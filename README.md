@@ -1,5 +1,9 @@
 # RI Building Plan Approval
 
+[![The approval trail: nine steps from zoning check to move-in for a 10-unit major land development in Cumberland, RI](docs/hero.png)](https://maqz-bromberg.github.io/ri-development-approval/)
+
+**Live site: [maqz-bromberg.github.io/ri-development-approval](https://maqz-bromberg.github.io/ri-development-approval/)**
+
 A Next.js site that turns a Rhode Island building project into its approval route. It shows every step, who decides it, the documents and forms to file, a checklist for each document, the source law quoted for each requirement, contacts, past approvals like yours, and notes for answering common objections at the hearing.
 
 Pilot municipality: **Cumberland, RI**. Rules were read in October 2026. Town staff verify final versions.

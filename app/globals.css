@@ -612,7 +612,9 @@ button.cal-day.is-open { background: var(--accent); color: var(--surface); }
 .rsteps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .rstep { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; scroll-margin-top: 160px; }
 .rstep:not(:last-child)::before { content: ""; position: absolute; left: 21px; top: 44px; bottom: -12px; border-left: 2px solid var(--accent); opacity: .35; }
-.rnum { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--surface); font-family: var(--ff-display); font-weight: 600; font-size: 20px; position: relative; }
+.rnum { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--surface); font-family: var(--ff-display); font-weight: 600; font-size: 20px; position: relative; border: 0; padding: 0; cursor: pointer; }
+.rnum:hover { filter: brightness(1.12); }
+.rnum:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .rstep.branch .rnum { background: var(--surface); color: var(--muted); border: 2px dashed var(--muted); }
 .rcard { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 14px 16px; min-width: 0; }
 .rstep.is-open .rcard { border-color: var(--accent); }

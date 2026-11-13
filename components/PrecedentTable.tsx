@@ -23,11 +23,11 @@ export function PrecedentTable({ rank = true }: { rank?: boolean }) {
           <col style={{ width: "5%" }} />
           <col style={{ width: "12%" }} />
           <col style={{ width: "15%" }} />
-          <col style={{ width: "34%" }} />
-          <col style={{ width: "5%" }} />
+          <col style={{ width: "31%" }} />
+          <col style={{ width: "8%" }} />
         </colgroup>
         <thead>
-          <tr><th>Project</th><th>Location</th><th>Zone</th><th className="num">Units</th><th>Route and outcome</th><th>Record</th><th>Relief or notes</th><th>Src</th></tr>
+          <tr><th>Project</th><th>Location</th><th>Zone</th><th className="num">Units</th><th>Route and outcome</th><th>Record</th><th>Relief or notes</th><th>Source</th></tr>
         </thead>
         <tbody>
           {rows.map(({ h }, i) => (

@@ -47,7 +47,7 @@ export function RouteFlow({ open, setOpen }: { open: Set<string>; setOpen: (fn: 
           const note = notes[`${tree}/${s.id}`] ?? "";
           return (
             <li key={s.id} id={`d-${s.id}`} className={`rstep${s.branch ? " branch" : ""}${isOpen ? " is-open" : ""}`}>
-              <span className="rnum" aria-hidden="true">{s.n}</span>
+              <button type="button" className="rnum" aria-expanded={isOpen} aria-controls={`rb-${s.id}`} aria-label={`${isOpen ? "Collapse" : "Expand"} step ${s.n}: ${s.title}`} onClick={() => toggle(s.id)}>{s.n}</button>
               <div className="rcard">
                 <div className="rhead">
                   <div className="rmain">

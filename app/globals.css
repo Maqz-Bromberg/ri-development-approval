@@ -990,7 +990,7 @@ textarea { resize: vertical; line-height: 1.45; }
 
 /* One accent per season in the wash, below the month labels: a blossom, a tree, a falling leaf, a snowman. Hardly noticeable on purpose. */
 .sscat { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.sscat-at { position: absolute; bottom: 0; transform: translateX(-50%); line-height: 0; }
-.sscat-at.s-fall { bottom: auto; top: 12%; }
+.sscat-at { position: absolute; transform: translateX(-50%); line-height: 0; }
+.sscat-at.is-ground { bottom: 0; }
 .sscat .season-mark { opacity: .1; }
 @media (prefers-color-scheme: dark) { .sscat .season-mark { opacity: .14; } }

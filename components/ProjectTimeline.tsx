@@ -96,7 +96,7 @@ export function ProjectTimeline({ rows }: { rows: Precedent[] }) {
                   {g.months.map((m, i) => (
                     <span key={m.t} className={`pt-band s-${seasonOf(m.m)}`} style={{ left: pct(m.t), width: `calc(${pct(i + 1 < g.months.length ? g.months[i + 1].t : g.end)} - ${pct(m.t)})` }} />
                   ))}
-                  {idx === 0 && <SeasonAccents bands={g.months.map((m, i) => ({ key: String(m.t), season: seasonOf(m.m), left: pct(m.t), width: `calc(${pct(i + 1 < g.months.length ? g.months[i + 1].t : g.end)} - ${pct(m.t)})` }))} />}
+                  {idx < 4 && <SeasonAccents lane={idx} bands={g.months.map((m, i) => ({ key: String(m.t), season: seasonOf(m.m), left: pct(m.t), width: `calc(${pct(i + 1 < g.months.length ? g.months[i + 1].t : g.end)} - ${pct(m.t)})` }))} />}
                   <span className="pt-line" style={{ left: pct(Math.min(...h.events.map((e) => eventTime(e.date)))), width: `calc(${pct(Math.max(...h.events.map((e) => eventTime(e.date))))} - ${pct(Math.min(...h.events.map((e) => eventTime(e.date))))})` }} />
                   {h.events.map((e) => {
                     const old = eventTime(e.date) < g.floor;

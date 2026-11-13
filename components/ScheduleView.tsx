@@ -93,8 +93,8 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
   const bandEls = () => bands.map((b) => (
     <span key={b.t.toISOString()} className={`tl-sband s-${b.season}`} style={bandStyle(b)} aria-hidden="true" />
   ));
-  const scatter = () => (
-    <SeasonAccents bands={bands.map((b) => ({ key: b.t.toISOString(), season: b.season, left: bandStyle(b).left, width: bandStyle(b).width }))} />
+  const scatter = (lane: number) => (
+    <SeasonAccents lane={lane} bands={bands.map((b) => ({ key: b.t.toISOString(), season: b.season, left: bandStyle(b).left, width: bandStyle(b).width }))} />
   );
 
   return (
@@ -129,7 +129,7 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
               </div>
               <div className="tl-track">
                 {bandEls()}
-                {p === plan[0] && scatter()}
+                {plan.indexOf(p) < 4 && scatter(plan.indexOf(p))}
                 {months.map((mm) => <span key={mm.toISOString()} className="tl-gridline" style={{ left: pct(mm) }} />)}
                 {today >= min && today <= max && <span className="tl-today" style={{ left: pct(today) }} title={`Today, ${fmtDate(today)}`} />}
                 <span className={`tl-bar${p.step.branch ? " branch" : ""}${p.plan.statutory ? " statutory" : ""}`} style={{ left: pct(p.start), width: `calc(${pct(p.end)} - ${pct(p.start)})` }} />

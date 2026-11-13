@@ -20,16 +20,16 @@ const VARIANTS = {
     label: "Working-page headings",
     options: { sans: "Nunito Sans", fredoka: "Fredoka" },
   },
-  verdict: {
-    label: "Check page opens with",
-    options: { verdict: "Verdict line", findings: "Findings only" },
+  checkLayout: {
+    label: "Check page",
+    options: { side: "Answer beside the facts", top: "Verdict above the form (old)", findings: "Findings only (old)" },
   },
 } as const;
 
 type Key = keyof typeof VARIANTS;
 export type TrialState = { [K in Key]: keyof (typeof VARIANTS)[K]["options"] };
 
-const DEFAULTS: TrialState = { routeLayout: "consolidated", considerations: "tick", headings: "sans", verdict: "verdict" };
+const DEFAULTS: TrialState = { routeLayout: "consolidated", considerations: "tick", headings: "sans", checkLayout: "side" };
 const STORE = "ri-plan-approval:trial";
 const DEV = process.env.NODE_ENV === "development";
 

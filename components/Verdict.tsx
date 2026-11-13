@@ -3,36 +3,99 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { CONTACTS, shortName } from "@/lib/data/contacts";
-import { TREES } from "@/lib/data/trees";
-import { hearingBody, verdict } from "@/lib/engine";
+import { TREES, TREE_ORDER } from "@/lib/data/trees";
+import { fmt, hearingBody, verdict } from "@/lib/engine";
 import { buildSchedule, fmtDate } from "@/lib/schedule";
+import type { ProjectInputs, TreeId } from "@/lib/types";
 import { useProject } from "./ProjectProvider";
 import { Term } from "./Term";
 
 const months = (days: number) => Math.max(1, Math.round(days / 30.4));
 
-/** The answer first: the route, how long the town may take, what blocks it and what is still open. */
-export function Verdict({ compact = false }: { compact?: boolean }) {
-  const { inputs, tree, steps } = useProject();
+const ORIGIN = { example: "Example project", browser: "Your project", link: "Project from a shared link", file: "Imported project" } as const;
+
+/** The facts the answer rests on, each tied to the form field that sets it. */
+export function projectBasis(i: ProjectInputs): { field: string; t: string }[] {
+  const out: { field: string; t: string }[] = [];
+  const s = i.units === 1 ? "" : "s";
+  out.push({ field: "f-units", t: i.type === "reuse" ? `${i.units} unit${s} in a reused building` : `${i.units} new unit${s}` });
+  if (i.aff) out.push({ field: "f-aff", t: `${i.aff} affordable` });
+  out.push({ field: "f-zone", t: i.zone === "other" ? `${i.town}, district not chosen` : `${i.zone}, ${i.town}` });
+  out.push({ field: "f-lot", t: `${fmt(i.lot)} sq ft lot` });
+  out.push({
+    field: "f-water",
+    t: i.water && i.sewer ? "public water and sewer" : i.water ? "public water, no sewer" : i.sewer ? "public sewer, no water" : "no public water or sewer",
+  });
+  out.push({ field: "f-dist", t: `${i.dist} acres disturbed` });
+  if (i.wet) out.push({ field: "f-wet", t: "wetlands" });
+  if (i.dot) out.push({ field: "f-dot", t: "state road access" });
+  if (!i.wet && !i.dot) out.push({ field: "f-wet", t: "no wetlands or state road marked" });
+  if (i.transit) out.push({ field: "f-transit", t: "near transit" });
+  if (i.conservation) out.push({ field: "f-conservation", t: "conservation development" });
+  if (i.rezone) out.push({ field: "f-rezone", t: "zone change sought" });
+  return out;
+}
+
+function goTo(field: string) {
+  const el = document.getElementById(field);
+  if (!el) return;
+  el.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  el.focus({ preventScroll: true });
+}
+
+/**
+ * The answer, read after the facts it rests on: where the project came from, the facts, then the
+ * route, how long the town may take, what blocks it and what is still open.
+ * `check` is the Check page's form: facts link back to their fields, the route can be overridden,
+ * and blockers are left to the findings that follow.
+ */
+export function Verdict({ compact = false, check = false }: { compact?: boolean; check?: boolean }) {
+  const { inputs, tree, auto, override, setOverride, steps, origin } = useProject();
   const v = verdict(inputs, tree, steps);
   const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate), [tree, steps, inputs.startDate]);
   const approved = plan.find((p) => p.step.id === "record") ?? plan.find((p) => p.step.id === "final") ?? plan.find((p) => p.step.id === "zcheck");
   const state = v.fails.length ? "fail" : v.flags.length ? "flag" : "pass";
   const headline = v.fails.length
-    ? "This project needs relief or a different route"
+    ? "Needs relief or a different route"
     : v.flags.length
-      ? "This project can proceed, with questions to settle first"
-      : "This project fits the rules as entered";
-  const where = inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`;
+      ? "Can proceed, with questions to settle first"
+      : "Fits the rules on these facts";
+  const basis = projectBasis(inputs);
+  const routeName = ["major", "minor", "comp", "dpr"].includes(tree) ? <Term id={tree}>{TREES[tree].name}</Term> : TREES[tree].name;
 
   return (
-    <div className={`verdict v-${state}${compact ? " compact" : ""}`}>
-      <p className="verdict-kicker">{inputs.units} unit{inputs.units === 1 ? "" : "s"} in {where}{inputs.address ? ` · ${inputs.address.split(",")[0]}` : ""}</p>
+    <div className={`verdict v-${state}${compact ? " compact" : ""}${check ? " check" : ""}`} aria-label={`${ORIGIN[origin]}: ${headline}`}>
+      <p className="verdict-kicker">
+        {origin === "example" ? <span className="example-flag">{ORIGIN.example}</span> : <span>{ORIGIN[origin]}</span>}
+        {check && origin === "example" && <span className="muted"> Sample facts, not yours. Look up an address or change any fact to check your own.</span>}
+      </p>
+      <p className="verdict-basis">
+        {inputs.address && <span className="basis-addr">{inputs.address.split(",")[0]}: </span>}
+        {basis.map((b, i) => (
+          <span key={`${b.field}-${b.t}`}>
+            {i > 0 && <span className="basis-sep" aria-hidden="true"> · </span>}
+            {check ? (
+              <button type="button" className="basis-item" onClick={() => goTo(b.field)} title="Go to this fact in the form">{b.t}</button>
+            ) : b.t}
+          </span>
+        ))}
+      </p>
       <p className="verdict-head">{headline}</p>
       <dl className="verdict-facts">
         <div>
           <dt>Route</dt>
-          <dd>{["major", "minor", "comp", "dpr"].includes(tree) ? <Term id={tree}>{TREES[tree].name}</Term> : TREES[tree].name}</dd>
+          <dd>
+            {routeName}
+            {check && (
+              <label className="override verdict-override" htmlFor="f-tree">
+                {override === "auto" ? "Set by the facts." : "Chosen by hand."}
+                <select id="f-tree" value={override} onChange={(e) => setOverride(e.target.value as TreeId | "auto")} aria-label="Approval route">
+                  <option value="auto">Auto ({TREES[auto].name})</option>
+                  {TREE_ORDER.map((k) => <option key={k} value={k}>{TREES[k].name}</option>)}
+                </select>
+              </label>
+            )}
+          </dd>
         </div>
         <div>
           <dt>Town review</dt>
@@ -48,17 +111,25 @@ export function Verdict({ compact = false }: { compact?: boolean }) {
         </div>
         <div>
           <dt>State permits</dt>
-          <dd>{v.statePermits.length ? v.statePermits.join(", ") : "none triggered by the facts entered"}</dd>
+          <dd>{v.statePermits.length ? v.statePermits.join(", ") : "none triggered by these facts"}</dd>
         </div>
       </dl>
-      <ul className="verdict-issues">
-        {v.fails.map((f) => <li key={f.t}><span className="st fail">Blocker</span><span>{f.t}</span></li>)}
-        {v.flags.map((f) => <li key={f.t}><span className="st flag">Open</span><span>{f.t}</span></li>)}
-        {!v.fails.length && !v.flags.length && <li><span className="st pass">Clear</span><span>No blockers or open questions from the facts entered.</span></li>}
-      </ul>
+      {check ? (
+        <p className="verdict-next small muted">
+          {v.fails.length + v.flags.length
+            ? `${v.fails.length ? `${v.fails.length} blocker${v.fails.length > 1 ? "s" : ""}` : ""}${v.fails.length && v.flags.length ? " and " : ""}${v.flags.length ? `${v.flags.length} open question${v.flags.length > 1 ? "s" : ""}` : ""} below, each with the rule it comes from.`
+            : "No blockers or open questions on these facts. The findings below show the rules checked."}
+        </p>
+      ) : (
+        <ul className="verdict-issues">
+          {v.fails.map((f) => <li key={f.t}><span className="st fail">Blocker</span><span>{f.t}</span></li>)}
+          {v.flags.map((f) => <li key={f.t}><span className="st flag">Open</span><span>{f.t}</span></li>)}
+          {!v.fails.length && !v.flags.length && <li><span className="st pass">Clear</span><span>No blockers or open questions on these facts.</span></li>}
+        </ul>
+      )}
       {compact && (
         <div className="verdict-actions">
-          <Link href="/project" className="btn">Check your own project</Link>
+          <Link href="/project" className="btn">{origin === "example" ? "Check your own project" : "Edit the project"}</Link>
           <Link href="/steps" className="btn ghost">See the steps</Link>
         </div>
       )}

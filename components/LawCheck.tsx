@@ -10,7 +10,8 @@ import { Gloss } from "./Term";
 const ORDER = { fail: 0, flag: 1, info: 2, pass: 3 } as const;
 const LABEL = { fail: "Blocker", flag: "Open", info: "Note", pass: "Pass" } as const;
 
-export function LawCheck() {
+/** `head={false}` leaves the route and its override to a verdict shown just above. */
+export function LawCheck({ head = true }: { head?: boolean }) {
   const { inputs, tree, auto, override, setOverride, steps } = useProject();
   const findings = analyze(inputs, tree).map((f, i) => ({ f, i })).sort((a, b) => ORDER[a.f.st] - ORDER[b.f.st] || a.i - b.i).map(({ f }) => f);
   const timed = steps.filter((s) => s.clock.days && !s.branch);
@@ -18,7 +19,7 @@ export function LawCheck() {
 
   return (
     <div className="panel" aria-labelledby="check-h">
-      <div className="result-head">
+      {head && <div className="result-head">
         <span className="muted small">Approval route</span>
         <span className="route-badge">{TREES[tree].name}</span>
         <label className="override" htmlFor="f-tree">
@@ -28,7 +29,7 @@ export function LawCheck() {
             {TREE_ORDER.map((k) => <option key={k} value={k}>{TREES[k].name}</option>)}
           </select>
         </label>
-      </div>
+      </div>}
       <h3 id="check-h">Zoning and law check</h3>
       <p className="sub">Blockers and open questions first. Each finding quotes the rule it comes from.</p>
       <ul className="check-list">

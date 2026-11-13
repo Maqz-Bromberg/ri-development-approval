@@ -90,7 +90,7 @@
 <li>Not built: the state/town split, town in the URL, <code>generateStaticParams</code>, per-town Atlas snapshots, the statewide Atlas comparison, and levels 2 to 4 for any other town. Open questions 2 and 3 (second town, who asks staff to confirm) are unanswered.</li>
 <li>The Hearing prep page still draws its examples from Cumberland's hearings for every town.</li>
 <li>Documents with no source are kept for all towns. I counted them as generic, but I did not read each one.</li>
-<li>The schedule's "Cumberland" calendar logic on the other branch is keyed by town name, so merging it with this branch works without more changes.</li>
+<li class="warn">After merging with <code>board-calendars</code>, the six callers of <code>buildSchedule</code> must pass <code>inputs.town</code>. It defaults to Cumberland, so other towns would otherwise get Cumberland's meeting dates.</li>
 </ul>
 </main>
 </body>

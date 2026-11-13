@@ -797,3 +797,46 @@ textarea { resize: vertical; line-height: 1.45; }
 /* Documented elapsed time from comparable projects, under a schedule step */
 .tl-actual { display: block; color: var(--muted, #5b6470); font-style: italic; }
 .ev-parties { margin: 0.35rem 0 0; }
+
+/* ---------- Zoning map (Check page, beside the Atlas panel) ---------- */
+.district-split { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.zm { display: grid; gap: 12px; }
+.zm-head { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: flex-start; justify-content: space-between; }
+.zm-head > div:first-child { flex: 1 1 260px; min-width: 0; }
+.zm-head .sub { margin: 0; }
+.zm-mode button { font-size: 13px; padding: 5px 12px; }
+.zm-frame { position: relative; }
+.zm-canvas { height: 440px; border-radius: 12px; border: 1px solid var(--rule); background: #f2f2ef; z-index: 0; }
+.zm-wait { display: grid; place-items: center; color: var(--muted); font-size: 14px; }
+.zm-status { position: absolute; left: 12px; bottom: 12px; z-index: 500; margin: 0; max-width: calc(100% - 24px); background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 4px 10px; font-size: 13px; }
+.zm-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; }
+.zm-legend li { display: inline-flex; gap: 6px; align-items: center; }
+.zm-legend b { font-weight: 700; color: var(--muted); font-size: 12.5px; }
+.zm-swatch { width: 14px; height: 14px; border-radius: 3px; flex: none; }
+.zm-swatch.empty { background: var(--surface); border: 1px solid #9aa39c; }
+.zm-swatch.site { background: transparent; border: 3px solid var(--ink); }
+.zm-shape { --c: var(--muted); width: 14px; height: 14px; flex: none; display: inline-block; border-radius: 50%; background: var(--c); }
+.zm-shape.ring { background: var(--surface); border: 3.5px solid var(--c); }
+.zm-shape.square { border-radius: 3px; }
+.zm-legend .zm-shape { --c: var(--muted); }
+.zm-note { margin: 0; }
+.zm-projects { list-style: none; margin: 0; padding: 0; display: grid; font-size: 14px; }
+.zm-projects li { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 7px 8px; border-top: 1px solid var(--rule); border-radius: 6px; }
+.zm-projects li.is-picked { background: var(--accent-soft); }
+.zm-projects .zm-shape { align-self: center; }
+/* Leaflet hover text and district labels in the site's type */
+.leaflet-container { font-family: var(--ff-body); }
+.leaflet-tooltip.zm-tip { font-size: 13px; line-height: 1.45; color: var(--ink); border: 1px solid var(--rule); border-radius: 8px; box-shadow: 0 4px 14px rgba(38, 51, 46, .14); padding: 6px 10px; width: max-content; max-width: 260px; white-space: normal; }
+.zm-tip .zm-sub { color: var(--muted); }
+.leaflet-tooltip.zm-dlabel { background: rgba(255, 255, 255, .78); border: 0; box-shadow: none; padding: 0 5px; border-radius: 4px; font-family: var(--ff-data); font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.leaflet-tooltip.zm-dlabel.own { color: var(--accent); }
+.leaflet-tooltip.zm-dlabel::before { display: none; }
+.zm-pin { background: none; border: 0; }
+@media (max-width: 960px) {
+  .district-split { grid-template-columns: 1fr; }
+  .zm-canvas { height: 360px; }
+}
+@media print {
+  .zm-canvas { height: 320px; }
+  .zm-mode { display: none; }
+}

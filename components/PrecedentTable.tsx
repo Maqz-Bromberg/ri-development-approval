@@ -1,6 +1,6 @@
 "use client";
 
-import { HISTORY } from "@/lib/data/history";
+import { HISTORY, precedentId } from "@/lib/data/history";
 import { SOURCES } from "@/lib/data/sources";
 import { fmtEventDate } from "@/lib/timelines";
 import { sourceKind } from "@/lib/sourceKind";
@@ -32,7 +32,7 @@ export function PrecedentTable({ rank = true }: { rank?: boolean }) {
         </thead>
         <tbody>
           {rows.map(({ h }, i) => (
-            <tr key={h.name}>
+            <tr key={h.name} id={`p-${precedentId(h.name)}`}>
               <td><b>{h.name}</b>{rank && i < 2 && <><br /><span className="sim">closest match</span></>}</td>
               <td>{h.addr}{h.lot && <><br /><span className="muted mono small">{h.lot}</span></>}</td>
               <td>{h.zone || "—"}</td>

@@ -91,6 +91,9 @@ export interface ProjectInputs {
   conservation: boolean;
   /** ISO date the project starts (day 0 of the schedule) */
   startDate: string;
+  /** Where the address lookup placed the site (WGS84). Unset for the example and for hand-entered projects. */
+  lat?: number;
+  lon?: number;
 }
 
 export interface Finding {
@@ -122,6 +125,10 @@ export interface Precedent {
   coverage?: Coverage[];
   /** ISO date the public record was last checked for new events */
   checked: string;
+  /** Map position: the centroid of its parcels, or the street address point when `exact` is false */
+  at?: { lat: number; lon: number; exact: boolean };
+  /** RIDEM tax parcel ids (PlatLot), when the parcels are known */
+  parcels?: string[];
 }
 
 export type TimelineStage = "trc" | "preapp" | "master" | "prelim" | "final" | "recorded" | "permit" | "start" | "co" | "other";

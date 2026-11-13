@@ -11,6 +11,7 @@ import { useProject } from "./ProjectProvider";
 import { useTrial } from "./Trial";
 import { Verdict } from "./Verdict";
 import { WhatIf } from "./WhatIf";
+import { ZoningMap } from "./ZoningMap";
 
 /**
  * The Check page: describe the project, then read the answer it leads to, then compare the alternatives.
@@ -63,7 +64,10 @@ export function ProjectWorkspace() {
           <p className="eyebrow">Your district</p>
           <h2 id="h-district">What the zoning allows here</h2>
         </div>
-        <AtlasPanel />
+        <div className="district-split">
+          <ZoningMap />
+          <AtlasPanel />
+        </div>
       </section>
 
       <section className="sec" aria-labelledby="h-whatif">

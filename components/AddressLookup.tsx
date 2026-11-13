@@ -55,6 +55,8 @@ export function AddressLookup() {
 
   const use = (place: Candidate, f: SiteFacts) => {
     setInput("address", place.label.split(",").slice(0, 3).join(","));
+    setInput("lat", place.lat);
+    setInput("lon", place.lon);
     if (f.platLot) setInput("parcel", f.platLot);
     if (f.acres) setInput("lot", Math.round((f.acres * 43560) / 100) * 100);
     if (f.water !== null) setInput("water", f.water);

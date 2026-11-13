@@ -49,7 +49,7 @@ export function IntakeForm() {
       <div className="form-grid">
         <div className="field">
           <label htmlFor="f-muni">Municipality</label>
-          <select id="f-muni" value={inputs.town} onChange={(e) => { setInput("town", e.target.value); setInput("zone", "other"); }}>
+          <select id="f-muni" value={inputs.town} onChange={(e) => { setInput("town", e.target.value); setInput("zone", "other"); setInput("lat", undefined); setInput("lon", undefined); }}>
             {TOWNS.map((t) => <option key={t.name} value={t.name}>{t.name} (level {t.level})</option>)}
           </select>
         </div>

@@ -1,9 +1,15 @@
 import type { Precedent, Timeline } from "../types";
 import TIMELINES from "./timelines.json";
 
-/** Cumberland multifamily items from Planning Board agendas, minutes and staff memos. Outcomes only where a source states them. */
+/**
+ * Cumberland multifamily items from Planning Board agendas, minutes and staff memos. Outcomes only where a source states them.
+ * Map positions (`at`): parcels found in RIDEM's tax parcel layer by plat and lot (centroid of the outlines),
+ * except Berkeley Mill (the parcel at its street address, 30 Martin Street) and 80 Bear Hill Road
+ * (street address point only: four parcels meet there, so none is assumed). Looked up 2026-11-13.
+ */
 const BASE: Omit<Precedent, "events" | "checked">[] = [
   {
+    at: { lat: 41.975489, lon: -71.465087, exact: true }, parcels: ["CU 054-0007-000", "CU 054-0008-000"],
     name: "Haley's Commons", addr: "75 Manville Hill Road", lot: "AP 54 Lots 7 & 8", zone: "R-1", units: 10, aff: 3, route: "comp",
     routeLabel: "Major land development / comprehensive permit",
     status: "approved", statusLabel: "Preliminary approved 7–2",
@@ -11,6 +17,7 @@ const BASE: Omit<Precedent, "events" | "checked">[] = [
     src: ["pb240627", "min250731", "min250925", "vid250925"],
   },
   {
+    at: { lat: 41.920889, lon: -71.408813, exact: true }, parcels: ["CU 014-0014-000"],
     name: "475 Mendon Road", addr: "475 Mendon Road", lot: "AP 14 Lot 14", zone: "C-1", units: 9, aff: 5, route: "comp",
     routeLabel: "Major land development / comprehensive permit",
     status: "pending", statusLabel: "Pre-application",
@@ -18,6 +25,7 @@ const BASE: Omit<Precedent, "events" | "checked">[] = [
     src: ["pb250731", "min250731", "vid250731"],
   },
   {
+    at: { lat: 41.915937, lon: -71.403095, exact: true }, parcels: ["CU 011-0069-000"],
     name: "Blackstone Residences", addr: "618 Broad Street", lot: "AP 11 Lot 69", zone: "C-1", units: 16, aff: 4, route: "comp",
     routeLabel: "Major land development / comprehensive permit",
     status: "pending", statusLabel: "Master plan heard",
@@ -25,6 +33,7 @@ const BASE: Omit<Precedent, "events" | "checked">[] = [
     src: ["pb250925", "min250925"],
   },
   {
+    at: { lat: 41.946542, lon: -71.393324, exact: true }, parcels: ["CU 017-0021-000", "CU 017-0014-000"],
     name: "The Homes at Waterman Pond", addr: "106 & 110 Bear Hill Road", lot: "AP 17 Lots 21 & 14", zone: "R-3", units: 18, aff: 0, route: "major",
     routeLabel: "Major land development / conservation development",
     status: "pending", statusLabel: "Master plan hearing",
@@ -32,6 +41,7 @@ const BASE: Omit<Precedent, "events" | "checked">[] = [
     src: ["pb260326", "memoWP", "min260528", "pb260625", "vb2025"],
   },
   {
+    at: { lat: 41.92692, lon: -71.425776, exact: true }, parcels: ["CU 034-0188-000"],
     name: "Berkeley Mill apartments", addr: "30 Martin Street", lot: "", zone: "BMMU", units: 24, aff: 0, route: "dpr",
     routeLabel: "Administrative review (mill overlay)",
     status: "administrative", statusLabel: "Approved by staff",
@@ -39,6 +49,7 @@ const BASE: Omit<Precedent, "events" | "checked">[] = [
     src: ["min250731"],
   },
   {
+    at: { lat: 41.945979, lon: -71.394682, exact: false },
     name: "80 Bear Hill Road condominiums", addr: "80 Bear Hill Road", lot: "", zone: "", units: 12, aff: 0, route: "major",
     routeLabel: "Major land development",
     status: "approved", statusLabel: "Master plan approved",
@@ -46,6 +57,7 @@ const BASE: Omit<Precedent, "events" | "checked">[] = [
     src: ["call2017"],
   },
   {
+    at: { lat: 41.906706, lon: -71.392487, exact: true }, parcels: ["CU 004-0266-000", "CU 004-0264-000"],
     name: "Steeple & Stone (St. Patrick Church)", addr: "295 & 305 Broad Street", lot: "AP 4 Lots 266 & 264", zone: "C-1", units: 60, aff: 60, route: "comp",
     routeLabel: "Major land development / comprehensive permit",
     status: "pending", statusLabel: "Revision heard",
@@ -53,6 +65,7 @@ const BASE: Omit<Precedent, "events" | "checked">[] = [
     src: ["min250925", "pb251204", "vid251204"],
   },
   {
+    at: { lat: 41.916537, lon: -71.391803, exact: true }, parcels: ["CU 009-0287-000"],
     name: "AJ Home Addition", addr: "50 Oakwood Avenue", lot: "AP 9 Lot 287", zone: "R-2", units: 4, aff: 2, route: "minor",
     routeLabel: "Minor land development / comprehensive permit",
     status: "pending", statusLabel: "Pre-application",
@@ -67,3 +80,8 @@ export const HISTORY: Precedent[] = BASE.map((b) => {
   if (!t) throw new Error(`No timeline for ${b.name} in timelines.json`);
   return { ...b, ...t };
 });
+
+/** Anchor id for a project's row in the precedent table, also used by the map's project list. */
+export function precedentId(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}

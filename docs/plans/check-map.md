@@ -1,6 +1,14 @@
 # Plan: a zoning map on the Check page
 
-Status: proposed, for review. Nothing built.
+Status: built on branch `check-map` (from `dev`), with Maqz's choices: (1) Leaflet with a light street basemap, (2) structure type as the default colouring, approval route as the alternative, (3) 400 m. Differences from the plan as written:
+
+- **Basemap:** Esri World Light Gray, not CARTO. CARTO's keyless basemaps now return "API key required" tiles.
+- **Site position:** only `lat`/`lon` are saved, not the outline. The site parcel is found among the fetched parcels (by plat/lot, or the parcel containing the point), which keeps share links short.
+- **Hover:** shows impervious share and square feet. It drops "% developed", because RIDEM's `PctDev` mixes 0–1 and 0–100 scales.
+- **Pins:** shown in "Approval route" mode, where the parcels turn grey. Selecting one highlights its row in a list under the map, which links to the precedent table. Popups with raw links would break under the GitHub Pages base path.
+- **Rendering:** SVG, not canvas. Leaflet 1.9.4's canvas renderer throws on React's development double mount.
+
+The report with possible additions is `docs/check-map-summary.html`.
 
 ## What it is for
 

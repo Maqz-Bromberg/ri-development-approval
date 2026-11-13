@@ -51,6 +51,8 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
   const { inputs } = useProject();
   const { districts: atlas } = useAtlas();
   const [mode, setMode] = useState<Mode>("structure");
+  // "Open in the zoning map" links from the records arrive with ?map=route.
+  useEffect(() => { if (new URLSearchParams(window.location.search).get("map") === "route") setMode("route"); }, []);
   const [picked, setPicked] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
   const expandBtn = useRef<HTMLButtonElement>(null);

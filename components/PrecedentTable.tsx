@@ -1,20 +1,32 @@
 "use client";
 
+import { useState } from "react";
+import { ProjectTimeline } from "./ProjectTimeline";
 import { HISTORY, precedentId } from "@/lib/data/history";
 import { SOURCES } from "@/lib/data/sources";
-import { fmtEventDate } from "@/lib/timelines";
+import { fmtEventDate, isMonthOnly } from "@/lib/timelines";
 import { sourceKind } from "@/lib/sourceKind";
 import { useProject } from "./ProjectProvider";
 
 export function PrecedentTable({ rank = true }: { rank?: boolean }) {
   const { inputs, tree } = useProject();
+  const [view, setView] = useState<"timeline" | "table">("timeline");
   const rows = HISTORY.map((h) => ({
     h,
     score: Math.abs(h.units - inputs.units) + (h.route === tree ? 0 : 6) + (h.zone === inputs.zone ? 0 : 2),
   }));
   if (rank) rows.sort((a, b) => a.score - b.score);
 
+  const toggle = (
+    <div className="seg small-seg" role="group" aria-label="Show the records as">
+      <button type="button" aria-pressed={view === "timeline"} onClick={() => setView("timeline")}>Timeline</button>
+      <button type="button" aria-pressed={view === "table"} onClick={() => setView("table")}>Table</button>
+    </div>
+  );
+  if (view === "timeline") return <>{toggle}<ProjectTimeline rows={rows.map((r) => r.h)} /></>;
+
   return (
+    <>{toggle}
     <div className="tablewrap">
       <table className="prec-table">
         <colgroup>
@@ -43,7 +55,7 @@ export function PrecedentTable({ rank = true }: { rank?: boolean }) {
                   {h.events.map((e) => (
                     <li key={e.date + e.what} className={`ev-${e.kind}`}>
                       <span className="mono small">{fmtEventDate(e.date)}</span> {e.what}
-                      {e.kind === "reported" && <span className="muted small"> (press report)</span>}
+                      {e.kind === "reported" && <span className="muted small"> (press report)</span>}{e.unverified && <span className="muted small"> (date not yet checked)</span>}{isMonthOnly(e.date) && <span className="muted small"> (day not known)</span>}
                     </li>
                   ))}
                 </ul>
@@ -61,5 +73,6 @@ export function PrecedentTable({ rank = true }: { rank?: boolean }) {
         </tbody>
       </table>
     </div>
+    </>
   );
 }

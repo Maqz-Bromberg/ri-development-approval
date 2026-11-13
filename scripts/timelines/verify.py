@@ -27,6 +27,8 @@ def main(cache, offline):
                 errors.append(f"{where}: bad date")
             for s in e["src"]:
                 if s not in srcs: errors.append(f"{where}: unknown source {s}")
+            if e.get("unverified") and e.get("quote"):
+                errors.append(f"{where}: marked unverified but has a quote; remove the flag if the quote was checked")
             if e["kind"] == "decided" and not e.get("quote"):
                 errors.append(f"{where}: decided without a quote")
             if e.get("quote") and not offline:

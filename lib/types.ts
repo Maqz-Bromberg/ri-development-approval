@@ -143,6 +143,8 @@ export interface TimelineEvent {
   src: string[];
   /** Verbatim from a source document; required for "decided" */
   quote?: string;
+  /** Set when the date was carried over from an earlier record and not found in a fetched document. The text says why. */
+  unverified?: string;
 }
 
 export interface Party {

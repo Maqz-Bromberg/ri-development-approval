@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p>
                 RI Building Plan Approval reads state and local rules as published (October 2026). It is not legal advice and does not
                 replace a determination by a municipality or a state agency. Town staff verify final versions. Only Cumberland has been read beyond state law.{" "}
-                <Link href="/glossary">Glossary of terms</Link>
+                <Link href="/glossary">Glossary of terms</Link>{" · "}<Link href="/verification">How records are checked</Link>
               </p>
             </div>
           </footer>

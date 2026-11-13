@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { Fragment, useMemo, useState } from "react";
+import { CUMBERLAND_CALENDAR } from "@/lib/data/calendars/cumberland";
+import { SOURCES } from "@/lib/data/sources";
 import { TREES } from "@/lib/data/trees";
 import { itemKey, visibleDocs } from "@/lib/engine";
 import { addDays, buildSchedule, daysBetween, fmtDate, isoDay, tickDocs, toICS, type PlannedStep, type PlannedTick } from "@/lib/schedule";
@@ -34,7 +36,7 @@ function TickPanel({ p, t, docs, onClose, onPick }: { p: PlannedStep; t: Planned
           <b>{t.label}</b>
           <span className="muted small">
             {fmtDate(t.date, { weekday: "short", month: "short", day: "numeric", year: "numeric" })} · Step {p.step.n}: {p.step.title} · day {t.d} of {p.plan.est}
-            {p.plan.statutory ? " (statutory clock)" : " (estimate)"}
+            {t.published ? " (published meeting date)" : t.est ? " (est., projected from the usual pattern)" : p.plan.statutory ? " (statutory clock)" : " (estimate)"}
           </span>
         </div>
         <button type="button" className="btn ghost small-btn" onClick={onClose}>Close</button>
@@ -209,6 +211,7 @@ export function ScheduleView() {
   const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate), [tree, steps, inputs.startDate]);
   if (!plan.length) return null;
 
+  const anyEst = plan.some((p) => p.ticks.some((t) => t.est));
   const find = (id: string) => plan.find((p) => p.step.id === id);
   const approvalEnd = (find("record") ?? find("final") ?? find("zcheck"))?.end;
   const permit = find("building")?.end;
@@ -257,11 +260,14 @@ export function ScheduleView() {
         <li><span className="tl-bar-key statutory" />Statutory review clock</li>
         <li><span className="tl-bar-key" />Estimate</li>
         <li><span className="today-key" />Today</li>
-        <li><DemoTag>Demo: meeting dates are estimates</DemoTag></li>
+        <li><DemoTag>Demo: durations other than board meetings are estimates</DemoTag></li>
       </ul>
       <p className="muted small route-note">
         Route: <b>{TREES[tree].name}</b>. Statutory clocks run to their maximums, and the other durations are estimates.
-        Meeting dates are placed a fixed number of days after filing, not on the board's real calendar.
+        Planning Board and Technical Review Committee dates come from Cumberland's published 2026 schedule
+        (<a href={SOURCES.csched.url} target="_blank" rel="noreferrer">meeting schedule and deadlines</a>, read {CUMBERLAND_CALENDAR.read}).
+        Dates after it are projected from the board's usual pattern and marked <b>est.</b> Confirm every date with the Planning Department before relying on it.
+        {anyEst && " Some hearings in this plan fall beyond the published calendar."}
       </p>
       {view === "timeline"
         ? (

@@ -1,6 +1,6 @@
 # Plan: from Cumberland to all 39 municipalities
 
-Status: draft for review. Nothing here is built.
+Status: partly built on branch `statewide`: level 1 for all 39 towns (town index, per-town Atlas districts, town in the project and share link, Cumberland wording removed). The state/town data split, town in the URL, level 2 and above are not built.
 
 ## What is already statewide, and what is not
 

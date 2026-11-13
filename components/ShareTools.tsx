@@ -21,7 +21,7 @@ export function ShareTools({ printHere = false }: { printHere?: boolean }) {
   const file = useRef<HTMLInputElement>(null);
 
   const link = () => `${window.location.origin}${window.location.pathname}#${SHARE_PARAM}=${encodeState(saved)}`;
-  const name = `${inputs.units} units, ${inputs.zone === "other" ? "Cumberland" : `${inputs.zone}, Cumberland`}`;
+  const name = `${inputs.units} units, ${inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}`;
 
   const copy = async () => {
     try {

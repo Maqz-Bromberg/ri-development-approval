@@ -155,7 +155,7 @@ export function ObjectionGuide() {
           </div>
         </div>
         <p className="print-only sheet-title">
-          <b>{body} hearing sheet</b> · {inputs.units} units, {inputs.zone === "other" ? "Cumberland" : `${inputs.zone}, Cumberland`}{inputs.address ? ` · ${inputs.address}` : ""}
+          <b>{body} hearing sheet</b> · {inputs.units} units, {inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}{inputs.address ? ` · ${inputs.address}` : ""}
         </p>
         <div className="obj-list">
           {shown.map((o) => {

@@ -1,3 +1,4 @@
+import { getActiveTown } from "../town";
 import type { AtlasDistrict } from "../types";
 
 /*
@@ -45,7 +46,19 @@ export const CUMBERLAND_DISTRICTS: AtlasDistrict[] = [
   { abbrvname: "OS", name: "Open Space District", type: "Nonresidential", family1_treatment: "Prohibited", family2_treatment: "Prohibited", family3_treatment: "Prohibited", family4_treatment: "Prohibited", accessory_treatment: "Prohibited", affordable_treatment: "Public Hearing", family1_minlotacres: null, family4_minlotacres: null, family4_maxunitsperacre: null, family4_maxheightft: null, family4_minparking_1br: null, family4_minparking_2br: null, family4_water_required: null },
 ];
 
-export function district(abbrv: string, list: AtlasDistrict[] = CUMBERLAND_DISTRICTS): AtlasDistrict | undefined {
+/** Districts of other towns, filled from the live Atlas layer as each town is selected. Cumberland has a bundled snapshot. */
+const TOWN_DISTRICTS: Record<string, AtlasDistrict[]> = { Cumberland: CUMBERLAND_DISTRICTS };
+
+export function registerDistricts(town: string, list: AtlasDistrict[]): void {
+  TOWN_DISTRICTS[town] = list;
+}
+
+export function districtsOf(town: string): AtlasDistrict[] | undefined {
+  return TOWN_DISTRICTS[town];
+}
+
+/** A district of the active town (the town of the project on screen), or of the list given. */
+export function district(abbrv: string, list: AtlasDistrict[] = TOWN_DISTRICTS[getActiveTown()] ?? []): AtlasDistrict | undefined {
   return list.find((d) => d.abbrvname === abbrv);
 }
 

@@ -11,7 +11,7 @@ export function TrailHeading() {
       <div>
         <p className="eyebrow">The road to approval</p>
         <h2 id="trail-h">
-          {inputs.units} units in {inputs.zone === "other" ? "Cumberland" : `${inputs.zone}, Cumberland`}: {TREES[tree].name.toLowerCase()}
+          {inputs.units} units in {inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}: {TREES[tree].name.toLowerCase()}
         </h2>
       </div>
       <p>

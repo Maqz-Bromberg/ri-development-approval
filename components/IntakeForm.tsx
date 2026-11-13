@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { CUMBERLAND_DISTRICTS } from "@/lib/data/atlas";
+import { TOWNS } from "@/lib/data/towns";
+import { CoverageNote } from "./Coverage";
+import { useAtlas } from "./useAtlas";
 import { DemoTag } from "./Demo";
 import { useProject } from "./ProjectProvider";
 import type { ProjectInputs } from "@/lib/types";
@@ -19,6 +21,7 @@ const FACTS: { key: keyof ProjectInputs; label: string }[] = [
 export function IntakeForm() {
   const { inputs, setInput, resetInputs, origin } = useProject();
   const [files, setFiles] = useState<{ name: string; size: number }[]>([]);
+  const { districts } = useAtlas();
   const [drag, setDrag] = useState(false);
 
   const num = (key: "units" | "aff" | "lot" | "dist") => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,16 +41,16 @@ export function IntakeForm() {
       <h3 id="intake-h">Project and site {origin === "example" && <span className="example-flag">Example values</span>}</h3>
       <p className="sub">
         {origin === "example"
-          ? "Pre-filled with a sample 10-unit multifamily project in Cumberland."
+          ? `Pre-filled with a sample 10-unit multifamily project in ${inputs.town}.`
           : inputs.address ? `Site facts for ${inputs.address}.` : "Your project."}{" "}
         Changes are saved in this browser.
       </p>
+      <CoverageNote compact />
       <div className="form-grid">
         <div className="field">
-          <label htmlFor="f-muni">Municipality <DemoTag>Cumberland only</DemoTag></label>
-          <select id="f-muni" defaultValue="cumberland">
-            <option value="cumberland">Cumberland</option>
-            <option value="other" disabled>Other towns: steps not yet read</option>
+          <label htmlFor="f-muni">Municipality</label>
+          <select id="f-muni" value={inputs.town} onChange={(e) => { setInput("town", e.target.value); setInput("zone", "other"); }}>
+            {TOWNS.map((t) => <option key={t.name} value={t.name}>{t.name} (level {t.level})</option>)}
           </select>
         </div>
         <div className="field">
@@ -65,7 +68,7 @@ export function IntakeForm() {
         <div className="field">
           <label htmlFor="f-zone">Zoning district</label>
           <select id="f-zone" value={inputs.zone} onChange={(e) => setInput("zone", e.target.value)}>
-            {CUMBERLAND_DISTRICTS.map((d) => (
+            {districts.map((d) => (
               <option key={d.abbrvname} value={d.abbrvname}>{d.abbrvname} {d.name}</option>
             ))}
             <option value="other">Other / not sure</option>

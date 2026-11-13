@@ -1,7 +1,8 @@
+import { getActiveTown } from "../town";
 import type { Contact } from "../types";
 
 /** Authorities and offices on the route. "verify" marks details from older or secondary sources. */
-export const CONTACTS: Record<string, Contact> = {
+const CUMBERLAND_CONTACTS: Record<string, Contact> = {
   planning: {
     name: "Planning & Community Development (Administrative Officer)", kind: "staff",
     lines: [["Address", "45 Broad Street, 2nd Floor, Cumberland, RI 02864"], ["Phone", "401-728-2400"], ["Director", "Amelia Morton (introduced May 2026)"], ["Principal planner", "ext. 142"]],
@@ -100,6 +101,34 @@ export const CONTACTS: Record<string, Contact> = {
     src: ["ridsp"],
   },
 };
+
+/** Offices that belong to the town. State agencies, RIHousing, the court and the General Assembly are the same everywhere. */
+const SHARED = new Set(["ridem", "ridot", "sfm", "rihousing", "court", "ga"]);
+const cache = new Map<string, Contact>();
+
+/** Outside Cumberland, a local office keeps its role but carries no Cumberland address, person or hours. */
+function forTown(id: string, c: Contact, town: string): Contact {
+  if (town === "Cumberland" || SHARED.has(id)) return c;
+  const key = `${town}/${id}`;
+  let out = cache.get(key);
+  if (!out) {
+    out = {
+      ...c,
+      name: c.name.replace(/Cumberland/g, town),
+      lines: [["Details", `Not yet read for ${town}. Find the office on the town's website. The Open Meetings portal lists each board's meetings.`]],
+      note: c.note.replace(/Cumberland/g, town),
+      verify: undefined,
+      src: ["sosom"],
+    };
+    cache.set(key, out);
+  }
+  return out;
+}
+
+/** The contacts of the town of the project on screen. Reads the active town each time, so it follows the project. */
+export const CONTACTS: Record<string, Contact> = new Proxy(CUMBERLAND_CONTACTS, {
+  get: (t, id: string) => (t[id] ? forTown(id, t[id], getActiveTown()) : undefined),
+});
 
 export const KIND_LABEL: Record<string, string> = {
   elected: "Elected",

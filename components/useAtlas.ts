@@ -1,46 +1,57 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CUMBERLAND_DISTRICTS, diffAgainstSnapshot, fetchAtlasDistricts } from "@/lib/data/atlas";
+import { CUMBERLAND_DISTRICTS, diffAgainstSnapshot, fetchAtlasDistricts, registerDistricts } from "@/lib/data/atlas";
 import type { AtlasDistrict } from "@/lib/types";
+import { useProject } from "./ProjectProvider";
 
 export type AtlasStatus = "loading" | "live" | "snapshot";
 
 interface AtlasState {
+  town: string;
   districts: AtlasDistrict[];
   status: AtlasStatus;
   diffs: { abbrvname: string; fields: string[] }[];
   error?: string;
 }
 
-let cache: AtlasState | null = null;
-let inflight: Promise<AtlasState> | null = null;
+const cache = new Map<string, AtlasState>();
+const inflight = new Map<string, Promise<AtlasState>>();
 
-function load(): Promise<AtlasState> {
-  if (cache) return Promise.resolve(cache);
-  if (!inflight) {
-    inflight = fetchAtlasDistricts("Cumberland")
-      .then((live) => {
-        const order = new Map(CUMBERLAND_DISTRICTS.map((d, i) => [d.abbrvname, i]));
-        live.sort((a, b) => (order.get(a.abbrvname) ?? 99) - (order.get(b.abbrvname) ?? 99));
-        cache = { districts: live.length ? live : CUMBERLAND_DISTRICTS, status: live.length ? "live" : "snapshot", diffs: diffAgainstSnapshot(live) };
-        return cache;
+function load(town: string): Promise<AtlasState> {
+  const hit = cache.get(town);
+  if (hit) return Promise.resolve(hit);
+  let p = inflight.get(town);
+  if (!p) {
+    const snapshot = town === "Cumberland" ? CUMBERLAND_DISTRICTS : [];
+    p = fetchAtlasDistricts(town)
+      .then((live): AtlasState => {
+        if (town === "Cumberland") {
+          const order = new Map(CUMBERLAND_DISTRICTS.map((d, i) => [d.abbrvname, i]));
+          live.sort((a, b) => (order.get(a.abbrvname) ?? 99) - (order.get(b.abbrvname) ?? 99));
+        } else {
+          live.sort((a, b) => a.abbrvname.localeCompare(b.abbrvname, undefined, { numeric: true }));
+          registerDistricts(town, live);
+        }
+        return { town, districts: live.length ? live : snapshot, status: live.length ? "live" : "snapshot", diffs: town === "Cumberland" ? diffAgainstSnapshot(live) : [] };
       })
-      .catch((e: Error) => {
-        cache = { districts: CUMBERLAND_DISTRICTS, status: "snapshot", diffs: [], error: e.message };
-        return cache;
-      });
+      .catch((e: Error): AtlasState => ({ town, districts: snapshot, status: "snapshot", diffs: [], error: e.message }));
+    p = p.then((s) => { cache.set(town, s); return s; });
+    inflight.set(town, p);
   }
-  return inflight;
+  return p;
 }
 
-/** Cumberland's Zoning Atlas districts: the bundled snapshot at once, then the live layer when it answers. */
+/** The Zoning Atlas districts of the project's town: Cumberland's bundled snapshot at once, then the live layer when it answers. */
 export function useAtlas(): AtlasState {
-  const [state, setState] = useState<AtlasState>(cache ?? { districts: CUMBERLAND_DISTRICTS, status: "loading", diffs: [] });
+  const { inputs } = useProject();
+  const town = inputs.town;
+  const [state, setState] = useState<AtlasState>(cache.get(town) ?? { town, districts: town === "Cumberland" ? CUMBERLAND_DISTRICTS : [], status: "loading", diffs: [] });
   useEffect(() => {
     let alive = true;
-    load().then((s) => { if (alive) setState(s); });
+    load(town).then((s) => { if (alive) setState(s); });
     return () => { alive = false; };
-  }, []);
-  return state;
+  }, [town]);
+  // Until the town's own districts arrive, show nothing of another town's.
+  return state.town === town ? state : { town, districts: town === "Cumberland" ? CUMBERLAND_DISTRICTS : [], status: "loading", diffs: [] };
 }

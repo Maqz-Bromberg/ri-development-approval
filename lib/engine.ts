@@ -1,8 +1,10 @@
 import { TREES } from "./data/trees";
 import { district, housingTypeLabel, readByUtility, treatmentFor, type Treatment } from "./data/atlas";
+import { getActiveTown } from "./town";
 import type { Doc, Finding, Flags, ProjectInputs, Step, TreeId } from "./types";
 
 export const DEFAULT_INPUTS: ProjectInputs = {
+  town: "Cumberland",
   address: "",
   parcel: "AP __ Lot __ (example)",
   units: 10,
@@ -62,8 +64,10 @@ export function requiredArea(i: ProjectInputs): AreaNeed | null {
     const sqft = Math.max((i.units / upa.prd) * SQFT_PER_ACRE, (minLot.prd ?? 0) * SQFT_PER_ACRE);
     return { sqft, basis: "riza-prd" };
   }
-  if (i.zone === "R-2" && i.units <= 2) return i.water && i.sewer ? { sqft: 10000 + (i.units - 1) * 5000, basis: "ordinance" } : null;
-  if (i.zone === "R-3") {
+  // The 10,000 + 5,000 sq ft formulas are Cumberland's ordinance. Other towns use the Atlas figures.
+  const cumberland = i.town === "Cumberland";
+  if (cumberland && i.zone === "R-2" && i.units <= 2) return i.water && i.sewer ? { sqft: 10000 + (i.units - 1) * 5000, basis: "ordinance" } : null;
+  if (cumberland && i.zone === "R-3") {
     const atlasSqft = upa.base ? Math.max((i.units / upa.base) * SQFT_PER_ACRE, (minLot.base ?? 0) * SQFT_PER_ACRE) : undefined;
     if (i.water && i.sewer) return { sqft: 10000 + (i.units - 1) * 5000, basis: "ordinance", atlasSqft };
     if (i.water || i.sewer) return { sqft: 30000 + (i.units - 1) * 10000, basis: "ordinance", atlasSqft };
@@ -106,9 +110,32 @@ export function condOK(cond: string | undefined, f: Flags): boolean {
 }
 
 /** Steps that apply to this site, numbered. Branch steps (zone change, appeal) are labelled separately. */
-export function stepsFor(tree: TreeId, f: Flags): NumberedStep[] {
+/** Sources that are state law or statewide data. Everything else a document cites is Cumberland's own. */
+const STATEWIDE_SRC = /^(s\d|ridsp|sfm|papa|riza|rigis|nza|sosom)/;
+
+/**
+ * A step as it applies outside Cumberland: the stage, who decides it and its statutory clock come from state law,
+ * but documents read from Cumberland's regulations are left out and Cumberland-specific wording is replaced.
+ * The master plan stage for comprehensive permits is Cumberland's own practice, so it is dropped.
+ */
+function forTown(s: Step, town: string): Step | null {
+  if (town === "Cumberland") return s;
+  if (s.id === "master" && s.title.includes("Cumberland")) return null;
+  const local = (t: string) => /Cumberland/.test(t);
+  return {
+    ...s,
+    title: s.title.replace(/ \(Cumberland[^)]*\)/, ""),
+    what: local(s.what) ? `State law sets this stage. ${town}'s own requirements for it have not been read yet, so confirm them with the planning office.` : s.what,
+    clock: { ...s.clock, text: s.clock.text.replace(/\(Cumberland[^)]*\)/, "(Cumberland's local figure; confirm yours)") },
+    docs: s.docs.filter((d) => !d.src || STATEWIDE_SRC.test(d.src)).map((d) => (d.note && local(d.note) ? { ...d, note: undefined } : d)),
+  };
+}
+
+export function stepsFor(tree: TreeId, f: Flags, town = getActiveTown()): NumberedStep[] {
   let n = 0;
   return TREES[tree].steps
+    .map((s) => forTown(s, town))
+    .filter((s): s is Step => s !== null)
     .filter((s) => condOK(s.cond, f))
     .map((s) => ({ ...s, n: s.branch ? (s.id === "rezone" ? "1a" : "↳") : String(++n) }));
 }
@@ -117,7 +144,7 @@ export function visibleDocs(s: Step, f: Flags): Doc[] {
   return s.docs.filter((d) => condOK(d.cond, f));
 }
 
-export function analyze(i: ProjectInputs, tree: TreeId): Finding[] {
+function analyzeRaw(i: ProjectInputs, tree: TreeId): Finding[] {
   const out: Finding[] = [];
   const d = district(i.zone);
   const t = treatmentFor(d, i.units);
@@ -208,7 +235,7 @@ export function analyze(i: ProjectInputs, tree: TreeId): Finding[] {
         src: "rizaLayer", pin: `${i.zone} · family4_maxunitsperacre / minlotacres`, q: `${d?.family4_maxunitsperacre} units/acre; ${d?.family4_minlotacres} acre minimum`,
       });
     }
-  } else if (i.zone === "R-3") {
+  } else if (i.town === "Cumberland" && i.zone === "R-3") {
     out.push({ st: "flag", t: "Density without public water or sewer", p: "R-3 density is listed only for sites with one or both utilities. Expect a much larger lot requirement.", src: "cz3", pin: "Art. 3" });
   }
 
@@ -242,6 +269,21 @@ export function analyze(i: ProjectInputs, tree: TreeId): Finding[] {
       : { st: "pass", t: "No state permit triggers entered", p: "Confirm against the wetlands and flood layers in the Zoning Atlas map." },
   );
   return out;
+}
+
+/** Findings for the site. Outside Cumberland, the ones that rest on Cumberland's ordinance, minutes or precedent are neutralised. */
+export function analyze(i: ProjectInputs, tree: TreeId): Finding[] {
+  const all = analyzeRaw(i, tree);
+  if (i.town === "Cumberland") return all;
+  const minAff = Math.ceil(i.units * 0.25);
+  const strip = (p: string) => p.replace(/ ?[^.]*(Haley's Commons|Blackstone|Cumberland hearings)[^.]*\./g, "").trim();
+  return all.flatMap((f): Finding[] => {
+    if (f.src === "min250925") return [];
+    if (f.src === "cz15") return [{ st: "info", t: `Inclusionary zoning: check ${i.town}'s ordinance`, p: `A comprehensive permit would need ${minAff} affordable units.` }];
+    if (f.src === "cregs") return [{ st: f.st, t: f.t, p: `Many towns require these before preliminary approval. Check ${i.town}'s regulations.` }];
+    const local = f.src === "memoWP" || f.src === "cz3";
+    return [{ ...f, p: strip(f.p), ...(local ? { src: "rizaLayer", pin: `${i.zone} · family4_minparking`, q: undefined } : {}) }];
+  });
 }
 
 /** The most units the lot supports under the density rule, with the use allowed. 0 when no rule is known. */

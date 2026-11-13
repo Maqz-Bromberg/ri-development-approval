@@ -24,12 +24,12 @@ export default function AtlasPage() {
           </div>
           <p>
             HousingWorks RI spent almost two years reading the zoning of all 39 Rhode Island cities and towns, using the National
-            Zoning Atlas method. This site reads Cumberland's districts from the atlas's public data layer and uses them in the zoning check.
+            Zoning Atlas method. This site reads the districts of the town you pick from the atlas's public data layer and uses them in the zoning check.
           </p>
         </div>
         <div className="callout-note">
           <b>Before you rely on it.</b> HousingWorks RI notes that the atlas isn't real-time (zoning as of September 2024), that zoning doesn't
-          guarantee a site is buildable, and that the data should be verified. This site flags where the atlas and recent Cumberland decisions disagree.
+          guarantee a site is buildable, and that the data should be verified. This site flags where the atlas and recent Cumberland decisions disagree (Cumberland only).
         </div>
       </section>
       <AtlasExplorer />

@@ -69,12 +69,14 @@ export interface Tree {
 }
 
 export interface ProjectInputs {
+  /** Municipality of the site; set by the address lookup or the town picker */
+  town: string;
   /** Street address the site facts were looked up from, if any */
   address: string;
   parcel: string;
   units: number;
   aff: number;
-  /** Zoning district abbreviation (Cumberland districts from the RI Zoning Atlas), or "other" */
+  /** Zoning district abbreviation (from the town's districts in the RI Zoning Atlas), or "other" */
   zone: string;
   lot: number;
   dist: number;

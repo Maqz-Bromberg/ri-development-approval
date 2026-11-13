@@ -23,7 +23,7 @@ export function Verdict({ compact = false }: { compact?: boolean }) {
     : v.flags.length
       ? "This project can proceed, with questions to settle first"
       : "This project fits the rules as entered";
-  const where = inputs.zone === "other" ? "Cumberland" : `${inputs.zone}, Cumberland`;
+  const where = inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`;
 
   return (
     <div className={`verdict v-${state}${compact ? " compact" : ""}`}>

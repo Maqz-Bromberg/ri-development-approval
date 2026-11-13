@@ -49,7 +49,7 @@ export function AtlasPanel() {
         <p className="sub">Choose a district from the project form, or open the atlas map to find the parcel's district.</p>
       )}
       <div className="actions">
-        <Link href="/atlas" className="btn ghost">Compare all Cumberland districts</Link>
+        <Link href="/atlas" className="btn ghost">Compare all {inputs.town} districts</Link>
         <a href={RIZA_LINKS.app} target="_blank" rel="noopener noreferrer" className="btn ghost">Open the atlas map ↗</a>
       </div>
     </div>

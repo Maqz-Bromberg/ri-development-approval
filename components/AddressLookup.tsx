@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { CUMBERLAND_DISTRICTS } from "@/lib/data/atlas";
+import { TOWNS } from "@/lib/data/towns";
 import { fmt } from "@/lib/engine";
 import { geocode, outlinePath, siteFacts, type Candidate, type SiteFacts } from "@/lib/lookup";
 import { useProject } from "./ProjectProvider";
@@ -59,7 +59,9 @@ export function AddressLookup() {
     if (f.acres) setInput("lot", Math.round((f.acres * 43560) / 100) * 100);
     if (f.water !== null) setInput("water", f.water);
     if (f.sewer !== null) setInput("sewer", f.sewer);
-    if (f.town === "Cumberland" && f.zone) setInput("zone", CUMBERLAND_DISTRICTS.some((d) => d.abbrvname === f.zone) ? f.zone : "other");
+    if (f.town && TOWNS.some((t) => t.name === f.town)) setInput("town", f.town);
+    // The district list of a town arrives from the Atlas after the town is set, so take the looked-up abbreviation as it is.
+    setInput("zone", f.zone ?? "other");
     setApplied(true);
   };
 
@@ -97,7 +99,7 @@ export function AddressLookup() {
         )}
         {state.step === "found" && (() => {
           const { place, facts: f } = state;
-          const inPilot = f.town === "Cumberland";
+          const covered = f.town !== null && TOWNS.some((t) => t.name === f.town);
           return (
             <div className="lookup-result">
               {f.outline && (
@@ -134,9 +136,9 @@ export function AddressLookup() {
                   </fieldset>
                 )}
                 {f.failed.length > 0 && <p className="lookup-note is-warn">Couldn't read: {f.failed.join(", ")}. Enter those by hand.</p>}
-                {!inPilot && f.town && (
+                {covered && f.town !== "Cumberland" && (
                   <p className="lookup-note is-warn">
-                    {f.town} isn't covered yet. The parcel and utility facts can still be used, but the approval steps shown are Cumberland's.
+                    {f.town}: only zoning and state-law steps have been read. Local checklists, contacts and meeting dates are not shown for this town.
                   </p>
                 )}
                 <div className="actions">

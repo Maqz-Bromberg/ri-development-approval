@@ -12,7 +12,7 @@ const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variabl
 
 export const metadata: Metadata = {
   title: { default: "RI Building Plan Approval", template: "%s · RI Building Plan Approval" },
-  description: "Every approval step, authority, form and checklist for a Rhode Island building project, with each requirement traced to the law that sets it. Pilot: Cumberland.",
+  description: "Every approval step, authority, form and checklist for a Rhode Island building project, with each requirement traced to the law that sets it. Zoning and state-law routes for all 39 towns; Cumberland read in full.",
 };
 
 export const viewport: Viewport = {
@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="wrap">
               <p>
                 RI Building Plan Approval reads state and local rules as published (October 2026). It is not legal advice and does not
-                replace a determination by the Town of Cumberland or a state agency. Town staff verify final versions.{" "}
+                replace a determination by a municipality or a state agency. Town staff verify final versions. Only Cumberland has been read beyond state law.{" "}
                 <Link href="/glossary">Glossary of terms</Link>
               </p>
             </div>

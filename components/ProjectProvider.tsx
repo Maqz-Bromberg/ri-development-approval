@@ -2,6 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { DEFAULT_INPUTS, classify, deriveFlags, itemKey, stepsFor, visibleDocs, type NumberedStep } from "@/lib/engine";
+import { districtsOf, fetchAtlasDistricts, registerDistricts } from "@/lib/data/atlas";
+import { setActiveTown } from "@/lib/town";
 import { isoDay } from "@/lib/schedule";
 import { readShareHash, type Saved } from "@/lib/share";
 import type { Flags, ProjectInputs, TreeId } from "@/lib/types";
@@ -63,6 +65,18 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [origin, setOrigin] = useState<ProjectState["origin"]>("example");
   const [hydrated, setHydrated] = useState(false);
+  // The engine reads the town of the project on screen. Set before anything below renders.
+  setActiveTown(inputs.town);
+  // Zoning districts of other towns come from the live Atlas layer; recompute once they arrive.
+  const [districtsIn, setDistrictsIn] = useState(0);
+  useEffect(() => {
+    if (districtsOf(inputs.town)) return;
+    let alive = true;
+    fetchAtlasDistricts(inputs.town)
+      .then((list) => { registerDistricts(inputs.town, list); if (alive) setDistrictsIn((n) => n + 1); })
+      .catch(() => { registerDistricts(inputs.town, []); });
+    return () => { alive = false; };
+  }, [inputs.town]);
 
   // Restore saved progress after mount so server and client first render match.
   useEffect(() => {
@@ -120,7 +134,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
       origin, hydrated,
       progress, current,
     };
-  }, [inputs, override, checked, notes, origin, hydrated, setInput]);
+  }, [inputs, override, checked, notes, origin, hydrated, setInput, districtsIn]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

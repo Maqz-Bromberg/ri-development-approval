@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CoverageNote } from "./Coverage";
 import { CONTACTS, shortName } from "@/lib/data/contacts";
 import { TREES } from "@/lib/data/trees";
 import { hearingBody, verdict } from "@/lib/engine";
@@ -41,7 +42,7 @@ export function StepsWorkspace() {
     <>
       <div className="summary-bar">
         <div className="summary-bar-main">
-          <b>{inputs.units} unit{inputs.units === 1 ? "" : "s"} · {inputs.zone === "other" ? "Cumberland" : `${inputs.zone}, Cumberland`}</b>
+          <b>{inputs.units} unit{inputs.units === 1 ? "" : "s"} · {inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}</b>
           <span>{TREES[tree].name}</span>
           {v.fails.length > 0 && <span className="st fail">{v.fails.length} blocker{v.fails.length > 1 ? "s" : ""}</span>}
           {v.flags.length > 0 && <span className="st flag">{v.flags.length} open</span>}
@@ -49,6 +50,8 @@ export function StepsWorkspace() {
         </div>
         <Link href="/project" className="link-btn">Change the facts</Link>
       </div>
+
+      <CoverageNote />
 
       <section className="sec" aria-labelledby="h-steps">
         <div className="sec-head">
@@ -97,10 +100,12 @@ export function StepsWorkspace() {
       <section className="sec" aria-labelledby="h-hist">
         <div className="sec-head">
           <p className="eyebrow">Precedent</p>
-          <h2 id="h-hist">Projects like yours in Cumberland</h2>
+          <h2 id="h-hist">Projects like yours in {inputs.town}</h2>
           <p>Multifamily projects from recent Planning Board agendas, closest match first. Outcomes are given only where a source states them.</p>
         </div>
-        <PrecedentTable />
+        {inputs.town === "Cumberland"
+          ? <PrecedentTable />
+          : <p className="muted">No projects from {inputs.town} have been read yet. Cumberland's are on the <Link href="/records">Records page</Link>, and show how one town applied the same state law.</p>}
       </section>
     </>
   );

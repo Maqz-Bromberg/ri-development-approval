@@ -11,6 +11,7 @@ const NAV = [
   { href: "/hearing", label: "Hearing prep" },
   { href: "/atlas", label: "Zoning atlas" },
   { href: "/records", label: "Records" },
+  { href: "/towns", label: "Towns" },
 ];
 
 export function SiteHeader() {
@@ -22,7 +23,7 @@ export function SiteHeader() {
           <span className="mark" aria-hidden="true" />
           <span>
             <b>RI Building Plan Approval</b>
-            <small>Pilot: Cumberland</small>
+            <small>All 39 towns · Cumberland read in full</small>
           </span>
         </Link>
         <nav aria-label="Main">

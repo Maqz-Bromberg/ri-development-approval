@@ -127,7 +127,7 @@ a.chip:hover { border-color: var(--accent); color: var(--accent); }
 .trail-svg { display: block; width: 100%; min-width: 980px; height: auto; }
 .milestone { cursor: pointer; outline: none; }
 .milestone .vignette { transition: transform .25s ease; transform-box: fill-box; transform-origin: center bottom; }
-.milestone:hover .vignette, .milestone.is-selected .vignette { transform: translateY(-4px) scale(1.04); }
+.milestone.is-selected .vignette { transform: translateY(-4px) scale(1.04); }
 .ms-dot { fill: var(--surface); stroke: var(--accent); stroke-width: 3; transition: r .2s ease; }
 .milestone.is-done .ms-dot { fill: var(--stamp); stroke: var(--ink); stroke-width: 2; }
 .milestone.is-selected .ms-dot { fill: var(--accent); stroke: var(--ink); stroke-width: 2; }
@@ -761,3 +761,11 @@ textarea { resize: vertical; line-height: 1.45; }
 .lookup-choose { border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; margin: 10px 0 0; display: grid; gap: 4px; font-size: 14px; }
 .lookup-choose legend { font-weight: 700; font-size: 13px; padding: 0 4px; }
 .lookup-choose label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+
+/* Town coverage */
+.coverage { border-left: 3px solid var(--accent, #2f6f5e); padding: 0.4rem 0.8rem; margin: 0.8rem 0; background: color-mix(in srgb, var(--accent, #2f6f5e) 7%, transparent); }
+.coverage p { margin: 0; }
+.level-chip { display: inline-block; font-size: 0.75rem; padding: 0 0.4rem; border: 1px solid currentColor; border-radius: 99px; }
+.level-key, .town-list { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
+.town-list { grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+.town-list li.is-current { font-weight: 600; }

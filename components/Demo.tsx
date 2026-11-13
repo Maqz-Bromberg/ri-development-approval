@@ -17,9 +17,9 @@ export const DEMO_PARTS: { where: string; what: string; outlook: "can" | "confir
   },
   {
     where: "Check · Municipality",
-    what: "Only Cumberland has approval steps. The address lookup reads zoning for every town, but the steps and checklists shown are Cumberland's.",
+    what: "All 39 towns get zoning from the Atlas and the state-law route and clocks. Only Cumberland has local checklists, contacts and precedent; other towns show state-law documents only and say so.",
     outlook: "can",
-    note: "Zoning and utilities are already statewide through the Zoning Atlas. Steps, checklists and contacts have to be read from each town's regulations. See the statewide plan.",
+    note: "Local steps have to be read from each town's regulations, then confirmed by a person. See the statewide plan and the Towns page for each town's level.",
   },
   {
     where: "Check · Wetlands, state road and transit",

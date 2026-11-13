@@ -18,7 +18,7 @@ export function AtlasExplorer() {
       <section className="sec" aria-labelledby="dist-h">
         <div className="sec-head">
           <div>
-            <p className="eyebrow">Cumberland in the atlas</p>
+            <p className="eyebrow">{inputs.town} in the atlas</p>
             <h2 id="dist-h">Housing allowed in each district</h2>
           </div>
           <AtlasStatusBadge status={status} diffs={diffs} error={error} />

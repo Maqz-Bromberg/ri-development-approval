@@ -220,7 +220,7 @@ export function ScheduleView() {
   const early = plan.filter((p) => !later.includes(p));
 
   const download = () => {
-    const blob = new Blob([toICS(plan, `${inputs.units} units, ${inputs.zone}, Cumberland`)], { type: "text/calendar" });
+    const blob = new Blob([toICS(plan, `${inputs.units} units, ${inputs.zone}, ${inputs.town}`)], { type: "text/calendar" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

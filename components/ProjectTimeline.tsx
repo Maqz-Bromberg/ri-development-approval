@@ -8,7 +8,7 @@ import { TREES } from "@/lib/data/trees";
 import { EVIDENCE, evidenceOf, eventRange, eventTime, fmtEventDate, isMonthOnly, seasonOf, spanDays, spansOfProject, unitColor, unitScale } from "@/lib/timelines";
 import type { Precedent, TimelineEvent } from "@/lib/types";
 import { HoverCard } from "./Popover";
-import { SeasonScatter } from "./Season";
+import { SeasonAccents } from "./Season";
 
 const DAY = 86400000;
 const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -82,7 +82,7 @@ export function ProjectTimeline({ rows }: { rows: Precedent[] }) {
               </span>
             ))}
           </div>
-          {rows.map((h) => {
+          {rows.map((h, idx) => {
             const c = unitColor(scale(h.units));
             const spans = spansOfProject(h);
             const earlier = h.events.filter((e) => eventTime(e.date) < g.floor);
@@ -96,7 +96,7 @@ export function ProjectTimeline({ rows }: { rows: Precedent[] }) {
                   {g.months.map((m, i) => (
                     <span key={m.t} className={`pt-band s-${seasonOf(m.m)}`} style={{ left: pct(m.t), width: `calc(${pct(i + 1 < g.months.length ? g.months[i + 1].t : g.end)} - ${pct(m.t)})` }} />
                   ))}
-                  <SeasonScatter lane={h.name} size={26} bands={g.months.map((m, i) => ({ key: String(m.t), season: seasonOf(m.m), left: pct(m.t), width: `calc(${pct(i + 1 < g.months.length ? g.months[i + 1].t : g.end)} - ${pct(m.t)})` }))} />
+                  {idx === 0 && <SeasonAccents bands={g.months.map((m, i) => ({ key: String(m.t), season: seasonOf(m.m), left: pct(m.t), width: `calc(${pct(i + 1 < g.months.length ? g.months[i + 1].t : g.end)} - ${pct(m.t)})` }))} />}
                   <span className="pt-line" style={{ left: pct(Math.min(...h.events.map((e) => eventTime(e.date)))), width: `calc(${pct(Math.max(...h.events.map((e) => eventTime(e.date))))} - ${pct(Math.min(...h.events.map((e) => eventTime(e.date))))})` }} />
                   {h.events.map((e) => {
                     const old = eventTime(e.date) < g.floor;

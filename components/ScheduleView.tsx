@@ -10,7 +10,7 @@ import { itemKey, visibleDocs } from "@/lib/engine";
 import { describeSpan, spansFor } from "@/lib/timelines";
 import { addDays, buildSchedule, daysBetween, fmtDate, isoDay, tickDocs, toICS, type PlannedStep, type PlannedTick } from "@/lib/schedule";
 import type { Doc, TreeId } from "@/lib/types";
-import { SeasonScatter } from "./Season";
+import { SeasonAccents } from "./Season";
 import { seasonOf, type Season } from "@/lib/timelines";
 import { DocChecklist } from "./DocChecklist";
 import { DemoTag } from "./Demo";
@@ -93,8 +93,8 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
   const bandEls = () => bands.map((b) => (
     <span key={b.t.toISOString()} className={`tl-sband s-${b.season}`} style={bandStyle(b)} aria-hidden="true" />
   ));
-  const scatter = (lane: string) => (
-    <SeasonScatter lane={lane} size={30} bands={bands.map((b) => ({ key: b.t.toISOString(), season: b.season, left: bandStyle(b).left, width: bandStyle(b).width }))} />
+  const scatter = () => (
+    <SeasonAccents bands={bands.map((b) => ({ key: b.t.toISOString(), season: b.season, left: bandStyle(b).left, width: bandStyle(b).width }))} />
   );
 
   return (
@@ -129,7 +129,7 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
               </div>
               <div className="tl-track">
                 {bandEls()}
-                {scatter(p.step.id)}
+                {p === plan[0] && scatter()}
                 {months.map((mm) => <span key={mm.toISOString()} className="tl-gridline" style={{ left: pct(mm) }} />)}
                 {today >= min && today <= max && <span className="tl-today" style={{ left: pct(today) }} title={`Today, ${fmtDate(today)}`} />}
                 <span className={`tl-bar${p.step.branch ? " branch" : ""}${p.plan.statutory ? " statutory" : ""}`} style={{ left: pct(p.start), width: `calc(${pct(p.end)} - ${pct(p.start)})` }} />

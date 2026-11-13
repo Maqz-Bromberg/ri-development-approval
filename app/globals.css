@@ -988,8 +988,9 @@ textarea { resize: vertical; line-height: 1.45; }
 .docs-link { margin-left: auto; align-self: flex-start; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 6px; color: var(--muted); }
 .docs-link:hover, .docs-link[aria-current="page"] { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
 
-/* Seasonal marks inside the wash, below the month labels: large, faint, sparse */
+/* One accent per season in the wash, below the month labels: a blossom, a tree, a falling leaf, a snowman. Hardly noticeable on purpose. */
 .sscat { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.sscat-at { position: absolute; transform: translate(-50%, -50%) rotate(var(--r, 0deg)); line-height: 0; }
-.sscat .season-mark { opacity: .17; }
-@media (prefers-color-scheme: dark) { .sscat .season-mark { opacity: .22; } }
+.sscat-at { position: absolute; bottom: 0; transform: translateX(-50%); line-height: 0; }
+.sscat-at.s-fall { bottom: auto; top: 12%; }
+.sscat .season-mark { opacity: .1; }
+@media (prefers-color-scheme: dark) { .sscat .season-mark { opacity: .14; } }

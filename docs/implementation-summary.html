@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan implementations: decisions</title>
+<style>
+  :root { --bg:#fbfaf7; --fg:#1d2420; --mut:#5d6760; --line:#d9d6cc; --acc:#2f6f5e; --warn:#8a5a00; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161a18; --fg:#e8ebe7; --mut:#9aa59d; --line:#2e3631; --acc:#6fc2a8; --warn:#e0b050; } }
+  body { background:var(--bg); color:var(--fg); font:16px/1.55 system-ui,sans-serif; margin:0; padding:0 16px 4rem; }
+  main { max-width:50rem; margin:0 auto; }
+  h1 { margin:2rem 0 .3rem; } h2 { margin:2.4rem 0 .2rem; border-top:1px solid var(--line); padding-top:1.4rem; }
+  h3 { margin:1.2rem 0 .3rem; font-size:1rem; text-transform:uppercase; letter-spacing:.05em; color:var(--acc); }
+  p, li { max-width:46rem; } .mut { color:var(--mut); } code { background:color-mix(in srgb,var(--fg) 8%,transparent); padding:0 .25em; border-radius:3px; }
+  table { border-collapse:collapse; width:100%; margin:.5rem 0; font-size:.95rem; } th,td { text-align:left; border-bottom:1px solid var(--line); padding:.4rem .5rem; vertical-align:top; }
+  .warn { color:var(--warn); }
+</style>
+</head>
+<body>
+<main>
+<h1>Plan implementations: what was decided</h1>
+<p class="mut">Three plans from <code>docs/plans/</code>, each built on its own branch. All three branch from <code>site-baseline</code>, a commit of the uncommitted work that was on <code>main</code>, so none depends on another. Each branch typechecks and passes <code>next build</code>. Merging them together will conflict in <code>lib/types.ts</code> and <code>components/Demo.tsx</code>, and the statewide and calendar branches both touch <code>lib/schedule.ts</code> callers.</p>
+
+<table>
+<tr><th>Branch</th><th>Plan</th><th>Built</th><th>Not built</th></tr>
+<tr><td><code>board-calendars</code></td><td>Real board calendars</td><td>Cumberland end to end, from the Town's published 2026 schedule</td><td>Other towns, Records-page line, weekly action</td></tr>
+<tr><td><code>real-timelines</code></td><td>Real timelines action</td><td>Order of work steps 1 to 4</td><td>Model step, post-approval milestones</td></tr>
+<tr><td><code>statewide</code></td><td>All 39 municipalities</td><td>Level 1 for every town, town index</td><td>State/town data split, town in the URL, levels 2 to 4 for any other town</td></tr>
+</table>
+
+<h2>1. Board calendars <span class="mut">· branch board-calendars</span></h2>
+<h3>What was done</h3>
+<p>The Town's "2026 Regular Meeting Schedule and Deadlines" PDF was fetched and read. Every row (deadline, Technical Review Committee date, Planning Board date) is in <code>lib/data/calendars/cumberland.ts</code> with the source id and read date. <code>buildSchedule</code> now snaps each Planning Board step to the first cycle whose deadline is on or after the filing date, and places the TRC, the notice (14 days before) and the hearing on that cycle's dates. The tick for the filing says "File a complete application by X to be heard on Y".</p>
+<h3>Decisions</h3>
+<ul>
+<li><b>One cut-off per cycle, not two.</b> Open question 1. Cumberland's schedule has a single deadline feeding both the TRC and the Planning Board. The type can grow a second field when a town needs it; the plan said to check five towns first, and only one was read.</li>
+<li><b>Dates beyond the published calendar are projected and labelled <i>est.</i></b> Open question 2, and the plan's year-boundary risk. The published rows end in December 2026, and the default start date (Nov 2) already falls after the last deadline (Oct 1). Without projection the feature would never show. The pattern is read from the table: Planning Board on the last Thursday (first Thursday in December), deadline 63 days earlier. Projected dates are marked in the tick panel and in a line under the schedule.</li>
+<li><b>The statutory deadline tick stays where it was, and the step end is the later of the two.</b> If the board's meeting falls after the statutory decision date, the deadline tick says so. The plan's "show both".</li>
+<li><b>Missing a cut-off by up to 14 days is called out</b> with the meeting that was missed. The 14-day window is my choice; the plan did not set one.</li>
+<li><b>The deadline is not a guarantee.</b> The Town's footnote says a submission by the deadline does not ensure agenda placement until staff certify it complete. The tick text says "complete application", and the schedule note asks the reader to confirm with the Planning Department.</li>
+<li><b>Other towns get the old fixed offsets.</b> <code>calendarFor(town)</code> returns null, so nothing changes for them.</li>
+<li><b>Demo list updated.</b> The meeting-date row was reworded, not removed, since projected dates remain a stand-in.</li>
+</ul>
+<h3 class="warn">Open</h3>
+<ul>
+<li>The weekly Open Meetings action (cancellations, new year) and the pass over all 39 towns are not built. The plan's open question 3 (pull request or automatic) is unanswered.</li>
+<li>Cancellations and special meetings are not in the data, and are never predicted.</li>
+</ul>
+
+<h2>2. Real timelines <span class="mut">· branch real-timelines</span></h2>
+<h3>What was done</h3>
+<p>The free-text <code>record</code> field is replaced by dated <code>events</code> in <code>lib/data/timelines.json</code>, joined to the eight projects in <code>history.ts</code>. The schedule shows, under a step, the statutory clock beside the documented span for a project on the same route: Haley's Commons shows 91 days from first appearance to the vote, after two continuances (Jun 26 to Sep 25, 2025, computed from the dates). The precedent table lists dated events, named parties where the minutes name them, and a checked date. Scripts <code>fetch.py</code>, <code>find.py</code> and <code>verify.py</code> are in <code>scripts/timelines/</code>, and <code>.github/workflows/timelines.yml</code> runs them monthly.</p>
+<h3>Decisions</h3>
+<ul>
+<li><b>Data lives in JSON, not TypeScript.</b> The Python scripts read it directly. TypeScript imports it with a type check at the join.</li>
+<li><b>Quotes were checked against the real minutes.</b> The minutes PDFs were downloaded and each quote on a decision was matched verbatim. <code>verify.py</code> does this check and fails on a decision with no quote. It passes on the current data.</li>
+<li><b>"Decided" is used only where a quote exists.</b> The 2017 Bear Hill Road approval is a press report, so it is kind <code>reported</code> with no quote, and the table says "press report".</li>
+<li><b>Open question 1: the action opens a pull request.</b> It contains a report file under <code>docs/timeline-reports/</code>, never an edit to the data and never a commit to main.</li>
+<li><b>Open question 2: no language model.</b> The action stops at "here are the passages". The plan called this a workable first version with no running cost.</li>
+<li><b>Elapsed time is computed from the dates and never typed.</b> Month-only dates give no day count. A span needs a decision, so projects without one show none, and the schedule does not average across projects.</li>
+<li><b>Press sites are not fetched.</b> They refuse automated clients (the check got a 403), and press is linked, not quoted.</li>
+<li><b>Only business and professional roles are recorded</b> (applicant LLC, attorney's firm, engineer's firm). The verifier restricts the role set; it cannot tell a resident from a company by name, so that remains a review step.</li>
+<li><b>The project name is the key in <code>timelines.json</code>.</b> A project missing from it throws at build time.</li>
+</ul>
+<h3 class="warn">Open</h3>
+<ul>
+<li>The Oct 21, 2025 Technical Review Committee date for Waterman Pond was carried over from the old record. I did not find it in a fetched document, and its source is set to the staff memo without having confirmed that.</li>
+<li>Agenda dates in the first two events for 475 Mendon Road and Haley's Commons (June 26, 2025) come from the old record, with a continuation quote where one exists.</li>
+<li>Fetching new agendas guesses the ClerkBase file name for each Thursday. It worked for the cited sources and found no new agendas on the test run, which I could not confirm is correct. It fails loudly on non-404 errors.</li>
+<li>Plan steps 5 (model) and 6 (post-approval milestones for finished projects) are not built. The <code>coverage</code> field is defined but empty.</li>
+<li>Open question 3 (which finished projects) is unanswered.</li>
+</ul>
+
+<h2>3. Statewide <span class="mut">· branch statewide</span></h2>
+<h3>What was done</h3>
+<p>All 39 towns are listed in <code>lib/data/towns.ts</code> with a coverage level. Every town is level 1 except Cumberland, level 4. The town is part of the project (<code>inputs.town</code>), is set by the address lookup or a picker, and travels in the share link. Zoning districts for other towns come from the live Atlas layer. A <code>/towns</code> page shows the levels, and a coverage note appears on the Check and Steps pages. "Cumberland" is removed from component text.</p>
+<h3>Decisions</h3>
+<ul>
+<li><b>Open question 1: level 1 ships alone.</b> It answers "can this be built here, by which route, and how long may the town take" for any town.</li>
+<li><b>The data split was done in code, not in files.</b> The plan's directory split (<code>state/</code> and <code>towns/cumberland/</code>) is the risky refactor, and the plan asked for it to land alone. Instead, for a town other than Cumberland, <code>forTown()</code> in <code>lib/engine.ts</code> drops any document whose source is not state law or statewide data, replaces Cumberland-worded step text, and drops Cumberland's master plan stage for comprehensive permits.</li>
+<li><b>Local offices show their role and no details.</b> Their address, phone, staff names and meeting times say "Not yet read for [town]". State agencies are unchanged.</li>
+<li><b>Findings that cite Cumberland's ordinance or precedent are neutralised</b> outside Cumberland, and Cumberland's R-2 and R-3 area formulas apply to Cumberland only.</li>
+<li><b>Town is in the project state, not the URL.</b> The static export and every existing route keep working, and the share link already carries all project inputs. The plan's <code>/cumberland/steps</code> paths are not built.</li>
+<li><b>The active town is a module-level variable</b> (<code>lib/town.ts</code>) set by the provider before it renders. This avoided adding a town argument to every engine, atlas and contact call. The trade-off is shared mutable state, which is fine in a single-project browser app and would not be on a server.</li>
+<li><b>No snapshots for other towns.</b> Districts load live. If the Atlas does not answer, the zoning check shows nothing for that town and says so, while Cumberland keeps its bundled snapshot.</li>
+<li><b>Levels are claimed only for what was read.</b> No town other than Cumberland was moved above level 1, though six towns have sample record links in <code>records.ts</code>.</li>
+</ul>
+<h3 class="warn">Open</h3>
+<ul>
+<li>Not built: the state/town split, town in the URL, <code>generateStaticParams</code>, per-town Atlas snapshots, the statewide Atlas comparison, and levels 2 to 4 for any other town. Open questions 2 and 3 (second town, who asks staff to confirm) are unanswered.</li>
+<li>The Hearing prep page still draws its examples from Cumberland's hearings for every town.</li>
+<li>Documents with no source are kept for all towns. I counted them as generic, but I did not read each one.</li>
+<li>The schedule's "Cumberland" calendar logic on the other branch is keyed by town name, so merging it with this branch works without more changes.</li>
+</ul>
+</main>
+</body>
+</html>

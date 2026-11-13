@@ -18,7 +18,7 @@ import { Gloss } from "./Term";
  */
 export function RouteFlow({ open, setOpen }: { open: Set<string>; setOpen: (fn: (prev: Set<string>) => Set<string>) => void }) {
   const { steps, flags, progress, tree, inputs, notes, setNote } = useProject();
-  const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate), [tree, steps, inputs.startDate]);
+  const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   const allOpen = steps.every((s) => open.has(s.id));
   const toggle = (id: string) => setOpen((prev) => {
     const next = new Set(prev);

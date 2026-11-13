@@ -14,7 +14,7 @@ const LABEL = { fail: "Blocker", flag: "Open", info: "Note", pass: "Pass" } as c
 /** The whole project on one printable page: facts, verdict, findings, then each step with its notes. */
 export function SummaryView() {
   const { inputs, tree, steps, flags, checked, notes, hydrated } = useProject();
-  const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate), [tree, steps, inputs.startDate]);
+  const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   const findings = analyze(inputs, tree).filter((f) => f.st !== "pass");
 
   return (

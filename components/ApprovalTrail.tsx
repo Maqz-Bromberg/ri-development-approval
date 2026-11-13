@@ -28,7 +28,7 @@ const SHORT: Record<string, string> = {
 
 export function ApprovalTrail() {
   const { steps, tree, flags, progress, current, inputs } = useProject();
-  const schedule = useMemo(() => buildSchedule(tree, steps, inputs.startDate), [tree, steps, inputs.startDate]);
+  const schedule = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   const trail = useMemo(() => steps.map((s, i) => ({ s, i })).filter(({ s }) => !s.branch), [steps]);
   const currentPos = Math.max(0, trail.findIndex(({ i }) => i === current));
   const [selected, setSelected] = useState<number | null>(null);

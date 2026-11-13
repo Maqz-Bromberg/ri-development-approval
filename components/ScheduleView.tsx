@@ -208,7 +208,7 @@ export function ScheduleView() {
   const [view, setView] = useState<"timeline" | "calendar">("timeline");
   const [selected, setSelected] = useState<string | null>(null);
   const [zoom, setZoom] = useState<"approvals" | "all">("approvals");
-  const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate), [tree, steps, inputs.startDate]);
+  const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   if (!plan.length) return null;
 
   const anyEst = plan.some((p) => p.ticks.some((t) => t.est));

@@ -29,7 +29,7 @@ function measure(id: string, label: string, why: string, inputs: ProjectInputs):
   const tree = classify(inputs);
   const steps = stepsFor(tree, deriveFlags(inputs, tree));
   const v = verdict(inputs, tree, steps);
-  const plan = buildSchedule(tree, steps, inputs.startDate);
+  const plan = buildSchedule(tree, steps, inputs.startDate, inputs.town);
   const done = plan.find((p) => p.step.id === "record") ?? plan.find((p) => p.step.id === "final") ?? plan.find((p) => p.step.id === "zcheck");
   const main = steps.filter((s) => !s.branch);
   const before = main.findIndex((s) => s.id === "building");

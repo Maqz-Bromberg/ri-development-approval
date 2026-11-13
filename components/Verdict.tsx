@@ -52,7 +52,7 @@ function goTo(field: string) {
 export function Verdict({ compact = false, check = false }: { compact?: boolean; check?: boolean }) {
   const { inputs, tree, auto, override, setOverride, steps, origin } = useProject();
   const v = verdict(inputs, tree, steps);
-  const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate), [tree, steps, inputs.startDate]);
+  const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   const approved = plan.find((p) => p.step.id === "record") ?? plan.find((p) => p.step.id === "final") ?? plan.find((p) => p.step.id === "zcheck");
   const state = v.fails.length ? "fail" : v.flags.length ? "flag" : "pass";
   const headline = v.fails.length

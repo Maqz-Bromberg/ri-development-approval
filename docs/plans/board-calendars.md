@@ -1,6 +1,6 @@
 # Plan: real board calendars for every Rhode Island municipality
 
-Status: draft for review. Nothing here is built. Build on a separate branch (`board-calendars`) after review.
+Status: Cumberland end to end is built on branch `board-calendars` (order of work step 1). Other towns, the Records page line and the weekly action are not built.
 
 ## What changes for the applicant
 

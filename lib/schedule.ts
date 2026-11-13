@@ -1,3 +1,4 @@
+import { calendarFor, snap, type Snap } from "./calendar";
 import { SCHEDULE } from "./data/schedule";
 import type { NumberedStep } from "./engine";
 import type { Doc, ScheduleTick, StepPlan, TreeId } from "./types";
@@ -5,6 +6,10 @@ import type { Doc, ScheduleTick, StepPlan, TreeId } from "./types";
 export interface PlannedTick extends ScheduleTick {
   id: string;
   date: Date;
+  /** True when the date comes from a projected meeting pattern, not a published schedule */
+  est?: boolean;
+  /** True when the date comes from the board's published calendar */
+  published?: boolean;
 }
 
 export interface PlannedStep {
@@ -13,6 +18,8 @@ export interface PlannedStep {
   start: Date;
   end: Date;
   ticks: PlannedTick[];
+  /** The board cycle this step's filing was snapped to, when a calendar applies */
+  cycle?: Snap;
 }
 
 const DAY = 86400000;
@@ -44,7 +51,8 @@ export function planFor(tree: TreeId, stepId: string): StepPlan {
 }
 
 /** Lay the steps out in sequence from the start date. Steps with `with` run alongside that step. */
-export function buildSchedule(tree: TreeId, steps: NumberedStep[], startISO: string): PlannedStep[] {
+export function buildSchedule(tree: TreeId, steps: NumberedStep[], startISO: string, town = "Cumberland"): PlannedStep[] {
+  const cal = calendarFor(town);
   const start0 = parseISO(startISO);
   const out: PlannedStep[] = [];
   let cursor = start0;
@@ -58,11 +66,30 @@ export function buildSchedule(tree: TreeId, steps: NumberedStep[], startISO: str
       const lag = permitsIn ? daysBetween(addDays(start, plan.est), permitsIn) : 0;
       if (lag > 0) start = addDays(start, lag);
     }
-    const end = addDays(start, plan.est);
-    out.push({
-      step, plan, start, end,
-      ticks: plan.ticks.map((t, i) => ({ ...t, id: `${step.id}-${i}`, date: addDays(start, t.d) })),
-    });
+    let end = addDays(start, plan.est);
+    const cycle = cal && plan.ticks.some((t) => t.cal === "pb") ? snap(cal, isoDay(start)) ?? undefined : undefined;
+    let ticks: PlannedTick[] = plan.ticks.map((t, i) => ({ ...t, id: `${step.id}-${i}`, date: addDays(start, t.d) }));
+    if (cycle) {
+      const { row, missed } = cycle;
+      const pb = parseISO(row.pb);
+      const est = !!row.est;
+      ticks = ticks.map((t) => {
+        if (t.cal === "pb") return { ...t, date: pb, est, published: !est };
+        if (t.cal === "trc" && row.trc) return { ...t, date: parseISO(row.trc), published: true };
+        if (t.cal === "notice") return { ...t, date: addDays(pb, -14), est };
+        return t;
+      });
+      const first = ticks[0];
+      const lead = `File a complete application by ${fmtDate(parseISO(row.cutoff), { month: "short", day: "numeric" })} to be heard on ${fmtDate(pb, { month: "short", day: "numeric", year: "numeric" })}${est ? " (projected from the usual pattern)" : ""}.`;
+      const lost = missed ? ` Filing ${missed.daysLate} day${missed.daysLate === 1 ? "" : "s"} after the ${fmtDate(parseISO(missed.row.cutoff), { month: "short", day: "numeric" })} cut-off costs a cycle: the ${fmtDate(parseISO(missed.row.pb), { month: "short", day: "numeric" })} meeting is missed.` : "";
+      ticks[0] = { ...first, note: [first.note, lead + lost].filter(Boolean).join(" ") };
+      ticks = ticks.map((t) => {
+        if (t.kind !== "deadline" || !/Decision deadline/.test(t.label) || t.date >= pb) return t;
+        return { ...t, note: [t.note, "The board's next meeting falls after this statutory date. The board must act by then, so expect the hearing to be set earlier or the deadline extended by agreement."].filter(Boolean).join(" ") };
+      });
+      if (pb > end) end = pb;
+    }
+    out.push({ step, plan, start, end, ticks, cycle });
     if (!partner) cursor = end;
   });
   return out;

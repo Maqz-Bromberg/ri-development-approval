@@ -35,9 +35,9 @@ export const DEMO_PARTS: { where: string; what: string; outlook: "can" | "confir
   },
   {
     where: "Schedule · Meeting and hearing dates",
-    what: "Hearings fall a fixed number of days after filing. They are not the board's real meeting dates or submission cut-offs.",
-    outlook: "can",
-    note: "Each board publishes a yearly calendar. See the board calendar plan.",
+    what: "Cumberland's Planning Board and TRC dates and filing cut-offs are read from the Town's 2026 schedule. Dates after it are projected from the usual pattern and marked est. Other towns have no calendar yet.",
+    outlook: "confirm",
+    note: "Each board publishes a yearly calendar. Cancellations and special meetings change it, so confirm with the planning office. See the board calendar plan.",
   },
   {
     where: "Schedule · Durations without a statutory clock",

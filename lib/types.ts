@@ -202,6 +202,8 @@ export interface ScheduleTick {
   /** Document titles this moment concerns; "all" = every document in the step */
   docs?: string[] | "all";
   note?: string;
+  /** Moment tied to the board's real calendar: its TRC meeting, the hearing, or the notice 14 days before the hearing */
+  cal?: "trc" | "pb" | "notice";
 }
 
 export interface StepPlan {
@@ -212,4 +214,26 @@ export interface StepPlan {
   /** True when est comes from a statutory clock rather than an estimate */
   statutory?: boolean;
   ticks: ScheduleTick[];
+}
+
+/** One cycle of a board's published calendar: file by `cutoff`, TRC meets on `trc`, the board hears it on `pb`. */
+export interface CalendarRow {
+  cutoff: string;
+  trc?: string;
+  pb: string;
+  /** True when the row is projected from the pattern, not read from a published schedule */
+  est?: boolean;
+}
+
+export interface BoardCalendar {
+  town: string;
+  /** Year the published schedule covers (its later rows may fall in the next year) */
+  year: number;
+  /** Source id in sources.ts */
+  src: string;
+  /** ISO date the source was read */
+  read: string;
+  times?: { pb?: string; trc?: string };
+  rows: CalendarRow[];
+  pattern: { cutoffDaysBefore: number; note: string };
 }

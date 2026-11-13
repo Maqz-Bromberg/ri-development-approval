@@ -982,3 +982,7 @@ textarea { resize: vertical; line-height: 1.45; }
 .dev-q li { margin-bottom: .6rem; } .dev-q p { margin: .1rem 0 0; }
 .q-status { font-size: .72rem; border: 1px solid var(--rule); border-radius: 99px; padding: 0 .5rem; margin-right: .3rem; }
 .q-status.q-open { border-color: var(--ev-continued); } .q-status.q-decided { border-color: var(--ev-decided); }
+.dev-proj { list-style: none; padding: 0; max-width: 46rem; display: grid; gap: .9rem; }
+.dev-proj li { border: 1px solid var(--rule); border-radius: 8px; padding: .6rem .9rem; background: var(--surface); }
+.dev-proj p { margin: .25rem 0 0; }
+.q-status.p-built { border-color: var(--ev-decided); } .q-status.p-partial { border-color: var(--ev-continued); }

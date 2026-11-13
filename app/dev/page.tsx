@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DEV_PROJECTS } from "@/lib/data/devProjects";
 import { OPEN_QUESTIONS, type QStatus } from "@/lib/data/openQuestions";
 
 export const metadata: Metadata = { title: "Dev notes", robots: { index: false } };
@@ -22,6 +23,23 @@ export default function DevPage() {
         <li><Link href="/after-approval"><b>From build</b></Link> · post-approval milestones (empty so far)</li>
         <li><Link href="/towns"><b>Towns</b></Link> · coverage level for each of the 39 towns</li>
       </ul>
+      <h2 className="h2" id="projects">Verification and maintenance projects</h2>
+      <p className="muted">Where each stands, and an idea for it. Effort: S an afternoon, M a few days, L needs a decision or the larger review first.</p>
+      {(["Verification", "Maintenance"] as const).map((g) => (
+        <section key={g} aria-label={g}>
+          <h3 className="h3">{g}</h3>
+          <ul className="dev-proj">
+            {DEV_PROJECTS.filter((p) => p.group === g).map((p) => (
+              <li key={p.title}>
+                <b>{p.title}</b> <span className={`q-status p-${p.status}`}>{p.status}</span> <span className="q-status">effort {p.effort}</span>
+                <p><span className="muted">Now:</span> {p.now}</p>
+                <p><span className="muted">Idea:</span> {p.idea}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      <h2 className="h2">Open questions</h2>
       {AREAS.map((a) => (
         <section key={a} aria-label={a}>
           <h2 className="h3">{a}</h2>

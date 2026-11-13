@@ -113,12 +113,46 @@ export interface Precedent {
   aff: number;
   route: TreeId;
   routeLabel: string;
-  record: string[];
   status: PrecedentStatus;
   statusLabel: string;
   notes: string;
   src: string[];
+  events: TimelineEvent[];
+  parties?: Party[];
+  coverage?: Coverage[];
+  /** ISO date the public record was last checked for new events */
+  checked: string;
 }
+
+export type TimelineStage = "trc" | "preapp" | "master" | "prelim" | "final" | "recorded" | "permit" | "start" | "co" | "other";
+
+export interface TimelineEvent {
+  /** ISO date; "YYYY-MM" when only the month is known */
+  date: string;
+  stage: TimelineStage;
+  what: string;
+  kind: "filed" | "certified" | "heard" | "continued" | "decided" | "reported";
+  /** Ids in sources.ts */
+  src: string[];
+  /** Verbatim from a source document; required for "decided" */
+  quote?: string;
+}
+
+export interface Party {
+  role: "applicant" | "owner" | "engineer" | "attorney" | "architect" | "builder";
+  name: string;
+  src: string;
+}
+
+export interface Coverage {
+  label: string;
+  url: string;
+  date: string;
+  kind: "press" | "statement" | "video";
+}
+
+/** The part of a Precedent kept in timelines.json */
+export type Timeline = Pick<Precedent, "events" | "parties" | "coverage" | "checked">;
 
 export type ObjectionWeight = "material" | "partly" | "not";
 

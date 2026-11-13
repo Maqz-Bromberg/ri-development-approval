@@ -2,6 +2,7 @@
 
 import { HISTORY } from "@/lib/data/history";
 import { SOURCES } from "@/lib/data/sources";
+import { fmtEventDate } from "@/lib/timelines";
 import { sourceKind } from "@/lib/sourceKind";
 import { useProject } from "./ProjectProvider";
 
@@ -37,7 +38,18 @@ export function PrecedentTable({ rank = true }: { rank?: boolean }) {
               <td>{h.zone || "—"}</td>
               <td className="num">{h.units}{h.aff > 0 && <><br /><span className="muted small">{h.aff} aff.</span></>}</td>
               <td><span className="small">{h.routeLabel}</span><br /><span className={`status s-${h.status}`}>{h.statusLabel}</span></td>
-              <td><ul className="tl">{h.record.map((r) => <li key={r}>{r}</li>)}</ul></td>
+              <td>
+                <ul className="tl">
+                  {h.events.map((e) => (
+                    <li key={e.date + e.what} className={`ev-${e.kind}`}>
+                      <span className="mono small">{fmtEventDate(e.date)}</span> {e.what}
+                      {e.kind === "reported" && <span className="muted small"> (press report)</span>}
+                    </li>
+                  ))}
+                </ul>
+                {h.parties && <p className="muted small ev-parties">{h.parties.map((p) => `${p.role}: ${p.name}`).join(" · ")}</p>}
+                <p className="muted small">Checked {fmtEventDate(h.checked)}. Construction start and completion are not in planning records.</p>
+              </td>
               <td className="notes">{h.notes}</td>
               <td className="src-cell">
                 {h.src.map((s) => SOURCES[s] && (

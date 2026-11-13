@@ -793,3 +793,7 @@ textarea { resize: vertical; line-height: 1.45; }
 .level-key, .town-list { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
 .town-list { grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
 .town-list li.is-current { font-weight: 600; }
+
+/* Documented elapsed time from comparable projects, under a schedule step */
+.tl-actual { display: block; color: var(--muted, #5b6470); font-style: italic; }
+.ev-parties { margin: 0.35rem 0 0; }

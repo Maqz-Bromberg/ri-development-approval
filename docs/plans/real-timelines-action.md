@@ -1,6 +1,6 @@
 # Plan: real project timelines, kept current by a GitHub Action
 
-Status: draft for review. Nothing here is built.
+Status: built on branch `real-timelines` through step 4 (events converted, display, scripts, workflow without the model step). Steps 5 and 6 are not built.
 
 ## What changes for the applicant
 

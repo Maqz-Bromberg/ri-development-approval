@@ -46,6 +46,11 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
+        <Link href="/dev" className="docs-link" aria-label="Dev notes: verification, maintenance and open questions" title="Dev notes" aria-current={path.replace(/\/$/, "") === "/dev" ? "page" : undefined}>
+          <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 2.5h7l3.5 3.5v11.5H5z" /><path d="M12 2.5V6h3.5" /><path d="M7.5 10h5M7.5 13h5" />
+          </svg>
+        </Link>
       </div>
     </header>
   );

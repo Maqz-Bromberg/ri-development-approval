@@ -986,3 +986,5 @@ textarea { resize: vertical; line-height: 1.45; }
 .dev-proj li { border: 1px solid var(--rule); border-radius: 8px; padding: .6rem .9rem; background: var(--surface); }
 .dev-proj p { margin: .25rem 0 0; }
 .q-status.p-built { border-color: var(--ev-decided); } .q-status.p-partial { border-color: var(--ev-continued); }
+.docs-link { margin-left: auto; align-self: flex-start; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 6px; color: var(--muted); }
+.docs-link:hover, .docs-link[aria-current="page"] { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }

@@ -4,8 +4,9 @@ import Link from "next/link";
 import { Fragment, useMemo, useState } from "react";
 import { TREES } from "@/lib/data/trees";
 import { itemKey, visibleDocs } from "@/lib/engine";
+import { describeSpan, spansFor } from "@/lib/timelines";
 import { addDays, buildSchedule, daysBetween, fmtDate, isoDay, tickDocs, toICS, type PlannedStep, type PlannedTick } from "@/lib/schedule";
-import type { Doc } from "@/lib/types";
+import type { Doc, TreeId } from "@/lib/types";
 import { DocChecklist } from "./DocChecklist";
 import { DemoTag } from "./Demo";
 import { useProject } from "./ProjectProvider";
@@ -62,7 +63,7 @@ function TickPanel({ p, t, docs, onClose, onPick }: { p: PlannedStep; t: Planned
   );
 }
 
-function Timeline({ plan: all, selected, setSelected }: { plan: PlannedStep[]; selected: string | null; setSelected: (id: string | null) => void }) {
+function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedStep[]; tree: TreeId; selected: string | null; setSelected: (id: string | null) => void }) {
   const tickState = useTickState();
   const { progress } = useProject();
   // The appeal only happens if a decision is denied or challenged, so it sits below the main sequence.
@@ -100,6 +101,11 @@ function Timeline({ plan: all, selected, setSelected }: { plan: PlannedStep[]; s
                 <span className="tl-t">
                   <b>{p.step.title}</b>
                   <span className="muted small">{fmtDate(p.start, { month: "short", day: "numeric" })} – {fmtDate(p.end, { month: "short", day: "numeric", year: "numeric" })}{pr.done > 0 ? ` · ${pr.done} of ${pr.total} dealt with` : ""}</span>
+                  {spansFor(tree, p.step.id).map((sp) => (
+                    <span key={sp.project} className="tl-actual small">
+                      {p.plan.statutory ? `Statutory: ${p.plan.est} days. ` : ""}{describeSpan(sp)}
+                    </span>
+                  ))}
                 </span>
               </div>
               <div className="tl-track">
@@ -275,7 +281,7 @@ export function ScheduleView() {
                 <span className="muted small">After approval: {later.map((p) => p.step.title.toLowerCase()).join(", then ")}. <button type="button" className="link-btn" onClick={() => setZoom("all")}>Show them</button></span>
               )}
             </div>
-            <Timeline plan={zoom === "approvals" && early.length ? early : plan} selected={selected} setSelected={setSelected} />
+            <Timeline tree={tree} plan={zoom === "approvals" && early.length ? early : plan} selected={selected} setSelected={setSelected} />
           </>
         )
         : <Calendar plan={plan} />}

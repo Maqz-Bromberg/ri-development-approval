@@ -761,3 +761,7 @@ textarea { resize: vertical; line-height: 1.45; }
 .lookup-choose { border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; margin: 10px 0 0; display: grid; gap: 4px; font-size: 14px; }
 .lookup-choose legend { font-weight: 700; font-size: 13px; padding: 0 4px; }
 .lookup-choose label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+
+/* Documented elapsed time from comparable projects, under a schedule step */
+.tl-actual { display: block; color: var(--muted, #5b6470); font-style: italic; }
+.ev-parties { margin: 0.35rem 0 0; }

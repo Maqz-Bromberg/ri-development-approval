@@ -1,0 +1,40 @@
+# Monthly check of Cumberland Planning Board records for new events on tracked projects.
+# It never commits to main: it opens a pull request with a report for a person to read.
+name: Update project timelines
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 1 * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  timelines:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install -y poppler-utils
+      - name: Fetch cited sources and new agendas
+        run: python3 scripts/timelines/fetch.py "$RUNNER_TEMP/cache"
+      - name: Verify the quotes already in the data
+        run: python3 scripts/timelines/verify.py "$RUNNER_TEMP/cache"
+      - name: Find new mentions
+        run: python3 scripts/timelines/find.py "$RUNNER_TEMP/cache"
+      - name: Open a pull request with the report
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          branch="timelines/$(date +%Y-%m)"
+          git config user.name "timelines-bot"; git config user.email "timelines-bot@users.noreply.github.com"
+          git checkout -b "$branch"
+          mkdir -p docs/timeline-reports
+          cp "$RUNNER_TEMP/cache/report.md" "docs/timeline-reports/$(date +%Y-%m).md"
+          git add docs/timeline-reports
+          git commit -m "Timeline candidates $(date +%Y-%m)"
+          git push -u origin "$branch"
+          gh pr create --title "Timeline candidates $(date +%Y-%m)" \
+            --body "Passages from new Planning Board agendas that mention tracked projects. Read them, add dated events with quotes to lib/data/timelines.json, and run scripts/timelines/verify.py. Nothing here is applied automatically."

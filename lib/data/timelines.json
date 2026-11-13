@@ -1,0 +1,261 @@
+{
+ "Haley's Commons": {
+  "events": [
+   {
+    "date": "2024-06-27",
+    "stage": "preapp",
+    "what": "Pre-application",
+    "kind": "heard",
+    "src": [
+     "pb240627"
+    ]
+   },
+   {
+    "date": "2025-06-26",
+    "stage": "prelim",
+    "what": "Preliminary hearing opened, then continued",
+    "kind": "continued",
+    "src": [
+     "pb250828"
+    ]
+   },
+   {
+    "date": "2025-08-28",
+    "stage": "prelim",
+    "what": "Continued again",
+    "kind": "continued",
+    "src": [
+     "min250925"
+    ],
+    "quote": "THIS ITEM WAS CONTINUED FROM THE AUGUST 28, 2025 PLANNING BOARD MEETING"
+   },
+   {
+    "date": "2025-09-25",
+    "stage": "prelim",
+    "what": "Preliminary plan approved 7–2, with the five staff conditions",
+    "kind": "decided",
+    "src": [
+     "min250925",
+     "vid250925"
+    ],
+    "quote": "The motion was passed with a vote of 7-2"
+   }
+  ],
+  "parties": [
+   {
+    "role": "applicant",
+    "name": "Haley’s LLC.",
+    "src": "min250925"
+   },
+   {
+    "role": "attorney",
+    "name": "KSPR Law (Michael Resnick)",
+    "src": "min250925"
+   },
+   {
+    "role": "engineer",
+    "name": "InSite Engineering Services, LLC",
+    "src": "min250925"
+   }
+  ],
+  "checked": "2026-11-13"
+ },
+ "475 Mendon Road": {
+  "events": [
+   {
+    "date": "2025-06-26",
+    "stage": "preapp",
+    "what": "Pre-application item, continued",
+    "kind": "continued",
+    "src": [
+     "min250731"
+    ],
+    "quote": "THIS ITEM WAS CONTINUED FROM THE JUNE 26, 2025 PLANNING BOARD MEETING"
+   },
+   {
+    "date": "2025-07-31",
+    "stage": "preapp",
+    "what": "Pre-application heard: one 9-unit building proposed after the first 12-unit layout",
+    "kind": "heard",
+    "src": [
+     "pb250731",
+     "min250731",
+     "vid250731"
+    ]
+   }
+  ],
+  "parties": [
+   {
+    "role": "applicant",
+    "name": "Almeida Investments, LLC.",
+    "src": "min250731"
+   }
+  ],
+  "checked": "2026-11-13"
+ },
+ "Blackstone Residences": {
+  "events": [
+   {
+    "date": "2025-08-22",
+    "stage": "master",
+    "what": "Certified complete",
+    "kind": "certified",
+    "src": [
+     "min250925"
+    ],
+    "quote": "the proposed project was certified complete on August 22, 2025"
+   },
+   {
+    "date": "2025-09-25",
+    "stage": "master",
+    "what": "Master plan hearing, part I",
+    "kind": "heard",
+    "src": [
+     "pb250925",
+     "min250925"
+    ]
+   }
+  ],
+  "checked": "2026-11-13"
+ },
+ "The Homes at Waterman Pond": {
+  "events": [
+   {
+    "date": "2025-10-21",
+    "stage": "trc",
+    "what": "Technical Review Committee",
+    "kind": "heard",
+    "src": [
+     "memoWP"
+    ]
+   },
+   {
+    "date": "2026-03-26",
+    "stage": "preapp",
+    "what": "Pre-application",
+    "kind": "heard",
+    "src": [
+     "pb260326"
+    ]
+   },
+   {
+    "date": "2026-05-28",
+    "stage": "master",
+    "what": "Continued at the applicant's request",
+    "kind": "continued",
+    "src": [
+     "min260528"
+    ],
+    "quote": "Mr. Butler made a motion to grant a continuance to the June 25th, 2026,"
+   },
+   {
+    "date": "2026-06-25",
+    "stage": "master",
+    "what": "Master plan hearing",
+    "kind": "heard",
+    "src": [
+     "pb260625"
+    ]
+   }
+  ],
+  "parties": [
+   {
+    "role": "applicant",
+    "name": "The Homes at Waterman Pond, LLC",
+    "src": "min260528"
+   },
+   {
+    "role": "attorney",
+    "name": "Patrick J. Dougherty",
+    "src": "min260528"
+   }
+  ],
+  "checked": "2026-11-13"
+ },
+ "Berkeley Mill apartments": {
+  "events": [
+   {
+    "date": "2025-06-17",
+    "stage": "prelim",
+    "what": "Technical Review Committee review",
+    "kind": "heard",
+    "src": [
+     "min250731"
+    ]
+   },
+   {
+    "date": "2025-07-01",
+    "stage": "prelim",
+    "what": "Approved administratively by the Planning Department",
+    "kind": "decided",
+    "src": [
+     "min250731"
+    ],
+    "quote": "the Planning Department approved the proposal administratively on July 1st, 2025"
+   }
+  ],
+  "checked": "2026-11-13"
+ },
+ "80 Bear Hill Road condominiums": {
+  "events": [
+   {
+    "date": "2017-04",
+    "stage": "master",
+    "what": "Master plan approved unanimously, as reported by the press",
+    "kind": "reported",
+    "src": [
+     "call2017"
+    ]
+   }
+  ],
+  "checked": "2026-11-13"
+ },
+ "Steeple & Stone (St. Patrick Church)": {
+  "events": [
+   {
+    "date": "2023-01",
+    "stage": "prelim",
+    "what": "Preliminary plan approved for 44 units",
+    "kind": "decided",
+    "src": [
+     "min250925"
+    ],
+    "quote": "In January 2023, the Planning Board approved the Preliminary Plan for 44"
+   },
+   {
+    "date": "2025-09-25",
+    "stage": "preapp",
+    "what": "Pre-application for 60 units",
+    "kind": "heard",
+    "src": [
+     "min250925"
+    ]
+   },
+   {
+    "date": "2025-12-04",
+    "stage": "prelim",
+    "what": "Revised preliminary hearing",
+    "kind": "heard",
+    "src": [
+     "pb251204",
+     "vid251204"
+    ]
+   }
+  ],
+  "checked": "2026-11-13"
+ },
+ "AJ Home Addition": {
+  "events": [
+   {
+    "date": "2025-09-25",
+    "stage": "preapp",
+    "what": "Pre-application",
+    "kind": "heard",
+    "src": [
+     "pb250925"
+    ]
+   }
+  ],
+  "checked": "2026-11-13"
+ }
+}

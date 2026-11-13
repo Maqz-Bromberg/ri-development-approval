@@ -10,7 +10,7 @@ import { itemKey, visibleDocs } from "@/lib/engine";
 import { describeSpan, spansFor } from "@/lib/timelines";
 import { addDays, buildSchedule, daysBetween, fmtDate, isoDay, tickDocs, toICS, type PlannedStep, type PlannedTick } from "@/lib/schedule";
 import type { Doc, TreeId } from "@/lib/types";
-import { SeasonMark } from "./Season";
+import { SeasonScatter } from "./Season";
 import { seasonOf, type Season } from "@/lib/timelines";
 import { DocChecklist } from "./DocChecklist";
 import { DemoTag } from "./Demo";
@@ -90,18 +90,19 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
     bands.push({ t: b, end: new Date(Date.UTC(b.getUTCFullYear(), b.getUTCMonth() + 1, 1)), season: seasonOf(b.getUTCMonth()) });
   }
   const bandStyle = (b: { t: Date; end: Date }) => ({ left: pct(b.t < min ? min : b.t), width: `calc(${pct(b.end > max ? max : b.end)} - ${pct(b.t < min ? min : b.t)})` });
-  const bandEls = (marks: boolean) => bands.map((b) => (
-    <span key={b.t.toISOString()} className={`tl-sband s-${b.season}`} style={bandStyle(b)} aria-hidden="true">
-      {marks && [2, 5, 8, 11].includes(b.t.getUTCMonth()) && <SeasonMark season={b.season} size={13} />}
-    </span>
+  const bandEls = () => bands.map((b) => (
+    <span key={b.t.toISOString()} className={`tl-sband s-${b.season}`} style={bandStyle(b)} aria-hidden="true" />
   ));
+  const scatter = (lane: string) => (
+    <SeasonScatter lane={lane} size={30} bands={bands.map((b) => ({ key: b.t.toISOString(), season: b.season, left: bandStyle(b).left, width: bandStyle(b).width }))} />
+  );
 
   return (
     <div className="tl-scroll">
       <div className="tl-grid">
         <div className="tl-axis-label" />
         <div className="tl-axis">
-          {bandEls(true)}
+          {bandEls()}
           {months.map((mm) => (
             <span key={mm.toISOString()} className={`tl-month${mm.getUTCMonth() === 0 ? " year" : ""}`} style={{ left: pct(mm) }}>
               {mm.getUTCMonth() === 0 ? mm.getUTCFullYear() : fmtDate(mm, { month: "short" })}
@@ -127,7 +128,8 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
                 </span>
               </div>
               <div className="tl-track">
-                {bandEls(false)}
+                {bandEls()}
+                {scatter(p.step.id)}
                 {months.map((mm) => <span key={mm.toISOString()} className="tl-gridline" style={{ left: pct(mm) }} />)}
                 {today >= min && today <= max && <span className="tl-today" style={{ left: pct(today) }} title={`Today, ${fmtDate(today)}`} />}
                 <span className={`tl-bar${p.step.branch ? " branch" : ""}${p.plan.statutory ? " statutory" : ""}`} style={{ left: pct(p.start), width: `calc(${pct(p.end)} - ${pct(p.start)})` }} />

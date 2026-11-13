@@ -919,6 +919,7 @@ textarea { resize: vertical; line-height: 1.45; }
 .pt-scroll { overflow-x: auto; }
 .pt-grid { min-width: 46rem; display: grid; grid-template-columns: 13rem 1fr; gap: 0 .8rem; align-items: center; }
 .pt-axis, .pt-track { position: relative; height: 1.7rem; }
+.pt-track { height: 2.6rem; }
 .pt-axis { height: 1.9rem; }
 .pt-lane { display: contents; }
 .pt-name { display: flex; gap: .5rem; align-items: center; padding: .35rem 0; font-size: .9rem; line-height: 1.25; }
@@ -927,12 +928,11 @@ textarea { resize: vertical; line-height: 1.45; }
 .pt-m, .pt-band { position: absolute; top: 0; bottom: 0; }
 .pt-m { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; font-size: .7rem; color: var(--muted); overflow: hidden; }
 .pt-m b { position: absolute; top: 0; left: 2px; color: var(--ink); }
-.pt-m .season-mark { position: absolute; top: 1px; right: 2px; opacity: .55; }
 .pt-m.s-spring, .pt-band.s-spring { background: rgb(var(--season-spring) / .13); color-scheme: light dark; }
 .pt-m.s-summer, .pt-band.s-summer { background: rgb(var(--season-summer) / .14); }
 .pt-m.s-fall, .pt-band.s-fall { background: rgb(var(--season-fall) / .13); }
 .pt-m.s-winter, .pt-band.s-winter { background: rgb(var(--season-winter) / .13); }
-.season-mark { opacity: .6; }
+.season-mark { display: block; }
 .season-mark.s-spring { color: rgb(var(--season-spring)); } .season-mark.s-summer { color: rgb(var(--season-summer)); }
 .season-mark.s-fall { color: rgb(var(--season-fall)); } .season-mark.s-winter { color: rgb(var(--season-winter)); }
 .pt-line { position: absolute; top: 50%; height: 2px; background: var(--rule); transform: translateY(-50%); }
@@ -974,7 +974,6 @@ textarea { resize: vertical; line-height: 1.45; }
 @media (prefers-color-scheme: dark) { .pt-ev-badge { background: color-mix(in srgb, #fff 8%, transparent); } }
 
 .tl-sband { position: absolute; top: 0; bottom: 0; pointer-events: none; overflow: hidden; }
-.tl-sband .season-mark { position: absolute; top: 2px; left: 3px; opacity: .5; }
 .tl-track .tl-sband { opacity: .55; }
 
 /* Dev notes */
@@ -988,3 +987,9 @@ textarea { resize: vertical; line-height: 1.45; }
 .q-status.p-built { border-color: var(--ev-decided); } .q-status.p-partial { border-color: var(--ev-continued); }
 .docs-link { margin-left: auto; align-self: flex-start; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 6px; color: var(--muted); }
 .docs-link:hover, .docs-link[aria-current="page"] { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
+
+/* Seasonal marks inside the wash, below the month labels: large, faint, sparse */
+.sscat { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.sscat-at { position: absolute; transform: translate(-50%, -50%) rotate(var(--r, 0deg)); line-height: 0; }
+.sscat .season-mark { opacity: .17; }
+@media (prefers-color-scheme: dark) { .sscat .season-mark { opacity: .22; } }

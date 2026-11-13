@@ -131,14 +131,17 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
     })).sort((a, b) => (a.dist ?? 0) - (b.dist ?? 0)),
     [town, siteKey], // eslint-disable-line react-hooks/exhaustive-deps
   );
-  const routes = [...new Set(projects.map((p) => p.h.route))] as TreeId[];
+  // With a site, the route view takes the same surrounding as the structure view: projects within RADIUS only.
+  const shown = useMemo(() => (site ? projects.filter((p) => p.dist !== null && p.dist <= RADIUS) : projects), [projects, site]);
+  const elsewhere = projects.length - shown.length;
+  const routes = [...new Set(shown.map((p) => p.h.route))] as TreeId[];
 
-  const pins: Pin[] = useMemo(() => (mode === "route" ? projects.map(({ h, at, dist }) => ({
+  const pins: Pin[] = useMemo(() => (mode === "route" ? shown.map(({ h, at, dist }) => ({
     key: h.name, at, color: ROUTE_COLOR[h.route] ?? "#a3a9a2", shape: SHAPE[h.status],
     tip: `<b>${esc(h.name)}</b><br>${h.units} unit${h.units === 1 ? "" : "s"}${h.aff ? `, ${h.aff} affordable` : ""} · ${esc(TREES[h.route].name)}<br>${esc(h.statusLabel)}`
       + (dist !== null ? `<br>${distLabel(dist)} from your site` : "")
       + (h.at!.exact ? "" : "<br><i>Placed at the street address; parcel not confirmed</i>"),
-  })) : []), [mode, projects]);
+  })) : []), [mode, shown]);
 
   const districtTip = (abbr: string) => {
     const d = atlas.find((x) => x.abbrvname === abbr);
@@ -169,11 +172,11 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
     const own = districts.filter((d) => d.abbr === inputs.zone).flatMap((d) => d.rings.flat());
     const all = districts.flatMap((d) => d.rings.flat());
     let points: LatLon[];
-    if (mode === "route" && projects.length) points = [...projects.map((p) => p.at), ...(focus ? [focus] : [])];
+    if (mode === "route" && !focus && shown.length) points = shown.map((p) => p.at);
     else if (focus) points = circleBox(focus, RADIUS);
     else points = own.length ? own : all;
     return { key: `${mode}|${focusKey}|${town}|${inputs.zone}|${districts.length > 0}`, points };
-  }, [mode, focusKey, town, inputs.zone, districts, projects]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mode, focusKey, town, inputs.zone, districts, shown]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pick = (key: string) => {
     setPicked(key);
@@ -254,9 +257,9 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
               <li key={s}><span className={`zm-shape ${s}`} aria-hidden="true" />{SHAPE_LABEL[s]}</li>
             ))}
           </ul>
-          {projects.length ? (
+          {shown.length ? (
             <ol className="zm-projects">
-              {projects.map(({ h, dist }) => (
+              {shown.map(({ h, dist }) => (
                 <li key={h.name} id={`zm-p-${precedentId(h.name)}`} className={picked === h.name ? "is-picked" : undefined}>
                   <span className={`zm-shape ${SHAPE[h.status]}`} style={{ "--c": ROUTE_COLOR[h.route] } as React.CSSProperties} aria-hidden="true" />
                   <span>
@@ -268,9 +271,9 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
               ))}
             </ol>
           ) : (
-            <p className="small muted zm-note">No projects have been read into the records for {town} yet. Cumberland's are in the precedent table.</p>
+            <p className="small muted zm-note">{projects.length ? `No recorded projects lie within ${RADIUS} m of the site.` : `No projects have been read into the records for ${town} yet.`} Cumberland's are in the precedent table.</p>
           )}
-          {projects.length > 0 && <p className="small muted zm-note">Cumberland multifamily projects from Planning Board records. Select a pin to find it in the list.{site ? " Distances are from your site." : ""}</p>}
+          {projects.length > 0 && <p className="small muted zm-note">Cumberland multifamily projects from Planning Board records. Select a pin to find it in the list.{site ? ` Only projects within ${RADIUS} m of your site are shown, with distances from it.${elsewhere ? ` ${elsewhere} more in town are further away; see the precedent table.` : ""}` : ""}</p>}
         </>
       )}
     </div>

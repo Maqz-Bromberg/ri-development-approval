@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zoning map: summary</title>
+<style>
+  :root { --bg:#fbfaf7; --fg:#1d2420; --mut:#5d6760; --line:#d9d6cc; --acc:#2f6f5e; --warn:#8a5a00; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161a18; --fg:#e8ebe7; --mut:#9aa59d; --line:#2e3631; --acc:#6fc2a8; --warn:#e0b050; } }
+  body { background:var(--bg); color:var(--fg); font:16px/1.55 system-ui,sans-serif; margin:0; padding:0 16px 4rem; }
+  main { max-width:50rem; margin:0 auto; }
+  h1 { margin:2rem 0 .3rem; } h2 { margin:2.4rem 0 .2rem; border-top:1px solid var(--line); padding-top:1.4rem; }
+  h3 { margin:1.2rem 0 .3rem; font-size:1rem; text-transform:uppercase; letter-spacing:.05em; color:var(--acc); }
+  p, li { max-width:46rem; } .mut { color:var(--mut); } code { background:color-mix(in srgb,var(--fg) 8%,transparent); padding:0 .25em; border-radius:3px; }
+  table { border-collapse:collapse; width:100%; margin:.5rem 0; font-size:.95rem; } th,td { text-align:left; border-bottom:1px solid var(--line); padding:.4rem .5rem; vertical-align:top; }
+  .warn { color:var(--warn); }
+  figure { margin:1rem 0; } figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:8px; } figcaption { color:var(--mut); font-size:.9rem; margin-top:.3rem; }
+  .tag { display:inline-block; font-size:.75rem; font-weight:700; border:1px solid currentColor; border-radius:4px; padding:0 .35rem; margin-right:.3rem; vertical-align:1px; }
+  .s { color:var(--acc); } .m { color:var(--warn); } .l { color:var(--mut); }
+  .table-wrap { overflow-x:auto; }
+</style>
+</head>
+<body>
+<main>
+<h1>Zoning map on the Check page</h1>
+<p class="mut">Built from <code>docs/plans/check-map.md</code> with Maqz's three choices: (1) Leaflet with a street basemap, (2) structure type as the default colouring, (3) 400 m. Branch <code>check-map</code>, one commit on top of <code>dev</code>. Not merged into <code>dev</code>, not pushed. It typechecks, <code>next build</code> passes (13 static pages), and a headless browser run shows no console errors.</p>
+
+<figure>
+  <img src="check-map-structure.png" alt="The Check page's district section: a map of parcels within 400 m of Cumberland Town Hall coloured by structure type, with a hover card for a multi-family home, beside the Zoning Atlas panel for C-1.">
+  <figcaption>Structure type (default). The site is Cumberland Town Hall. The hover card shows a parcel's type, plat/lot, size, impervious cover and district.</figcaption>
+</figure>
+
+<h2>What was built</h2>
+<p>A map called "Where it sits" in the "What the zoning allows here" section, beside the existing Atlas panel. On a phone it stacks above that panel. Nothing loads, Leaflet included, until the section is within 300 px of the screen.</p>
+<div class="table-wrap">
+<table>
+<tr><th>Layer</th><th>Source</th><th>Shown</th><th>Hover</th></tr>
+<tr><td>Zoning districts</td><td>RI Zoning Atlas layer 14, live, cached per town</td><td>All the town's districts, with code labels. The project's district is tinted.</td><td>Code, name, how it treats the project's housing type</td></tr>
+<tr><td>Parcels within 400 m</td><td>RIDEM tax parcels, live, paged up to 6,000</td><td>Filled by six structure classes. Legend shows counts.</td><td>State's structure description (class), plat/lot, acres, impervious % and sq ft, district</td></tr>
+<tr><td>The site</td><td>Address lookup point, now saved in the project and share link</td><td>Marker, dashed 400 m circle, its parcel outlined</td><td>Address, plat/lot</td></tr>
+<tr><td>Recent projects</td><td><code>history.ts</code>, 8 Cumberland projects, now with positions</td><td>Second mode ("Approval route"): parcels turn grey, pins coloured by route, shaped by status, plus a list sorted by distance</td><td>Name, units, route, status, distance from the site</td></tr>
+</table>
+</div>
+
+<figure>
+  <img src="check-map-route.png" alt="The same map in Approval route mode: Cumberland's districts with eight project pins coloured by approval route, and a list of the projects sorted by distance from the site.">
+  <figcaption>Approval route mode. Selecting a pin highlights its row, and each row links to the project in the precedent table.</figcaption>
+</figure>
+
+<h2>Decisions</h2>
+<h3>Where the build differs from the plan</h3>
+<ul>
+<li><b>Basemap: Esri World Light Gray, not CARTO.</b> Every CARTO keyless style (light, voyager, with and without labels) now returns an "API KEY REQUIRED" tile. Esri's light grey canvas answers without a key. Its street names are drawn into the base and show through the gaps between parcels, because roads aren't parcels. Its place-name layer sits above the fills.</li>
+<li><b>Only the site's point is saved, not its outline.</b> The site's parcel is found among the parcels already fetched: by plat/lot when the form has one in RIDEM's format, otherwise the parcel containing the point. Share links stay short, and the outline is always current.</li>
+<li><b>Hover shows impervious cover, not "% developed".</b> RIDEM's <code>PctDev</code> mixes scales: some parcels read 100 and others 0.145 for the same kind of lot. <code>PctImp</code> (0–1) matches <code>IMP_sqft</code> divided by area, so that is the figure shown.</li>
+<li><b>Pins select a list row instead of opening popups.</b> The GitHub Pages workflow injects a base path at build time, and a link inside Leaflet's raw HTML would ignore it. The list uses Next's <code>Link</code>, so links to <code>/records#p-…</code> survive the base path. Precedent table rows now carry those anchors.</li>
+<li><b>SVG rendering, not canvas.</b> Leaflet 1.9.4's canvas renderer threw <code>clearRect</code> errors. React's development double mount removes the first map in the same frame its shapes were added, and that map's pending redraw then runs against a destroyed canvas. Even the densest test site drew comfortably as SVG.</li>
+</ul>
+<h3>Other choices</h3>
+<ul>
+<li><b>"Structure type as default"</b> became a two-way switch: structure type (default) and approval route. The two colourings never share the screen, so they can reuse one validated palette.</li>
+<li><b>Six classes from 36 E-911 codes.</b> Mobile, bungalow and seasonal homes count as single-family. "Other residential" counts as multi-family, as the plan said. Industrial, lodging, airports and campgrounds count as commercial. All P-codes count as public. Everything else is "accessory or other", and blank is "no structure recorded".</li>
+<li><b>Colours were validated, not eyeballed.</b> The four hues are light blue (single-family), dark blue (multi-family), orange (commercial) and aqua (public). They pass the dataviz validator for every pair against the page background, including color-blind separation of at least 9.2. One hue at two lightnesses carries the residential split, so single- and multi-family read as related. Three hues sit below 3:1 contrast, so every class is also named in the legend (with counts) and in each hover card.</li>
+<li><b>Pin shape carries status</b> (filled: approved, ring: pending or not stated, square: approved by staff), so colour is never the only signal.</li>
+<li><b>Where the projects are placed:</b> six by plat/lot (centroid of their parcels), Berkeley Mill by the parcel at its street address, and 80 Bear Hill Road by address point only. Four parcels meet at that point, so its hover says "parcel not confirmed".</li>
+<li><b>A manual town change clears the saved point,</b> so the map never shows a site in the wrong town. "Reset to the example" clears it too.</li>
+<li><b>The mouse wheel zooms only after the map is clicked or focused,</b> so scrolling the page never gets caught.</li>
+</ul>
+
+<h2>Checked</h2>
+<table>
+<tr><th>Case</th><th>Result</th></tr>
+<tr><td>Example project, no address</td><td>All 12 Cumberland districts, R-3 tinted, with a prompt to look up an address</td></tr>
+<tr><td>Address lookup through the form (45 Broad Street)</td><td>Point saved. 339 parcels in about 1 s: 99 single-family, 101 multi-family, 38 commercial, 12 public, 18 other, 71 none. Town Hall parcel outlined.</td></tr>
+<tr><td>Downtown Providence (Kennedy Plaza)</td><td>798 parcels in under 1 s, not truncated: 427 commercial, 259 multi-family, 0 single-family</td></tr>
+<tr><td>Phone width (390 px)</td><td>Map stacks above the Atlas panel at 360 px tall. Legend wraps.</td></tr>
+<tr><td>Approval route mode</td><td>8 pins, list sorted by distance. Selecting a pin highlights its row.</td></tr>
+<tr><td>Precedent anchors</td><td>All 8 <code>id="p-…"</code> rows present on /records</td></tr>
+</table>
+
+<h2 class="warn">Found while implementing</h2>
+<ul>
+<li class="warn"><b>Next.js 16.3.8 has published critical advisories,</b> fixed in 16.4.6: RCE in image optimization with SVG, RCE in <code>use cache</code>, and DoS via Server Actions. A static Pages export likely uses none of these, but the dev server and any server deploy do. <code>npm audit</code> flagged it when Leaflet was installed. Leaflet itself is clean.</li>
+<li><b>Esri basemap terms.</b> The keyless <code>services.arcgisonline.com</code> tiles are widely used with attribution, but Esri's terms expect an ArcGIS account for production apps. Before a public launch, either get a free ArcGIS developer key or self-host tiles (for example Protomaps). Swapping is two URLs in <code>ZoningMapView.tsx</code>.</li>
+<li><b>The circle crosses town lines, but district outlines don't.</b> Around Cumberland Town Hall, Central Falls parcels (<code>CF …</code>) are drawn and coloured, but only Cumberland's districts are outlined. Their hover shows no district.</li>
+<li><b>"Access Point for Multiple Buildings" (A9)</b> often marks a condominium or apartment complex's driveway address. It currently counts as "other", which undercounts multi-family around complexes.</li>
+<li><b>"Multi-family" means 2+ units.</b> Downtown Providence shows 259 multi-family parcels and no unit counts. A two-family house and a 200-unit tower look the same. The legend says so.</li>
+<li><b>Two pins overlap at town zoom.</b> Waterman Pond and 80 Bear Hill Road are about 150 m apart on Bear Hill Road. Both are in the list, but the map shows one until you zoom in.</li>
+<li><b>Hover cards can clip at the left edge on phones,</b> where hovering is a tap anyway.</li>
+</ul>
+
+<h2>Possible additions</h2>
+<p class="mut">Size: <span class="tag s">S</span> under a day, <span class="tag m">M</span> one to three days, <span class="tag l">L</span> longer or needs data work. Ordered by value to the applicant.</p>
+<div class="table-wrap">
+<table>
+<tr><th>Addition</th><th>Why</th><th>Size</th></tr>
+<tr><td><b>Fill the "by hand" facts from the map:</b> RIDEM wetlands, FEMA flood zones and RIDOT state roads, queried at the site's parcel</td><td>The form asks for wetlands and state-road access by hand, and they decide state permits. These are public statewide layers, queried the same way as the parcels. Draw them as optional layers and pre-tick the boxes, marked "from the map, confirm on site".</td><td><span class="tag m">M</span></td></tr>
+<tr><td><b>Notice radius ring and parcel count</b></td><td>Hearings need mailed notice to owners within a set distance. A second ring at the town's radius, with "about N parcels to notify", gives an early cost and effort figure. Owner names are not in the state layer and would need assessor data.</td><td><span class="tag s">S</span></td></tr>
+<tr><td><b>Pick the site on the map</b></td><td>Selecting a parcel sets the plat/lot, lot area, district and point, the same as the address lookup. This helps where address matching fails, such as vacant land.</td><td><span class="tag m">M</span></td></tr>
+<tr><td><b>Neighbourhood context for the hearing</b></td><td>The records show boards weighing density against "about 15 nearby" (Haley's Commons). Shares by structure type within 400 m, plus multi-family parcel sizes, give the applicant the same comparison to bring. Feed it into Hearing prep.</td><td><span class="tag m">M</span></td></tr>
+<tr><td><b>Neighbouring towns' districts</b> when the circle crosses a line</td><td>Query the Atlas by the circle's bounding box rather than by town. That fixes the missing Central Falls districts in the case above.</td><td><span class="tag s">S</span></td></tr>
+<tr><td><b>Transit near the site</b> from RIPTA stops and frequent routes</td><td>Pre-fills "near frequent transit", which changes parking and density rules under recent state law. RIPTA publishes GTFS.</td><td><span class="tag m">M</span></td></tr>
+<tr><td><b>Unit counts for existing buildings</b></td><td>Splitting "multi-family" into 2–4 and 5+ units needs assessor data per town (level 2+ in the statewide plan). No statewide source has it.</td><td><span class="tag l">L</span></td></tr>
+<tr><td><b>Project parcels outlined, and more towns' projects</b></td><td>Six projects already have parcel ids. Outlining them shows each project's footprint. Other towns get pins as their records are read.</td><td><span class="tag s">S</span>/<span class="tag l">L</span></td></tr>
+<tr><td><b>Map on the summary page</b> (print and share)</td><td>A static snapshot of the 400 m view on /summary, so the printed project carries its context.</td><td><span class="tag s">S</span></td></tr>
+<tr><td><b>Split "access point for multiple buildings"</b> into its own class, or count it with multi-family</td><td>Fixes the undercount around complexes. Check a sample first.</td><td><span class="tag s">S</span></td></tr>
+<tr><td><b>Spread overlapping pins</b> and show a tap-friendly card on phones</td><td>Fixes the two small display issues above.</td><td><span class="tag s">S</span></td></tr>
+<tr><td><b>Upgrade Next.js to 16.4.6</b></td><td>Security advisories, above. Separate from the map.</td><td><span class="tag s">S</span></td></tr>
+<tr><td><b>Basemap key or self-hosted tiles</b></td><td>Terms, above. Only before a public launch.</td><td><span class="tag s">S</span></td></tr>
+</table>
+</div>
+
+<h2>Files</h2>
+<ul>
+<li><code>lib/map.ts</code>: Atlas and parcel queries, structure classes and colours, geometry helpers</li>
+<li><code>components/ZoningMap.tsx</code>: data, mode switch, legend with counts, project list. Loads the view lazily.</li>
+<li><code>components/ZoningMapView.tsx</code>: Leaflet only, client-only</li>
+<li><code>lib/types.ts</code>: <code>lat</code>/<code>lon</code> on the project; <code>at</code>/<code>parcels</code> on precedents</li>
+<li><code>lib/data/history.ts</code>: positions and <code>precedentId</code>. <code>PrecedentTable.tsx</code> uses it for row anchors.</li>
+<li><code>AddressLookup.tsx</code> saves the point, and <code>IntakeForm.tsx</code> clears it on a town change.</li>
+<li><code>ProjectWorkspace.tsx</code> places the map, and <code>globals.css</code> styles it.</li>
+<li><code>package.json</code>: <code>leaflet@1.9.4</code>, <code>@types/leaflet@1.9.20</code></li>
+</ul>
+</main>
+</body>
+</html>

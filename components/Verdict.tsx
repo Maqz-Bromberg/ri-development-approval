@@ -36,7 +36,8 @@ export function projectBasis(i: ProjectInputs): { field: string; t: string }[] {
   return out;
 }
 
-function goTo(field: string) {
+/** Scroll to a form field and focus it. */
+export function focusField(field: string) {
   const el = document.getElementById(field);
   if (!el) return;
   el.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
@@ -44,42 +45,65 @@ function goTo(field: string) {
 }
 
 /**
+ * The facts line. With `check`, each fact is a button that goes to its field; `onPick` replaces that,
+ * for a layout where the field may be folded away.
+ */
+export function ProjectFacts({ check = false, onPick, className = "verdict-basis" }: { check?: boolean; onPick?: (field: string) => void; className?: string }) {
+  const { inputs } = useProject();
+  const go = onPick ?? focusField;
+  return (
+    <p className={className}>
+      {inputs.address && <span className="basis-addr">{inputs.address.split(",")[0]}: </span>}
+      {projectBasis(inputs).map((b, i) => (
+        <span key={`${b.field}-${b.t}`}>
+          {i > 0 && <span className="basis-sep" aria-hidden="true"> · </span>}
+          {check ? (
+            <button type="button" className="basis-item" onClick={() => go(b.field)} title="Go to this fact in the form">{b.t}</button>
+          ) : b.t}
+        </span>
+      ))}
+    </p>
+  );
+}
+
+/** The answer in one line. It has no subject: the facts it rests on are shown before it. */
+export function verdictHeadline(v: { fails: unknown[]; flags: unknown[] }): string {
+  return v.fails.length
+    ? "Needs relief or a different route"
+    : v.flags.length
+      ? "Can proceed, with questions to settle first"
+      : "Fits the rules on these facts";
+}
+
+export const ORIGIN_LABEL = ORIGIN;
+
+/**
  * The answer, read after the facts it rests on: where the project came from, the facts, then the
  * route, how long the town may take, what blocks it and what is still open.
  * `check` is the Check page's form: facts link back to their fields, the route can be overridden,
  * and blockers are left to the findings that follow.
+ * `premise={false}` leaves out the origin and facts lines, for a layout that shows them directly above.
  */
-export function Verdict({ compact = false, check = false }: { compact?: boolean; check?: boolean }) {
+export function Verdict({ compact = false, check = false, premise = true }: { compact?: boolean; check?: boolean; premise?: boolean }) {
   const { inputs, tree, auto, override, setOverride, steps, origin } = useProject();
   const v = verdict(inputs, tree, steps);
   const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   const approved = plan.find((p) => p.step.id === "record") ?? plan.find((p) => p.step.id === "final") ?? plan.find((p) => p.step.id === "zcheck");
   const state = v.fails.length ? "fail" : v.flags.length ? "flag" : "pass";
-  const headline = v.fails.length
-    ? "Needs relief or a different route"
-    : v.flags.length
-      ? "Can proceed, with questions to settle first"
-      : "Fits the rules on these facts";
-  const basis = projectBasis(inputs);
+  const headline = verdictHeadline(v);
   const routeName = ["major", "minor", "comp", "dpr"].includes(tree) ? <Term id={tree}>{TREES[tree].name}</Term> : TREES[tree].name;
 
   return (
     <div className={`verdict v-${state}${compact ? " compact" : ""}${check ? " check" : ""}`} aria-label={`${ORIGIN[origin]}: ${headline}`}>
-      <p className="verdict-kicker">
-        {origin === "example" ? <span className="example-flag">{ORIGIN.example}</span> : <span>{ORIGIN[origin]}</span>}
-        {check && origin === "example" && <span className="muted"> Sample facts, not yours. Look up an address or change any fact to check your own.</span>}
-      </p>
-      <p className="verdict-basis">
-        {inputs.address && <span className="basis-addr">{inputs.address.split(",")[0]}: </span>}
-        {basis.map((b, i) => (
-          <span key={`${b.field}-${b.t}`}>
-            {i > 0 && <span className="basis-sep" aria-hidden="true"> · </span>}
-            {check ? (
-              <button type="button" className="basis-item" onClick={() => goTo(b.field)} title="Go to this fact in the form">{b.t}</button>
-            ) : b.t}
-          </span>
-        ))}
-      </p>
+      {premise && (
+        <>
+          <p className="verdict-kicker">
+            {origin === "example" ? <span className="example-flag">{ORIGIN.example}</span> : <span>{ORIGIN[origin]}</span>}
+            {check && origin === "example" && <span className="muted"> Sample facts, not yours. Look up an address or change any fact to check your own.</span>}
+          </p>
+          <ProjectFacts check={check} />
+        </>
+      )}
       <p className="verdict-head">{headline}</p>
       <dl className="verdict-facts">
         <div>

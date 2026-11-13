@@ -4,6 +4,7 @@ import Link from "next/link";
 import { TREES, TREE_ORDER } from "@/lib/data/trees";
 import { AddressLookup } from "./AddressLookup";
 import { AtlasPanel } from "./AtlasPanel";
+import { CheckBar, ProjectCard } from "./CheckLayouts";
 import { DemoList } from "./Demo";
 import { IntakeForm } from "./IntakeForm";
 import { LawCheck } from "./LawCheck";
@@ -13,46 +14,70 @@ import { Verdict } from "./Verdict";
 import { WhatIf } from "./WhatIf";
 import { ZoningMap } from "./ZoningMap";
 
+const INTRO: Record<string, string> = {
+  side: "Describe the project first, from an address if you have one. The answer follows from those facts and updates as you change them.",
+  pinned: "Describe the project first, from an address if you have one. The answer stays in view beside the form and updates as you change the facts.",
+  stacked: "The project's facts sit directly above the answer. Unfold the project to look up an address or change a fact; the answer updates as you do.",
+  bar: "The bar under the header keeps the project's facts and its answer together while you scroll. Change any fact below.",
+  old: "Start from an address or enter the site facts. The verdict and the findings update as you type.",
+};
+
 /**
  * The Check page: describe the project, then read the answer it leads to, then compare the alternatives.
  * The project comes before the answer in reading order, and the answer restates the facts it rests on.
+ * Layouts and the map's placement are on trial (Trial.tsx); every layout keeps the facts with the answer.
  * The steps live on /steps.
  */
 export function ProjectWorkspace() {
   const { tree, auto, setOverride } = useProject();
-  const layout = useTrial().checkLayout;
-  const side = layout === "side";
+  const { checkLayout: layout, mapPlace } = useTrial();
+  const twoCol = layout === "side" || layout === "pinned";
+  const lookup = <AddressLookup map={mapPlace === "address"} />;
+  const answerLabel = <p className="col-label"><span aria-hidden="true">2</span> The answer</p>;
 
   return (
-    <>
+    <div className={`check-page layout-${layout}`}>
+      {layout === "bar" && <CheckBar />}
       <section className="sec" aria-labelledby="h-intake">
         <div className="sec-head">
           <p className="eyebrow">Check</p>
           <h1 id="h-intake" className="h2">Can this be built here, and by which route?</h1>
-          <p>
-            {side
-              ? "Describe the project first, from an address if you have one. The answer follows from those facts and updates as you change them."
-              : "Start from an address or enter the site facts. The verdict and the findings update as you type."}
-          </p>
-          {side && <a href="#answer" className="to-answer">Skip to the answer ↓</a>}
+          <p>{INTRO[layout] ?? INTRO.old}</p>
+          {(twoCol || layout === "bar") && <a href="#answer" className="to-answer">Skip to the answer ↓</a>}
         </div>
+
         {layout === "top" && <Verdict />}
-        <div className={`intake${side ? " check-split" : ""}`}>
-          <div className="intake-col">
-            {side && <p className="col-label"><span aria-hidden="true">1</span> The project</p>}
-            <AddressLookup />
-            <IntakeForm />
-          </div>
-          {side ? (
-            <div className="answer-col" id="answer">
-              <p className="col-label"><span aria-hidden="true">2</span> The answer</p>
-              <Verdict check />
+
+        {layout === "stacked" ? (
+          <>
+            <ProjectCard>
+              {lookup}
+              <IntakeForm />
+            </ProjectCard>
+            <div className="answer-col answer-stacked" id="answer">
+              {answerLabel}
+              <Verdict check premise={false} />
               <LawCheck head={false} />
             </div>
-          ) : (
-            <LawCheck />
-          )}
-        </div>
+          </>
+        ) : (
+          <div className={`intake${twoCol ? " check-split" : ""}${layout === "pinned" ? " pinned" : ""}`}>
+            <div className="intake-col">
+              {twoCol && <p className="col-label"><span aria-hidden="true">1</span> The project</p>}
+              {lookup}
+              <IntakeForm />
+            </div>
+            {twoCol ? (
+              <div className="answer-col" id="answer">
+                {answerLabel}
+                <Verdict check />
+                <LawCheck head={false} />
+              </div>
+            ) : (
+              <div className="answer-col" id="answer"><LawCheck /></div>
+            )}
+          </div>
+        )}
         <div className="next-row">
           <Link href="/steps" className="btn">Go to the approval steps →</Link>
           <Link href="/schedule" className="btn ghost">See it on the calendar</Link>
@@ -63,11 +88,21 @@ export function ProjectWorkspace() {
         <div className="sec-head">
           <p className="eyebrow">Your district</p>
           <h2 id="h-district">What the zoning allows here</h2>
+          {mapPlace === "address" && <p>The map of the district and the parcels around the site is in the address step above.</p>}
         </div>
-        <div className="district-split">
-          <ZoningMap />
+        {mapPlace === "beside" ? (
+          <div className="district-split">
+            <ZoningMap placement="beside" />
+            <AtlasPanel />
+          </div>
+        ) : mapPlace === "wide" ? (
+          <div className="district-wide">
+            <ZoningMap placement="wide" />
+            <AtlasPanel />
+          </div>
+        ) : (
           <AtlasPanel />
-        </div>
+        )}
       </section>
 
       <section className="sec" aria-labelledby="h-whatif">
@@ -103,6 +138,6 @@ export function ProjectWorkspace() {
       <section className="sec" aria-label="Demo parts">
         <DemoList />
       </section>
-    </>
+    </div>
   );
 }

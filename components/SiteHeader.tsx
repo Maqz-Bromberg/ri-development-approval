@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 const NAV = [
   { href: "/", label: "Overview" },
@@ -16,8 +17,20 @@ const NAV = [
 
 export function SiteHeader() {
   const path = usePathname();
+  // Sticky bars sit under the header, whose height changes with the width (the nav wraps, the subtitle adds a line).
+  // Publish the real height as --header-h instead of hard-coding it in the CSS.
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const set = () => document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   return (
-    <header className="site-header">
+    <header className="site-header" ref={ref}>
       <div className="wrap header-inner">
         <Link href="/" className="brand">
           <span className="mark" aria-hidden="true" />

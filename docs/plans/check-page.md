@@ -31,6 +31,23 @@ An answer is only readable next to the facts it rests on. So:
 - The five routes at the bottom of the page.
 - Persistence: still the browser store plus share links. The redesign adds none.
 
+## Layouts on trial
+
+After the map was added, more layouts went into the Trial panel (branch `check-trials`). Every one keeps the facts with the answer.
+
+| Trial option | What it does | Best at |
+| --- | --- | --- |
+| Check page layout: **Answer beside the facts** (default) | Form left, answer right, labelled 1 and 2 | Wide screens, first visit |
+| **Project on top, folds away** | The project is a card of facts above a full-width answer. Unfolding it shows the address step and the form. Selecting a fact unfolds the card and focuses that field. | Phones, return visits, reading the answer at full width |
+| **Sticky project-and-answer bar** | A bar under the header holds the facts (left) and the answer in one line (right) for the whole page. Below it are the form and the findings. | Keeping the answer in view while reading the district, map and what-if sections |
+| **Answer pinned while you edit** | Side layout, with the answer column sticky and scrolling on its own. Not sticky on phones. | Editing the lower facts with the answer in view. Only useful while the form is longer than the answer. |
+| Verdict above the form (old), Findings only (old) | The earlier layouts | Comparison |
+| Zoning map: **Full width, above the Atlas panel** (default) | The map at 540 px tall, Atlas panel below | Making the map prominent |
+| **Beside the Atlas panel** | The first map layout | Compactness |
+| **In the address step** | The map sits under the address search. A found place previews on it before you apply it, and a click looks up that point. The district section keeps only the Atlas panel. | Choosing the site, vacant land without an address |
+
+Every map placement has **Expand**, which opens the map as a modal. Escape closes it and focus returns to the button.
+
 ## To decide
 
 - Keep the old layout or delete it from `Trial.tsx` ("Check page": answer beside the facts / verdict above the form / findings only).

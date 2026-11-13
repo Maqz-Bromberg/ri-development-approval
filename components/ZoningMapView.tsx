@@ -29,7 +29,15 @@ export interface MapViewProps {
   mode: "structure" | "route";
   site: LatLon | null;
   siteTip: string;
+  /** The parcel outlined: the site's, or the found place's */
   siteParcel: string | null;
+  /** A found place not yet applied, marked apart from the site */
+  preview: LatLon | null;
+  previewTip: string;
+  /** Centre of the dashed 400 m circle */
+  ring: LatLon | null;
+  /** A click on the map, when the map is used to pick a point */
+  onMapClick?: (lat: number, lon: number) => void;
   pins: Pin[];
   onPin: (key: string) => void;
   /** The view refits when the key changes */
@@ -77,6 +85,10 @@ export default function ZoningMapView(props: MapViewProps) {
     // The wheel zooms only once the map has been clicked or focused, so scrolling the page never gets caught.
     m.on("focus click", () => m.scrollWheelZoom.enable());
     m.on("blur", () => m.scrollWheelZoom.disable());
+    m.on("click", (e: L.LeafletMouseEvent) => tips.current.onMapClick?.(e.latlng.lat, e.latlng.lng));
+    // The container changes size when the map is expanded into a modal, or a folded section opens.
+    const ro = new ResizeObserver(() => m.invalidateSize({ pan: false }));
+    ro.observe(el.current);
     groups.current = {
       districts: L.layerGroup().addTo(m),
       labels: L.layerGroup().addTo(m),
@@ -86,7 +98,7 @@ export default function ZoningMapView(props: MapViewProps) {
     };
     map.current = m;
     // Stop any pan or zoom first: a canvas redraw scheduled by an animation would otherwise run on the removed map.
-    return () => { m.stop(); m.off(); m.remove(); map.current = null; groups.current = null; };
+    return () => { ro.disconnect(); m.stop(); m.off(); m.remove(); map.current = null; groups.current = null; };
   }, []);
 
   const { districts, zone } = props;
@@ -111,7 +123,7 @@ export default function ZoningMapView(props: MapViewProps) {
     });
   }, [districts, zone]);
 
-  const { parcels, mode, site, siteParcel } = props;
+  const { parcels, mode, site, siteParcel, preview, ring } = props;
   useEffect(() => {
     const g = groups.current;
     if (!g) return;
@@ -134,14 +146,20 @@ export default function ZoningMapView(props: MapViewProps) {
         g.site.addLayer(L.polygon(p.rings, { color: INK, weight: 3, fill: false, interactive: false }));
       }
     });
+    if (ring) g.site.addLayer(L.circle(ring, { radius: RADIUS, color: INK, weight: 1.5, dashArray: "6 6", fill: false, interactive: false }));
+    if (preview) {
+      g.site.addLayer(
+        L.circleMarker(preview, { radius: 10, color: ACCENT, weight: 3.5, fillColor: "#ffffff", fillOpacity: 0.85 })
+          .bindTooltip(() => tips.current.previewTip, { className: "zm-tip", direction: "top", offset: [0, -8], permanent: false }),
+      );
+    }
     if (site) {
-      g.site.addLayer(L.circle(site, { radius: RADIUS, color: INK, weight: 1.5, dashArray: "6 6", fill: false, interactive: false }));
       g.site.addLayer(
         L.circleMarker(site, { radius: 7, color: "#ffffff", weight: 2.5, fillColor: INK, fillOpacity: 1 })
           .bindTooltip(() => tips.current.siteTip, { className: "zm-tip", direction: "top", offset: [0, -6] }),
       );
     }
-  }, [parcels, mode, site, siteParcel]);
+  }, [parcels, mode, site, siteParcel, preview, ring]);
 
   const { pins } = props;
   useEffect(() => {

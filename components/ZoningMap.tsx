@@ -32,14 +32,40 @@ function circleBox([lat, lon]: LatLon, m: number): LatLon[] {
   return [[lat - dLat, lon - dLon], [lat + dLat, lon + dLon]];
 }
 
+const NO_DISTRICTS: DistrictShape[] = [];
 const distLabel = (m: number) => (m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`);
 
-/** Where the project sits: its district among the town's, the parcels around it by structure type, and recent projects by route. */
-export function ZoningMap() {
+export type MapPlacement = "wide" | "beside" | "address";
+
+/**
+ * Where the project sits: its district among the town's, the parcels around it by structure type, and recent
+ * projects by route. In the address step (`placement="address"`) it also previews a found place before its
+ * facts are applied, and a click on the map looks up that point (`onPick`).
+ */
+export function ZoningMap({ placement = "beside", preview = null, onPick }: {
+  placement?: MapPlacement;
+  /** A place the address lookup found but hasn't applied yet */
+  preview?: { at: LatLon; label: string } | null;
+  onPick?: (lat: number, lon: number) => void;
+}) {
   const { inputs } = useProject();
   const { districts: atlas } = useAtlas();
   const [mode, setMode] = useState<Mode>("structure");
   const [picked, setPicked] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const expandBtn = useRef<HTMLButtonElement>(null);
+  const closeBtn = useRef<HTMLButtonElement>(null);
+  // Expanded, the map is a modal: Escape closes it, the page behind doesn't scroll, focus goes in and comes back.
+  useEffect(() => {
+    if (!expanded) return;
+    const back = expandBtn.current;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeBtn.current?.focus();
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setExpanded(false); };
+    window.addEventListener("keydown", onKey);
+    return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", onKey); back?.focus(); };
+  }, [expanded]);
 
   // Nothing is fetched, and Leaflet isn't loaded, until the map is near the screen.
   const box = useRef<HTMLDivElement>(null);
@@ -62,29 +88,35 @@ export function ZoningMap() {
       .catch(() => { if (alive) setShapes({ town, list: [], error: true }); });
     return () => { alive = false; };
   }, [seen, town]);
-  const districts = shapes?.town === town ? shapes.list : [];
+  const districts = shapes?.town === town ? shapes.list : NO_DISTRICTS;
 
-  const site: LatLon | null = inputs.lat != null && inputs.lon != null ? [inputs.lat, inputs.lon] : null;
+  // Points are memoised: a new array each render would redraw every parcel on every keystroke in the form.
+  const site = useMemo<LatLon | null>(() => (inputs.lat != null && inputs.lon != null ? [inputs.lat, inputs.lon] : null), [inputs.lat, inputs.lon]);
   const siteKey = site ? `${site[0].toFixed(6)},${site[1].toFixed(6)}` : "";
+  // The map centres on a found-but-unapplied place when there is one, otherwise on the project's site.
+  const previewAt = preview?.at ?? null;
+  const focus = useMemo<LatLon | null>(() => previewAt ?? site, [previewAt, site]);
+  const focusKey = focus ? `${focus[0].toFixed(6)},${focus[1].toFixed(6)}` : "";
   const [near, setNear] = useState<{ key: string; parcels: Parcel[] | null; truncated?: boolean; error?: boolean } | null>(null);
   useEffect(() => {
-    if (!seen || !siteKey) return;
-    const [lat, lon] = siteKey.split(",").map(Number);
+    if (!seen || !focusKey) return;
+    const [lat, lon] = focusKey.split(",").map(Number);
     const ac = new AbortController();
-    setNear({ key: siteKey, parcels: null });
+    setNear({ key: focusKey, parcels: null });
     parcelsNear(lat, lon, ac.signal)
-      .then((r) => setNear({ key: siteKey, parcels: r.parcels, truncated: r.truncated }))
-      .catch(() => { if (!ac.signal.aborted) setNear({ key: siteKey, parcels: [], error: true }); });
+      .then((r) => setNear({ key: focusKey, parcels: r.parcels, truncated: r.truncated }))
+      .catch(() => { if (!ac.signal.aborted) setNear({ key: focusKey, parcels: [], error: true }); });
     return () => ac.abort();
-  }, [seen, siteKey]);
-  const parcels = near?.key === siteKey && siteKey ? near.parcels : null;
-  const loadingParcels = !!siteKey && seen && (!near || near.key !== siteKey || near.parcels === null);
+  }, [seen, focusKey]);
+  const parcels = near?.key === focusKey && focusKey ? near.parcels : null;
+  const loadingParcels = !!focusKey && seen && (!near || near.key !== focusKey || near.parcels === null);
 
+  /** The parcel outlined: the found place's, or the site's (by plat/lot when the form has one, else by the point) */
   const siteParcel = useMemo(() => {
-    if (!parcels || !site) return null;
-    if (PLATLOT.test(inputs.parcel) && parcels.some((p) => p.id === inputs.parcel)) return inputs.parcel;
-    return parcels.find((p) => inRings(site, p.rings))?.id ?? null;
-  }, [parcels, siteKey, inputs.parcel]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!parcels || !focus) return null;
+    if (!preview && PLATLOT.test(inputs.parcel) && parcels.some((p) => p.id === inputs.parcel)) return inputs.parcel;
+    return parcels.find((p) => inRings(focus, p.rings))?.id ?? null;
+  }, [parcels, focusKey, inputs.parcel]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const counts = useMemo(() => {
     const c = Object.fromEntries(STRUCTURE_ORDER.map((k) => [k, 0])) as Record<StructureClass, number>;
@@ -125,10 +157,11 @@ export function ZoningMap() {
       `${esc(p.id)}${p.acres !== null ? ` · ${p.acres.toFixed(2)} acres` : ""}`,
       p.pctImp !== null && p.impSqft ? `${Math.round(p.pctImp * 100)}% impervious (${fmt(p.impSqft)} sq ft)` : "",
       d ? `District ${esc(d.abbr)}` : "",
-      p.id === siteParcel ? "<i>Your site</i>" : "",
+      p.id === siteParcel ? (preview ? "<i>The place found</i>" : "<i>Your site</i>") : "",
     ];
     return lines.filter(Boolean).join("<br>");
   };
+  const previewTip = preview ? `<b>Found: not applied yet</b><br>${esc(preview.label.split(",").slice(0, 2).join(","))}` : "";
   const siteTip = `<b>Your site</b>${inputs.address ? `<br>${esc(inputs.address.split(",")[0])}` : ""}${siteParcel ? `<br>${esc(siteParcel)}` : ""}`;
 
   // Refit when the site, the town or the mode changes; not when parcels finish loading.
@@ -136,11 +169,11 @@ export function ZoningMap() {
     const own = districts.filter((d) => d.abbr === inputs.zone).flatMap((d) => d.rings.flat());
     const all = districts.flatMap((d) => d.rings.flat());
     let points: LatLon[];
-    if (mode === "route" && projects.length) points = [...projects.map((p) => p.at), ...(site ? [site] : [])];
-    else if (site) points = circleBox(site, RADIUS);
+    if (mode === "route" && projects.length) points = [...projects.map((p) => p.at), ...(focus ? [focus] : [])];
+    else if (focus) points = circleBox(focus, RADIUS);
     else points = own.length ? own : all;
-    return { key: `${mode}|${siteKey}|${town}|${inputs.zone}|${districts.length > 0}`, points };
-  }, [mode, siteKey, town, inputs.zone, districts, projects]); // eslint-disable-line react-hooks/exhaustive-deps
+    return { key: `${mode}|${focusKey}|${town}|${inputs.zone}|${districts.length > 0}`, points };
+  }, [mode, focusKey, town, inputs.zone, districts, projects]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pick = (key: string) => {
     setPicked(key);
@@ -148,19 +181,34 @@ export function ZoningMap() {
   };
 
   return (
-    <div className="panel zm" ref={box}>
+    <>
+    {expanded && <div className="zm-backdrop" onClick={() => setExpanded(false)} aria-hidden="true" />}
+    <div
+      className={`${placement === "address" ? "zm-inset" : "panel"} zm zm-${placement}${expanded ? " is-expanded" : ""}${onPick ? " can-pick" : ""}`}
+      ref={box}
+      {...(expanded ? { role: "dialog", "aria-modal": true, "aria-label": "Zoning map, expanded" } : {})}
+    >
       <div className="zm-head">
         <div>
-          <h3>Where it sits</h3>
+          {placement !== "address" && <h3>Where it sits</h3>}
           <p className="sub">
-            {site
-              ? `Parcels within ${RADIUS} m of the site, coloured by ${mode === "structure" ? "the building the state records on each" : "nothing: the pins carry the colour"}. Hover for details.`
-              : `${town}'s zoning districts, with ${inputs.zone === "other" ? "no district chosen yet" : `${inputs.zone} tinted`}. Look up an address to see the parcels around your site.`}
+            {preview
+              ? `The place found, with the parcels within ${RADIUS} m. Use its facts below the map${onPick ? ", or click elsewhere to look up another point" : ""}.`
+              : focus
+                ? `Parcels within ${RADIUS} m of the site, coloured by ${mode === "structure" ? "the building the state records on each" : "nothing: the pins carry the colour"}. Hover for details.`
+                : onPick
+                  ? `${town}'s zoning districts. Search an address above, or click the map to look up a point.`
+                  : `${town}'s zoning districts, with ${inputs.zone === "other" ? "no district chosen yet" : `${inputs.zone} tinted`}. Look up an address to see the parcels around your site.`}
           </p>
         </div>
-        <div className="seg zm-mode" role="group" aria-label="Colour by">
-          <button type="button" aria-pressed={mode === "structure"} onClick={() => setMode("structure")}>Structure type</button>
-          <button type="button" aria-pressed={mode === "route"} onClick={() => setMode("route")}>Approval route</button>
+        <div className="zm-tools">
+          <div className="seg zm-mode" role="group" aria-label="Colour by">
+            <button type="button" aria-pressed={mode === "structure"} onClick={() => setMode("structure")}>Structure type</button>
+            <button type="button" aria-pressed={mode === "route"} onClick={() => setMode("route")}>Approval route</button>
+          </div>
+          {expanded
+            ? <button type="button" ref={closeBtn} className="btn ghost zm-expand" onClick={() => setExpanded(false)}>Close ✕</button>
+            : <button type="button" ref={expandBtn} className="btn ghost zm-expand" onClick={() => setExpanded(true)} aria-label="Expand the map">Expand ⤢</button>}
         </div>
       </div>
 
@@ -170,12 +218,13 @@ export function ZoningMap() {
             districts={districts} zone={inputs.zone} districtTip={districtTip}
             parcels={parcels} parcelTip={parcelTip} mode={mode}
             site={site} siteTip={siteTip} siteParcel={siteParcel}
-            pins={pins} onPin={pick} fit={fit}
+            preview={previewAt} previewTip={previewTip} ring={focus}
+            pins={pins} onPin={pick} fit={fit} onMapClick={onPick}
           />
         ) : <div className="zm-canvas zm-wait">The map loads when you scroll to it.</div>}
         {loadingParcels && <p className="zm-status" role="status">Reading the parcels around the site…</p>}
         {shapes?.error && <p className="zm-status" role="status">The Zoning Atlas didn't answer, so district outlines are missing.</p>}
-        {near?.error && near.key === siteKey && <p className="zm-status" role="status">The state parcel map didn't answer. Try the address lookup again later.</p>}
+        {near?.error && near.key === focusKey && <p className="zm-status" role="status">The state parcel map didn't answer. Try again later.</p>}
       </div>
 
       {mode === "structure" ? (
@@ -188,6 +237,7 @@ export function ZoningMap() {
               </li>
             ))}
             {site && <li><span className="zm-swatch site" aria-hidden="true" />Your site</li>}
+            {preview && <li><span className="zm-swatch found" aria-hidden="true" />Place found, not applied</li>}
           </ul>
           <p className="small muted zm-note">
             Types are the state's E-911 structure points on each tax parcel, not zoning uses or unit counts. "Multi-family" covers a two-family house and an apartment block alike.
@@ -224,5 +274,6 @@ export function ZoningMap() {
         </>
       )}
     </div>
+    </>
   );
 }

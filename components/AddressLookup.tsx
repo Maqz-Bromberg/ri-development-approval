@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { TOWNS } from "@/lib/data/towns";
 import { fmt } from "@/lib/engine";
 import { geocode, outlinePath, siteFacts, type Candidate, type SiteFacts } from "@/lib/lookup";
 import { useProject } from "./ProjectProvider";
+import { ZoningMap } from "./ZoningMap";
 
 type State =
   | { step: "idle" }
@@ -14,7 +15,7 @@ type State =
   | { step: "error"; message: string };
 
 /** Type an address, get the zoning district, parcel, lot area and utilities from public map layers. */
-export function AddressLookup() {
+export function AddressLookup({ map = false }: { map?: boolean } = {}) {
   const { inputs, setInput } = useProject();
   const [q, setQ] = useState(inputs.address);
   const [state, setState] = useState<State>({ step: "idle" });
@@ -72,6 +73,16 @@ export function AddressLookup() {
     setState((st) => (st.step === "found" ? { ...st, facts: { ...st.facts, ...patch } } : st));
   };
 
+  // With the map in this step: a found place shows on it before its facts are used, and a click looks up that point.
+  const preview = useMemo(
+    () => (state.step === "found" && !applied ? { at: [state.place.lat, state.place.lon] as [number, number], label: state.place.label } : null),
+    [state, applied],
+  );
+  const pickPoint = (lat: number, lon: number) => {
+    setQ("");
+    locate({ label: `Map point ${lat.toFixed(5)}, ${lon.toFixed(5)}`, lat, lon, precise: true });
+  };
+
   const yn = (v: boolean | null) => (v === null ? "not found" : v ? "Yes" : "No");
 
   return (
@@ -86,6 +97,7 @@ export function AddressLookup() {
         <input id="f-address" type="text" value={q} placeholder="45 Broad Street, Cumberland" autoComplete="street-address" onChange={(e) => setQ(e.target.value)} />
         <button type="submit" className="btn" disabled={state.step === "working"}>Look up</button>
       </form>
+      {map && <ZoningMap placement="address" preview={preview} onPick={pickPoint} />}
       <div aria-live="polite">
         {state.step === "working" && <p className="lookup-note">{state.note}</p>}
         {state.step === "error" && <p className="lookup-note is-error">{state.message}</p>}

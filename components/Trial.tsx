@@ -21,15 +21,26 @@ const VARIANTS = {
     options: { sans: "Nunito Sans", fredoka: "Fredoka" },
   },
   checkLayout: {
-    label: "Check page",
-    options: { side: "Answer beside the facts", top: "Verdict above the form (old)", findings: "Findings only (old)" },
+    label: "Check page layout",
+    options: {
+      side: "Answer beside the facts",
+      stacked: "Project on top, folds away",
+      bar: "Sticky project-and-answer bar",
+      pinned: "Answer pinned while you edit",
+      top: "Verdict above the form (old)",
+      findings: "Findings only (old)",
+    },
+  },
+  mapPlace: {
+    label: "Zoning map",
+    options: { wide: "Full width, above the Atlas panel", beside: "Beside the Atlas panel", address: "In the address step" },
   },
 } as const;
 
 type Key = keyof typeof VARIANTS;
 export type TrialState = { [K in Key]: keyof (typeof VARIANTS)[K]["options"] };
 
-const DEFAULTS: TrialState = { routeLayout: "consolidated", considerations: "tick", headings: "sans", checkLayout: "side" };
+const DEFAULTS: TrialState = { routeLayout: "consolidated", considerations: "tick", headings: "sans", checkLayout: "side", mapPlace: "wide" };
 const STORE = "ri-plan-approval:trial";
 const DEV = process.env.NODE_ENV === "development";
 

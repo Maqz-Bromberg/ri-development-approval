@@ -976,3 +976,9 @@ textarea { resize: vertical; line-height: 1.45; }
 .tl-sband { position: absolute; top: 0; bottom: 0; pointer-events: none; overflow: hidden; }
 .tl-sband .season-mark { position: absolute; top: 2px; left: 3px; opacity: .5; }
 .tl-track .tl-sband { opacity: .55; }
+
+/* Dev notes */
+.dev-links, .dev-q { max-width: 46rem; padding-left: 1.1rem; }
+.dev-q li { margin-bottom: .6rem; } .dev-q p { margin: .1rem 0 0; }
+.q-status { font-size: .72rem; border: 1px solid var(--rule); border-radius: 99px; padding: 0 .5rem; margin-right: .3rem; }
+.q-status.q-open { border-color: var(--ev-continued); } .q-status.q-decided { border-color: var(--ev-decided); }

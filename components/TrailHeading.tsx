@@ -15,7 +15,7 @@ export function TrailHeading() {
         </h2>
       </div>
       <p>
-        The builder stands at the first step with unchecked items. Tick off the checklists and the flags go up along the way.{" "}
+        Select any stop to see who decides it and what you file. The builder stands at the first step with open items.{" "}
         <Link href="/project">Change the project</Link>
       </p>
     </div>

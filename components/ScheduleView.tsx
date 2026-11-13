@@ -7,6 +7,7 @@ import { itemKey, visibleDocs } from "@/lib/engine";
 import { addDays, buildSchedule, daysBetween, fmtDate, isoDay, tickDocs, toICS, type PlannedStep, type PlannedTick } from "@/lib/schedule";
 import type { Doc } from "@/lib/types";
 import { DocChecklist } from "./DocChecklist";
+import { DemoTag } from "./Demo";
 import { useProject } from "./ProjectProvider";
 
 const KIND_LABEL = { file: "You file", deadline: "Deadline", hearing: "Meeting or hearing", milestone: "Milestone" } as const;
@@ -53,17 +54,21 @@ function TickPanel({ p, t, docs, onClose, onPick }: { p: PlannedStep; t: Planned
       ) : (
         <p className="muted small">
           Nothing to file at this moment. {all.length > 0 && <>This step has {all.length} documents. </>}
-          <Link href={`/project#d-${p.step.id}`}>Open the step sheet</Link>
+          <Link href={`/steps#d-${p.step.id}`}>Open the step</Link>
         </p>
       )}
-      {docs.length > 0 && <p className="small"><Link href={`/project#d-${p.step.id}`}>Open the full step sheet, with sources and contacts →</Link></p>}
+      {docs.length > 0 && <p className="small"><Link href={`/steps#d-${p.step.id}`}>Open the full step, with sources and contacts →</Link></p>}
     </div>
   );
 }
 
-function Timeline({ plan, selected, setSelected }: { plan: PlannedStep[]; selected: string | null; setSelected: (id: string | null) => void }) {
+function Timeline({ plan: all, selected, setSelected }: { plan: PlannedStep[]; selected: string | null; setSelected: (id: string | null) => void }) {
   const tickState = useTickState();
   const { progress } = useProject();
+  // The appeal only happens if a decision is denied or challenged, so it sits below the main sequence.
+  const plan = [...all.filter((p) => p.step.id !== "appeal"), ...all.filter((p) => p.step.id === "appeal")];
+  const now = new Date();
+  const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
   const min = plan[0].start;
   const max = plan.reduce((a, p) => (p.end > a ? p.end : a), min);
   const span = Math.max(1, daysBetween(min, max));
@@ -89,15 +94,17 @@ function Timeline({ plan, selected, setSelected }: { plan: PlannedStep[]; select
           const sel = p.ticks.find((t) => t.id === selected);
           return (
             <Fragment key={p.step.id}>
+              {p.step.id === "appeal" && <div className="tl-divider">Only if a decision is denied or challenged</div>}
               <div className={`tl-label${p.step.branch ? " branch" : ""}`}>
                 <span className="tl-n">{p.step.n}</span>
                 <span className="tl-t">
                   <b>{p.step.title}</b>
-                  <span className="muted small">{fmtDate(p.start, { month: "short", day: "numeric" })} – {fmtDate(p.end, { month: "short", day: "numeric", year: "numeric" })} · {pr.done}/{pr.total}</span>
+                  <span className="muted small">{fmtDate(p.start, { month: "short", day: "numeric" })} – {fmtDate(p.end, { month: "short", day: "numeric", year: "numeric" })}{pr.done > 0 ? ` · ${pr.done} of ${pr.total} dealt with` : ""}</span>
                 </span>
               </div>
               <div className="tl-track">
                 {months.map((mm) => <span key={mm.toISOString()} className="tl-gridline" style={{ left: pct(mm) }} />)}
+                {today >= min && today <= max && <span className="tl-today" style={{ left: pct(today) }} title={`Today, ${fmtDate(today)}`} />}
                 <span className={`tl-bar${p.step.branch ? " branch" : ""}${p.plan.statutory ? " statutory" : ""}`} style={{ left: pct(p.start), width: `calc(${pct(p.end)} - ${pct(p.start)})` }} />
                 {p.ticks.map((t) => {
                   const st = tickState(p, t);
@@ -198,6 +205,7 @@ export function ScheduleView() {
   const { tree, steps, inputs, setInput } = useProject();
   const [view, setView] = useState<"timeline" | "calendar">("timeline");
   const [selected, setSelected] = useState<string | null>(null);
+  const [zoom, setZoom] = useState<"approvals" | "all">("approvals");
   const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate), [tree, steps, inputs.startDate]);
   if (!plan.length) return null;
 
@@ -206,6 +214,10 @@ export function ScheduleView() {
   const permit = find("building")?.end;
   const moveIn = find("occupy")?.end;
   const totalDays = daysBetween(plan[0].start, plan.reduce((a, p) => (p.end > a ? p.end : a), plan[0].start));
+
+  // Construction is long enough to squeeze the approvals into a corner, so the default view stops at the recorded approval.
+  const later = approvalEnd ? plan.filter((p) => !p.step.branch && p.start >= approvalEnd) : [];
+  const early = plan.filter((p) => !later.includes(p));
 
   const download = () => {
     const blob = new Blob([toICS(plan, `${inputs.units} units, ${inputs.zone}, Cumberland`)], { type: "text/calendar" });
@@ -244,13 +256,28 @@ export function ScheduleView() {
         ))}
         <li><span className="tl-bar-key statutory" />Statutory review clock</li>
         <li><span className="tl-bar-key" />Estimate</li>
+        <li><span className="today-key" />Today</li>
+        <li><DemoTag>Demo: meeting dates are estimates</DemoTag></li>
       </ul>
       <p className="muted small route-note">
         Route: <b>{TREES[tree].name}</b>. Statutory clocks run to their maximums, and the other durations are estimates.
-        A tick fills in green when every checklist item it covers is ticked.
+        Meeting dates are placed a fixed number of days after filing, not on the board's real calendar.
       </p>
       {view === "timeline"
-        ? <Timeline plan={plan} selected={selected} setSelected={setSelected} />
+        ? (
+          <>
+            <div className="zoom-row">
+              <div className="seg small-seg" role="group" aria-label="Timeline range">
+                <button type="button" aria-pressed={zoom === "approvals"} onClick={() => setZoom("approvals")}>Approvals</button>
+                <button type="button" aria-pressed={zoom === "all"} onClick={() => setZoom("all")}>Through move-in</button>
+              </div>
+              {zoom === "approvals" && later.length > 0 && (
+                <span className="muted small">After approval: {later.map((p) => p.step.title.toLowerCase()).join(", then ")}. <button type="button" className="link-btn" onClick={() => setZoom("all")}>Show them</button></span>
+              )}
+            </div>
+            <Timeline plan={zoom === "approvals" && early.length ? early : plan} selected={selected} setSelected={setSelected} />
+          </>
+        )
         : <Calendar plan={plan} />}
     </>
   );

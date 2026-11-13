@@ -50,6 +50,8 @@ export interface Step {
   clock: { days?: number; text: string };
   what: string;
   auth: AuthRef[];
+  /** Label for the authorities when they do not decide an application at this step (default "Decided by") */
+  authLabel?: string;
   docs: Doc[];
   cond?: string;
   branch?: boolean;
@@ -67,6 +69,8 @@ export interface Tree {
 }
 
 export interface ProjectInputs {
+  /** Street address the site facts were looked up from, if any */
+  address: string;
   parcel: string;
   units: number;
   aff: number;

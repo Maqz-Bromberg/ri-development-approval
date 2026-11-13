@@ -72,7 +72,7 @@ export function StepSheets({ open, setOpen }: { open: Set<string>; setOpen: (fn:
                     <div className="obj-box">
                       <h4>Objections to prepare for</h4>
                       <ul>
-                        {objs.map((o) => <li key={o.id}><Link href={`/objections#${o.id}`}>"{o.said}"</Link></li>)}
+                        {objs.map((o) => <li key={o.id}><Link href={`/hearing#${o.id}`}>"{o.said}"</Link></li>)}
                       </ul>
                     </div>
                   )}

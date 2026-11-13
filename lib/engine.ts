@@ -3,6 +3,7 @@ import { district, housingTypeLabel, readByUtility, treatmentFor, type Treatment
 import type { Doc, Finding, Flags, ProjectInputs, Step, TreeId } from "./types";
 
 export const DEFAULT_INPUTS: ProjectInputs = {
+  address: "",
   parcel: "AP __ Lot __ (example)",
   units: 10,
   aff: 0,
@@ -241,4 +242,46 @@ export function analyze(i: ProjectInputs, tree: TreeId): Finding[] {
       : { st: "pass", t: "No state permit triggers entered", p: "Confirm against the wetlands and flood layers in the Zoning Atlas map." },
   );
   return out;
+}
+
+/** The most units the lot supports under the density rule, with the use allowed. 0 when no rule is known. */
+export function maxUnits(i: ProjectInputs): number {
+  let best = 0;
+  for (let u = 1; u <= 300; u++) {
+    const s = { ...i, units: u, aff: Math.min(i.aff, u) };
+    const need = requiredArea(s);
+    if (!need) continue;
+    if (need.sqft > i.lot) break;
+    if (useTreatment(s) === "allowed") best = u;
+  }
+  return best;
+}
+
+export interface Verdict {
+  fails: Finding[];
+  flags: Finding[];
+  /** Sum of the statutory town review clocks on the main line, in days */
+  reviewDays: number;
+  statePermits: string[];
+}
+
+/** The headline for a project: what blocks it, what is open, and how long the town may take. */
+export function verdict(i: ProjectInputs, tree: TreeId, steps: NumberedStep[]): Verdict {
+  const findings = analyze(i, tree);
+  const statePermits: string[] = [];
+  if (i.wet) statePermits.push("RIDEM wetlands");
+  if (i.dist >= 1) statePermits.push("RIPDES stormwater");
+  if (i.dot) statePermits.push("RIDOT road access");
+  return {
+    fails: findings.filter((f) => f.st === "fail"),
+    flags: findings.filter((f) => f.st === "flag"),
+    reviewDays: steps.filter((s) => !s.branch).reduce((a, s) => a + (s.clock.days ?? 0), 0),
+    statePermits,
+  };
+}
+
+/** The board or council that holds the public hearings on this route. */
+export function hearingBody(steps: NumberedStep[]): string {
+  const s = steps.find((x) => !x.branch && (x.objections?.length ?? 0) > 0);
+  return s?.auth[0]?.c ?? "pb";
 }

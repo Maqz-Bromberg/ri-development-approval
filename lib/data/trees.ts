@@ -13,7 +13,8 @@ function stepZoning(): Step {
   return {
     id: "zoning", title: "Zoning and site check", app: "Site data package: plat and lot, zoning district, utilities, constraints",
     clock: { text: "Before filing" },
-    what: "Confirm the parcel's zoning district, whether multi-household use is allowed, the density the lot supports, and which state permits the site will trigger. The GIS lookup and the law check on the project page cover this step.",
+    what: "Confirm the parcel's zoning district, whether multi-household use is allowed, the density the lot supports, and which state permits the site will trigger. The address lookup and the law check on the Check page cover this step.",
+    authLabel: "Rules set by",
     auth: [
       { c: "council", role: "Adopts the zoning ordinance, the zoning map and the Comprehensive Plan" },
       { c: "ga", role: "Sets the enabling acts and the 9-unit minor threshold" },

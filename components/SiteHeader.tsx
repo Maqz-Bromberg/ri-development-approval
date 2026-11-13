@@ -5,11 +5,12 @@ import { usePathname } from "next/navigation";
 
 const NAV = [
   { href: "/", label: "Overview" },
-  { href: "/project", label: "Your project" },
+  { href: "/project", label: "Check" },
+  { href: "/steps", label: "Steps" },
   { href: "/schedule", label: "Schedule" },
+  { href: "/hearing", label: "Hearing prep" },
   { href: "/atlas", label: "Zoning atlas" },
-  { href: "/objections", label: "Common questions" },
-  { href: "/records", label: "Meeting records" },
+  { href: "/records", label: "Records" },
 ];
 
 export function SiteHeader() {
@@ -26,7 +27,7 @@ export function SiteHeader() {
         </Link>
         <nav aria-label="Main">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} aria-current={path === n.href ? "page" : undefined}>
+            <Link key={n.href} href={n.href} aria-current={(path.replace(/\/$/, "") || "/") === n.href ? "page" : undefined}>
               {n.label}
             </Link>
           ))}

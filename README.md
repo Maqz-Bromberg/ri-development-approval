@@ -20,19 +20,27 @@ npm run build && npm start
 
 | Route | What it does |
 |---|---|
-| `/` | Landing page with the cartoon approval trail. The builder walks to the first step with unchecked items, and a flag goes up at each completed step. |
-| `/project` | Project input, zoning and law check, review-clock bar, flowchart (applications down the centre, authorities feeding in from the right), expandable step sheets with per-document checklists, precedent, and development-type trees |
-| `/schedule` | The approval route laid out from your start date. **Timeline** view: one row per step, with bars for statutory review clocks and estimates, and ticks for filings, deadlines, hearings and milestones. Each tick drops down to the documents and checklist items due then. **Calendar** view: month grids with the same events. **Download .ics** puts every tick in your calendar. |
-| `/atlas` | Cumberland's 12 zoning districts from the **Rhode Island Zoning Atlas** (HousingWorks RI): how each treats 1-, 2-, 3- and 4+-family housing and ADUs, plus minimum lots, units per acre, height and parking. It queries the live atlas layer and flags any difference from the bundled snapshot. The atlas map and StoryMap load on request. |
-| `/objections` | **Common questions**, matched to the locality's own hearing records: documented concerns from Cumberland Planning Board minutes, staff memos, meeting videos and press, each with the applicant's response and the vote. Residents are named by role only. Each has the board's view, what to do, an example note and the plan sheet to bring. Non-indexed towns list their recording sources for the backend to transcribe. |
-| `/records` | Where Town Council and Planning Board records are published (Cumberland plus sample towns): agendas, meeting video, minutes PDFs, memos, press and testimony, with reading tips and the Cumberland precedent table |
+| `/` | Landing page: the example project's verdict, and the cartoon approval trail. Select a stop to see who decides it and what you file. |
+| `/project` | **Check.** Address lookup (district, parcel, lot area, water and sewer from public map layers), site facts, a verdict line, the zoning and law check with blockers first, a what-if comparison of nearby alternatives, the district's Atlas figures, and the five routes. Lists every part of the site that is a stand-in. |
+| `/steps` | **Approval steps.** One row per step: what you file, who holds the decision (an icon per kind of authority, with role and contacts on hover or tap), and the clock. Each row opens to its documents, considerations, likely hearing questions, your notes and contacts. Share link, project file, email and printable summary. Precedent table. |
+| `/summary` | The whole project on one printable page, with notes and the considerations dealt with |
+| `/schedule` | The approval route laid out from your start date. **Timeline** view (approvals by default, or through move-in) with a today marker, statutory clocks and estimates, and ticks that open the documents due then. **Calendar** view. **Download .ics**. |
+| `/hearing` | **Hearing prep**, titled for the body that holds the hearings. Questions matched to the town's own hearing records. Each card shows an example note and, where the question turns on a number, a line with your project's figures. Pick questions and print a one-page hearing sheet. `/objections` redirects here. |
+| `/atlas` | Cumberland's 12 zoning districts from the **Rhode Island Zoning Atlas** (HousingWorks RI), with lot and density figures shown for your site's utilities |
+| `/records` | Where Town Council and Planning Board records are published (Cumberland plus sample towns), with reading tips and the precedent table |
+| `/glossary` | Plain-language definitions. Across the site these terms carry a dotted underline and show the definition on hover, focus or tap. |
 
-Project inputs and checklist ticks are saved in the browser (`localStorage`, key `ri-plan-approval:v1`).
+Project inputs, ticks and notes are saved in the browser (`localStorage`, key `ri-plan-approval:v1`) as a convenience. To keep a project, use a share link (the whole project is encoded in the link's `#p=` fragment, and nothing is sent to a server), a downloaded project file, or the printable summary.
+
+### Trying design variants
+
+Under `npm run dev` a **Trial** button sits at the bottom right. It switches between variants (the consolidated steps list against the older flowchart and step sheets, tickable against read-only considerations, heading typeface, verdict on or off). Variants are declared in `components/Trial.tsx`. The published site always uses the first option of each.
 
 ## Where the data lives
 
 Everything the backend will eventually serve sits in `lib/data/`, one file per concern:
 
+- `glossary.ts`: plain-language terms and the spellings to recognise in text
 - `trees.ts`: one approval tree per development type (`major`, `minor`, `comp`, `dpr`, `byright`). Each step has an application, a clock, authorities, and documents. Each document has an optional `src` + `pin` + verbatim `q` quote, and a `checklist` of considerations. `cond` expressions (`wet`, `dot`, `acre`, `relief`, `rezone`, `transit`, joined with `|`) show or hide items for the site.
 - `sources.ts`: every statute, regulation, agenda and article that is quoted
 - `contacts.ts`: authorities and offices. `verify` marks details from older or secondary sources.
@@ -42,7 +50,7 @@ Everything the backend will eventually serve sits in `lib/data/`, one file per c
 - `schedule.ts`: per-step durations (statutory or estimated) and the dated ticks, each naming the documents it concerns
 - `objections.ts`: common questions. Each one's `heard` entries cite the minutes, memo or video they came from, and the `say` notes are drafting examples, not quotes.
 
-`lib/engine.ts` holds the rules: classification (9-unit minor cap, 25% comprehensive-permit threshold), permitted use from the Zoning Atlas, density (the ordinance formula for R-3, atlas figures elsewhere, and the conservation-development density), parking, height, site flags, and the findings for the law check. It flags where the atlas and recent Cumberland decisions disagree. `lib/schedule.ts` lays the steps out on dates and writes the `.ics`.
+`lib/engine.ts` holds the rules: classification (9-unit minor cap, 25% comprehensive-permit threshold), permitted use from the Zoning Atlas, density (the ordinance formula for R-3, atlas figures elsewhere, and the conservation-development density), parking, height, site flags, and the findings for the law check. It flags where the atlas and recent Cumberland decisions disagree. `lib/schedule.ts` lays the steps out on dates and writes the `.ics`. `lib/whatif.ts` builds the nearby alternatives, `lib/lookup.ts` turns an address into site facts, and `lib/share.ts` encodes a project into a link or file.
 
 ## Adding a municipality
 
@@ -54,9 +62,11 @@ Everything the backend will eventually serve sits in `lib/data/`, one file per c
 
 ## Not yet built
 
-- Plan-set extraction: uploaded files are only listed, and the site facts are entered by hand.
-- Live GIS joins (parcels, zoning, FEMA flood, RIDEM wetlands)
+- Plan-set extraction: uploaded files are only listed.
+- Wetlands, flood, state-road and transit lookups. The address lookup covers district, parcel, lot area, water and sewer.
 - Fees: Cumberland's current fee schedule was not available.
 - Precedent outcomes: read from minutes through May 2026. Later minutes are not yet read.
 - Video transcription: meeting videos are linked, not transcribed. The backend should transcribe them and tag objections the way the minutes were tagged by hand.
 - Business days: schedules count calendar days, as the statutes do. Meeting dates are estimated, not taken from the board calendar.
+
+The stand-ins are labelled on the site and listed in `components/Demo.tsx`. Plans for the larger gaps are in `docs/plans/`: real board calendars, real project timelines kept current by a GitHub Action, and extending to all 39 municipalities.

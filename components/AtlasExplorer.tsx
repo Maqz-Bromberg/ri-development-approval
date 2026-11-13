@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { RIZA_LINKS } from "@/lib/data/atlas";
-import { AtlasStatusBadge, TreatChip } from "./AtlasBits";
+import { AtlasFigure, AtlasStatusBadge, TreatChip, utilityLabel } from "./AtlasBits";
 import { useAtlas } from "./useAtlas";
 import { useProject } from "./ProjectProvider";
 
@@ -33,7 +33,7 @@ export function AtlasExplorer() {
             <thead>
               <tr>
                 <th>District</th><th>1-fam</th><th>2-fam</th><th>3-fam</th><th>4+ fam</th><th>ADU</th>
-                <th>Min lot, 4+ (ac)</th><th>Units / acre</th><th className="num">Height</th><th className="num">Parking</th><th />
+                <th className="num">Min lot, 4+ (ac)</th><th className="num">Units / acre</th><th className="num">Height</th><th className="num">Parking</th><th />
               </tr>
             </thead>
             <tbody>
@@ -47,8 +47,8 @@ export function AtlasExplorer() {
                     <td><TreatChip value={d.family3_treatment} /></td>
                     <td><TreatChip value={d.family4_treatment} /></td>
                     <td><TreatChip value={d.accessory_treatment} /></td>
-                    <td className="mono small">{d.family4_minlotacres ?? "—"}</td>
-                    <td className="mono small">{d.family4_maxunitsperacre ?? "—"}</td>
+                    <td className="num"><AtlasFigure raw={d.family4_minlotacres} water={inputs.water} sewer={inputs.sewer} /></td>
+                    <td className="num"><AtlasFigure raw={d.family4_maxunitsperacre} water={inputs.water} sewer={inputs.sewer} /></td>
                     <td className="num">{d.family4_maxheightft ? `${d.family4_maxheightft} ft` : "—"}</td>
                     <td className="num">{d.family4_minparking_2br ?? "—"}</td>
                     <td>
@@ -64,7 +64,7 @@ export function AtlasExplorer() {
         </div>
         <p className="small muted">
           Treatments: <b>Allowed</b> means by right, possibly with conditions. <b>Hearing</b> means a public hearing, usually for a special use permit.
-          <b> No</b> means prohibited. Lot and density figures depend on utilities: "w/s" is public water or sewer, "w+s" is both, and "if PRD" is the planned residential or conservation development figure.
+          <b> No</b> means prohibited. Lot and density figures are for a site {utilityLabel(inputs.water, inputs.sewer)}, the utilities entered for your project. Hover a figure for the atlas's own text.
         </p>
       </section>
 

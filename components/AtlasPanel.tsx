@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { RIZA_LINKS, housingTypeLabel, treatmentFor } from "@/lib/data/atlas";
-import { AtlasStatusBadge, TreatChip, districtMetrics } from "./AtlasBits";
+import { AtlasStatusBadge, TreatChip, districtMetrics, utilityLabel } from "./AtlasBits";
 import { useAtlas } from "./useAtlas";
 import { useProject } from "./ProjectProvider";
 
@@ -36,12 +36,12 @@ export function AtlasPanel() {
             <TreatChip label="Affordable" value={d.affordable_treatment} />
           </div>
           <dl className="metrics">
-            {districtMetrics(d).map(([k, v]) => (
+            {districtMetrics(d, inputs.water, inputs.sewer).map(([k, v]) => (
               <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
             ))}
           </dl>
           <p className="small muted">
-            "w/s" means public water or sewer, "w+s" both, and "if PRD" is the planned residential or conservation development figure.
+            Lot and density figures are for a site {utilityLabel(inputs.water, inputs.sewer)}, as entered. Hover a figure for the atlas's own text.
             The atlas reflects zoning as of September 2024. Verify against the current ordinance.
           </p>
         </>

@@ -137,7 +137,7 @@ export function ApprovalTrail() {
           <p className="tc-what">{step.what}</p>
           <div className="tc-grid">
             <div>
-              <h4>Who decides</h4>
+              <h4>{step.authLabel ?? "Who decides"}</h4>
               <ul className="who-list">
                 {step.auth.filter((a) => !a.cond || a.cond.split("|").some((k) => flags[k as keyof typeof flags])).map((a) => {
                   const c = CONTACTS[a.c];
@@ -148,18 +148,18 @@ export function ApprovalTrail() {
             <div>
               <h4>What you hand over</h4>
               <p className="tc-app">{step.app}</p>
-              <p className="muted small">{visibleDocs(step, flags).length} documents, {prog.total} checklist items</p>
+              <p className="muted small">{visibleDocs(step, flags).length} documents, {prog.total} things to consider</p>
               <div className="bar" role="progressbar" aria-valuemin={0} aria-valuemax={prog.total} aria-valuenow={prog.done} aria-label="Checklist progress">
                 <span style={{ width: `${prog.total ? (prog.done / prog.total) * 100 : 0}%` }} />
               </div>
-              <p className="muted small">{prog.done} of {prog.total} checked</p>
+              <p className="muted small">{prog.done} of {prog.total} dealt with</p>
             </div>
           </div>
           <div className="tc-actions">
-            <Link href={`/project#d-${step.id}`} className="btn">Open the checklist</Link>
+            <Link href={`/steps#d-${step.id}`} className="btn">Open this step</Link>
             {objections.length > 0 && (
-              <Link href={`/objections#${objections[0]!.id}`} className="btn ghost">
-                {objections.length} objections to prepare for
+              <Link href={`/hearing#${objections[0]!.id}`} className="btn ghost">
+                {objections.length} questions to expect
               </Link>
             )}
             <span className="muted small">Select any stop on the trail to preview it.</span>

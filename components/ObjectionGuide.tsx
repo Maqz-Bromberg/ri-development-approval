@@ -3,11 +3,17 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { OBJECTIONS, WEIGHT_LABEL } from "@/lib/data/objections";
+import { CONTACTS, shortName } from "@/lib/data/contacts";
+import { district } from "@/lib/data/atlas";
+import { hearingBody } from "@/lib/engine";
 import { LOCALITIES } from "@/lib/data/records";
 import { SOURCES } from "@/lib/data/sources";
 import { fmtDate, parseISO } from "@/lib/schedule";
 import { sourceKind as srcKind } from "@/lib/sourceKind";
-import type { Heard, MediaItem, Objection } from "@/lib/types";
+import type { Heard, MediaItem, Objection, ProjectInputs } from "@/lib/types";
+import { DemoTag } from "./Demo";
+import { useProject } from "./ProjectProvider";
+import { Gloss } from "./Term";
 
 const TOPICS = Array.from(new Set(OBJECTIONS.map((o) => o.topic)));
 const MEDIA_LABEL: Record<MediaItem["kind"], string> = { video: "Video", minutes: "Minutes", memo: "Staff memo", news: "Press", livestream: "Live stream", testimony: "Testimony" };
@@ -38,19 +44,55 @@ function HeardList({ items }: { items: Heard[] }) {
   );
 }
 
+/** The same answer with the figures from the project entered, where the question turns on a number. */
+function yourNumbers(id: string, i: ProjectInputs): string | null {
+  if (id === "traffic") {
+    const day = Math.round(i.units * 6.5);
+    const peak = Math.max(1, Math.round(i.units * 0.5));
+    return `${i.units} units adds about ${day} vehicle trips a day and about ${peak} in the busiest hour, roughly one every ${Math.round(60 / peak)} minutes (ITE low-rise multifamily rates).`;
+  }
+  if (id === "parking" && i.units >= 3) {
+    const per = i.transit ? 1 : parseFloat(district(i.zone)?.family4_minparking_2br ?? "2") || 2;
+    return `${i.units} units at ${per} per unit means ${i.units * per} required spaces${i.transit ? " (the 2026 transit cap)" : ""}. Say how many you provide beyond that.`;
+  }
+  if (id === "character" && i.lot > 0) {
+    return `${i.units} units on ${(i.lot / 43560).toFixed(2)} acres is ${(i.units / (i.lot / 43560)).toFixed(1)} units per acre. Compare it with the density of the nearest existing multifamily housing.`;
+  }
+  return null;
+}
+
 export function ObjectionGuide() {
+  const { inputs, steps } = useProject();
   const [loc, setLoc] = useState("cumberland");
   const [topic, setTopic] = useState<Objection["topic"] | "all">("all");
   const [target, setTarget] = useState("");
+  const [open, setOpen] = useState<Set<string>>(new Set());
+  const [picked, setPicked] = useState<Set<string>>(new Set());
   const locality = LOCALITIES.find((l) => l.id === loc)!;
+  const body = shortName(CONTACTS[hearingBody(steps)]?.name ?? "Planning Board");
 
   useEffect(() => {
     const id = window.location.hash.slice(1);
     if (id) {
       setTarget(id);
+      setOpen(new Set([id]));
       setTimeout(() => document.getElementById(id)?.scrollIntoView({ block: "start" }), 50);
     }
   }, []);
+
+  const flip = (set: (fn: (prev: Set<string>) => Set<string>) => void, id: string) => set((prev) => {
+    const next = new Set(prev);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    return next;
+  });
+
+  const printSheet = () => {
+    const root = document.documentElement;
+    root.classList.add("print-sheet");
+    const done = () => { root.classList.remove("print-sheet"); window.removeEventListener("afterprint", done); };
+    window.addEventListener("afterprint", done);
+    window.print();
+  };
 
   const localHeard = (o: Objection) => o.heard.filter((h) => h.locality === loc || (loc === "cumberland" && h.locality === "statewide"));
   const ranked = useMemo(
@@ -64,16 +106,16 @@ export function ObjectionGuide() {
 
   return (
     <>
-      <section className="sec" aria-labelledby="loc-h">
+      <section className="sec no-print" aria-labelledby="loc-h">
         <div className="loc-bar">
           <label htmlFor="f-loc" className="loc-label" id="loc-h">Whose hearings?</label>
           <select id="f-loc" value={loc} onChange={(e) => setLoc(e.target.value)}>
-            {LOCALITIES.map((l) => <option key={l.id} value={l.id}>{l.name}{l.indexed ? "" : " (not yet indexed)"}</option>)}
+            {LOCALITIES.map((l) => <option key={l.id} value={l.id}>{l.name}{l.indexed ? "" : " (records not yet read)"}</option>)}
           </select>
           <span className="muted small">
             {locality.indexed
               ? `${totalHeard} documented concerns from ${hearings} hearings and memos, read from this town's minutes, staff memos and meeting videos`
-              : "This locality's recordings haven't been read yet. The notes below are general, and its sources are listed for the backend to transcribe and tag."}
+              : <><DemoTag>Not yet read</DemoTag> This town's recordings haven't been read. The notes below are general, and its sources are listed.</>}
           </span>
         </div>
         {locality.media && locality.media.length > 0 && (
@@ -97,48 +139,73 @@ export function ObjectionGuide() {
         )}
       </section>
 
-      <section className="sec" aria-label="Common questions">
-        <div className="filters" role="group" aria-label="Filter by topic">
-          <button type="button" className="filter" aria-pressed={topic === "all"} onClick={() => setTopic("all")}>All ({OBJECTIONS.length})</button>
-          {TOPICS.map((t) => (
-            <button key={t} type="button" className="filter" aria-pressed={topic === t} onClick={() => setTopic(t)}>
-              {t} ({OBJECTIONS.filter((o) => o.topic === t).length})
-            </button>
-          ))}
+      <section className="sec" aria-label="Questions to expect">
+        <div className="sheet-bar no-print">
+          <div className="filters" role="group" aria-label="Filter by topic">
+            <button type="button" className="filter" aria-pressed={topic === "all"} onClick={() => setTopic("all")}>All ({OBJECTIONS.length})</button>
+            {TOPICS.map((t) => (
+              <button key={t} type="button" className="filter" aria-pressed={topic === t} onClick={() => setTopic(t)}>
+                {t} ({OBJECTIONS.filter((o) => o.topic === t).length})
+              </button>
+            ))}
+          </div>
+          <div className="sheet-actions">
+            <span className="small muted">{picked.size ? `${picked.size} on your sheet` : "Add questions to build a one-page sheet"}</span>
+            <button type="button" className="btn" disabled={!picked.size} onClick={printSheet}>Print my hearing sheet</button>
+          </div>
         </div>
-        <div className="obj-grid">
+        <p className="print-only sheet-title">
+          <b>{body} hearing sheet</b> · {inputs.units} units, {inputs.zone === "other" ? "Cumberland" : `${inputs.zone}, Cumberland`}{inputs.address ? ` · ${inputs.address}` : ""}
+        </p>
+        <div className="obj-list">
           {shown.map((o) => {
             const heard = localHeard(o);
+            const isOpen = open.has(o.id);
+            const isPicked = picked.has(o.id);
+            const mine = yourNumbers(o.id, inputs);
             return (
-              <article key={o.id} id={o.id} className={`obj${o.id === target ? " is-target" : ""}`}>
+              <article key={o.id} id={o.id} className={`obj${o.id === target ? " is-target" : ""}${isOpen ? "" : " is-collapsed"}${isPicked ? " is-picked" : ""}`}>
                 <div className="obj-head">
                   <span className="obj-topic">{o.topic}</span>
                   <span className={`weight w-${o.weight}`}>{WEIGHT_LABEL[o.weight]}</span>
+                  {heard.length > 0 && <span className="heard-count">Heard {heard.length}× in {locality.name}</span>}
                 </div>
                 <blockquote className="said">"{o.said}"</blockquote>
-                {heard.length > 0 ? (
-                  <div className="heard-box">
-                    <span className="heard-title">Heard in {locality.name} · {heard.length}</span>
-                    <HeardList items={heard} />
-                  </div>
-                ) : locality.indexed ? (
-                  <p className="muted small">Not found in {locality.name}'s records read so far.</p>
-                ) : null}
-                <dl className="obj-body">
-                  <dt>What the board can weigh</dt>
-                  <dd>{o.boardView}</dd>
-                  <dt>What to do</dt>
-                  <dd>{o.response}</dd>
-                </dl>
                 <div className="note">
                   <span className="note-label">Example note for the hearing</span>
                   <p>{o.say}</p>
                 </div>
-                <div className="bring">
-                  <span className="muted small">Bring:</span>
-                  {o.bring.map((b) => (
-                    <Link key={`${b.step}-${b.doc}`} href={`/project#d-${b.step}`} className="chip">{b.doc}</Link>
-                  ))}
+                {mine && <p className="mine"><b>With your numbers:</b> {mine}</p>}
+                <div className="obj-more">
+                  {heard.length > 0 ? (
+                    <div className="heard-box">
+                      <span className="heard-title">Heard in {locality.name}</span>
+                      <HeardList items={heard} />
+                    </div>
+                  ) : locality.indexed ? (
+                    <p className="muted small">Not found in {locality.name}'s records read so far.</p>
+                  ) : null}
+                  <dl className="obj-body">
+                    <dt>What the board can weigh</dt>
+                    <dd><Gloss text={o.boardView} /></dd>
+                    <dt>What to do</dt>
+                    <dd><Gloss text={o.response} /></dd>
+                  </dl>
+                  <div className="bring">
+                    <span className="muted small">Bring:</span>
+                    {o.bring.map((b) => (
+                      <Link key={`${b.step}-${b.doc}`} href={`/steps#d-${b.step}`} className="chip">{b.doc}</Link>
+                    ))}
+                  </div>
+                </div>
+                <div className="obj-actions no-print">
+                  <button type="button" className="link-btn" aria-expanded={isOpen} onClick={() => flip(setOpen, o.id)}>
+                    {isOpen ? "Show less" : `What the board weighs, what to do${heard.length ? ", and when it came up" : ""}`}
+                  </button>
+                  <label className="pick">
+                    <input type="checkbox" checked={isPicked} onChange={() => flip(setPicked, o.id)} />
+                    On my sheet
+                  </label>
                 </div>
               </article>
             );
@@ -152,4 +219,11 @@ export function ObjectionGuide() {
       </section>
     </>
   );
+}
+
+/** The page heading, named for the body that will hold this project's hearings. */
+export function HearingHeading() {
+  const { steps } = useProject();
+  const body = shortName(CONTACTS[hearingBody(steps)]?.name ?? "Planning Board");
+  return <h1 id="obj-h" className="h2">{body} hearing prep</h1>;
 }

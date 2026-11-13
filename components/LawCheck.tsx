@@ -5,10 +5,14 @@ import { analyze } from "@/lib/engine";
 import type { TreeId } from "@/lib/types";
 import { Cite } from "./Cite";
 import { useProject } from "./ProjectProvider";
+import { Gloss } from "./Term";
+
+const ORDER = { fail: 0, flag: 1, info: 2, pass: 3 } as const;
+const LABEL = { fail: "Blocker", flag: "Open", info: "Note", pass: "Pass" } as const;
 
 export function LawCheck() {
   const { inputs, tree, auto, override, setOverride, steps } = useProject();
-  const findings = analyze(inputs, tree);
+  const findings = analyze(inputs, tree).map((f, i) => ({ f, i })).sort((a, b) => ORDER[a.f.st] - ORDER[b.f.st] || a.i - b.i).map(({ f }) => f);
   const timed = steps.filter((s) => s.clock.days && !s.branch);
   const total = timed.reduce((a, s) => a + (s.clock.days ?? 0), 0);
 
@@ -26,14 +30,14 @@ export function LawCheck() {
         </label>
       </div>
       <h3 id="check-h">Zoning and law check</h3>
-      <p className="sub">Each finding quotes the rule it comes from. Flags mark extra approvals or open questions.</p>
+      <p className="sub">Blockers and open questions first. Each finding quotes the rule it comes from.</p>
       <ul className="check-list">
         {findings.map((f) => (
           <li key={f.t}>
-            <span className={`st ${f.st}`}>{f.st}</span>
+            <span className={`st ${f.st}`}>{LABEL[f.st]}</span>
             <div>
               <b>{f.t}</b>
-              <p>{f.p}</p>
+              <p><Gloss text={f.p} /></p>
               <Cite src={f.src} pin={f.pin} q={f.q} />
             </div>
           </li>

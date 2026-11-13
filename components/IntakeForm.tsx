@@ -2,21 +2,22 @@
 
 import { useState } from "react";
 import { CUMBERLAND_DISTRICTS } from "@/lib/data/atlas";
+import { DemoTag } from "./Demo";
 import { useProject } from "./ProjectProvider";
 import type { ProjectInputs } from "@/lib/types";
 
 const FACTS: { key: keyof ProjectInputs; label: string }[] = [
   { key: "water", label: "Public water" },
   { key: "sewer", label: "Public sewer" },
-  { key: "wet", label: "Wetlands on or near the site" },
-  { key: "dot", label: "Access onto a state road" },
+  { key: "wet", label: "Wetlands on or near the site (by hand)" },
+  { key: "dot", label: "Access onto a state road (by hand)" },
   { key: "transit", label: "Near frequent transit (⅛ mi) or a mobility hub (¼ mi)" },
   { key: "rezone", label: "Seek a zone change instead of relief" },
   { key: "conservation", label: "Conservation development (open space for density)" },
 ];
 
 export function IntakeForm() {
-  const { inputs, setInput, resetInputs } = useProject();
+  const { inputs, setInput, resetInputs, origin } = useProject();
   const [files, setFiles] = useState<{ name: string; size: number }[]>([]);
   const [drag, setDrag] = useState(false);
 
@@ -34,14 +35,19 @@ export function IntakeForm() {
 
   return (
     <form className="panel" onSubmit={(e) => e.preventDefault()} aria-labelledby="intake-h">
-      <h3 id="intake-h">Project and site <span className="example-flag">Example values</span></h3>
-      <p className="sub">Pre-filled with a sample 10-unit multifamily project in Cumberland. Your changes are saved in this browser.</p>
+      <h3 id="intake-h">Project and site {origin === "example" && <span className="example-flag">Example values</span>}</h3>
+      <p className="sub">
+        {origin === "example"
+          ? "Pre-filled with a sample 10-unit multifamily project in Cumberland."
+          : inputs.address ? `Site facts for ${inputs.address}.` : "Your project."}{" "}
+        Changes are saved in this browser.
+      </p>
       <div className="form-grid">
         <div className="field">
-          <label htmlFor="f-muni">Municipality</label>
+          <label htmlFor="f-muni">Municipality <DemoTag>Cumberland only</DemoTag></label>
           <select id="f-muni" defaultValue="cumberland">
             <option value="cumberland">Cumberland</option>
-            <option value="other" disabled>Other RI municipalities (coming soon)</option>
+            <option value="other" disabled>Other towns: steps not yet read</option>
           </select>
         </div>
         <div className="field">
@@ -57,7 +63,7 @@ export function IntakeForm() {
           <input id="f-aff" type="number" min={0} max={inputs.units} value={inputs.aff} onChange={num("aff")} />
         </div>
         <div className="field">
-          <label htmlFor="f-zone">Zoning district (from GIS)</label>
+          <label htmlFor="f-zone">Zoning district</label>
           <select id="f-zone" value={inputs.zone} onChange={(e) => setInput("zone", e.target.value)}>
             {CUMBERLAND_DISTRICTS.map((d) => (
               <option key={d.abbrvname} value={d.abbrvname}>{d.abbrvname} {d.name}</option>
@@ -85,7 +91,7 @@ export function IntakeForm() {
           </select>
         </div>
         <fieldset className="field full">
-          <legend>Site facts (from GIS layers and the plan set)</legend>
+          <legend>Site facts</legend>
           <div className="facts">
             {FACTS.map((f) => (
               <label key={f.key} className="cb">
@@ -96,7 +102,7 @@ export function IntakeForm() {
           </div>
         </fieldset>
         <div className="field full">
-          <span className="legend-like">Building plans</span>
+          <span className="legend-like">Building plans <DemoTag>Demo: files are listed, not read</DemoTag></span>
           <label
             className={`drop${drag ? " drag" : ""}`}
             htmlFor="f-files"
@@ -105,13 +111,13 @@ export function IntakeForm() {
             onDrop={(e) => { e.preventDefault(); setDrag(false); addFiles(e.dataTransfer.files); }}
           >
             <strong>Drop the plan set here, or choose files</strong>
-            <span>Site plan, floor plans, elevations, survey and drainage report. PDF, DWG, DXF or images.</span>
+            <span>Nothing is read from the files yet and nothing is uploaded. Enter the site facts above by hand.</span>
             <input id="f-files" type="file" multiple accept=".pdf,.dwg,.dxf,.png,.jpg,.jpeg" hidden onChange={(e) => addFiles(e.target.files)} />
           </label>
           {files.length > 0 && (
             <ul className="file-list">
               {files.map((f, i) => (
-                <li key={`${f.name}-${i}`}><span>{f.name}</span><span>{Math.max(1, Math.round(f.size / 1024))} KB · queued for extraction</span></li>
+                <li key={`${f.name}-${i}`}><span>{f.name}</span><span>{Math.max(1, Math.round(f.size / 1024))} KB · listed only</span></li>
               ))}
             </ul>
           )}

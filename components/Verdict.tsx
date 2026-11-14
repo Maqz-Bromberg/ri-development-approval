@@ -9,6 +9,7 @@ import { buildSchedule, fmtDate } from "@/lib/schedule";
 import type { ProjectInputs, TreeId } from "@/lib/types";
 import { useProject } from "./ProjectProvider";
 import { Term } from "./Term";
+import { routeText } from "@/lib/engine";
 
 const months = (days: number) => Math.max(1, Math.round(days / 30.4));
 
@@ -91,7 +92,9 @@ export function Verdict({ compact = false, check = false, premise = true }: { co
   const approved = plan.find((p) => p.step.id === "record") ?? plan.find((p) => p.step.id === "final") ?? plan.find((p) => p.step.id === "zcheck");
   const state = v.fails.length ? "fail" : v.flags.length ? "flag" : "pass";
   const headline = verdictHeadline(v);
-  const routeName = ["major", "minor", "comp", "dpr"].includes(tree) ? <Term id={tree}>{TREES[tree].name}</Term> : TREES[tree].name;
+  // The glossary defines the routes by the state thresholds, so a town that redraws them gets its own name without the gloss.
+  const route = routeText(tree);
+  const routeName = ["major", "minor", "comp", "dpr"].includes(tree) && !route.local ? <Term id={tree}>{route.name}</Term> : route.name;
 
   return (
     <div className={`verdict v-${state}${compact ? " compact" : ""}${check ? " check" : ""}`} aria-label={`${ORIGIN[origin]}: ${headline}`}>
@@ -114,8 +117,8 @@ export function Verdict({ compact = false, check = false, premise = true }: { co
               <label className="override verdict-override" htmlFor="f-tree">
                 {override === "auto" ? "Set by the facts." : "Chosen by hand."}
                 <select id="f-tree" value={override} onChange={(e) => setOverride(e.target.value as TreeId | "auto")} aria-label="Approval route">
-                  <option value="auto">Auto ({TREES[auto].name})</option>
-                  {TREE_ORDER.map((k) => <option key={k} value={k}>{TREES[k].name}</option>)}
+                  <option value="auto">Auto ({routeText(auto).name})</option>
+                  {TREE_ORDER.map((k) => <option key={k} value={k}>{routeText(k).name}</option>)}
                 </select>
               </label>
             )}

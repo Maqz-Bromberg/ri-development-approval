@@ -6,6 +6,7 @@ import type { TreeId } from "@/lib/types";
 import { Cite } from "./Cite";
 import { useProject } from "./ProjectProvider";
 import { Gloss } from "./Term";
+import { routeText } from "@/lib/engine";
 
 const ORDER = { fail: 0, flag: 1, info: 2, pass: 3 } as const;
 const LABEL = { fail: "Blocker", flag: "Open", info: "Note", pass: "Pass" } as const;
@@ -21,12 +22,12 @@ export function LawCheck({ head = true }: { head?: boolean }) {
     <div className="panel" aria-labelledby="check-h">
       {head && <div className="result-head">
         <span className="muted small">Approval route</span>
-        <span className="route-badge">{TREES[tree].name}</span>
+        <span className="route-badge">{routeText(tree).name}</span>
         <label className="override" htmlFor="f-tree">
           Override
           <select id="f-tree" value={override} onChange={(e) => setOverride(e.target.value as TreeId | "auto")}>
-            <option value="auto">Auto ({TREES[auto].name})</option>
-            {TREE_ORDER.map((k) => <option key={k} value={k}>{TREES[k].name}</option>)}
+            <option value="auto">Auto ({routeText(auto).name})</option>
+            {TREE_ORDER.map((k) => <option key={k} value={k}>{routeText(k).name}</option>)}
           </select>
         </label>
       </div>}

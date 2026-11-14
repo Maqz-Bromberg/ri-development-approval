@@ -1,4 +1,5 @@
 import { CUMBERLAND_CALENDAR } from "./data/calendars/cumberland";
+import { PROVIDENCE_CALENDAR } from "./data/towns/providence/town";
 import type { BoardCalendar, CalendarRow } from "./types";
 
 const DAY = 86400000;
@@ -15,6 +16,12 @@ function patternMeeting(y: number, m: number): Date {
   return new Date(last.getTime() - ((last.getUTCDay() - 4 + 7) % 7) * DAY);
 }
 
+/** The nth given weekday of a month, such as the third Tuesday. */
+function nthWeekday(y: number, m: number, weekday: number, nth: number): Date {
+  const first = utc(y, m, 1);
+  return new Date(first.getTime() + (((weekday - first.getUTCDay() + 7) % 7) + (nth - 1) * 7) * DAY);
+}
+
 /**
  * The published rows, extended by the town's usual pattern for the following year or two.
  * Projected rows carry `est: true` and are shown as estimates. Joint and special meetings are never predicted.
@@ -24,7 +31,8 @@ export function rowsWithPattern(cal: BoardCalendar, throughYear: number): Calend
   const lastPb = rows.reduce((a, r) => (r.pb > a ? r.pb : a), "");
   for (let y = cal.year + 1; y <= throughYear; y++) {
     for (let m = 0; m < 12; m++) {
-      const pb = patternMeeting(y, m);
+      const rule = cal.pattern.rule;
+      const pb = rule ? nthWeekday(y, m, rule.weekday, rule.nth) : patternMeeting(y, m);
       if (iso(pb) <= lastPb) continue;
       rows.push({ cutoff: iso(new Date(pb.getTime() - cal.pattern.cutoffDaysBefore * DAY)), pb: iso(pb), est: true });
     }
@@ -33,7 +41,7 @@ export function rowsWithPattern(cal: BoardCalendar, throughYear: number): Calend
 }
 
 export function calendarFor(town: string): BoardCalendar | null {
-  return town === "Cumberland" ? CUMBERLAND_CALENDAR : null;
+  return town === "Cumberland" ? CUMBERLAND_CALENDAR : town === "Providence" ? PROVIDENCE_CALENDAR : null;
 }
 
 export interface Snap {

@@ -69,6 +69,11 @@ export function ObjectionGuide() {
   const [open, setOpen] = useState<Set<string>>(new Set());
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const locality = LOCALITIES.find((l) => l.id === loc)!;
+  // Follow the project's town when its hearings have been read, until the visitor picks another.
+  useEffect(() => {
+    const own = LOCALITIES.find((l) => l.name === inputs.town && l.indexed);
+    setLoc(own ? own.id : "cumberland");
+  }, [inputs.town]);
   const body = shortName(CONTACTS[hearingBody(steps)]?.name ?? "Planning Board");
 
   useEffect(() => {
@@ -114,7 +119,7 @@ export function ObjectionGuide() {
           </select>
           <span className="muted small">
             {locality.indexed
-              ? `${totalHeard} documented concerns from ${hearings} hearings and memos, read from this town's minutes, staff memos and meeting videos`
+              ? `${totalHeard} documented concerns from ${hearings} hearings and memos, read from ${locality.id === "providence" ? "City Plan Commission minutes, staff reports and one court decision for Fox Point and Wayland only (a trial; no video was watched)" : "this town's minutes, staff memos and meeting videos"}`
               : <><DemoTag>Not yet read</DemoTag> This town's recordings haven't been read. The notes below are general, and its sources are listed.</>}
           </span>
         </div>

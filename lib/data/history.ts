@@ -1,5 +1,7 @@
 import type { Precedent, Timeline } from "../types";
 import TIMELINES from "./timelines.json";
+import { PROVIDENCE_HISTORY } from "./towns/providence/history";
+import PROVIDENCE_TIMELINES from "./towns/providence/timelines.json";
 
 /**
  * Cumberland multifamily items from Planning Board agendas, minutes and staff memos. Outcomes only where a source states them.
@@ -7,7 +9,7 @@ import TIMELINES from "./timelines.json";
  * except Berkeley Mill (the parcel at its street address, 30 Martin Street) and 80 Bear Hill Road
  * (street address point only: four parcels meet there, so none is assumed). Looked up 2026-11-13.
  */
-const BASE: Omit<Precedent, "events" | "checked">[] = [
+const BASE: Omit<Precedent, "events" | "checked" | "town">[] = [
   {
     at: { lat: 41.975489, lon: -71.465087, exact: true }, parcels: ["CU 054-0007-000", "CU 054-0008-000"],
     name: "Haley's Commons", addr: "75 Manville Hill Road", lot: "AP 54 Lots 7 & 8", zone: "R-1", units: 10, aff: 3, route: "comp",
@@ -74,12 +76,20 @@ const BASE: Omit<Precedent, "events" | "checked">[] = [
   },
 ];
 
-/** The records above, joined to their dated events. A project with no entry in timelines.json fails the build check. */
-export const HISTORY: Precedent[] = BASE.map((b) => {
-  const t = (TIMELINES as unknown as Record<string, Timeline>)[b.name];
-  if (!t) throw new Error(`No timeline for ${b.name} in timelines.json`);
-  return { ...b, ...t };
-});
+/** Records joined to their dated events. A project with no entry in its town's timelines file fails the build. */
+function join(town: string, base: Omit<Precedent, "events" | "checked" | "town">[], timelines: unknown): Precedent[] {
+  return base.map((b) => {
+    const t = (timelines as Record<string, Timeline>)[b.name];
+    if (!t) throw new Error(`No timeline for ${b.name} (${town})`);
+    return { town, ...b, ...t };
+  });
+}
+
+/** Every recorded project, from every town read so far. Each carries its town. */
+export const HISTORY: Precedent[] = [...join("Cumberland", BASE, TIMELINES), ...join("Providence", PROVIDENCE_HISTORY, PROVIDENCE_TIMELINES)];
+
+/** The recorded projects of one town. */
+export const historyFor = (town: string): Precedent[] => HISTORY.filter((h) => h.town === town);
 
 /** Anchor id for a project's row in the precedent table, also used by the map's project list. */
 export function precedentId(name: string): string {

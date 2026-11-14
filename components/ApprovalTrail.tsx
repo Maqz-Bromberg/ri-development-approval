@@ -9,6 +9,7 @@ import { visibleDocs } from "@/lib/engine";
 import { buildSchedule, fmtDate } from "@/lib/schedule";
 import { useProject } from "./ProjectProvider";
 import { Vignette, Walker } from "./Vignettes";
+import { routeText } from "@/lib/engine";
 
 const W = 1400;
 const H = 470;
@@ -59,7 +60,7 @@ export function ApprovalTrail() {
   return (
     <div className="trail">
       <div className="trail-scroll" ref={scroller}>
-        <svg viewBox={`0 0 ${W} ${H}`} className="trail-svg" role="group" aria-label={`Approval trail: ${TREES[tree].name}, ${trail.length} steps`}>
+        <svg viewBox={`0 0 ${W} ${H}`} className="trail-svg" role="group" aria-label={`Approval trail: ${routeText(tree).name}, ${trail.length} steps`}>
           {/* scenery */}
           <rect x="0" y="0" width={W} height={H} fill="var(--sky)" />
           <circle cx="1270" cy="70" r="38" fill="var(--sun)" />

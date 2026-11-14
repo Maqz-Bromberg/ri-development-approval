@@ -4,7 +4,8 @@
  *   2 Offices and records: board and office contacts, meeting pattern, where records live.
  *   3 Local steps: checklists, forms and pinpoints read from the town's regulations.
  *   4 Hearings and precedent: minutes read into documented concerns and example projects.
- * Only Cumberland is above level 1. A level is claimed only when it has been read, with a date.
+ * Cumberland is level 4. Providence is a trial: level 3 across the city, level 4 in one part of it.
+ * A level is claimed only when it has been read, with a date.
  */
 export type Level = 1 | 2 | 3 | 4;
 
@@ -14,6 +15,12 @@ export interface Town {
   level: Level;
   /** ISO date the town's level was last set, with the reader's note */
   read?: string;
+  /** True while the town's reading is a trial that no person has confirmed */
+  trial?: boolean;
+  /** What the level leaves out, where the general description of the level would overstate it */
+  gaps?: string;
+  /** A part of the town read to a higher level than the rest. Hearings and precedent are local, so level 4 can cover a neighbourhood. */
+  part?: { name: string; level: Level; /** south, west, north, east (WGS84). An approximate box, not an official boundary. */ box: [number, number, number, number]; note: string };
 }
 
 const L1 = (county: Town["county"], names: string[]): Town[] => names.map((name) => ({ name, county, level: 1 }));
@@ -22,8 +29,16 @@ const ALL: Town[] = [
   ...L1("Bristol", ["Barrington", "Bristol", "Warren"]),
   ...L1("Kent", ["Coventry", "East Greenwich", "Warwick", "West Greenwich", "West Warwick"]),
   ...L1("Newport", ["Jamestown", "Little Compton", "Middletown", "Newport", "Portsmouth", "Tiverton"]),
-  ...L1("Providence", ["Burrillville", "Central Falls", "Cranston", "East Providence", "Foster", "Glocester", "Johnston", "Lincoln", "North Providence", "North Smithfield", "Pawtucket", "Providence", "Scituate", "Smithfield", "Woonsocket"]),
+  ...L1("Providence", ["Burrillville", "Central Falls", "Cranston", "East Providence", "Foster", "Glocester", "Johnston", "Lincoln", "North Providence", "North Smithfield", "Pawtucket", "Scituate", "Smithfield", "Woonsocket"]),
   { name: "Cumberland", county: "Providence", level: 4, read: "2026-11-13" },
+  {
+    name: "Providence", county: "Providence", level: 3, read: "2026-11-13", trial: true,
+    gaps: "Read from the Land Development and Subdivision Review Regulations and the City Plan Commission's forms. The Zoning Ordinance itself was not read, and no one at the city has confirmed any of it.",
+    part: {
+      name: "Fox Point and Wayland", level: 4, box: [41.8125, -71.4045, 41.8305, -71.376],
+      note: "City Plan Commission records from 2023 to 2026 were read for five projects here. The box is an approximation drawn around them, not the city's neighbourhood boundary.",
+    },
+  },
   ...L1("Washington", ["Charlestown", "Exeter", "Hopkinton", "Narragansett", "New Shoreham", "North Kingstown", "Richmond", "South Kingstown", "Westerly"]),
 ];
 export const TOWNS: Town[] = ALL.sort((a, b) => a.name.localeCompare(b.name));
@@ -41,3 +56,16 @@ export function townInfo(name: string): Town {
 
 /** True when the town's rules have been read into this site beyond state law. */
 export const hasLocalRules = (town: string) => townInfo(town).level >= 3;
+
+/**
+ * The level that applies to a site. Inside a town's better-read part it is the part's level.
+ * `inPart` is null when the town has such a part but the site's position is unknown (a hand-entered project).
+ */
+export function levelAt(town: string, lat?: number, lon?: number): { level: Level; inPart: boolean | null } {
+  const t = townInfo(town);
+  if (!t.part) return { level: t.level, inPart: false };
+  if (lat === undefined || lon === undefined) return { level: t.level, inPart: null };
+  const [s, w, n, e] = t.part.box;
+  const inside = lat >= s && lat <= n && lon >= w && lon <= e;
+  return { level: inside ? t.part.level : t.level, inPart: inside };
+}

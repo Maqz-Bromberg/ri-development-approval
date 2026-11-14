@@ -1,6 +1,7 @@
 import { TREES } from "./data/trees";
 import { district, housingTypeLabel, readByUtility, treatmentFor, type Treatment } from "./data/atlas";
 import { getActiveTown } from "./town";
+import { townFindings, townRules, townSteps } from "./data/towns/overlay";
 import type { Doc, Finding, Flags, ProjectInputs, Step, TreeId } from "./types";
 
 export const DEFAULT_INPUTS: ProjectInputs = {
@@ -20,6 +21,7 @@ export const DEFAULT_INPUTS: ProjectInputs = {
   transit: false,
   rezone: false,
   conservation: false,
+  commercial: 0,
   startDate: "2026-11-02",
 };
 
@@ -80,7 +82,17 @@ export function requiredArea(i: ProjectInputs): AreaNeed | null {
   return null;
 }
 
+/** A route's name, rule and summary as the town defines it. Falls back to the state-law wording. */
+export function routeText(tree: TreeId, town = getActiveTown()): { name: string; rule: string; blurb: string; status: string; local: boolean } {
+  const t = TREES[tree], local = townRules(town).routeText?.[tree];
+  const status = town === "Cumberland" ? t.status : townSteps(town, tree) ? "Local steps read (trial, not confirmed)" : "State law only";
+  return { name: local?.name ?? t.name, rule: local?.rule ?? t.rule, blurb: local?.blurb ?? t.blurb, status, local: !!local };
+}
+
+/** The route a project takes. A town whose regulations sort projects differently from the state defaults supplies its own rule. */
 export function classify(i: ProjectInputs): TreeId {
+  const local = townRules(i.town).classify;
+  if (local) return local(i);
   if (i.units >= 3 && i.aff / i.units >= 0.25) return "comp";
   if (i.type === "reuse" && i.units < 9) return "dpr";
   if (i.units >= 10) return "major";
@@ -131,11 +143,21 @@ function forTown(s: Step, town: string): Step | null {
   };
 }
 
+/**
+ * The route for a town. Where the town's own steps have been read for this route they are used in order,
+ * followed by the state-law steps they do not cover (building permit, occupancy). Otherwise the state-law route.
+ */
+function routeSteps(tree: TreeId, town: string): Step[] {
+  const base = TREES[tree].steps.map((s) => forTown(s, town)).filter((s): s is Step => s !== null);
+  const local = townSteps(town, tree);
+  if (!local) return base;
+  const ids = new Set(local.map((s) => s.id));
+  return [...local, ...base.filter((s) => !ids.has(s.id))];
+}
+
 export function stepsFor(tree: TreeId, f: Flags, town = getActiveTown()): NumberedStep[] {
   let n = 0;
-  return TREES[tree].steps
-    .map((s) => forTown(s, town))
-    .filter((s): s is Step => s !== null)
+  return routeSteps(tree, town)
     .filter((s) => condOK(s.cond, f))
     .map((s) => ({ ...s, n: s.branch ? (s.id === "rezone" ? "1a" : "↳") : String(++n) }));
 }
@@ -273,6 +295,11 @@ function analyzeRaw(i: ProjectInputs, tree: TreeId): Finding[] {
 
 /** Findings for the site. Outside Cumberland, the ones that rest on Cumberland's ordinance, minutes or precedent are neutralised. */
 export function analyze(i: ProjectInputs, tree: TreeId): Finding[] {
+  const local = townFindings(i.town);
+  return local ? local(i, tree, analyzeGeneric(i, tree), district(i.zone)) : analyzeGeneric(i, tree);
+}
+
+function analyzeGeneric(i: ProjectInputs, tree: TreeId): Finding[] {
   const all = analyzeRaw(i, tree);
   if (i.town === "Cumberland") return all;
   const minAff = Math.ceil(i.units * 0.25);

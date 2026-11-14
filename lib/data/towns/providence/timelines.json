@@ -1,0 +1,48 @@
+{
+ "27 East River Street": {
+  "events": [
+   { "date": "2024-10-15", "stage": "prelim", "what": "Height and parking adjustments granted 3 to 1, with conditions. Preliminary plan continued until they are met.", "kind": "continued", "src": ["pmin241015"], "quote": "the CPC voted to continue consideration of the preliminary plan at the applicant’s request" },
+   { "date": "2025-10-21", "stage": "other", "what": "One-year extension requested", "kind": "heard", "src": ["pag251021"], "quote": "The applicant is requesting a one year extension of the validity of the preliminary plan approval" },
+   { "date": "2025-12-16", "stage": "prelim", "what": "Preliminary plan approved 5 to 0, with seven conditions", "kind": "decided", "src": ["pmin251216"], "quote": "the CPC voted to approve the preliminary plan based on their findings, and subject to the following conditions" }
+  ],
+  "parties": [ { "role": "applicant", "name": "27 E River LLC", "src": "pmin251216" } ],
+  "checked": "2026-11-13"
+ },
+ "150 Pitman Street": {
+  "events": [
+   { "date": "2024-11-19", "stage": "other", "what": "One-year extension of the earlier approval requested", "kind": "heard", "src": ["pag241119"], "quote": "The applicant is requesting a one-year extension of the preliminary plan approval of the subject" },
+   { "date": "2025-08-19", "stage": "prelim", "what": "Major change, 16 units to 8, heard and continued", "kind": "continued", "src": ["pmin250819"], "quote": "continue the item to the September 16 meeting" },
+   { "date": "2025-09-16", "stage": "prelim", "what": "Major change and preliminary plan approved 6 to 0, with five conditions", "kind": "decided", "src": ["pmin250916"], "scan": true, "quote": "the CPC voted to approve the major change and the preliminary plan based on their findings and subject to the following conditions" }
+  ],
+  "checked": "2026-11-13"
+ },
+ "128 Wayland Avenue": {
+  "events": [
+   { "date": "2024-08", "stage": "prelim", "what": "Preliminary plan approved (later vacated by a court)", "kind": "decided", "src": ["pag250916"], "quote": "Preliminary plan approval granted in August 2024 was vacated by a court decision" },
+   { "date": "2024-10", "stage": "final", "what": "Final plan approved (later vacated)", "kind": "decided", "src": ["psr128w2509"], "quote": "The final plan for the subject development was approved in October 2024, but vacated by a court decision" },
+   { "date": "2025-09-16", "stage": "prelim", "what": "Reheard. Height adjustment granted and preliminary plan approved 6 to 0, with a condition on the facade panels.", "kind": "decided", "src": ["pmin250916"], "scan": true, "quote": "the CPC voted to approve the preliminary plan, based on their findings and subject to the following condition" }
+  ],
+  "parties": [ { "role": "applicant", "name": "AE128 Wayland LLC", "src": "pag250916" } ],
+  "checked": "2026-11-13"
+ },
+ "269 Wickenden Street": {
+  "events": [
+   { "date": "2023-02-21", "stage": "master", "what": "Master plan application filed", "kind": "filed", "src": ["pc241374"], "quote": "On February 21, 2023, Fox Point submitted an application for master plan approval" },
+   { "date": "2023-08-15", "stage": "master", "what": "Public hearing. Master plan approved with conditions.", "kind": "decided", "src": ["pc241374"], "quote": "the Commission approved Fox Point’s master plan in a written decision" },
+   { "date": "2023-09-18", "stage": "other", "what": "Second master plan application: more units, more height, less parking", "kind": "filed", "src": ["pc241374"], "quote": "On September 18, 2023, Fox Point submitted a second application" },
+   { "date": "2023-11-09", "stage": "other", "what": "Second master plan approved in part, in a written decision", "kind": "decided", "src": ["pc241374"], "quote": "the Commission issued a written decision on November 9, 2023 approving in part Fox Point’s master plan" },
+   { "date": "2024-02-23", "stage": "other", "what": "Board of Appeal upheld the Commission", "kind": "decided", "src": ["pc241374"], "quote": "issued its written decision on February 23, 2024, upholding the Commission’s determination" },
+   { "date": "2024-09-23", "stage": "other", "what": "Superior Court denied the neighbours' appeal", "kind": "decided", "src": ["pc241374"], "quote": "The appeal is DENIED" },
+   { "date": "2025-01-21", "stage": "prelim", "what": "Preliminary plan heard and continued for detail on loading, bicycle storage and planting", "kind": "continued", "src": ["pmin250121", "pag250121"], "scan": true, "quote": "voted to continue consideration of the item to the February 18, CPC meeting" },
+   { "date": "2025-02-18", "stage": "prelim", "what": "Preliminary plan approved 4 to 1, with five conditions", "kind": "decided", "src": ["pmin250218"], "scan": true, "quote": "the CPC voted to approve the preliminary plan based on their findings and subject to the following conditions" }
+  ],
+  "parties": [ { "role": "applicant", "name": "Fox Point Capital LLC", "src": "pag250121" } ],
+  "checked": "2026-11-13"
+ },
+ "135 Gano Street": {
+  "events": [
+   { "date": "2024-09", "stage": "prelim", "what": "Preliminary plan, narrative and traffic study posted for staff review", "kind": "filed", "src": ["padmin"], "unverified": "The month comes from the upload path of the posted documents, not from a dated record." }
+  ],
+  "checked": "2026-11-13"
+ }
+}

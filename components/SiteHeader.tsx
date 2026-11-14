@@ -36,7 +36,7 @@ export function SiteHeader() {
           <span className="mark" aria-hidden="true" />
           <span>
             <b>RI Building Plan Approval</b>
-            <small>All 39 towns · Cumberland read in full</small>
+            <small>All 39 towns · Cumberland read in full · Providence on trial</small>
           </span>
         </Link>
         <nav aria-label="Main">

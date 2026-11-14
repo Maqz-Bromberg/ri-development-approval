@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Providence trial: review</title>
+<style>
+  :root { --bg:#fbfaf7; --fg:#1d2420; --mut:#5d6760; --line:#d9d6cc; --acc:#2f6f5e; --warn:#8a5a00; --ok:#2f6f5e; --no:#9a3b2e; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161a18; --fg:#e8ebe7; --mut:#9aa59d; --line:#2e3631; --acc:#6fc2a8; --warn:#e0b050; --ok:#6fc2a8; --no:#e58a7a; } }
+  body { background:var(--bg); color:var(--fg); font:16px/1.55 system-ui,sans-serif; margin:0; padding:0 16px 4rem; }
+  main { max-width:54rem; margin:0 auto; }
+  h1 { margin:2rem 0 .3rem; } h2 { margin:2.4rem 0 .2rem; border-top:1px solid var(--line); padding-top:1.4rem; }
+  h3 { margin:1.2rem 0 .3rem; font-size:1rem; text-transform:uppercase; letter-spacing:.05em; color:var(--acc); }
+  p, li { max-width:48rem; } .mut { color:var(--mut); } code { background:color-mix(in srgb,var(--fg) 8%,transparent); padding:0 .25em; border-radius:3px; overflow-wrap:anywhere; }
+  .scroll { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; margin:.5rem 0; font-size:.93rem; } th,td { text-align:left; border-bottom:1px solid var(--line); padding:.4rem .5rem; vertical-align:top; }
+  .warn { color:var(--warn); } .ok { color:var(--ok); font-weight:600; } .no { color:var(--no); font-weight:600; }
+  .q { border:1px solid var(--line); border-radius:8px; padding:.6rem .9rem; margin:.7rem 0; max-width:48rem; }
+  .q p { margin:.25rem 0; } .q b.n { color:var(--acc); }
+  .nums { display:grid; grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr)); gap:.6rem; margin:1rem 0; padding:0; list-style:none; }
+  .nums li { border:1px solid var(--line); border-radius:8px; padding:.5rem .7rem; } .nums b { display:block; font-size:1.5rem; font-variant-numeric:tabular-nums; }
+  nav.toc { font-size:.93rem; } nav.toc a { color:var(--acc); margin-right:.9rem; white-space:nowrap; }
+</style>
+</head>
+<body>
+<main>
+<h1>Providence trial: questions, concerns and complications</h1>
+<p class="mut">Written Nov 13, 2026. Branch <code>providence-trial</code>, from <code>dev</code> at <code>a1661b4</code>, in the worktree <code>../HousingHackathon-providence</code>. Built from <code>docs/plans/statewide.md</code>. Nothing here has been confirmed by anyone at the City of Providence, and the reading was done by Claude in one sitting.</p>
+
+<nav class="toc" aria-label="Sections">
+<a href="#built">What was built</a><a href="#honest">How far level 4 holds</a><a href="#questions">Questions for you</a><a href="#plan">What the plan got wrong</a><a href="#concerns">Concerns</a><a href="#sources">Source complications</a><a href="#checked">What was checked</a><a href="#defects">Known defects</a><a href="#next">Next steps</a>
+</nav>
+
+<h2 id="built">What was built</h2>
+<p>Providence is now the second town with local steps. The trial area for hearings and precedent is <b>Fox Point and Wayland</b>, on the East Side. I chose it from the records: of the housing cases before the City Plan Commission in 2024 to 2026, more fell here than in any other compact area, and between them they cover the major route, the minor route, a staff-decided project, a rezoning, extensions, a major change, and two court challenges by neighbours.</p>
+
+<ul class="nums">
+<li><b>82</b>quotes from Providence documents, each matched word for word by a script</li>
+<li><b>13</b>dated timeline events matched the same way</li>
+<li><b>4</b>dated events read by eye from scanned minutes, and marked so</li>
+<li><b>5</b>projects with timelines, four with map positions</li>
+<li><b>18</b>documented hearing concerns, across 10 kinds</li>
+<li><b>0</b>people at the city who have seen any of it</li>
+</ul>
+
+<div class="scroll">
+<table>
+<tr><th>Level</th><th>What was read</th><th>Read from</th><th>Not read</th></tr>
+<tr><td>2 Offices and records</td><td>Planning department, City Plan Commission, Downtown Design Review Committee, City Council, Zoning Board of Review, Recorder of Deeds, Inspection and Standards. Where agendas, staff reports, minutes and video are published.</td><td>The City's pages, the 2026 schedule, the application form</td><td>Zoning Board page (not found). Public Works, water and sewer contacts. Council members and procedure.</td></tr>
+<tr><td>3 Local steps</td><td>Minor and major land development routes: steps, who decides, clocks, fees, notice, checklists, recording, appeals. The Commission's 2026 calendar and filing deadlines.</td><td>Land Development and Subdivision Review Regulations (amended through Dec 16, 2025), the Minor Land Development Project form</td><td><b>The Zoning Ordinance.</b> Development plan review. Comprehensive permits. Historic district and downtown review. Subdivisions.</td></tr>
+<tr><td>4 Hearings and precedent, Fox Point and Wayland only</td><td>27 East River Street, 150 Pitman Street, 128 Wayland Avenue, 269 Wickenden Street, 135 Gano Street. Concerns raised, answers given, votes and conditions.</td><td>Commission minutes and agendas from the state Open Meetings site, four staff reports, one Superior Court decision</td><td>Transcripts, video, written public comment, decision letters, anything before 2023.</td></tr>
+</table>
+</div>
+
+<h3>In the code</h3>
+<ul>
+<li><code>lib/data/towns/providence/</code> holds the town: <code>steps.ts</code> (routes and the route rule), <code>rules.ts</code> (findings and schedule), <code>town.ts</code> (contacts, calendar, record links), <code>history.ts</code> with <code>timelines.json</code>, and <code>hearings.ts</code>.</li>
+<li><code>lib/data/towns/overlay.ts</code> is the seam: the engine asks it for a town's steps, route rule, findings and schedule. A town absent from it gets state law only, as before.</li>
+<li><code>scripts/towns/verify_quotes.py</code> and <code>fetch_sources.py</code>, with a README. <code>scripts/timelines/verify.py</code> now reads every town's timelines.</li>
+<li>Coverage is shown per town and per part of a town, with a trial mark, on the coverage note, the Towns page, the address lookup, hearing prep and the stand-in list.</li>
+<li>The dev page has a new section on sources and views, and a Providence trial group of open questions.</li>
+</ul>
+<p class="mut">Cumberland's output is unchanged. Seven Cumberland projects and three in level 1 towns were run through the engine before and after, and the route, steps, contacts, findings, verdict and schedule came out identical. One deliberate difference: a level 1 town's schedule no longer shows Cumberland's documented spans under its steps, since they were shown with no town named.</p>
+
+<h2 id="honest">How far level 4 holds</h2>
+<p>The site now shows Providence as level 3 across the city and level 4 in Fox Point and Wayland, both marked trial. That is a fair description of the effort. It is a generous description of the result, for three reasons you should weigh before anyone else sees it.</p>
+<ul>
+<li><b>Level 3 without the zoning ordinance.</b> The process is read from the regulations, which is where process lives. But height, parking, setbacks and coverage come from the 2024 Zoning Atlas, and Providence amended its ordinance in 2025 and 2026. Every Providence check carries a standing flag saying so.</li>
+<li><b>Level 4 from thin minutes.</b> For any item with zoning relief, the minutes say only that "a discussion ensued" and that a transcript is part of the record. The transcript is available on request, not online. So the most contested hearings, such as 269 Wickenden Street, are the least described. Most of what is documented comes from one project, 27 East River Street, whose two hearings happened to have full minutes.</li>
+<li><b>Level 2 with holes.</b> Two of ten contacts have no details at all, and six carry a note of what could not be confirmed.</li>
+</ul>
+
+<h2 id="questions">Questions for you</h2>
+<p class="mut">Each has what I did in the trial and what I would recommend. They are also on the dev page under Providence trial.</p>
+
+<div class="q"><p><b class="n">1.</b> <b>Is a level for part of a town the right model?</b></p>
+<p>Offices and regulations are citywide, but hearings and precedent are local, so I gave Providence level 3 with a level 4 part. The part is a rough box around the projects, not the City's neighbourhood boundary. A site outside the box still sees the Fox Point and Wayland projects, labelled as the nearest record of how the same board decides.</p>
+<p>Recommend: keep the part model, since no one will read a whole city's hearings at once. Replace the box with the City's own neighbourhood polygons before leaving trial.</p></div>
+
+<div class="q"><p><b class="n">2.</b> <b>Can level 3 be claimed when the zoning ordinance was not read?</b></p>
+<p>I claimed it with a stated gap. The stricter reading is level 2 until the ordinance is read.</p>
+<p>Recommend: your call. If the levels are a promise to the applicant, drop Providence to 2 and keep the steps visible as a trial.</p></div>
+
+<div class="q"><p><b class="n">3.</b> <b>Should the intake form ask town-specific questions?</b></p>
+<p>Providence sorts projects of 10 or more units by commercial floor area, so the form now asks for it when the town is Providence. It also turns on gross floor area and parking spaces, which I did not add.</p>
+<p>Recommend: yes, but decide the pattern now, because each new town will bring one or two of these.</p></div>
+
+<div class="q"><p><b class="n">4.</b> <b>What does a project under 10 units get in Providence?</b></p>
+<p>The regulations start Commission review at 10 units, 10,000 sq ft or 50 parking spaces. Below that I show the building permit route with a flag saying that development plan review may apply and was not read. For the small developer this site is for, this is the common case, and it is the one the trial covers worst.</p>
+<p>Recommend: read Article 19 of the ordinance next, before any more hearings.</p></div>
+
+<div class="q"><p><b class="n">5.</b> <b>May a date read by eye from a scanned page count as a decision?</b></p>
+<p>Four events do, with a new "Read from a scan" mark. The alternative was to leave out the approvals of 269 Wickenden Street, 128 Wayland Avenue and 150 Pitman Street, which would have removed most of the precedent.</p>
+<p>Recommend: allow it for now, add text recognition to the fetch step, and then require a second reader for anything recognition cannot match.</p></div>
+
+<div class="q"><p><b class="n">6.</b> <b>Should the site quote the ordinance through a court decision?</b></p>
+<p>Three findings do (the C-2 height limit, one parking space per unit, and the small-lot parking exemption), and each pinpoint says the ordinance is quoted by the court. The court's text is from 2024.</p>
+<p>Recommend: acceptable as a stopgap, and only with that label. Replace when the ordinance is read.</p></div>
+
+<div class="q"><p><b class="n">7.</b> <b>Where do supporters go?</b></p>
+<p>At the October 2024 hearing five residents spoke for the project, and several asked for more bicycle parking. Hearing prep is built around objections and has no place for a request from a supporter, though it is something an applicant can act on.</p>
+<p>Recommend: add a "what supporters asked for" kind before reading more Providence hearings. It did not come up in Cumberland.</p></div>
+
+<div class="q"><p><b class="n">8.</b> <b>Who asks the City?</b></p>
+<p>Two requests are now concrete: permission to fetch its documents by script, and a planner to confirm the sheet. The second is already an open question in the statewide plan.</p>
+<p>Recommend: one message covering both, from you, with the review of the 30 or so facts attached. I can draft the sheet from the data files.</p></div>
+
+<div class="q"><p><b class="n">9.</b> <b>North Providence or another unlike town next?</b></p>
+<p>The plan asked whether the second town should be as unlike Cumberland as possible. Providence was, and it broke four assumptions (below). I would expect a small rural town to break different ones: no planner on staff, no published schedule.</p>
+<p>Recommend: do the state and town split with Cumberland and Providence as the two test cases, then Exeter.</p></div>
+
+<h2 id="plan">What the plan got wrong, or left open</h2>
+<p>The statewide plan said this trial would "show what the overlay shape got wrong". It did.</p>
+<div class="scroll">
+<table>
+<tr><th>The plan assumed</th><th>Providence shows</th><th>What I did</th></tr>
+<tr><td>"<code>classify</code> is state law and stays."</td><td>State law lets a town raise the minor thresholds, and Providence did. A 355-unit residential building is a <i>minor</i> project there. Under 10 units is not a land development project at all.</td><td>A town can supply its own route rule. Route names and rules on screen come from the town.</td></tr>
+<tr><td>A Technical Review Committee, or none.</td><td>The regulations name the Downtown Design Review Committee as the Technical Review Committee. It acts only downtown.</td><td>Shown as a contact with that explanation. No committee step in the trial area.</td></tr>
+<tr><td>State permits before the preliminary plan.</td><td>Providence takes them before the <i>final</i> plan, and the Commission writes that into its conditions.</td><td>The schedule's permit gate is now set per town.</td></tr>
+<tr><td>One meeting pattern.</td><td>Third Tuesday, one deadline about four weeks before, no committee date. And the Commission met off its own schedule in four months of 2026.</td><td>The calendar takes a weekday rule. The schedule note tells the reader to confirm against the agenda.</td></tr>
+<tr><td>Relief means a variance.</td><td>Most projects here asked for a "dimensional adjustment" (more height, less parking) that the Commission grants on stated grounds, with no variance. Staff can also grant an "administrative modification".</td><td>Described in the steps and findings. The site's <code>relief</code> flag still means only use or density relief, so the hearing documents do not appear for an adjustment.</td></tr>
+<tr><td>An overlay merged step by step onto the state route.</td><td>The local version of a step differs in title, clock, who decides and every document. Merging field by field was more fragile than replacing the step.</td><td>A town supplies whole steps for a route. State-law steps it does not cover follow.</td></tr>
+<tr><td>Levels are per town.</td><td>Level 4 is local.</td><td>A part of a town can carry its own level.</td></tr>
+</table>
+</div>
+<p><b>Not done:</b> the split itself. Cumberland's steps still live in <code>lib/data/trees.ts</code>, mixed with state law, and the engine still strips them by pattern for other towns. Providence sits beside that, in the shape the plan describes. Moving Cumberland into the same shape is the plan's step 1 and should still land alone.</p>
+
+<h2 id="concerns">Concerns</h2>
+<h3>Trust</h3>
+<ul>
+<li><b>One reader, no confirmation.</b> The quote check proves that each stored sentence is in the document. It does not prove I understood the document, attached the sentence to the right step, or left nothing out. The regulations run to 80 pages and I read the parts on land development closely and the rest not at all.</li>
+<li><b>The city's own records disagree.</b> I stored what each says and noted the difference. An applicant comparing their site with these will meet the same thing.
+<div class="scroll"><table>
+<tr><th>Project</th><th>Agenda</th><th>Staff report</th></tr>
+<tr><td>128 Wayland Avenue</td><td>22 apartments, case 24-024MIL, preliminary approval of August 2024 vacated</td><td>23 dwelling units, case 24-042MI on one page, final plan approved October 2024 and vacated</td></tr>
+<tr><td>269 Wickenden Street</td><td>74 residential units, case 23-012MA</td><td>75 residential units, case 23-021 MA on two pages</td></tr>
+<tr><td>150 Pitman Street</td><td>Wayland, case 23-055MIL (and 22-051MI in 2024, on three lots in Fox Point)</td><td>Fox Point, case 23-055 MI</td></tr>
+<tr><td>27 East River Street</td><td>An extension of a preliminary approval, two months before the preliminary plan was approved</td><td>About 88,000 sq ft. The state parcel layer gives about 2.3 acres.</td></tr>
+</table></div></li>
+<li><b>A timeline number that may mislead.</b> The schedule shows 27 East River Street at 427 days from first appearance to preliminary approval. That is true and it is one very large riverfront project. With two spans on the minor route, any reader will take it as typical.</li>
+<li><b>Survivors only.</b> Every project read was approved. Withdrawn and denied projects exist in the agendas (14 Cargill Street was withdrawn) and none is in the trial area's data. The same gap is already an open question for Cumberland.</li>
+</ul>
+<h3>People</h3>
+<ul>
+<li><b>Residents are named in the Providence minutes.</b> None is named on the site. I described each by role and ran a name scan over the data files, which found none. The court decision names seven neighbours as appellants. They appear as "neighbours, on appeal".</li>
+<li><b>The minutes record one resident's repeated catchphrase.</b> I left it out and kept the objection. A rule is worth writing down: the site repeats the substance of a concern, never the manner.</li>
+<li><b>City staff are named as contacts</b>, as the City's own form and page name them. Cumberland's contacts do the same. Staff change, and the read date is the only guard.</li>
+<li><b>An individual applicant</b> is named on the agenda for 150 Pitman Street. I did not list him as a party, since the party check cannot tell a person from a company. That check is already on the dev page as unfinished.</li>
+</ul>
+<h3>Tone and liability</h3>
+<ul>
+<li>The plan warned that statewide the site reads as an authority. Providence is where that bites first: it is the largest city, its staff are named, and the site now tells applicants that staff can decide a plan without a hearing. If that sentence is wrong for a given site, the cost is real. The trial mark is on the header, the footer, the coverage note, the address lookup and the route cards. I would not remove any of them.</li>
+<li>The findings repeat a court's remark that a lot split to avoid parking was "troubling". It is quoted, and it names a project. Consider whether precedent notes should carry criticism of a named project at all.</li>
+</ul>
+
+<h2 id="sources">Source complications</h2>
+<div class="scroll">
+<table>
+<tr><th>What happened</th><th>Effect</th><th>What it needs</th></tr>
+<tr><td><b>providenceri.gov answers 403 to a script.</b> A request dressed as a browser was blocked by this session's permission rules, correctly. I used the fetch tool instead, which saved each PDF so its text could be read and checked locally.</td><td>No action can fetch Providence's regulations, forms, staff reports or schedule. The monthly check cannot cover them.</td><td>Permission from the City, or hand-saved files with a dated hash. Decide before a second city with the same block.</td></tr>
+<tr><td><b>The zoning ordinance is over 10 MB</b>, past the fetch tool's limit.</td><td>Not read.</td><td>A person saves it once. It is the first document to read next.</td></tr>
+<tr><td><b>Most of the minutes are scans</b> (23 of the 36 filed since 2024).</td><td>No quote can be matched against them.</td><td>Text recognition in the fetch step. None is installed here.</td></tr>
+<tr><td><b>The Open Meetings site rate-limits.</b> It answered 429 near the end of a run of about a hundred requests, one second apart.</td><td>The last two meetings failed on the first run.</td><td>A two-second pause, already in the script.</td></tr>
+<tr><td><b>Minutes are filed a month or more after the meeting.</b></td><td>A decision is known from the video weeks before it can be quoted.</td><td>A "heard, outcome not yet in the minutes" state, or reading captions.</td></tr>
+<tr><td><b>Minutes are not on the City's page</b>, only on the state site. Agendas are on both. Staff reports are only on the City's.</td><td>One project's record sits on two sites with different access.</td><td>Both fetchers, and the state id for each board in the town's record.</td></tr>
+<tr><td><b>Transcripts exist for the contested items</b> and are not published.</td><td>See level 4 above.</td><td>A public records request, if level 4 is to mean what it says.</td></tr>
+<tr><td><b>A merged lot is missing from the state parcel layer</b> under its new number (AP 15 Lot 498).</td><td>The pin uses the three former lots.</td><td>The City's own parcel service, not read.</td></tr>
+<tr><td><b>The Zoning Board of Review's page was not found</b> at the address tried.</td><td>That contact is thin.</td><td>A person to find it.</td></tr>
+<tr><td><b>The fetch tool's reading model paraphrases.</b> Asked for verbatim text of web pages, it summarised, citing a quote limit.</td><td>Contact details from HTML pages are not quote-checked. They are short facts, each with its source.</td><td>Hand-saved copies of those pages, so the checker can cover them.</td></tr>
+</table>
+</div>
+<p><b>One thing that went better than expected:</b> the state Open Meetings site lists every meeting of every public body with its agenda and minutes, at a predictable address. One fetcher there serves all 39 towns, and it gives real meeting dates to check each calendar against.</p>
+
+<h2 id="checked">What was checked, and what was not</h2>
+<div class="scroll">
+<table>
+<tr><th>Check</th><th>Result</th></tr>
+<tr><td>Every <code>q:</code> in the Providence files against the cited document</td><td><span class="ok">82 of 82 match.</span> One more cites the state legislative summary, which was not in the cache.</td></tr>
+<tr><td>Providence timeline quotes against the cited documents</td><td><span class="ok">13 of 13 match.</span> 4 scanned, reported and not matched.</td></tr>
+<tr><td>Cumberland timelines, after the change to <code>verify.py</code></td><td><span class="ok">Pass</span>, with its 14 sources fetched fresh.</td></tr>
+<tr><td>Document titles named by schedule ticks and by hearing prep; source ids</td><td><span class="ok">No broken references.</span> A one-off script, not yet a build check.</td></tr>
+<tr><td>Names of residents in the data files</td><td><span class="ok">None found</span> against the names in the minutes read.</td></tr>
+<tr><td>Four sample Providence projects, the Cumberland default and a level 1 town through the engine</td><td><span class="ok">Routes, steps, findings and schedules as intended.</span> Read by eye, not stored as tests.</td></tr>
+<tr><td>Type check and production build</td><td><span class="ok">Both pass.</span></td></tr>
+<tr><td>The pages in a browser</td><td><span class="ok">Partly.</span> Headless screenshots of the dev page, and of the Check and Steps pages for a 22-unit project at 128 Wayland Avenue, read as intended. <span class="no">Not viewed:</span> the schedule, hearing prep, the records timeline, the Towns page, the Providence map pins, any phone width, and nothing was clicked.</td></tr>
+<tr><td>Whether the readings are right</td><td><span class="no">Not checked by anyone.</span></td></tr>
+<tr><td>The new quote checker on Cumberland's <code>trees.ts</code> and <code>engine.ts</code></td><td>It finds 72 quotes. 7 match. 65 wait for their sources to be fetched. None failed.</td></tr>
+</table>
+</div>
+
+<h2 id="defects">Known defects left in the trial</h2>
+<ul>
+<li><b>State-law steps keep town wording.</b> The building and occupancy steps shown for Providence still say "Town Council" and "Town Clerk" in places, because they are the shared text.</li>
+<li><b>The glossary defines minor and major by the state numbers.</b> I removed the hover from the route name for Providence. The same words inside body text still open the state definition.</li>
+<li><b>An adjustment does not raise the hearing documents.</b> See the table above. A Providence applicant asking only for height sees the notice and stenographer items as not applying, when a Commission meeting does apply.</li>
+<li><b>The what-if tool and the verdict</b> were not reviewed for Providence. They call the same engine and should follow, but I did not read their text.</li>
+<li><b>Coastal review has no site fact.</b> The Coastal Resources Management Council appears when "wetlands" is ticked, as a stand-in.</li>
+<li><b>135 Gano Street has no map pin</b> and no known outcome.</li>
+<li><b>The district snapshot.</b> Providence's Atlas districts load live, with no bundled copy, so the district list is empty offline.</li>
+<li><b>The monthly action</b> does not look for new Providence meetings.</li>
+</ul>
+
+<h2 id="next">Suggested next steps, in order</h2>
+<ol>
+<li>Look at it in the browser with a Fox Point address, and decide questions 1 to 3.</li>
+<li>Save the zoning ordinance by hand and have Article 19, the district tables and the parking article read. This settles questions 2, 4 and 6.</li>
+<li>Add text recognition to <code>fetch_sources.py</code> and re-check the four scanned events.</li>
+<li>Draft the one-page sheet for Providence planning staff and send it with the access request.</li>
+<li>Do the state and town split, with these two towns as the before-and-after test, and turn the sample projects into stored tests.</li>
+<li>Only then a third town.</li>
+</ol>
+<p class="mut">Maintenance and verification ideas for each source and view are on the dev page (<code>/dev#new-town</code>), from <code>lib/data/sourceNotes.ts</code>.</p>
+</main>
+</body>
+</html>

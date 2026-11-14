@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Check lib/data/timelines.json against the fetched documents.
+"""Check lib/data/timelines.json and every lib/data/towns/*/timelines.json against the fetched documents.
 
 - every date parses (YYYY-MM-DD or YYYY-MM);
 - every "decided" event has a quote, and every quote appears verbatim (whitespace-normalised)
   in the text of one of the sources it cites;
 - every cited source id exists in sources.ts;
+- an event marked "scan" was read by eye from a scanned page with no text layer: its quote is required but
+  cannot be matched, so it is counted and reported, never passed silently;
 - parties use only the allowed roles (business and professional roles; no residents).
 usage: verify.py CACHE_DIR [--offline]   (--offline skips the quote check when nothing was fetched)
 """
@@ -12,13 +14,20 @@ import datetime as dt, json, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ROLES = {"applicant", "owner", "engineer", "attorney", "architect", "builder"}
-norm = lambda s: re.sub(r"\s+", " ", s.replace("’", "'").replace("“", '"').replace("”", '"')).strip().lower()
+norm = lambda s: re.sub(r"\s+", " ", s.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')).strip().lower()
 
 
 def main(cache, offline):
     srcs = set(re.findall(r"^\s*(\w+): \{ label:", (ROOT / "lib/data/sources.ts").read_text(), re.M))
-    errors = []
-    for name, t in json.loads((ROOT / "lib/data/timelines.json").read_text()).items():
+    errors, scans = [], []
+    files = [ROOT / "lib/data/timelines.json", *sorted((ROOT / "lib/data/towns").glob("*/timelines.json"))]
+    timelines, strict = {}, set()
+    for f in files:
+        for k, v in json.loads(f.read_text()).items():
+            timelines[k] = v
+            if f == files[0]: strict.add(k)  # the monthly action fetches these sources, so a missing text is a failure
+    unchecked = []
+    for name, t in timelines.items():
         for e in t["events"]:
             where = f"{name} {e['date']}"
             try:
@@ -31,17 +40,26 @@ def main(cache, offline):
                 errors.append(f"{where}: marked unverified but has a quote; remove the flag if the quote was checked")
             if e["kind"] == "decided" and not e.get("quote"):
                 errors.append(f"{where}: decided without a quote")
+            if e.get("scan"):
+                if not e.get("quote"): errors.append(f"{where}: scanned source with no transcribed quote")
+                scans.append(where); continue
             if e.get("quote") and not offline:
                 found = False
-                for s in e["src"]:
-                    f = pathlib.Path(cache) / f"{s}.txt"
-                    if f.exists() and norm(e["quote"]) in norm(f.read_text(errors="replace")): found = True
+                have = [pathlib.Path(cache) / f"{s}.txt" for s in e["src"]]
+                have = [f for f in have if f.exists()]
+                # A town's sources may need fetching by hand (scripts/towns/README.md). With none present, say so; don't fail or pass.
+                if not have and name not in strict:
+                    unchecked.append(where); continue
+                for f in have:
+                    if norm(e["quote"]) in norm(f.read_text(errors="replace")): found = True
                 if not found: errors.append(f"{where}: quote not found in {', '.join(e['src'])}: {e['quote'][:60]!r}")
         for p in t.get("parties", []):
             if p["role"] not in ROLES: errors.append(f"{name}: party role {p['role']}")
     if errors:
         print("\n".join(errors)); sys.exit(1)
-    print("timelines.json verified")
+    print(f"timelines verified: {len(timelines)} projects in {len(files)} files")
+    if unchecked: print(f"{len(unchecked)} quotes not checked, source text not in the cache: " + "; ".join(unchecked))
+    if scans: print(f"{len(scans)} events rest on scanned pages read by eye, not matched: " + "; ".join(scans))
 
 
 if __name__ == "__main__":

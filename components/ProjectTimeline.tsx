@@ -9,6 +9,7 @@ import { EVIDENCE, evidenceOf, eventRange, eventTime, fmtEventDate, isMonthOnly,
 import type { Precedent, TimelineEvent } from "@/lib/types";
 import { HoverCard } from "./Popover";
 import { SeasonAccents } from "./Season";
+import { routeText } from "@/lib/engine";
 
 const DAY = 86400000;
 const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -19,7 +20,7 @@ function EventCard({ h, e }: { h: Precedent; e: TimelineEvent }) {
     <div className="pt-card">
       <span className="pt-card-date mono">{fmtEventDate(e.date)}{isMonthOnly(e.date) && <i> · day not known</i>}</span>
       <b>{e.what}</b>
-      <p className="muted small">{h.name} · {TREES[h.route].name}</p>
+      <p className="muted small">{h.name} · {routeText(h.route, h.town).name}</p>
       <p className={`pt-ev-badge e-${ev}`}><b>{EVIDENCE[ev].label}.</b> {EVIDENCE[ev].how}</p>
       {e.unverified && <p className="small">{e.unverified}</p>}
       {e.quote && <blockquote className="small">“{e.quote}”</blockquote>}

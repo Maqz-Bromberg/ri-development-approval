@@ -2,16 +2,17 @@
 
 import { useState } from "react";
 import { ProjectTimeline } from "./ProjectTimeline";
-import { HISTORY, precedentId } from "@/lib/data/history";
+import { historyFor, precedentId } from "@/lib/data/history";
 import { SOURCES } from "@/lib/data/sources";
 import { fmtEventDate, isMonthOnly } from "@/lib/timelines";
 import { sourceKind } from "@/lib/sourceKind";
 import { useProject } from "./ProjectProvider";
 
-export function PrecedentTable({ rank = true }: { rank?: boolean }) {
+/** The recorded projects of one town: the project's own town unless another is named. */
+export function PrecedentTable({ rank = true, town }: { rank?: boolean; town?: string }) {
   const { inputs, tree } = useProject();
   const [view, setView] = useState<"timeline" | "table">("timeline");
-  const rows = HISTORY.map((h) => ({
+  const rows = historyFor(town ?? inputs.town).map((h) => ({
     h,
     score: Math.abs(h.units - inputs.units) + (h.route === tree ? 0 : 6) + (h.zone === inputs.zone ? 0 : 2),
   }));
@@ -55,7 +56,7 @@ export function PrecedentTable({ rank = true }: { rank?: boolean }) {
                   {h.events.map((e) => (
                     <li key={e.date + e.what} className={`ev-${e.kind}`}>
                       <span className="mono small">{fmtEventDate(e.date)}</span> {e.what}
-                      {e.kind === "reported" && <span className="muted small"> (press report)</span>}{e.unverified && <span className="muted small"> (date not yet checked)</span>}{isMonthOnly(e.date) && <span className="muted small"> (day not known)</span>}
+                      {e.kind === "reported" && <span className="muted small"> (press report)</span>}{e.unverified && <span className="muted small"> (date not yet checked)</span>}{e.scan && <span className="muted small"> (read from a scanned page)</span>}{isMonthOnly(e.date) && <span className="muted small"> (day not known)</span>}
                     </li>
                   ))}
                 </ul>

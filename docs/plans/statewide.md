@@ -2,6 +2,8 @@
 
 Status: partly built on branch `statewide`: level 1 for all 39 towns (town index, per-town Atlas districts, town in the project and share link, Cumberland wording removed). The state/town data split, town in the URL, level 2 and above are not built.
 
+A trial of levels 2 to 4 for one part of Providence (Fox Point and Wayland) is on branch `providence-trial`. It did not do the split: Providence sits in `lib/data/towns/providence/` behind `lib/data/towns/overlay.ts`, and Cumberland is still inside `trees.ts`. What the trial found, including the assumptions below that did not hold, is in `docs/providence-trial-review.html`.
+
 ## What is already statewide, and what is not
 
 | Layer | Today | Statewide cost |

@@ -1,5 +1,6 @@
 import { getActiveTown } from "../town";
 import type { Contact } from "../types";
+import { PROVIDENCE_CONTACTS } from "./towns/providence/town";
 
 /** Authorities and offices on the route. "verify" marks details from older or secondary sources. */
 const CUMBERLAND_CONTACTS: Record<string, Contact> = {
@@ -125,9 +126,15 @@ function forTown(id: string, c: Contact, town: string): Contact {
   return out;
 }
 
+/** Towns whose own offices have been read. An id found here wins; anything else falls back to the role-only version. */
+const TOWN_CONTACTS: Record<string, Record<string, Contact>> = { Providence: PROVIDENCE_CONTACTS };
+
 /** The contacts of the town of the project on screen. Reads the active town each time, so it follows the project. */
 export const CONTACTS: Record<string, Contact> = new Proxy(CUMBERLAND_CONTACTS, {
-  get: (t, id: string) => (t[id] ? forTown(id, t[id], getActiveTown()) : undefined),
+  get: (t, id: string) => {
+    const town = getActiveTown();
+    return TOWN_CONTACTS[town]?.[id] ?? (t[id] ? forTown(id, t[id], town) : undefined);
+  },
 });
 
 export const KIND_LABEL: Record<string, string> = {

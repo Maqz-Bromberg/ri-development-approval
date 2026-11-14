@@ -1,4 +1,5 @@
-import { HISTORY } from "./data/history";
+import { historyFor } from "./data/history";
+import { getActiveTown } from "./town";
 import type { Precedent, TimelineEvent, TreeId } from "./types";
 
 const DAY = 86400000;
@@ -29,14 +30,16 @@ export function fmtEventDate(date: string): string {
 /*
  * What backs each event. This is computed from the data, and scripts/timelines/verify.py enforces the first level.
  *   quoted  a verbatim quote that verify.py found in the cited document
+ *   scanned a quote transcribed by eye from a scanned page; verify.py reports it and cannot match it
  *   cited   a source is linked, but no quote is checked against it
  *   press   a news report, linked and not fetched
  *   carried the date came from the earlier record and was not found in a fetched document
  */
-export type Evidence = "quoted" | "cited" | "press" | "carried";
+export type Evidence = "quoted" | "scanned" | "cited" | "press" | "carried";
 
 export const EVIDENCE: Record<Evidence, { label: string; how: string }> = {
   quoted: { label: "Quote checked", how: "A sentence from the source is stored, and a script confirmed it appears word for word in the document." },
+  scanned: { label: "Read from a scan", how: "The source is a scanned page with no searchable text. A sentence was transcribed by eye, and no script has matched it against the page." },
   cited: { label: "Source linked", how: "The event comes from the linked document, but no sentence is stored and checked. A person read it." },
   press: { label: "Press report", how: "From a news story. Not fetched or quoted, and the paper may be wrong or may differ from the town record." },
   carried: { label: "Not yet checked", how: "The date came from an earlier version of the record and has not been found in a fetched document." },
@@ -45,6 +48,7 @@ export const EVIDENCE: Record<Evidence, { label: string; how: string }> = {
 export function evidenceOf(e: TimelineEvent): Evidence {
   if (e.unverified) return "carried";
   if (e.kind === "reported") return "press";
+  if (e.scan) return "scanned";
   return e.quote ? "quoted" : "cited";
 }
 
@@ -87,9 +91,9 @@ export function spansOfProject(h: Precedent): Span[] {
   return [...new Set(h.events.map((e) => e.stage))].flatMap((s) => spanOf(h, s) ?? []);
 }
 
-/** Documented spans for a step on this route, one per project that ran the same route. */
-export function spansFor(tree: TreeId, stage: string): Span[] {
-  return HISTORY.filter((h) => h.route === tree).flatMap((h) => spanOf(h, stage) ?? []);
+/** Documented spans for a step on this route, one per project of the same town that ran the same route. */
+export function spansFor(tree: TreeId, stage: string, town = getActiveTown()): Span[] {
+  return historyFor(town).filter((h) => h.route === tree).flatMap((h) => spanOf(h, stage) ?? []);
 }
 
 export function spanDays(s: Span): string {

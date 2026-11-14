@@ -13,6 +13,9 @@ import { RouteFlow } from "./RouteFlow";
 import { ShareTools } from "./ShareTools";
 import { StepSheets } from "./StepSheets";
 import { useTrial } from "./Trial";
+import { routeText } from "@/lib/engine";
+import { townInfo } from "@/lib/data/towns";
+import { historyFor } from "@/lib/data/history";
 
 /** The Work page: a sticky summary of the project, then the approval steps, ways to keep them, and precedent. */
 export function StepsWorkspace() {
@@ -43,7 +46,7 @@ export function StepsWorkspace() {
       <div className="summary-bar">
         <div className="summary-bar-main">
           <b>{inputs.units} unit{inputs.units === 1 ? "" : "s"} · {inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}</b>
-          <span>{TREES[tree].name}</span>
+          <span>{routeText(tree).name}</span>
           {v.fails.length > 0 && <span className="st fail">{v.fails.length} blocker{v.fails.length > 1 ? "s" : ""}</span>}
           {v.flags.length > 0 && <span className="st flag">{v.flags.length} open</span>}
           {!v.fails.length && !v.flags.length && <span className="st pass">Clear</span>}
@@ -101,10 +104,13 @@ export function StepsWorkspace() {
         <div className="sec-head">
           <p className="eyebrow">Precedent</p>
           <h2 id="h-hist">Projects like yours in {inputs.town}</h2>
-          <p>Multifamily projects from recent Planning Board agendas, closest match first. Outcomes are given only where a source states them.</p>
+          <p>Multifamily projects from recent {shortName(CONTACTS.pb?.name ?? "Planning Board")} records, closest match first. Outcomes are given only where a source states them.</p>
         </div>
-        {inputs.town === "Cumberland"
-          ? <PrecedentTable />
+        {historyFor(inputs.town).length > 0
+          ? <>
+              {townInfo(inputs.town).part && <p className="muted small">Read for {townInfo(inputs.town).part!.name} only. {townInfo(inputs.town).part!.note}</p>}
+              <PrecedentTable />
+            </>
           : <p className="muted">No projects from {inputs.town} have been read yet. Cumberland's are on the <Link href="/records">Records page</Link>, and show how one town applied the same state law.</p>}
       </section>
     </>

@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DEV_PROJECTS } from "@/lib/data/devProjects";
 import { OPEN_QUESTIONS, type QStatus } from "@/lib/data/openQuestions";
+import { SOURCE_NOTES, VIEW_NOTES, type CheckState } from "@/lib/data/sourceNotes";
 
 export const metadata: Metadata = { title: "Dev notes", robots: { index: false } };
 
-const AREAS = ["Board calendars", "Real timelines", "Verification", "Statewide", "Site-wide"] as const;
+const AREAS = ["Providence trial", "Board calendars", "Real timelines", "Verification", "Statewide", "Site-wide"] as const;
+const CHECK: Record<CheckState, { label: string; cls: string }> = { built: { label: "script checks it", cls: "p-built" }, partial: { label: "partly checked", cls: "p-partial" }, none: { label: "by hand", cls: "p-idea" } };
 const LABEL: Record<QStatus, string> = { open: "Open", review: "Larger review", decided: "Decided so far" };
 
 export default function DevPage() {
@@ -23,6 +25,50 @@ export default function DevPage() {
         <li><Link href="/after-approval"><b>From build</b></Link> · post-approval milestones (empty so far)</li>
         <li><Link href="/towns"><b>Towns</b></Link> · coverage level for each of the 39 towns</li>
       </ul>
+      <h2 className="h2" id="new-town">Taking on a new town: sources, views and how each is kept true</h2>
+      <p className="muted">
+        From the Providence trial (Nov 13, 2026), which read one part of a second town to level 4. The questions it raised are in <code>docs/providence-trial-review.html</code>.
+        Run the checks with <code>scripts/towns/</code>. This list lives in <code>lib/data/sourceNotes.ts</code>.
+      </p>
+      <ol className="dev-rules">
+        <li><b>Nothing is stored without the document it came from.</b> A quote is copied, with its source on the same line, and a script matches it. A summary with no matching text says so.</li>
+        <li><b>A source that cannot be fetched by script is a maintenance debt, written down.</b> The fetch script lists them. Each one needs a named person and a date.</li>
+        <li><b>Change is found by comparing, and reported as an issue.</b> Schedules against the state meeting list, parcel ids against the layer, links against the page that points to them. Never an automatic edit.</li>
+        <li><b>A view claims only what its data backs.</b> Level, trial mark and read date travel with the town to every page, and a build check should hold them to the data.</li>
+        <li><b>Where a town's own documents disagree, show both.</b> It happened in three of five projects.</li>
+        <li><b>A town leaves trial when its planning office has confirmed the sheet</b>, with a name and a date. Not before.</li>
+      </ol>
+      <h3 className="h3">Sources</h3>
+      <div className="tablewrap">
+        <table className="dev-table">
+          <thead><tr><th>Source</th><th>Fetched by script?</th><th>Feeds</th><th>How it goes wrong</th><th>How it is checked</th></tr></thead>
+          <tbody>
+            {SOURCE_NOTES.map((n) => (
+              <tr key={n.source}>
+                <th scope="row">{n.source}<br /><span className="muted small">{n.where}</span></th>
+                <td>{n.fetch}</td><td>{n.feeds}</td><td>{n.breaks}</td>
+                <td><span className={`q-status ${CHECK[n.check].cls}`}>{CHECK[n.check].label}</span> {n.verify}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <h3 className="h3">Views</h3>
+      <div className="tablewrap">
+        <table className="dev-table">
+          <thead><tr><th>View</th><th>Reads from</th><th>Wrong when</th><th>What stands guard</th></tr></thead>
+          <tbody>
+            {VIEW_NOTES.map((n) => (
+              <tr key={n.view}>
+                <th scope="row">{n.view}</th>
+                <td><code>{n.from}</code></td><td>{n.wrongWhen}</td>
+                <td><span className={`q-status ${CHECK[n.check].cls}`}>{CHECK[n.check].label}</span> {n.guard}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <h2 className="h2" id="projects">Verification and maintenance projects</h2>
       <p className="muted">Where each stands, and an idea for it. Effort: S an afternoon, M a few days, L needs a decision or the larger review first.</p>
       {(["Verification", "Maintenance"] as const).map((g) => (

@@ -89,6 +89,8 @@ export interface ProjectInputs {
   rezone: boolean;
   /** Conservation development (Cumberland Zoning Art. 11): density bonus in exchange for open space */
   conservation: boolean;
+  /** Gross sq ft of commercial floor area in the project. Used only where a town's rules sort projects by it (Providence). */
+  commercial: number;
   /** ISO date the project starts (day 0 of the schedule) */
   startDate: string;
   /** Where the address lookup placed the site (WGS84). Unset for the example and for hand-entered projects. */
@@ -108,6 +110,8 @@ export interface Finding {
 export type PrecedentStatus = "approved" | "pending" | "administrative" | "unknown";
 
 export interface Precedent {
+  /** Municipality whose records the project comes from */
+  town: string;
   name: string;
   addr: string;
   lot: string;
@@ -145,6 +149,8 @@ export interface TimelineEvent {
   quote?: string;
   /** Set when the date was carried over from an earlier record and not found in a fetched document. The text says why. */
   unverified?: string;
+  /** True when the quote was read by eye from a scanned page with no text layer, so no script has matched it. */
+  scan?: boolean;
 }
 
 export interface Party {
@@ -163,6 +169,18 @@ export interface Coverage {
 /** The part of a Precedent kept in timelines.json */
 export type Timeline = Pick<Precedent, "events" | "parties" | "coverage" | "checked">;
 
+/** What a town changes in the state-law route: its own steps, its own sorting of projects, and its own findings. */
+export interface TownRules {
+  /** Which route a project takes, where the town's thresholds differ from the state defaults */
+  classify?: (i: ProjectInputs) => TreeId;
+  /** The stage by which state permits must be in hand. Cumberland's regulations say preliminary. */
+  permitsBefore?: "prelim" | "final";
+  /** True when the route depends on commercial floor area, so the intake form asks for it */
+  asksCommercial?: boolean;
+  /** Route names and rules as the town defines them, where they differ from the state defaults */
+  routeText?: Partial<Record<TreeId, { name?: string; rule: string; blurb: string }>>;
+}
+
 export type ObjectionWeight = "material" | "partly" | "not";
 
 /** One documented instance of a concern raised at a real hearing. Private residents are described by role only. */
@@ -176,6 +194,8 @@ export interface Heard {
   answer?: string;
   outcome?: string;
   src: string[];
+  /** A sentence from src[0], word for word, that the summary rests on. Checked by scripts/towns/verify_quotes.py. */
+  q?: string;
 }
 
 export interface Objection {
@@ -278,5 +298,6 @@ export interface BoardCalendar {
   read: string;
   times?: { pb?: string; trc?: string };
   rows: CalendarRow[];
-  pattern: { cutoffDaysBefore: number; note: string };
+  /** `rule` names the usual meeting day (weekday 0 = Sunday; nth week of the month). Without it, Cumberland's last-Thursday pattern is used. */
+  pattern: { cutoffDaysBefore: number; note: string; rule?: { weekday: number; nth: number } };
 }

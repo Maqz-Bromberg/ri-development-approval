@@ -1,4 +1,5 @@
 import type { Objection } from "../types";
+import { PROVIDENCE_HEARD, PROVIDENCE_OBJECTIONS } from "./towns/providence/hearings";
 
 /*
  * Common questions and objections at Planning Board hearings on multifamily projects.
@@ -6,7 +7,7 @@ import type { Objection } from "../types";
  * meeting video, local press). Residents are described by role and street, never by name.
  * "say" notes are drafting examples written for this guide, not quotes.
  */
-export const OBJECTIONS: Objection[] = [
+const BASE: Objection[] = [
   {
     id: "traffic", topic: "Traffic and parking",
     said: "This road can't take any more traffic.",
@@ -211,6 +212,9 @@ export const OBJECTIONS: Objection[] = [
     heard: [],
   },
 ];
+
+/** The common concerns, each with the instances documented in every town read so far. A town's own file adds its instances by concern id. */
+export const OBJECTIONS: Objection[] = [...BASE, ...PROVIDENCE_OBJECTIONS].map((o) => ({ ...o, heard: [...o.heard, ...(PROVIDENCE_HEARD[o.id] ?? [])] }));
 
 export const WEIGHT_LABEL = {
   material: "Board can weigh this",

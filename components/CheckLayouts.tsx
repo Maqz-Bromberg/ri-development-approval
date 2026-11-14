@@ -5,6 +5,7 @@ import { TREES } from "@/lib/data/trees";
 import { verdict } from "@/lib/engine";
 import { useProject } from "./ProjectProvider";
 import { ORIGIN_LABEL, ProjectFacts, focusField, verdictHeadline } from "./Verdict";
+import { routeText } from "@/lib/engine";
 
 /*
  * Pieces for the Check page layouts on trial (Trial.tsx, "Check page layout"). Both keep the rule from
@@ -72,7 +73,7 @@ export function CheckBar() {
       <div className="cb-answer">
         <p className="cb-head"><span className={`st ${state}`}>{STATE_LABEL[state]}</span> <b>{verdictHeadline(v)}</b></p>
         <p className="cb-meta muted">
-          {TREES[tree].name}{months ? ` · town review up to ${months} months` : ""}
+          {routeText(tree).name}{months ? ` · town review up to ${months} months` : ""}
           {v.fails.length + v.flags.length > 0 && <> · <a href="#answer">{v.fails.length + v.flags.length} to settle ↓</a></>}
         </p>
       </div>

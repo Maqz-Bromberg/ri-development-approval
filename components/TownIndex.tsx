@@ -10,11 +10,12 @@ const COUNTIES = ["Bristol", "Kent", "Newport", "Providence", "Washington"] as c
 export function TownIndex() {
   const { inputs, setInput } = useProject();
   const count = (l: Level) => TOWNS.filter((t) => t.level === l).length;
+  const parts = (l: Level) => TOWNS.filter((t) => t.part?.level === l).length;
   return (
     <>
       <ul className="level-key">
         {([1, 2, 3, 4] as Level[]).map((l) => (
-          <li key={l}><LevelChip level={l} /> <b>{LEVELS[l].name}</b> · {count(l)} town{count(l) === 1 ? "" : "s"}<br /><span className="muted small">{LEVELS[l].has}</span></li>
+          <li key={l}><LevelChip level={l} /> <b>{LEVELS[l].name}</b> · {count(l)} town{count(l) === 1 ? "" : "s"}{parts(l) ? `, and part of ${parts(l)} more` : ""}<br /><span className="muted small">{LEVELS[l].has}</span></li>
         ))}
       </ul>
       {COUNTIES.map((c) => (
@@ -24,6 +25,8 @@ export function TownIndex() {
             {TOWNS.filter((t) => t.county === c).map((t) => (
               <li key={t.name} className={inputs.town === t.name ? "is-current" : undefined}>
                 <b>{t.name}</b> <LevelChip level={t.level} />
+                {t.part && <span className="muted small"> · {t.part.name} <LevelChip level={t.part.level} /></span>}
+                {t.trial && <span className="muted small"> · trial</span>}
                 {inputs.town === t.name
                   ? <span className="muted small"> · your project</span>
                   : <Link href="/project" className="link-btn small" onClick={() => { setInput("town", t.name); setInput("zone", "other"); }}>Use this town</Link>}

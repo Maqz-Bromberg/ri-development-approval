@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { TREES, TREE_ORDER } from "@/lib/data/trees";
+import { TREE_ORDER } from "@/lib/data/trees";
+import { routeText } from "@/lib/engine";
 import { AddressLookup } from "./AddressLookup";
 import { AtlasPanel } from "./AtlasPanel";
 import { CheckBar, ProjectCard } from "./CheckLayouts";
@@ -122,7 +123,7 @@ export function ProjectWorkspace() {
         </div>
         <div className="trees">
           {TREE_ORDER.map((k) => {
-            const t = TREES[k];
+            const t = routeText(k);
             return (
               <button key={k} type="button" className="tree-card" aria-pressed={k === tree} onClick={() => setOverride(k === auto ? "auto" : k)}>
                 <b>{t.name}</b>

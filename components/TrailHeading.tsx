@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { TREES } from "@/lib/data/trees";
 import { useProject } from "./ProjectProvider";
+import { routeText } from "@/lib/engine";
 
 export function TrailHeading() {
   const { inputs, tree } = useProject();
@@ -11,7 +12,7 @@ export function TrailHeading() {
       <div>
         <p className="eyebrow">The road to approval</p>
         <h2 id="trail-h">
-          {inputs.units} units in {inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}: {TREES[tree].name.toLowerCase()}
+          {inputs.units} units in {inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}: {routeText(tree).name.toLowerCase()}
         </h2>
       </div>
       <p>

@@ -6,6 +6,7 @@ import { fmt } from "@/lib/engine";
 import { geocode, outlinePath, siteFacts, type Candidate, type SiteFacts } from "@/lib/lookup";
 import { useProject } from "./ProjectProvider";
 import { ZoningMap } from "./ZoningMap";
+import { townInfo } from "@/lib/data/towns";
 
 type State =
   | { step: "idle" }
@@ -150,9 +151,14 @@ export function AddressLookup({ map = false }: { map?: boolean } = {}) {
                   </fieldset>
                 )}
                 {f.failed.length > 0 && <p className="lookup-note is-warn">Couldn't read: {f.failed.join(", ")}. Enter those by hand.</p>}
-                {covered && f.town !== "Cumberland" && (
+                {covered && f.town && townInfo(f.town).level < 3 && (
                   <p className="lookup-note is-warn">
                     {f.town}: only zoning and state-law steps have been read. Local checklists, contacts and meeting dates are not shown for this town.
+                  </p>
+                )}
+                {covered && f.town && townInfo(f.town).trial && (
+                  <p className="lookup-note is-warn">
+                    {f.town}: local steps come from a trial reading that the city has not confirmed.{townInfo(f.town).part ? ` Hearings and example projects were read for ${townInfo(f.town).part!.name} only.` : ""}
                   </p>
                 )}
                 <div className="actions">

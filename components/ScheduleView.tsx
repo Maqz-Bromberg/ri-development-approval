@@ -15,6 +15,7 @@ import { seasonOf, type Season } from "@/lib/timelines";
 import { DocChecklist } from "./DocChecklist";
 import { DemoTag } from "./Demo";
 import { useProject } from "./ProjectProvider";
+import { routeText } from "@/lib/engine";
 
 const KIND_LABEL = { file: "You file", deadline: "Deadline", hearing: "Meeting or hearing", milestone: "Milestone" } as const;
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -233,6 +234,7 @@ export function ScheduleView() {
   const [view, setView] = useState<"timeline" | "calendar">("timeline");
   const [selected, setSelected] = useState<string | null>(null);
   const [zoom, setZoom] = useState<"approvals" | "all">("approvals");
+  const cal = calendarFor(inputs.town);
   const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   if (!plan.length) return null;
 
@@ -288,12 +290,13 @@ export function ScheduleView() {
         <li><DemoTag>Demo: durations other than board meetings are estimates</DemoTag></li>
       </ul>
       <p className="muted small route-note">
-        Route: <b>{TREES[tree].name}</b>. Statutory clocks run to their maximums, and the other durations are estimates.
-        {calendarFor(inputs.town) ? (
+        Route: <b>{routeText(tree).name}</b>. Statutory clocks run to their maximums, and the other durations are estimates.
+        {cal ? (
           <>
-            Planning Board and Technical Review Committee dates come from Cumberland's published 2026 schedule
-            (<a href={SOURCES.csched.url} target="_blank" rel="noreferrer">meeting schedule and deadlines</a>, read {CUMBERLAND_CALENDAR.read}).
-            Dates after it are projected from the board's usual pattern and marked <b>est.</b>
+            {cal.town === "Cumberland" ? "Planning Board and Technical Review Committee" : "City Plan Commission"} dates come from {cal.town}'s published {cal.year} schedule
+            (<a href={SOURCES[cal.src].url} target="_blank" rel="noreferrer">meeting schedule and deadlines</a>, read {cal.read}).
+            Dates after it are projected from the board's usual pattern ({cal.pattern.note}) and marked <b>est.</b>
+            {cal.town === "Providence" && " In 2026 several meetings were held on other days than the schedule gave, so confirm each date against the agenda."}
           </>
         ) : (
           <>Hearing dates for {inputs.town} are estimates: its board's meeting calendar has not been read yet.</>

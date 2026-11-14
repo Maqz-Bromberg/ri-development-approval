@@ -3,6 +3,7 @@ import { TREES } from "./data/trees";
 import { classify, deriveFlags, maxUnits, stepsFor, verdict } from "./engine";
 import { buildSchedule, daysBetween } from "./schedule";
 import type { ProjectInputs, TreeId } from "./types";
+import { routeText } from "./engine";
 
 export interface Scenario {
   id: string;
@@ -34,7 +35,7 @@ function measure(id: string, label: string, why: string, inputs: ProjectInputs):
   const main = steps.filter((s) => !s.branch);
   const before = main.findIndex((s) => s.id === "building");
   return {
-    id, label, why, inputs, tree, route: TREES[tree].name,
+    id, label, why, inputs, tree, route: routeText(tree).name,
     approvalSteps: before === -1 ? main.length : before,
     hearings: plan.filter((p) => !p.step.branch).reduce((a, p) => a + p.ticks.filter((t) => t.kind === "hearing" && /hearing/i.test(t.label)).length, 0),
     reviewDays: v.reviewDays,

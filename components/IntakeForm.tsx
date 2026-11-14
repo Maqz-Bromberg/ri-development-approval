@@ -7,6 +7,7 @@ import { useAtlas } from "./useAtlas";
 import { DemoTag } from "./Demo";
 import { useProject } from "./ProjectProvider";
 import type { ProjectInputs } from "@/lib/types";
+import { townRules } from "@/lib/data/towns/overlay";
 
 const FACTS: { key: keyof ProjectInputs; label: string }[] = [
   { key: "water", label: "Public water" },
@@ -24,7 +25,7 @@ export function IntakeForm() {
   const { districts } = useAtlas();
   const [drag, setDrag] = useState(false);
 
-  const num = (key: "units" | "aff" | "lot" | "dist") => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const num = (key: "units" | "aff" | "lot" | "dist" | "commercial") => (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = parseFloat(e.target.value);
     let n = Number.isFinite(v) ? v : 0;
     if (key === "units") n = Math.max(1, Math.round(n));
@@ -65,6 +66,13 @@ export function IntakeForm() {
           <label htmlFor="f-aff">Deed-restricted affordable units</label>
           <input id="f-aff" type="number" min={0} max={inputs.units} value={inputs.aff} onChange={num("aff")} />
         </div>
+        {townRules(inputs.town).asksCommercial && (
+          <div className="field full">
+            <label htmlFor="f-commercial">Commercial floor area (sq ft)</label>
+            <input id="f-commercial" type="number" min={0} step={100} value={inputs.commercial ?? 0} onChange={num("commercial")} />
+            <span className="muted small">{inputs.town} sorts projects of 10 or more units by this: over 2,500 sq ft is a major project.</span>
+          </div>
+        )}
         <div className="field">
           <label htmlFor="f-zone">Zoning district</label>
           <select id="f-zone" value={inputs.zone} onChange={(e) => setInput("zone", e.target.value)}>

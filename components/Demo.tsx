@@ -17,9 +17,15 @@ export const DEMO_PARTS: { where: string; what: string; outlook: "can" | "confir
   },
   {
     where: "Check · Municipality",
-    what: "All 39 towns get zoning from the Atlas and the state-law route and clocks. Only Cumberland has local checklists, contacts and precedent; other towns show state-law documents only and say so.",
+    what: "All 39 towns get zoning from the Atlas and the state-law route and clocks. Cumberland has local checklists, contacts and precedent. Providence has them from a trial reading (see the next entry). Other towns show state-law documents only and say so.",
     outlook: "can",
     note: "Local steps have to be read from each town's regulations, then confirmed by a person. See the statewide plan and the Towns page for each town's level.",
+  },
+  {
+    where: "Every page · Providence",
+    what: "Providence's steps, contacts, meeting dates and findings come from one reading of its regulations and forms, made on Nov 13, 2026 and not confirmed by anyone at the city. Its Zoning Ordinance was not read: dimensional figures come from the 2024 Zoning Atlas. Hearings and example projects cover Fox Point and Wayland only, and four of their dated events were read by eye from scanned minutes.",
+    outlook: "confirm",
+    note: "The open questions are in docs/providence-trial-review.html. Before this leaves trial: read the ordinance, have planning staff confirm the sheet, and add text recognition for scanned minutes.",
   },
   {
     where: "Check · Wetlands, state road and transit",
@@ -47,7 +53,7 @@ export const DEMO_PARTS: { where: string; what: string; outlook: "can" | "confir
   },
   {
     where: "Hearing prep · Towns other than Cumberland",
-    what: "The town picker lists where each town's hearings are recorded, but only Cumberland's records have been read into the questions.",
+    what: "The town picker lists where each town's hearings are recorded. Only Cumberland's records, and Providence's for Fox Point and Wayland, have been read into the questions.",
     outlook: "confirm",
     note: "Minutes can be read and tagged with a review step. Meeting videos need transcription first.",
   },

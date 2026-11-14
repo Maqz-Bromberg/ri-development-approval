@@ -6,6 +6,7 @@ import { TREES } from "@/lib/data/trees";
 import { verdict } from "@/lib/engine";
 import { SHARE_PARAM, encodeState, fromFile, toFile } from "@/lib/share";
 import { useProject } from "./ProjectProvider";
+import { routeText } from "@/lib/engine";
 
 const ORIGIN_NOTE = {
   example: "You're looking at the example project.",
@@ -53,7 +54,7 @@ export function ShareTools({ printHere = false }: { printHere?: boolean }) {
     const v = verdict(inputs, tree, steps);
     const lines = [
       `${name}${inputs.address ? ` (${inputs.address})` : ""}`,
-      `Route: ${TREES[tree].name}`,
+      `Route: ${routeText(tree).name}`,
       v.reviewDays ? `Town review: up to ${v.reviewDays} days of statutory clocks` : "",
       ...v.fails.map((f) => `Blocker: ${f.t}`),
       ...v.flags.map((f) => `Open: ${f.t}`),

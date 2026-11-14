@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { housingTypeLabel, treatmentFor } from "@/lib/data/atlas";
-import { HISTORY, precedentId } from "@/lib/data/history";
+import { historyFor, precedentId } from "@/lib/data/history";
 import { TREES } from "@/lib/data/trees";
 import { fmt } from "@/lib/engine";
 import {
@@ -15,6 +15,7 @@ import type { PrecedentStatus, TreeId } from "@/lib/types";
 import { useAtlas } from "./useAtlas";
 import { useProject } from "./ProjectProvider";
 import type { Pin } from "./ZoningMapView";
+import { routeText } from "@/lib/engine";
 
 const ZoningMapView = dynamic(() => import("./ZoningMapView"), {
   ssr: false,
@@ -126,9 +127,9 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
     return c;
   }, [parcels, siteParcel]);
 
-  // Recorded projects are Cumberland's only, so pins show for Cumberland projects only.
+  // Pins are the recorded projects of the project's own town.
   const projects = useMemo(
-    () => (town === "Cumberland" ? HISTORY.filter((h) => h.at) : []).map((h) => ({
+    () => historyFor(town).filter((h) => h.at).map((h) => ({
       h, at: [h.at!.lat, h.at!.lon] as LatLon, dist: site ? metresBetween(site, [h.at!.lat, h.at!.lon]) : null,
     })).sort((a, b) => (a.dist ?? 0) - (b.dist ?? 0)),
     [town, siteKey], // eslint-disable-line react-hooks/exhaustive-deps
@@ -140,7 +141,7 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
 
   const pins: Pin[] = useMemo(() => (mode === "route" ? shown.map(({ h, at, dist }) => ({
     key: h.name, at, color: ROUTE_COLOR[h.route] ?? "#a3a9a2", shape: SHAPE[h.status],
-    tip: `<b>${esc(h.name)}</b><br>${h.units} unit${h.units === 1 ? "" : "s"}${h.aff ? `, ${h.aff} affordable` : ""} · ${esc(TREES[h.route].name)}<br>${esc(h.statusLabel)}`
+    tip: `<b>${esc(h.name)}</b><br>${h.units} unit${h.units === 1 ? "" : "s"}${h.aff ? `, ${h.aff} affordable` : ""} · ${esc(routeText(h.route, h.town).name)}<br>${esc(h.statusLabel)}`
       + (dist !== null ? `<br>${distLabel(dist)} from your site` : "")
       + (h.at!.exact ? "" : "<br><i>Placed at the street address; parcel not confirmed</i>"),
   })) : []), [mode, shown]);
@@ -266,16 +267,16 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
                   <span className={`zm-shape ${SHAPE[h.status]}`} style={{ "--c": ROUTE_COLOR[h.route] } as React.CSSProperties} aria-hidden="true" />
                   <span>
                     <Link href={`/records#p-${precedentId(h.name)}`}><b>{h.name}</b></Link>{" "}
-                    <span className="muted">{h.units} units{h.aff ? `, ${h.aff} affordable` : ""} · {TREES[h.route].name} · {h.statusLabel}</span>
+                    <span className="muted">{h.units} units{h.aff ? `, ${h.aff} affordable` : ""} · {routeText(h.route, h.town).name} · {h.statusLabel}</span>
                   </span>
                   <span className="mono small">{dist !== null ? distLabel(dist) : h.zone || ""}</span>
                 </li>
               ))}
             </ol>
           ) : (
-            <p className="small muted zm-note">{projects.length ? `No recorded projects lie within ${RADIUS} m of the site.` : `No projects have been read into the records for ${town} yet.`} Cumberland's are in the precedent table.</p>
+            <p className="small muted zm-note">{projects.length ? `No recorded projects lie within ${RADIUS} m of the site.` : `No projects have been read into the records for ${town} yet. Cumberland's are in the precedent table.`}</p>
           )}
-          {projects.length > 0 && <p className="small muted zm-note">Cumberland multifamily projects from Planning Board records. Select a pin to find it in the list.{site ? ` Only projects within ${RADIUS} m of your site are shown, with distances from it.${elsewhere ? ` ${elsewhere} more in town are further away; see the precedent table.` : ""}` : ""}</p>}
+          {projects.length > 0 && <p className="small muted zm-note">{town} multifamily projects from board records. Select a pin to find it in the list.{site ? ` Only projects within ${RADIUS} m of your site are shown, with distances from it.${elsewhere ? ` ${elsewhere} more in town are further away; see the precedent table.` : ""}` : ""}</p>}
         </>
       )}
     </div>

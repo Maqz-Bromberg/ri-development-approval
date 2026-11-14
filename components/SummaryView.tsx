@@ -8,6 +8,7 @@ import { buildSchedule, fmtDate } from "@/lib/schedule";
 import { useProject } from "./ProjectProvider";
 import { ShareTools } from "./ShareTools";
 import { Verdict } from "./Verdict";
+import { routeText } from "@/lib/engine";
 
 const LABEL = { fail: "Blocker", flag: "Open", info: "Note", pass: "Pass" } as const;
 
@@ -44,7 +45,7 @@ export function SummaryView() {
         </section>
       )}
       <section className="sum-block">
-        <h2>{TREES[tree].name}: steps</h2>
+        <h2>{routeText(tree).name}: steps</h2>
         <ol className="sum-steps">
           {steps.map((s) => {
             const when = plan.find((p) => p.step.id === s.id);

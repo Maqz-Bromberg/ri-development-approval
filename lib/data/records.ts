@@ -1,4 +1,5 @@
 import type { Locality } from "../types";
+import { PROVIDENCE_LOCALITY } from "./towns/providence/town";
 
 /*
  * Where council and board records live. Each locality publishes differently, so these are
@@ -66,13 +67,7 @@ export const LOCALITIES: Locality[] = [
       { kind: "video", label: "Special Zoning Atlas Briefing: Warwick/Cranston", url: "https://youtu.be/Spw3OJdRq2Y", note: "HousingWorks RI briefing on zoning in Warwick and Cranston" },
     ],
   },
-  {
-    id: "providence", name: "Providence",
-    intro: "The City Plan Commission posts agendas and materials a week ahead of each meeting, and also files them on the state Open Meetings portal.",
-    links: [
-      { label: "City Plan Commission meeting schedule (2023)", url: "https://www.providenceri.gov/wp-content/uploads/2022/12/CPC-meeting-schedule-2023.pdf", note: "Shows how the schedule and filing deadlines are published. Check the city site for the current year." },
-    ],
-  },
+  PROVIDENCE_LOCALITY,
   {
     id: "exeter", name: "Exeter",
     intro: "Exeter also uses ClerkBase, with the same page naming as Cumberland.",

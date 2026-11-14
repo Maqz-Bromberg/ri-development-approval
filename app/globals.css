@@ -957,6 +957,7 @@ textarea { resize: vertical; line-height: 1.45; }
 .pt-ev-badge { padding: .3rem .5rem; border-radius: 6px; background: color-mix(in srgb, var(--ink) 6%, transparent); }
 .pt-ev-badge.e-carried { background: rgb(var(--season-fall) / .18); }
 .pt-ev-badge.e-quoted { background: rgb(var(--season-spring) / .2); }
+.pt-ev-badge.e-scanned { background: rgb(var(--season-fall) / .1); }
 .vf { list-style: none; padding: 0; display: grid; gap: 1.4rem; max-width: 46rem; }
 .vf-stage { position: relative; border: 1px solid var(--rule); border-left-width: 5px; border-radius: 8px; padding: .8rem 1rem; background: var(--surface); }
 .vf-stage.r-low { border-left-color: var(--ev-decided); } .vf-stage.r-medium { border-left-color: var(--ev-continued); } .vf-stage.r-high { border-left-color: #B3402F; }
@@ -985,6 +986,12 @@ textarea { resize: vertical; line-height: 1.45; }
 .dev-proj li { border: 1px solid var(--rule); border-radius: 8px; padding: .6rem .9rem; background: var(--surface); }
 .dev-proj p { margin: .25rem 0 0; }
 .q-status.p-built { border-color: var(--ev-decided); } .q-status.p-partial { border-color: var(--ev-continued); }
+.dev-rules { max-width: 46rem; padding-left: 1.2rem; } .dev-rules li { margin-bottom: .4rem; }
+.dev-table { width: 100%; min-width: 46rem; border-collapse: collapse; font-size: .86rem; }
+.dev-table th, .dev-table td { text-align: left; vertical-align: top; padding: .45rem .6rem; border-bottom: 1px solid var(--rule); }
+.dev-table thead th { font-size: .74rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.dev-table tbody th { font-weight: 600; min-width: 9rem; }
+.dev-table code { font-size: .78rem; overflow-wrap: anywhere; }
 .docs-link { margin-left: auto; align-self: flex-start; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 6px; color: var(--muted); }
 .docs-link:hover, .docs-link[aria-current="page"] { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
 

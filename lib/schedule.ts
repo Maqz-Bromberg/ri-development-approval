@@ -1,5 +1,6 @@
 import { calendarFor, snap, type Snap } from "./calendar";
 import { SCHEDULE } from "./data/schedule";
+import { townPlan, townRules } from "./data/towns/overlay";
 import type { NumberedStep } from "./engine";
 import type { Doc, ScheduleTick, StepPlan, TreeId } from "./types";
 
@@ -46,22 +47,24 @@ export function daysBetween(a: Date, b: Date): number {
   return Math.round((b.getTime() - a.getTime()) / DAY);
 }
 
-export function planFor(tree: TreeId, stepId: string): StepPlan {
-  return SCHEDULE[`${tree}:${stepId}`] ?? SCHEDULE[stepId] ?? { est: 30, ticks: [{ d: 0, label: "Start", kind: "file", docs: "all" }] };
+export function planFor(tree: TreeId, stepId: string, town = "Cumberland"): StepPlan {
+  return townPlan(town, tree, stepId) ?? SCHEDULE[`${tree}:${stepId}`] ?? SCHEDULE[stepId] ?? { est: 30, ticks: [{ d: 0, label: "Start", kind: "file", docs: "all" }] };
 }
 
 /** Lay the steps out in sequence from the start date. Steps with `with` run alongside that step. */
 export function buildSchedule(tree: TreeId, steps: NumberedStep[], startISO: string, town = "Cumberland"): PlannedStep[] {
   const cal = calendarFor(town);
+  const gate = townRules(town).permitsBefore ?? "prelim";
   const start0 = parseISO(startISO);
   const out: PlannedStep[] = [];
   let cursor = start0;
   steps.forEach((step) => {
-    const plan = planFor(tree, step.id);
+    const plan = planFor(tree, step.id, town);
     const partner = plan.with ? out.find((p) => p.step.id === plan.with) : undefined;
     let start = partner ? partner.start : cursor;
-    if (!partner && step.id === "prelim") {
-      // Preliminary approval needs the state permits, so its decision can't come before they are in hand.
+    if (!partner && step.id === gate) {
+      // The gated stage needs the state permits, so its decision can't come before they are in hand.
+      // Cumberland's regulations gate the preliminary plan. Providence's gate the final plan.
       const permitsIn = out.filter((p) => p.plan.with).reduce<Date | null>((a, p) => (!a || p.end > a ? p.end : a), null);
       const lag = permitsIn ? daysBetween(addDays(start, plan.est), permitsIn) : 0;
       if (lag > 0) start = addDays(start, lag);

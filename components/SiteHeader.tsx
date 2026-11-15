@@ -47,11 +47,20 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Link href="/dev" className="docs-link" aria-label="Dev notes: verification, maintenance and open questions" title="Dev notes" aria-current={path.replace(/\/$/, "") === "/dev" ? "page" : undefined}>
-          <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 2.5h7l3.5 3.5v11.5H5z" /><path d="M12 2.5V6h3.5" /><path d="M7.5 10h5M7.5 13h5" />
-          </svg>
-        </Link>
+        <div className="header-tools">
+          <Link href="/engine" className="docs-link" aria-label="Engine: how the checks work, as flowcharts" title="How the engine works" aria-current={path.startsWith("/engine") ? "page" : undefined}>
+            <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="10" cy="10" r="2.6" />
+              <path d="M10 2.2v2.1M10 15.7v2.1M2.2 10h2.1M15.7 10h2.1M4.5 4.5 6 6M14 14l1.5 1.5M15.5 4.5 14 6M6 14l-1.5 1.5" />
+              <circle cx="10" cy="10" r="5.6" />
+            </svg>
+          </Link>
+          <Link href="/dev" className="docs-link" aria-label="Dev notes: verification, maintenance and open questions" title="Dev notes" aria-current={path.replace(/\/$/, "") === "/dev" ? "page" : undefined}>
+            <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 2.5h7l3.5 3.5v11.5H5z" /><path d="M12 2.5V6h3.5" /><path d="M7.5 10h5M7.5 13h5" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </header>
   );

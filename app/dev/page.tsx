@@ -22,6 +22,7 @@ export default function DevPage() {
         <p>Working pages and the questions still open. This page is not in the navigation. The list lives in <code>lib/data/openQuestions.ts</code>. How the site is put together, and each decision behind it, is in <code>docs/ARD.md</code>.</p>
       </div>
       <ul className="dev-links">
+        <li><Link href="/engine"><b>Engine</b></Link> · how the engine works, as flowcharts, one page for each part</li>
         <li><Link href="/verification"><b>Verification</b></Link> · how a record gets onto a timeline, with the risk at each stage</li>
         <li><Link href="/after-approval"><b>From build</b></Link> · post-approval milestones (empty so far)</li>
         <li><Link href="/towns"><b>Towns</b></Link> · coverage level for each of the 39 towns</li>

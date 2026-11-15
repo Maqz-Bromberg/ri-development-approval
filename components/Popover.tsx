@@ -19,7 +19,7 @@ const CLOSE_DELAY = 250;
  * Where the card goes, from its measured height: below the trigger if it fits there, else above, else on the roomier
  * side with its height capped so it scrolls inside. Either way it stays MARGIN clear of the window's edges.
  */
-function place(rect: DOMRect, width: number, height: number): { top: number; left: number; below: boolean; maxHeight?: number } {
+export function place(rect: DOMRect, width: number, height: number): { top: number; left: number; below: boolean; maxHeight?: number } {
   const left = Math.max(EDGE, Math.min(rect.left, window.innerWidth - width - EDGE));
   const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 0;
   const below = window.innerHeight - rect.bottom - EDGE - MARGIN;

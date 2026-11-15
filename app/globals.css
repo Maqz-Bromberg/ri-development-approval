@@ -750,7 +750,7 @@ textarea { resize: vertical; line-height: 1.45; }
 }
 @media (max-width: 760px) {
   .header-inner { flex-direction: column; align-items: stretch; gap: 6px; padding-block: 8px 0; }
-  .docs-link { top: 8px; }
+  .header-tools { top: 8px; }
   nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding: 0 16px 8px; }
   nav::-webkit-scrollbar { display: none; }
   nav a { white-space: nowrap; flex: none; }
@@ -1029,7 +1029,8 @@ textarea { resize: vertical; line-height: 1.45; }
 .dev-table tbody th { font-weight: 600; min-width: 9rem; }
 .dev-table code { font-size: .78rem; overflow-wrap: anywhere; }
 .header-inner { padding-right: 3rem; }
-.docs-link { position: absolute; right: 12px; top: 12px; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 6px; color: var(--muted); }
+.header-tools { position: absolute; right: 12px; top: 12px; display: flex; gap: 2px; }
+.docs-link { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 6px; color: var(--muted); }
 .docs-link:hover, .docs-link[aria-current="page"] { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
 
 /* Season accents in the wash, below the month labels: small coloured drawings (components/Season.tsx). Faint on purpose. */

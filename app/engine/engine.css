@@ -1,0 +1,78 @@
+/* The engine's flowcharts (ARD D41). Loaded by app/engine/layout.tsx only. */
+
+.fc { margin-block: 8px 24px; }
+.fc-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); padding: 6px 8px 10px; }
+.fc-svg { display: block; margin-inline: auto; height: auto; overflow: visible; font-family: var(--ff-body); }
+
+/* Boxes */
+.fc-node { cursor: pointer; outline: none; transition: opacity .15s; }
+.fc-node.is-dim { opacity: .38; }
+.fc-shape { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; transition: stroke-width .12s, filter .12s; }
+.fc-node:hover .fc-shape, .fc-node.is-on .fc-shape { stroke-width: 2.6; filter: drop-shadow(0 2px 5px rgba(38, 51, 46, .22)); }
+.fc-node:focus-visible .fc-shape { stroke: var(--accent); stroke-width: 3.2; }
+.fc-text { pointer-events: none; }
+.fc-label { fill: var(--ink); font-weight: 700; }
+.fc-sub { fill: var(--muted); font-weight: 400; }
+
+.fk-data .fc-shape { fill: var(--accent-soft); stroke: var(--accent); }
+.fk-step .fc-shape { fill: var(--surface); stroke: var(--staff); }
+.fk-decision .fc-shape { fill: color-mix(in srgb, var(--warn) 14%, var(--surface)); stroke: var(--warn); }
+.fk-town .fc-shape { fill: color-mix(in srgb, var(--utility) 11%, var(--surface)); stroke: var(--utility); }
+.fk-town .fc-bar { fill: var(--utility); pointer-events: none; }
+.fk-gap .fc-shape { fill: var(--surface); stroke: var(--bad); stroke-dasharray: 6 4; }
+.fk-output .fc-shape { fill: var(--accent); stroke: var(--accent); }
+.fk-output .fc-label { fill: var(--surface); }
+.fk-output .fc-sub { fill: color-mix(in srgb, var(--surface) 82%, var(--accent)); }
+
+.fc-tag rect { fill: var(--utility); }
+.fc-tag text { fill: var(--surface); font-size: 10px; font-weight: 800; letter-spacing: .02em; pointer-events: none; }
+.fk-output .fc-go { fill: var(--surface); }
+.fc-go { fill: var(--accent); font-size: 13px; font-weight: 800; pointer-events: none; }
+
+/* Lines */
+.fc-edge path { fill: none; stroke: var(--muted); stroke-width: 1.5; transition: stroke .15s, opacity .15s; }
+.fc-edge.is-dashed path { stroke-dasharray: 5 5; }
+.fc-edge.is-lit path { stroke: var(--accent); stroke-width: 2.4; }
+.fc-edge.is-dim { opacity: .25; }
+.fc-head { fill: var(--muted); }
+.fc-elabel { font-size: 11.5px; font-weight: 700; fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; pointer-events: none; }
+
+/* The card */
+.fc-card { z-index: 60; }
+.fc-card p { margin: 6px 0 0; }
+.fc-kind { margin: 0 0 4px !important; font-size: 11.5px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); }
+.fc-kind.fk-town { color: var(--utility); } .fc-kind.fk-decision { color: var(--warn); } .fc-kind.fk-gap { color: var(--bad); } .fc-kind.fk-data, .fc-kind.fk-output { color: var(--accent); }
+.fc-note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--rule); padding-left: 8px; }
+.fc-where { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 2px; }
+.fc-where code { font-family: var(--ff-data); font-size: 11.5px; color: var(--muted); word-break: break-all; }
+.fc-go-link { font-weight: 700; }
+
+/* Key */
+.fc-key { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px 20px; font-size: 13px; color: var(--muted); }
+.fc-key li { display: flex; gap: 8px; align-items: center; }
+.fc-key svg { flex: none; overflow: visible; }
+.fc-key .fc-node { cursor: default; }
+
+/* Pages */
+.eng-intro { max-width: 72ch; }
+.eng-intro p { margin: 0 0 .7em; }
+.eng-crumbs { font-size: 14px; margin: 0 0 6px; }
+.eng-shows { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin: 4px 0 0; font-size: 14px; }
+.eng-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px 32px; margin-top: 24px; }
+.eng-cols h2 { font-size: 18px; margin-bottom: 6px; }
+.eng-cols ul { margin: 0; padding-left: 1.1em; }
+.eng-cols li { margin-bottom: 4px; }
+.eng-cols code, .eng-list code { font-family: var(--ff-data); font-size: 12.5px; }
+.eng-list { margin-top: 18px; }
+.eng-list summary { cursor: pointer; font-weight: 700; }
+.eng-list ol { padding-left: 1.4em; max-width: 78ch; }
+.eng-list li { margin-bottom: 10px; }
+.eng-list li > b { display: inline; }
+.eng-list .muted { font-size: 13.5px; }
+.eng-nav { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--rule); font-weight: 700; }
+.eng-parts { list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px 20px; }
+.eng-parts li { border: 1px solid var(--rule); border-radius: 10px; padding: 10px 14px; background: var(--surface); }
+.eng-parts a { font-weight: 800; }
+.eng-parts p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+
+@media print { .fc-scroll { overflow: visible; } }

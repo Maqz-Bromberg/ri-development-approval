@@ -1,6 +1,6 @@
 # Architectural Review Document
 
-RI Building Plan Approval. Started 2026-11-14. Last updated 2026-11-14 (Site selection).
+RI Building Plan Approval. Started 2026-11-14. Last updated 2026-11-14 (engine flowcharts).
 
 This is the living record of how the site is put together, why, and what is still unsettled. It is updated in the same change as any decision that alters the shape of the data, the engine, the sources or the checks. Plans for single features stay in `docs/plans/`. Reviews of finished work stay as dated HTML files in `docs/`. This document is the thread between them.
 
@@ -130,6 +130,7 @@ These were stated by Maqz or settled in review. A change that breaks one needs a
 | D38 | 2026-11-14 | **Charlestown read far enough to scope the design**: its Land Use Table and two overlays (`lib/data/towns/charlestown/`). General changes made from it: a town's use table replaces the Atlas's for any town (`withTownUse`, extending D14 below level 3); overlay rules (`TownRules.overlayRules`), overlays the Atlas does not map (`unmappedOverlays`) and corrections to the Atlas's kind of district (`kinds`); the lookup reads tribal land (Atlas Native Lands) and the wetlands agency (RIDEM's jurisdiction layer), and the check stops on the first and names CRMC for the second. | decided | Maqz: read Charlestown to scope the changes before the next ordinances are fetched. The remaining design needs are listed in the plan, section 11a. |
 | D39 | 2026-11-14 | **Without public sewer, RIDEM's septic approval is a state permit** (250-RICR-150-10-6, amendment effective July 1, 2022, `owts`, fetched by script from the Secretary of State's code of regulations). A `septic` flag adds it to the State permits step (with RIDEM as a decider), the triggered permits and a finding; the large-system line (5,000 gallons a day, about 44 bedrooms) and, in the six towns with land in them, the Salt Pond and Narrow River critical resource areas (nitrogen-reducing technology) are flagged. Water and sewer letters and offices now appear only where the site has public water or sewer (`pubwater`, `pubsewer`). | decided | Maqz. Found while reading Charlestown, which has no public sewer. The critical areas are named by town because RIDEM's layer of that name holds only small unlabelled polygons. |
 | D31 | 2026-11-14 | **Coverage per kind of project, and gaps as findings.** `towns.ts` carries a commercial level per town (Cumberland 3, Providence 3, others 1) with what it leaves out; a finding can carry `gap`, what would answer it, shown as a Gap tag. | decided | Principle 10. |
+| D41 | 2026-11-14 | **The engine is documented as flowcharts, one page per part, under `/engine`** (an engine icon beside the dev-notes icon, noindex, not in the navigation). An overview of thirteen parts links to a flowchart for each; every box has a hover card saying what happens, the code it describes and the decision behind it. The charts are data (`lib/data/engine/`, one file each), drawn by `components/Flowchart.tsx`. | trial | Maqz asked for it, for private use for now, public later. Cost: the charts are written by hand, so they can drift from the code. `scripts/check_engine_flows.py` checks that every code pointer (`file#symbol`) still exists and every line joins real boxes; it cannot check that the words still describe what the code does (debt 21). |
 
 ## 6. Sources, and how each is reached
 
@@ -174,6 +175,7 @@ The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and
 18. **On tribal land the route, steps and schedule still show the ordinary route**, though the check says the town's rules may not apply (D38).
 19. **The State permits step names RIDEM as the wetlands decider even where CRMC is** (D38); the finding is right, the step is not.
 20. **Coverage levels don't express a town whose zoning is read but whose steps are not** (Charlestown, D38).
+21. **The engine flowcharts are prose and layout written by hand** (D41). The check finds a renamed function, not a changed rule. When a part of the engine changes, its chart in `lib/data/engine/` is updated in the same change, as this document is.
 
 ## 8. Open questions
 
@@ -189,6 +191,8 @@ Kept in full in `lib/data/openQuestions.ts` and shown on `/dev`. The ones that b
 - **Q8.** Any site, one at a time (answered). Commercial and mixed-use to come in (Maqz), planned in `docs/plans/commercial-mixed-use.md`. Still open there: which uses first, how to treat the mixed-use line, coverage per kind of project. What each would need is in the plan, section 3: mixed-use housing is near; pure commercial needs each town's use table, thresholds and dimensional rules read.
 
 ## 9. Log
+
+- **2026-11-14, engine flowcharts.** `/engine` and one page per part: site lookup, project facts, town overlay, route, use and density, flags, steps, law check, verdict, schedule, alternatives, sources, records (D41, debt 21). Maqz's ask; check script added.
 
 - **2026-11-14, septic.** RIDEM's onsite wastewater rules fetched and read (D39): septic approval as a state permit wherever there is no public sewer, with large systems and critical resource areas flagged; water and sewer letters made conditional on the utilities.
 

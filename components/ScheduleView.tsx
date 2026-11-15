@@ -8,13 +8,14 @@ import { SOURCES } from "@/lib/data/sources";
 import { TREES } from "@/lib/data/trees";
 import { itemKey, visibleDocs } from "@/lib/engine";
 import { describeSpan, spansFor } from "@/lib/timelines";
-import { addDays, buildSchedule, daysBetween, fmtDate, isoDay, tickDocs, toICS, type PlannedStep, type PlannedTick } from "@/lib/schedule";
+import { addDays, buildSchedule, daysBetween, fmtDate, isoDay, tickDocs, type PlannedStep, type PlannedTick } from "@/lib/schedule";
 import type { Doc, TreeId } from "@/lib/types";
 import { SeasonAccents } from "./Season";
 import { seasonOf, type Season } from "@/lib/timelines";
 import { DocChecklist } from "./DocChecklist";
 import { DemoTag } from "./Demo";
 import { useProject } from "./ProjectProvider";
+import { useCalendarFile } from "./useCalendarFile";
 import { routeText } from "@/lib/engine";
 
 const KIND_LABEL = { file: "You file", deadline: "Deadline", hearing: "Meeting or hearing", milestone: "Milestone" } as const;
@@ -249,15 +250,7 @@ export function ScheduleView() {
   const later = approvalEnd ? plan.filter((p) => !p.step.branch && p.start >= approvalEnd) : [];
   const early = plan.filter((p) => !later.includes(p));
 
-  const download = () => {
-    const blob = new Blob([toICS(plan, `${inputs.units} units, ${inputs.zone}, ${inputs.town}`)], { type: "text/calendar" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "approval-schedule.ics";
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  };
+  const download = useCalendarFile();
 
   return (
     <>
@@ -277,7 +270,7 @@ export function ScheduleView() {
             <button type="button" aria-pressed={view === "timeline"} onClick={() => setView("timeline")}>Timeline</button>
             <button type="button" aria-pressed={view === "calendar"} onClick={() => setView("calendar")}>Calendar</button>
           </div>
-          <button type="button" className="btn ghost" onClick={download}>Download .ics</button>
+          <button type="button" className="btn ghost" onClick={download} title="Includes which considerations you have ticked">Download .ics</button>
         </div>
       </div>
       <ul className="legend tick-legend" aria-label="Tick types">

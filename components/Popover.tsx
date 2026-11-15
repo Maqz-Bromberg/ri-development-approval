@@ -6,17 +6,29 @@
 // Changed for this site: no MUI, a click or tap pins the card open (touch screens have no hover),
 // and Escape, an outside click, a scroll or a resize closes it.
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 const EDGE = 8;
+/** Room kept clear between a card and the top or bottom of the window */
+const MARGIN = 24;
 const OPEN_DELAY = 180;
 const CLOSE_DELAY = 250;
 
-function place(rect: DOMRect, width: number, minSpaceBelow: number): { top: number; left: number; below: boolean } {
+/**
+ * Where the card goes, from its measured height: below the trigger if it fits there, else above, else on the roomier
+ * side with its height capped so it scrolls inside. Either way it stays MARGIN clear of the window's edges.
+ */
+function place(rect: DOMRect, width: number, height: number): { top: number; left: number; below: boolean; maxHeight?: number } {
   const left = Math.max(EDGE, Math.min(rect.left, window.innerWidth - width - EDGE));
-  const below = window.innerHeight - rect.bottom >= minSpaceBelow || rect.top < minSpaceBelow;
-  return { top: below ? rect.bottom + EDGE : rect.top - EDGE, left, below };
+  const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 0;
+  const below = window.innerHeight - rect.bottom - EDGE - MARGIN;
+  const above = rect.top - EDGE - Math.max(MARGIN, header + EDGE);
+  if (height <= below) return { top: rect.bottom + EDGE, left, below: true };
+  if (height <= above) return { top: rect.top - EDGE, left, below: false };
+  return below >= above
+    ? { top: rect.bottom + EDGE, left, below: true, maxHeight: Math.max(120, below) }
+    : { top: rect.top - EDGE, left, below: false, maxHeight: Math.max(120, above) };
 }
 
 interface HoverCardProps {
@@ -43,11 +55,13 @@ export function HoverCard({ card, children, className, label, width = 320, minSp
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const id = useId();
 
+  // The card's height, measured once it is drawn (hidden) so it can be placed to fit.
+  const [height, setHeight] = useState<number | null>(null);
   const show = useCallback(() => {
     setRect(trigger.current?.getBoundingClientRect() ?? null);
     setOpen(true);
   }, []);
-  const close = useCallback(() => { setOpen(false); setPinned(false); }, []);
+  const close = useCallback(() => { setOpen(false); setPinned(false); setHeight(null); }, []);
 
   const enter = () => {
     if (hideTimer.current) clearTimeout(hideTimer.current);
@@ -55,7 +69,7 @@ export function HoverCard({ card, children, className, label, width = 320, minSp
   };
   const leave = () => {
     if (showTimer.current) clearTimeout(showTimer.current);
-    if (!pinned) hideTimer.current = setTimeout(() => setOpen(false), CLOSE_DELAY);
+    if (!pinned) hideTimer.current = setTimeout(() => { setOpen(false); setHeight(null); }, CLOSE_DELAY);
   };
 
   useEffect(() => () => {
@@ -85,7 +99,10 @@ export function HoverCard({ card, children, className, label, width = 320, minSp
   }, [open, close]);
 
   const w = typeof window === "undefined" ? width : Math.min(width, window.innerWidth - 2 * EDGE);
-  const pos = open && rect ? place(rect, w, minSpaceBelow) : null;
+  useLayoutEffect(() => {
+    if (open && rect && height === null && cardRef.current) setHeight(cardRef.current.scrollHeight);
+  }, [open, rect, height]);
+  const pos = open && rect ? place(rect, w, height ?? minSpaceBelow) : null;
 
   return (
     <>
@@ -99,7 +116,7 @@ export function HoverCard({ card, children, className, label, width = 320, minSp
         onMouseEnter={enter}
         onMouseLeave={leave}
         onFocus={show}
-        onBlur={() => { if (!pinned) setOpen(false); }}
+        onBlur={() => { if (!pinned) { setOpen(false); setHeight(null); } }}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -114,7 +131,12 @@ export function HoverCard({ card, children, className, label, width = 320, minSp
           id={id}
           role="tooltip"
           className={`popcard${pinned ? " is-pinned" : ""}`}
-          style={{ top: pos.top, left: pos.left, width: w, transform: pos.below ? undefined : "translateY(-100%)" }}
+          style={{
+            top: pos.top, left: pos.left, width: w, transform: pos.below ? undefined : "translateY(-100%)",
+            maxHeight: pos.maxHeight, overflowY: pos.maxHeight ? "auto" : undefined,
+            // Drawn once unseen to measure it, then placed.
+            visibility: height === null ? "hidden" : undefined,
+          }}
           onMouseEnter={() => { if (hideTimer.current) clearTimeout(hideTimer.current); }}
           onMouseLeave={leave}
         >

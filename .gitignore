@@ -6,3 +6,9 @@ next-env.d.ts
 .env*.local
 
 convo.md
+
+# Local copies of cited documents and machine transcripts. Not committed: transcripts name residents.
+.sources/
+
+# Python bytecode from the scripts
+__pycache__/

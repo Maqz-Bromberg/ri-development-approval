@@ -1,4 +1,5 @@
 /*
+ * Kept with docs/ARD.md, which holds the decisions behind it.
  * What the Providence trial (Nov 13, 2026) taught about taking on a new town: each kind of source it needed,
  * each view the data feeds, and how each can be kept true. Shown on /dev.
  * `check`: built = a script does it today; partial = part of it; none = a person has to.
@@ -48,10 +49,10 @@ export const SOURCE_NOTES: SourceNote[] = [
     breaks: "The ordinance a decision quotes can be amended afterwards, as section 1904.E was.",
     verify: "Quote check, with the pinpoint saying the ordinance is quoted through the decision. Replace with the ordinance itself once it is read.", check: "built" },
   { source: "Zoning ordinance", where: "A PDF over 10 MB on the city's site",
-    fetch: "No. Refused to a script, and too large for the fetch tool used in the trial.",
-    feeds: "Should feed height, parking, setbacks and the development plan review thresholds. Today the 2024 Zoning Atlas stands in.",
-    breaks: "Amended in 2025 and 2026. The Atlas does not know.",
-    verify: "Not read, and the site says so on every Providence page. Reading it is the first job before the trial label comes off.", check: "none" },
+    fetch: "No. Refused to a script. Saved by hand, and recognised and filed by organize_sources.py.",
+    feeds: "The use table, building heights, parking, the Commission's adjustments, and which projects staff review. Setbacks, coverage and design standards are not read yet.",
+    breaks: "Amended in 2025 and 2026. The 2024 Atlas still shows two districts it dropped and prohibits housing it now allows.",
+    verify: "Quote check, including rows of the use table. Re-read when the City posts a new official copy.", check: "built" },
   { source: "City web pages", where: "Board, department and staff pages",
     fetch: "No, as above. One board's page was not found at all.",
     feeds: "Contacts, members, meeting place, the list of staff-decided projects",
@@ -62,11 +63,16 @@ export const SOURCE_NOTES: SourceNote[] = [
     feeds: "Map pins for recorded projects",
     breaks: "A merged lot was missing under its new number. One lot area differs from the staff report by about 13,000 sq ft.",
     verify: "Re-resolve each stored parcel id monthly and report any that no longer exist.", check: "none" },
-  { source: "Hearing transcripts and video", where: "Transcripts on request. Video on YouTube.",
+  { source: "Meeting recordings", where: "YouTube, one video per meeting, titled with the date",
+    fetch: "Yes. fetch_captions.py takes the automatic captions with yt-dlp, no video. Six of seven meetings tried had them. One, nearly five hours long, had none.",
+    feeds: "Ten hearing concerns from the January 2025 hearing on 269 Wickenden Street, whose minutes say only that a discussion ensued. Each links to its moment in the recording.",
+    breaks: "No punctuation, misheard names and addresses. Speakers give their names, so the files are not committed. YouTube can change or drop captions.",
+    verify: "A quote is matched against the captions like any other and shown as a machine transcript. It supports a concern. A decision needs the minutes, or a stated gap in them.", check: "built" },
+  { source: "Stenographer's transcripts", where: "On request from the city, for items with zoning relief",
     fetch: "Not attempted.",
-    feeds: "Nothing yet. Minutes for items with zoning relief say only that a transcript exists.",
+    feeds: "Nothing. The minutes for those items say only that a transcript exists.",
     breaks: "The most contested hearings are the least described in the minutes.",
-    verify: "Captions or a records request, with anything machine-transcribed marked as such.", check: "none" },
+    verify: "A records request. The recordings above are the cheaper route to the same hearings.", check: "none" },
 ];
 
 export interface ViewNote {

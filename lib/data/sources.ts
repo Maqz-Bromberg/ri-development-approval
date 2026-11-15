@@ -1,6 +1,10 @@
 import type { Source } from "../types";
 
-/** Every document a requirement is quoted from. Ids are referenced by trees, findings and contacts. */
+/**
+ * Every document a requirement is quoted from. Ids are referenced by trees, findings and contacts.
+ * One entry per line, as `id: { label, url }`: the scripts in scripts/ read this file as text.
+ * A local copy is filed by the town named in the label. Add `town` only where the label names none, or another.
+ */
 export const SOURCES: Record<string, Source> = {
   s3932: { label: "R.I. Gen. Laws § 45-23-32 (Development Review Act: definitions)", url: "https://webserver.rilegislature.gov/Statutes/TITLE45/45-23/45-23-32.htm" },
   s3938: { label: "R.I. Gen. Laws § 45-23-38 (minor land development review)", url: "https://webserver.rilegislature.gov/Statutes/TITLE45/45-23/45-23-38.htm" },
@@ -8,10 +12,20 @@ export const SOURCES: Record<string, Source> = {
   s3950: { label: "R.I. Gen. Laws § 45-23-50.1 (unified development review)", url: "https://webserver.rilegislature.gov/Statutes/TITLE45/45-23/45-23-50.1.htm" },
   s3971: { label: "R.I. Gen. Laws § 45-23-71 (appeals to Superior Court)", url: "https://webserver.rilegislature.gov/Statutes/TITLE45/45-23/45-23-71.htm" },
   s5304: { label: "R.I. Gen. Laws § 45-53-4 (comprehensive permits)", url: "https://webserver.rilegislature.gov/Statutes/TITLE45/45-53/45-53-4.htm" },
+  irc42: { label: "26 U.S.C. § 42(g)(1), low-income housing tax credit minimum set-asides", url: "https://www.law.cornell.edu/uscode/text/26/42" },
   s2449: { label: "R.I. Gen. Laws § 45-24-49 (development plan review)", url: "https://webserver.rilegislature.gov/Statutes/TITLE45/45-24/45-24-49.htm" },
   cregs: { label: "Cumberland Land Development and Subdivision Regulations (rev. Dec 12, 2023; Appendix C checklists)", url: "https://www.ecode360.com/CU3602/laws/LF1960426.pdf" },
   cz3: { label: "Cumberland Zoning Ordinance, Article 3 (districts and density)", url: "https://www.zoneomics.com/code/cumberland-RI/chapter_3" },
-  cz15: { label: "Cumberland Zoning Ordinance, Article 15 (low and moderate income housing)", url: "https://www.zoneomics.com/code/cumberland-RI/chapter_14" },
+  chzo: { label: "Charlestown Zoning Ordinance, Chapter 218 (eCode360, print view)", url: "https://ecode360.com/print/CH1115?guid=8492633&children=true" },
+  chzt1: { label: "Charlestown Zoning Ordinance, Attachment 1: Land Use Table (eCode360)", url: "https://ecode360.com/attachment/318218/CH1115-218a%20Land%20Use%20Table.pdf" },
+  owts: { label: "RIDEM Regulations: Onsite Wastewater Treatment Systems, 250-RICR-150-10-6", url: "https://rules.sos.ri.gov/regulations/part/250-150-10-6" },
+  ridemWetJur: { label: "RIDEM, Wetland Jurisdiction layer (RIDEM or CRMC permitting authority), live", url: "https://risegis.ri.gov/hosting/rest/services/RIDEM/Boundaries_and_Regulatory_Overlays_v2/MapServer/7", town: "State" },
+  rizaNative: { label: "Rhode Island Zoning Atlas, Native Lands layer (from the federal Protected Areas Database), live", url: "https://services1.arcgis.com/CjMORKCN9JBntrcv/arcgis/rest/services/RIZoningAtlas1016_WFL1/FeatureServer/2", town: "State" },
+  czt1: { label: "Cumberland Zoning Ordinance, Table 1: Use Table (eCode360 attachment)", url: "https://ecode360.com/attachment/334062/CU3602-Ba%20Table%201%20Use%20Table.pdf" },
+  czA: { label: "Cumberland Zoning Ordinance, Appendix A: Use Regulations Definitions (eCode360 attachment)", url: "https://ecode360.com/attachment/334062/CU3602-Bc%20App%20A%20Use%20Regs%20Definitions.pdf" },
+  cz5: { label: "Cumberland Zoning Ordinance, Article 5 (dimensional regulations)", url: "https://www.zoneomics.com/code/cumberland-RI/chapter_5" },
+  cz14: { label: "Cumberland Zoning Ordinance, Article 14 (off-street parking and loading)", url: "https://www.zoneomics.com/code/cumberland-RI/chapter_13" },
+  cz15: { label: "Cumberland Zoning Ordinance, Article 15 (low and moderate income housing)", url: "https://www.zoneomics.com/code/cumberland-RI/chapter_13" },
   ridsp: { label: "RI Division of Statewide Planning, Summary of the 2026 Legislative Session", url: "https://planning.ri.gov/sites/g/files/xkgbur826/files/2026-07/2026%20Legislative%20Summary%20RIDSP.pdf" },
   pb240627: { label: "Cumberland Planning Board agenda, June 27, 2024", url: "https://clerkshq.com/Content/Cumberland-RI/Planning/2024/jun27_24pbag.htm" },
   pb250828: { label: "Cumberland Planning Board agenda, Aug 28, 2025", url: "https://clerkshq.com/Content/Cumberland-RI/Planning/2025/aug28_25pbag.htm" },
@@ -19,7 +33,7 @@ export const SOURCES: Record<string, Source> = {
   pb251204: { label: "Cumberland Planning Board agenda, Dec 4, 2025", url: "https://clerkshq.com/Content/Cumberland-RI/Planning/2025/dec04_25pbag.htm" },
   pb260326: { label: "Cumberland Planning Board agenda, Mar 26, 2026", url: "https://clerkshq.com/Content/Cumberland-RI/Planning/2026/mar26_26pbag.htm" },
   pb260625: { label: "Cumberland Planning Board agenda, June 25, 2026", url: "https://clerkshq.com/Content/Cumberland-RI/Planning/2026/jun25_26pbag.htm" },
-  call2017: { label: "The Call (Woonsocket), \"Bear Hill Road condo project gets planning OK\", Apr 29, 2017", url: "https://www.pressreader.com/usa/call-and-times/20170429/281930247877237" },
+  call2017: { label: "The Call (Woonsocket), \"Bear Hill Road condo project gets planning OK\", Apr 29, 2017", url: "https://www.pressreader.com/usa/call-and-times/20170429/281930247877237", town: "Cumberland" },
   cdir: { label: "Town of Cumberland staff directory: Planning & Community Development", url: "https://www.cumberlandri.gov/Directory.aspx?did=19" },
   ctrc: { label: "Town of Cumberland: Technical Review Committee", url: "https://www.cumberlandri.gov/386/Technical-Review-Committee" },
   csched: { label: "Cumberland 2026 TRC and Planning Board meeting schedule", url: "https://www.cumberlandri.gov/DocumentCenter/View/2407/2026-TRC-PB-Meeting-Schedule_V2" },
@@ -33,7 +47,7 @@ export const SOURCES: Record<string, Source> = {
   rizaApp: { label: "Rhode Island Zoning Atlas map (ArcGIS Experience)", url: "https://experience.arcgis.com/experience/e9b8450970b643ee9dd71188ce59e766/" },
   rizaLayer: { label: "RI Zoning Atlas: RI Zoning Districts feature layer (data current as of Sept 2024)", url: "https://services1.arcgis.com/CjMORKCN9JBntrcv/arcgis/rest/services/RIZoningAtlas1016_WFL1/FeatureServer/14" },
   nzaRI: { label: "National Zoning Atlas: Rhode Island", url: "https://www.zoningatlas.org/rhode-island" },
-  rizaVidWC: { label: "Special Zoning Atlas Briefing: Warwick/Cranston (YouTube)", url: "https://youtu.be/Spw3OJdRq2Y" },
+  rizaVidWC: { label: "Special Zoning Atlas Briefing: Warwick/Cranston (YouTube)", url: "https://youtu.be/Spw3OJdRq2Y", town: "State" },
   rizaVidTr: { label: "Rhode Island Zoning Atlas: Transportation Lunch and Learn, April 2024 (YouTube)", url: "https://youtu.be/N_CrOwZ3pBM" },
   /* Cumberland hearing records */
   pb250731: { label: "Cumberland Planning Board agenda, July 31, 2025", url: "https://clerkshq.com/Content/Cumberland-RI/Planning/2025/jul31_25pbag.htm" },
@@ -47,7 +61,7 @@ export const SOURCES: Record<string, Source> = {
   vid250925: { label: "Cumberland Planning Board video, Sept 25, 2025 (YouTube)", url: "https://www.youtube.com/watch?v=c7NCk5qx6nw" },
   vid251204: { label: "Cumberland Planning Board video, Dec 4, 2025 (YouTube)", url: "https://www.youtube.com/watch?v=6XPE5Bs8SSo" },
   vidtc260902: { label: "Cumberland Town Council video, Sept 2, 2026 (YouTube)", url: "https://www.youtube.com/watch?v=NE7v--G8xf8" },
-  vb2025: { label: "Valley Breeze, \"Another condo project proposed on Bear Hill Road\" (2025)", url: "https://valleybreeze.com/news/another-condo-project-proposed-on-bear-hill-road/article_ddcef53f-ef33-4e61-b323-f7d648263dc0.html" },
+  vb2025: { label: "Valley Breeze, \"Another condo project proposed on Bear Hill Road\" (2025)", url: "https://valleybreeze.com/news/another-condo-project-proposed-on-bear-hill-road/article_ddcef53f-ef33-4e61-b323-f7d648263dc0.html", town: "Cumberland" },
   s2268: { label: "Neighbors Welcome! Rhode Island, testimony on S 2268 (Senate Housing Committee, 2026)", url: "https://www.rilegislature.gov/senators/SenateComDocs/2026%20Housing%20and%20Municipal%20Government/S2268%20Neighbors%20Welcome!%20Rhode%20Island.pdf" },
   /* Providence trial (Fox Point and Wayland). Ids start with p. Read 2026-11-13.
    * providenceri.gov refuses scripted requests, so those files are fetched by hand for the quote check (scripts/towns/README.md). */
@@ -61,7 +75,7 @@ export const SOURCES: Record<string, Source> = {
   pddrc: { label: "City of Providence: Downtown Design Review Committee", url: "https://www.providenceri.gov/planning/downtown-design-review-committee-ddrc/" },
   pstaff: { label: "City of Providence: Planning staff directory", url: "https://www.providenceri.gov/planning/3626/" },
   pis: { label: "City of Providence: Department of Inspection and Standards", url: "https://www.providenceri.gov/inspection-standards/" },
-  pzo: { label: "Providence Zoning Ordinance (official copy, July 22, 2026). Linked, not read: see the trial review", url: "https://www.providenceri.gov/wp-content/uploads/2026/10/26.07.22-Official-Zoning-Ordinance.pdf" },
+  pzo: { label: "Providence Zoning Ordinance (official copy, July 22, 2026)", url: "https://www.providenceri.gov/wp-content/uploads/2026/10/26.07.22-Official-Zoning-Ordinance.pdf" },
   pom: { label: "RI Open Meetings: Providence City Plan Commission (agendas and minutes)", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2767" },
   pyt: { label: "Providence City Plan Commission meeting recordings (YouTube)", url: "https://www.youtube.com/@pvdcpc" },
   pc241374: { label: "R.I. Superior Court, Schieferdecker v. Providence Zoning Board of Review, PC-2024-01374 (Sept 23, 2024)", url: "https://www.courts.ri.gov/Decisions/Superior-PC-2024-1374.pdf" },
@@ -82,4 +96,15 @@ export const SOURCES: Record<string, Source> = {
   psr128w2509: { label: "Providence DPD staff report: 128 Wayland Ave, preliminary plan (Sept 16, 2025)", url: "https://www.providenceri.gov/wp-content/uploads/2025/09/24-024MI-128-Wayland-Ave-preliminary-staff-report-9.16.25.pdf" },
   psr269w2502: { label: "Providence DPD staff report: 269 Wickenden Street, preliminary plan (Feb 2025)", url: "https://www.providenceri.gov/wp-content/uploads/2025/02/23-012MA-269-Wickenden-Street-preliminary-plan-report-Feb-2025.pdf" },
   psr150p2509: { label: "Providence DPD staff report: 150 Pitman Street, major change (Sept 16, 2025)", url: "https://www.providenceri.gov/wp-content/uploads/2025/09/23-055MI-150-Pitman-St-major-change-report-9.16.pdf" },
+  /* Providence meeting recordings. Captions are fetched as machine transcripts by scripts/towns/fetch_captions.py. */
+  pvid241015: { label: "Providence City Plan Commission recording, Oct 15, 2024 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=Vpq5VcAnqEk" },
+  pvid250121: { label: "Providence City Plan Commission recording, Jan 21, 2025 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=f5mTI-4fRG4" },
+  pvid250218: { label: "Providence City Plan Commission recording, Feb 18, 2025 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=kZKUbpFgOgk" },
+  pvid250819: { label: "Providence City Plan Commission recording, Aug 19, 2025 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=ZVSkYK0OQUk" },
+  pvid250916: { label: "Providence City Plan Commission recording, Sept 16, 2025 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=iwdrpl5Gccg" },
+  pvid251216: { label: "Providence City Plan Commission recording, Dec 16, 2025 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=4hSt_rJPk-w" },
+  pvid260519: { label: "Providence City Plan Commission recording, May 19, 2026 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=ErVW36G50b0" },
 };
+
+/** True for a meeting recording. What is quoted from one comes from its automatic captions: a machine transcript. */
+export const isRecording = (id: string): boolean => /youtube\.com|youtu\.be/.test(SOURCES[id]?.url ?? "");

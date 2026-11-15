@@ -136,7 +136,7 @@ export const PROVIDENCE_LOCALITY: Locality = {
     "Staff reports give the lot size, district, relief requested and the recommendation, and are the best single document per hearing.",
   ],
   media: [
-    { kind: "video", label: "City Plan Commission meeting recordings", url: "https://www.youtube.com/@pvdcpc", note: "Every meeting is recorded. None has been watched or transcribed for this site." },
+    { kind: "video", label: "City Plan Commission meeting recordings", url: "https://www.youtube.com/@pvdcpc", note: "Every meeting since December 2023 is recorded, and all but one carry automatic captions. The January 2025 hearing on 269 Wickenden Street was read from its captions." },
     { kind: "minutes", label: "Minutes, Dec 16, 2025", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4752%5C2026%5C546678.pdf", date: "2025-12-16", note: "27 East River Street, 355 units: drainage, traffic, parks and the vote" },
     { kind: "minutes", label: "Minutes, Oct 15, 2024", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4752%5C2024%5C510439.pdf", date: "2024-10-15", note: "27 East River Street: public comment on outreach, parking and height, and a 3 to 1 vote" },
     { kind: "minutes", label: "Minutes, Sept 16, 2025 (scanned)", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4752%5C2025%5C541570.pdf", date: "2025-09-16", note: "128 Wayland Avenue reheard after a court vacated its approval, and 150 Pitman Street cut from 16 units to 8" },

@@ -1,12 +1,13 @@
 import type { Step, TownRules, TreeId } from "../../../types";
+import { PROVIDENCE_GONE, providenceClassifyCommercial, providenceCommercialFindings, providenceCommercialRoute, providenceCommercialUse, providenceUse } from "./rules";
 
 /*
  * Providence's own steps, laid over the state-law route. Trial reading, 2026-11-13, not confirmed by the city.
  *
  * Read from: the Land Development and Subdivision Review Regulations amended through Dec 16, 2025 (`pregs`),
  * the City Plan Commission's Minor Land Development Project form (`pformminor`), Commission minutes and agendas,
- * and one Superior Court decision that reproduces parts of the Zoning Ordinance (`pc241374`).
- * The Zoning Ordinance itself was NOT read (see docs/providence-trial-review.html).
+ * one Superior Court decision (`pc241374`), and, since 2026-11-14, the Zoning Ordinance of July 22, 2026 (`pzo`):
+ * its use table, dimensional tables, parking article and Article 19. The rest of the ordinance was not read.
  *
  * Every `q` is checked word for word by scripts/towns/verify_quotes.py. Keep `src`, `pin` and `q` on one line:
  * the script pairs each quote with the source named before it on the same line.
@@ -28,7 +29,7 @@ const zoning: Step = {
   docs: [
     {
       title: "Zoning district and overlays", src: "pregs", pin: "App. C, item 5", q: "Zoning district(s) and overlay district(s) of the parcel(s) being developed; if more than one district, zoning boundary lines must be shown on the plan",
-      note: "The Zoning Ordinance and the official map are linked from the City's zoning page. The ordinance text was not read for this trial.",
+      note: "The district list on this site comes from the 2024 Zoning Atlas. The ordinance of July 2026 has no R-2 or C-1 district, so confirm the district on the City's map.",
       checklist: [
         "Find the parcel on the City's zoning map and save a dated copy",
         "Check for a historic district, the East Side overlay or the downtown district, each of which adds its own review",
@@ -38,12 +39,13 @@ const zoning: Step = {
     },
     {
       title: "Is it a land development project?", src: "pregs", pin: "Art. 2, Land development project (A)(3)", q: "Construction of new gross floor area that creates 10 or more dwelling or rooming",
-      note: "The other triggers are 10,000 sq ft of new floor area and 50 new parking spaces.",
+      note: "The other triggers are 10,000 sq ft of new floor area and 50 new parking spaces. Projects reviewed by the Downtown Design Review Committee or the I-195 Redevelopment District Commission are not land development projects.",
       checklist: [
         "Count the dwelling units created by new floor area",
         "Add up new gross floor area against the 10,000 sq ft line",
         "Count new parking spaces against the line of 50",
-        "Below all three, ask staff whether development plan review under Article 19 of the Zoning Ordinance applies. That article was not read here.",
+        "Below all three, a new building of 4 or more units, or any new rowhouses, still gets administrative development plan review by staff",
+        "Reuse of an existing building adds no new floor area, so ask staff to confirm which category applies",
       ],
     },
     {
@@ -62,11 +64,12 @@ const zoning: Step = {
       ],
     },
     {
-      title: "Adjustments the Commission can grant", src: "pc241374", pin: "footnote 1, quoting Zoning Ordinance § 1904(E)(1)", q: "The City Plan Commission has the authority to make adjustments to certain dimensional and design standards through land development project review",
-      note: "Quoted from a court decision that reproduces the ordinance. Section 1904 was amended in 2025 and 2026 (Commission referrals 3594 and 3605), so confirm the current list of grounds and limits.",
+      title: "Adjustments the Commission can grant", src: "pzo", pin: "§ 1904.E.1", q: "The City Plan Commission has the authority to make adjustments to certain dimensional and",
+      note: "Limits: setbacks by 10 ft; height by 12 ft and one story in residential zones, 24 ft and two stories elsewhere; density by 50%; required parking by 50%.",
       checklist: [
-        "Decide whether you will ask for more height or less parking than the district allows",
-        "Name the ground that makes the project eligible, such as structured parking or open space set aside for public use",
+        "Decide whether you will ask for more height, more units or less parking than the district allows",
+        "Name the ground that makes the project eligible: open space set aside for public use, the site's shape or location, housing for low and moderate income families, structured parking, vertical mixed use that is at least half residential, or no fossil fuel combustion on the property",
+        "Keep the request inside the limits. Anything beyond them is a variance.",
         "Expect the Commission, not staff, to decide once an adjustment is requested",
       ],
     },
@@ -174,6 +177,11 @@ const minorPrelim: Step = {
   ],
   objections: ["parking", "traffic", "character", "variances", "stormwater", "trees", "privacy", "construction", "lighting"],
   docs: [
+    {
+      title: "Design review session with planning staff", src: "pzo", pin: "§ 1904.D", q: "shall conduct a design review session to evaluate compliance with applicable design standards",
+      note: "Required for every land development project. Staff file a report with the Commission.",
+      checklist: ["Bring elevations, materials and the street-level plan", "Ask what staff will say in their report, and change what you can before the hearing"],
+    },
     {
       title: "Application, owner's consent and copies", src: "pregs", pin: "App. C, item 2", q: "A notarized letter stating that the property owner(s) have granted their permission and consent for applicant to proceed with the application.",
       checklist: [
@@ -341,7 +349,7 @@ const minorFinal: Step = {
       checklist: ["Note the certification date and day 25"],
     },
     {
-      title: "No site work before final approval", src: "pformminor", pin: "Demolition and site work prior to approval, citing Zoning Ordinance § 1904.B", q: "no demolition, foundation, or building permits will be issued, and no site work will be allowed for any development requiring approval of a land development project until the City Plan Commission has approved the final plan",
+      title: "No site work before final approval", src: "pzo", pin: "§ 1904.B", q: "No demolition, foundation, or building permits will be issued, and no site work will be allowed for any development requiring approval",
       checklist: ["Hold demolition and foundation permit applications until the final plan is approved"],
     },
   ],
@@ -360,6 +368,11 @@ const master: Step = {
     {
       title: "Fees", src: "pregs", pin: "§ 905.A", q: "($200 due at master plan, $200 due at preliminary plan)",
       checklist: ["Pay $200 with the master plan", "Add $400 at each stage if unified development review is requested"],
+    },
+    {
+      title: "Design review session with planning staff", src: "pzo", pin: "§ 1904.D", q: "shall conduct a design review session to evaluate compliance with applicable design standards",
+      note: "Required for every land development project. Staff file a report with the Commission.",
+      checklist: ["Bring elevations, materials and the street-level plan", "Ask what staff will say in their report, and change what you can before the hearing"],
     },
     {
       title: "Concept plan set", src: "pregs", pin: "App. E, master plan item 15", q: "A conceptual landscape plan showing the locations and types of plantings.",
@@ -486,20 +499,26 @@ const majorFinal: Step = {
       checklist: ["Note the certification date and day 45"],
     },
     {
-      title: "No site work before final approval", src: "pformminor", pin: "Demolition and site work prior to approval, citing Zoning Ordinance § 1904.B", q: "no demolition, foundation, or building permits will be issued, and no site work will be allowed for any development requiring approval of a land development project until the City Plan Commission has approved the final plan",
+      title: "No site work before final approval", src: "pzo", pin: "§ 1904.B", q: "No demolition, foundation, or building permits will be issued, and no site work will be allowed for any development requiring approval",
       checklist: ["Hold demolition and foundation permit applications until the final plan is approved"],
     },
   ],
 };
 
-const record = (major: boolean): Step => ({
+const EXPIRY = {
+  minor: { clock: "Within 1 year of approval", doc: { title: "Expiry and extensions", src: "pregs", pin: "§ 402.H", q: "expire one year from the date of approval", note: "Extensions are common on the Commission's agenda. 386 Ives Street and 27 East River Street each asked for a further year.", checklist: ["Put the one-year date in your calendar", "Request an extension in writing before it lapses, and attend the meeting"] } },
+  major: { clock: "Within 2 years of final approval", doc: { title: "Expiry", src: "pregs", pin: "§ 504.E", q: "expires two years from the date of approval", checklist: ["Put the two-year date in your calendar", "A one-year extension needs a written request and an appearance before the Commission"] } },
+  dpr: { clock: "Within 2 years of approval", doc: { title: "Expiry", src: "pregs", pin: "§ 604.E", q: "Approval of development plan review shall expire two years from the date of", checklist: ["Put the two-year date in your calendar", "An extension is asked of whoever approved the plan, for good cause"] } },
+} as const;
+
+const record = (kind: keyof typeof EXPIRY): Step => ({
   id: "record", title: "Record the approval", app: "Approval letter and stamped plans for the Recorder of Deeds",
-  clock: { text: major ? "Within 2 years of final approval" : "Within 1 year of approval" },
-  what: "Staff return stamped copies of the plan and the approval letter, and you record them at the Recorder of Deeds in City Hall. Recording the decision and posting it in the City Clerk's office starts the 20-day appeal window. Approvals lapse if nothing is recorded in time, and extensions are requested from the Commission at a public meeting.",
+  clock: { text: EXPIRY[kind].clock },
+  what: "Staff return stamped copies of the plan and the approval letter, and you record them at the Recorder of Deeds in City Hall. Recording the decision and posting it in the City Clerk's office starts the 20-day appeal window. Approvals lapse if nothing is recorded in time.",
   auth: [
     { c: "clerk", role: "Records the plan and letter, and posts the decision" },
     { c: "planning", role: "Signs the plan and keeps the permanent record" },
-    { c: "pb", role: "Decides requests to extend an approval" },
+    ...(kind === "dpr" ? [] : [{ c: "pb", role: "Decides requests to extend an approval" }]),
   ],
   docs: [
     {
@@ -507,18 +526,73 @@ const record = (major: boolean): Step => ({
       note: "The form gives the recording fees and asks for one recorded copy back.",
       checklist: ["Record the approval letter and the stamped plans", "Pay the recording fees, by check if possible", "Return one copy of each recorded document to the planning department"],
     },
-    major
-      ? {
-        title: "Expiry", src: "pregs", pin: "§ 504.E", q: "expires two years from the date of approval",
-        checklist: ["Put the two-year date in your calendar", "A one-year extension needs a written request and an appearance before the Commission"],
-      }
-      : {
-        title: "Expiry and extensions", src: "pregs", pin: "§ 402.H", q: "expire one year from the date of approval",
-        note: "Extensions are common on the Commission's agenda. 386 Ives Street and 27 East River Street each asked for a further year.",
-        checklist: ["Put the one-year date in your calendar", "Request an extension in writing before it lapses, and attend the meeting"],
-      },
+    { ...EXPIRY[kind].doc, checklist: [...EXPIRY[kind].doc.checklist] },
   ],
 });
+
+/* Four to nine units of new construction: too small for the Commission, reviewed by staff. Zoning Ordinance § 1905, regulations Art. 6. */
+const adpr: Step = {
+  id: "prelim", title: "Administrative development plan review", app: "Development plan review application, fee, survey and plan set",
+  clock: { days: 40, text: "15 days to certify · 25 days to decide" },
+  what: "Planning staff review new multi-family and rowhouse buildings that are too small to be land development projects, against the ordinance's design standards. There is one stage and no hearing. If the plan needs a variance or special use permit, it goes to the City Plan Commission under unified development review instead. Projects already reviewed by the Historic District Commission or the Downtown Design Review Committee skip this review.",
+  auth: [
+    { c: "planning", role: "Administrative officer decides" },
+    { c: "pb", role: "Decides instead when a variance or special use permit is needed, after a public hearing", cond: "relief" },
+    { c: "building", role: "The Director can grant a 15% modification of a dimensional requirement" },
+  ],
+  objections: ["design", "privacy", "parking", "trees"],
+  docs: [
+    {
+      title: "Which projects get this review", src: "pzo", pin: "§ 1905.C.1.c", q: "All new construction of rowhouse developments and multi-family dwellings.",
+      note: "Multi-family means four or more units. New buildings over 2,500 sq ft in C-2, C-3, M-MU and W-2 are also covered.",
+      checklist: ["Confirm with staff that the project is not a land development project and is not in a historic or downtown review area"],
+    },
+    {
+      title: "Application, fee and plan set", src: "pregs", pin: "App. F, item 3", q: "One paper copy and a PDF of the survey and plan set are required",
+      note: "The fee schedule lists $200 for projects under § 1905.C.1 and $400 for new construction outside the downtown overlay. Ask which applies.",
+      checklist: ["Online application signed by the applicant", "Class I survey with the zoning table", "Email the PDF to the administrative officer"],
+    },
+    {
+      title: "Design standards for multi-family and rowhouse buildings", src: "pzo", pin: "§ 1202.K", q: "Building façades shall not contain blank wall areas that",
+      checklist: [
+        "A primary entrance visible from the street, on or within 20 ft of the front façade",
+        "No blank wall longer than 12 linear feet",
+        "At least 15% transparency on each façade, and 10% on other building faces",
+        "Cornices or parapets on flat roofs",
+        "Consistent materials wrapping every street-facing façade",
+      ],
+    },
+    {
+      title: "Site plan", src: "pregs", pin: "App. F, item 6", q: "The location of refuse and recycling containers",
+      checklist: ["Structures, parking with aisle and stall dimensions, landscaped areas", "Transformers, mechanical units, refuse and recycling", "Wetlands or coastal features on or within 200 ft, and base flood elevation"],
+    },
+    {
+      title: "Landscape plan with canopy coverage", src: "pregs", pin: "App. F, item 7", q: "A detailed landscape plan showing the locations of plantings, tree species,",
+      checklist: ["Canopy coverage required against provided", "Significant trees on the lot"],
+    },
+    {
+      title: "Elevations with transparency and height", src: "pregs", pin: "App. F, item 9", q: "fenestration, transparency calculations, and building height",
+      checklist: ["Height from average grade, with the diagram", "Transparency percentage for each façade", "Exterior materials"],
+    },
+    {
+      title: "Lighting plan", src: "pregs", pin: "App. F, item 12", q: "light fixtures and light emitting devices with light levels measured in foot",
+      checklist: ["Fixture locations and heights", "Light levels in foot-candles", "Cut sheets"],
+    },
+    {
+      title: "A 15% modification, without a variance", cond: "always", when: "If a dimension is slightly off", src: "pzo", pin: "§ 1903.B", q: "is authorized to grant a 15% modification to",
+      note: "Up to 5% needs no notice. Above that neighbours are notified, and one written objection within 14 days turns the request into a variance.",
+      checklist: ["File the request with Inspection and Standards alongside the plan", "The plan review clock waits for the decision on the modification"],
+    },
+    {
+      title: "Relief moves the plan to the Commission", cond: "relief", src: "pregs", pin: "§ 603.A.4", q: "by the City Plan Commission under unified development review pursuant to Article",
+      checklist: ["Complete the UDR form", "Place and pay for the hearing notice", "Hire the stenographer"],
+    },
+    {
+      title: "Decision deadline", src: "pregs", pin: "§ 604.C.1", q: "or approved with conditions within 25 days of the certificate of completeness",
+      checklist: ["Note the certification date and day 25", "If it passes with no decision, ask for a certificate of approval"],
+    },
+  ],
+};
 
 const appeal: Step = {
   id: "appeal", title: "Appeal, if denied or challenged", branch: true, app: "Complaint to the Superior Court, or an appeal to the Board of Appeal on an administrative matter",
@@ -552,26 +626,41 @@ const appeal: Step = {
 
 /** Providence's steps by route. A route not listed keeps the state-law steps. */
 export const PROVIDENCE_STEPS: Partial<Record<TreeId, Step[]>> = {
-  minor: [zoning, rezone, preapp(false), minorPrelim, minorFinal, record(false), appeal],
-  major: [zoning, rezone, preapp(true), master, majorState, majorPrelim, majorFinal, record(true), appeal],
+  minor: [zoning, rezone, preapp(false), minorPrelim, minorFinal, record("minor"), appeal],
+  major: [zoning, rezone, preapp(true), master, majorState, majorPrelim, majorFinal, record("major"), appeal],
+  dpr: [zoning, preapp(false), adpr, record("dpr"), appeal],
 };
 
 export const PROVIDENCE_RULES: TownRules = {
   /*
-   * Art. 2 of the regulations: a land development project starts at 10 units (or 10,000 sq ft, or 50 parking
-   * spaces, which this site does not ask for). Up to 2,500 sq ft of commercial space it is minor, above that major.
+   * Regulations Art. 2 and Zoning Ordinance §§ 1904.C and 1905.C. The thresholds count new floor area:
+   *   new construction, 10 or more units   land development project. Minor up to 2,500 sq ft of commercial space, major above.
+   *   new construction, 4 to 9 units       administrative development plan review ("multi-family" is four or more units)
+   *   reuse of an existing building        no new floor area, so neither. Administrative review if the lot is 40,000 sq ft or more.
+   * Gross floor area, parking spaces and rowhouses also trigger review, and this site does not ask for them.
    * The 25%-affordable comprehensive permit route is state law and is kept, though Providence's handling of it was not read.
    */
   classify: (i) => {
     if (i.units >= 3 && i.aff / i.units >= 0.25) return "comp";
+    if (i.type === "reuse") return i.lot >= 40000 ? "dpr" : "byright";
     if (i.units >= 10) return (i.commercial ?? 0) > 2500 ? "major" : "minor";
-    return "byright";
+    return i.units >= 4 ? "dpr" : "byright";
   },
+  use: providenceUse,
+  classifyCommercial: providenceClassifyCommercial,
+  commercialLines: [10000, 20000],
+  commercialRoute: providenceCommercialRoute,
+  commercialFindings: providenceCommercialFindings,
+  useCommercial: providenceCommercialUse,
+  /** Administrative development plan review has one stage. */
+  omit: { dpr: ["final"] },
   permitsBefore: "final",
   asksCommercial: true,
+  retired: { zones: PROVIDENCE_GONE, note: "Not in the Zoning Ordinance of July 2026. The 2024 Atlas still lists it. Find the parcel's present district on the City's zoning map." },
   routeText: {
-    minor: { name: "Minor land development project", rule: "10 or more units, with up to 2,500 sq ft of commercial space", blurb: "Two stages, preliminary and final. Staff can decide a plan that needs no relief. The City Plan Commission decides when more height, less parking, a waiver or a variance is requested." },
-    major: { name: "Major land development project", rule: "10 or more units, with more than 2,500 sq ft of commercial space", blurb: "Master, preliminary and final plans before the City Plan Commission, with a public hearing at master plan. Stages are often combined." },
-    byright: { rule: "Fewer than 10 units and under 10,000 sq ft of new floor area", blurb: "Not a land development project in Providence. A building permit, and possibly development plan review under Article 19 of the Zoning Ordinance, which was not read for this trial." },
+    minor: { name: "Minor land development project", rule: "10 or more new units with up to 2,500 sq ft of commercial space, or 10,000 to 20,000 sq ft of new non-residential floor area", blurb: "Two stages, preliminary and final. Staff can decide a plan that needs no relief. The City Plan Commission decides when more height, less parking, a waiver or a variance is requested." },
+    major: { name: "Major land development project", rule: "10 or more new units with more than 2,500 sq ft of commercial space, or more than 20,000 sq ft of new non-residential floor area", blurb: "Master, preliminary and final plans before the City Plan Commission, with a public hearing at master plan. Stages are often combined." },
+    dpr: { name: "Administrative development plan review", rule: "4 to 9 new units, a change of use on a lot of 40,000 sq ft or more, or a new building over 2,500 sq ft in C-2, C-3, M-MU or W-2", blurb: "One stage, decided by planning staff with no hearing. A variance or special use permit moves it to the City Plan Commission." },
+    byright: { rule: "Up to 3 units, or reuse of an existing building on a smaller lot", blurb: "A building permit. New rowhouses, and new buildings over 2,500 sq ft in C-2, C-3, M-MU and W-2, still get administrative development plan review." },
   },
 };

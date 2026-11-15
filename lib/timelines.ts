@@ -1,4 +1,5 @@
 import { historyFor } from "./data/history";
+import { isRecording } from "./data/sources";
 import { getActiveTown } from "./town";
 import type { Precedent, TimelineEvent, TreeId } from "./types";
 
@@ -31,15 +32,17 @@ export function fmtEventDate(date: string): string {
  * What backs each event. This is computed from the data, and scripts/timelines/verify.py enforces the first level.
  *   quoted  a verbatim quote that verify.py found in the cited document
  *   scanned a quote transcribed by eye from a scanned page; verify.py reports it and cannot match it
+ *   transcript a quote from a recording's automatic captions, matched by script against what the machine heard
  *   cited   a source is linked, but no quote is checked against it
  *   press   a news report, linked and not fetched
  *   carried the date came from the earlier record and was not found in a fetched document
  */
-export type Evidence = "quoted" | "scanned" | "cited" | "press" | "carried";
+export type Evidence = "quoted" | "scanned" | "transcript" | "cited" | "press" | "carried";
 
 export const EVIDENCE: Record<Evidence, { label: string; how: string }> = {
   quoted: { label: "Quote checked", how: "A sentence from the source is stored, and a script confirmed it appears word for word in the document." },
   scanned: { label: "Read from a scan", how: "The source is a scanned page with no searchable text. A sentence was transcribed by eye, and no script has matched it against the page." },
+  transcript: { label: "Machine transcript", how: "From the automatic captions of the meeting recording. A script matched the words against the captions, but captions mishear names, numbers and addresses. Listen at the linked time before relying on it." },
   cited: { label: "Source linked", how: "The event comes from the linked document, but no sentence is stored and checked. A person read it." },
   press: { label: "Press report", how: "From a news story. Not fetched or quoted, and the paper may be wrong or may differ from the town record." },
   carried: { label: "Not yet checked", how: "The date came from an earlier version of the record and has not been found in a fetched document." },
@@ -49,6 +52,7 @@ export function evidenceOf(e: TimelineEvent): Evidence {
   if (e.unverified) return "carried";
   if (e.kind === "reported") return "press";
   if (e.scan) return "scanned";
+  if (e.quote && e.src.length > 0 && e.src.every(isRecording)) return "transcript";
   return e.quote ? "quoted" : "cited";
 }
 
@@ -127,4 +131,33 @@ export function seasonOf(monthIndex: number): Season {
   if (monthIndex <= 7 && monthIndex >= 5) return "summer";
   if (monthIndex >= 8 && monthIndex <= 10) return "fall";
   return "winter";
+}
+
+/** How far a project has been approved, from its recorded decisions. */
+export type ApprovalDegree = "none" | "master" | "prelim" | "final" | "denied";
+
+export const APPROVAL: Record<ApprovalDegree, { label: string; rank: number }> = {
+  none: { label: "No approval recorded", rank: 0 },
+  master: { label: "Master plan approved", rank: 1 },
+  prelim: { label: "Preliminary plan approved", rank: 2 },
+  final: { label: "Final plan approved or later", rank: 3 },
+  denied: { label: "Denied", rank: -1 },
+};
+
+const STAGE_DEGREE: Partial<Record<string, ApprovalDegree>> = { master: "master", prelim: "prelim", final: "final", recorded: "final", permit: "final", start: "final", co: "final" };
+
+/**
+ * The degree of approval a project has reached: the latest decision on a review stage, so a later rehearing or a
+ * vacated approval counts as it stands now. Decisions on appeals and other matters are left out. Without a recorded
+ * decision, the status line is read for a master plan approval; otherwise nothing is claimed.
+ */
+export function approvalOf(h: Precedent): { degree: ApprovalDegree; event?: TimelineEvent } {
+  const decided = h.events
+    .filter((e) => e.kind === "decided" && STAGE_DEGREE[e.stage])
+    .sort((a, b) => eventTime(a.date) - eventTime(b.date));
+  const last = decided[decided.length - 1];
+  if (last) return { degree: /\b(denied|rejected|disapproved)\b/i.test(last.what) ? "denied" : STAGE_DEGREE[last.stage]!, event: last };
+  if (/master plan approved/i.test(h.statusLabel)) return { degree: "master" };
+  if (/\b(denied|rejected)\b/i.test(h.statusLabel)) return { degree: "denied" };
+  return { degree: "none" };
 }

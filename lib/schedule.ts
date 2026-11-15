@@ -109,21 +109,35 @@ function icsEscape(s: string): string {
   return s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
 }
 
-/** An iCalendar file with one all-day event per tick. */
-export function toICS(plan: PlannedStep[], project: string): string {
+/** A tick's considerations with whether each is dealt with: what the calendar shows beside the date. */
+export interface TickProgress { items: { text: string; on: boolean }[]; done: number; total: number }
+
+/**
+ * An iCalendar file with one all-day event per tick. With `progress`, each event lists its considerations as
+ * done or open, and one that is fully dealt with is marked so in its title and its category.
+ */
+export function toICS(plan: PlannedStep[], project: string, progress?: (step: PlannedStep, tick: PlannedTick) => TickProgress | null, link?: string): string {
   const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
   const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//RI Building Plan Approval//EN", "CALSCALE:GREGORIAN"];
   plan.forEach((p) => p.ticks.forEach((t) => {
     const d = isoDay(t.date).replace(/-/g, "");
     const next = isoDay(addDays(t.date, 1)).replace(/-/g, "");
+    const pr = progress?.(p, t) ?? null;
+    const complete = !!pr && pr.total > 0 && pr.done === pr.total;
+    const desc = [
+      `${project} · ${p.step.title}${t.note ? ` · ${t.note}` : ""}`,
+      pr && pr.total ? `Considerations ${pr.done} of ${pr.total} dealt with:\n${pr.items.map((x) => `${x.on ? "[x]" : "[ ]"} ${x.text}`).join("\n")}` : "",
+      link ? `Open the project: ${link}` : "",
+    ].filter(Boolean).join("\n\n");
     lines.push(
       "BEGIN:VEVENT",
       `UID:${t.id}-${d}@ri-plan-approval`,
       `DTSTAMP:${stamp}`,
       `DTSTART;VALUE=DATE:${d}`,
       `DTEND;VALUE=DATE:${next}`,
-      `SUMMARY:${icsEscape(`Step ${p.step.n}: ${t.label}`)}`,
-      `DESCRIPTION:${icsEscape(`${project} · ${p.step.title}${t.note ? ` · ${t.note}` : ""}`)}`,
+      `SUMMARY:${icsEscape(`${complete ? "Done: " : ""}Step ${p.step.n}: ${t.label}${pr && pr.total && !complete ? ` (${pr.done}/${pr.total})` : ""}`)}`,
+      `DESCRIPTION:${icsEscape(desc)}`,
+      ...(complete ? ["CATEGORIES:Done"] : []),
       "END:VEVENT",
     );
   }));

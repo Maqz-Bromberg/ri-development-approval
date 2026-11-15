@@ -1,6 +1,6 @@
 import { district, readByUtility } from "./data/atlas";
 import { TREES } from "./data/trees";
-import { classify, deriveFlags, maxUnits, stepsFor, verdict } from "./engine";
+import { classify, commercialLines, deciders, deriveFlags, fmt, maxUnits, stepsFor, verdict } from "./engine";
 import { buildSchedule, daysBetween } from "./schedule";
 import type { ProjectInputs, TreeId } from "./types";
 import { routeText } from "./engine";
@@ -23,12 +23,15 @@ export interface Scenario {
   approvalDays: number;
   fails: number;
   flags: number;
+  /** Who holds the decision on the main line, by contact id */
+  deciders: string[];
   current?: boolean;
 }
 
 function measure(id: string, label: string, why: string, inputs: ProjectInputs): Scenario {
   const tree = classify(inputs);
-  const steps = stepsFor(tree, deriveFlags(inputs, tree));
+  const f = deriveFlags(inputs, tree);
+  const steps = stepsFor(tree, f);
   const v = verdict(inputs, tree, steps);
   const plan = buildSchedule(tree, steps, inputs.startDate, inputs.town);
   const done = plan.find((p) => p.step.id === "record") ?? plan.find((p) => p.step.id === "final") ?? plan.find((p) => p.step.id === "zcheck");
@@ -42,6 +45,7 @@ function measure(id: string, label: string, why: string, inputs: ProjectInputs):
     approvalDays: done && plan.length ? daysBetween(plan[0].start, done.end) : 0,
     fails: v.fails.length,
     flags: v.flags.length,
+    deciders: deciders(steps, f),
   };
 }
 
@@ -61,6 +65,15 @@ export function scenarios(i: ProjectInputs): Scenario[] {
     seen.add(key);
     out.push(measure(id, label, why, next));
   };
+  // A commercial project's alternatives are its floor-area lines: the largest one under the floor area entered.
+  if (i.kind === "commercial") {
+    const line = commercialLines(i.town).filter((l) => l < i.gfa && i.work !== "change").pop();
+    if (line) add("under", `Keep the new floor area to ${fmt(line)} sq ft`, `${fmt(line)} sq ft of new floor area is a line in ${i.town}'s review: under it the review is lighter.`, { gfa: line });
+    return out;
+  }
+  if (i.kind === "mixed" && (i.units > 6 || i.commercial > 2500) && i.units < 10) {
+    add("mixedline", "6 units and 2,500 sq ft of commercial space", "Within the state's minor line for mixed use, which settles the route without asking the town.", { units: Math.min(i.units, 6), commercial: Math.min(i.commercial, 2500), aff: Math.min(i.aff, 6) });
+  }
   const share = i.units ? i.aff / i.units : 0;
   const comp = i.units >= 3 && share >= 0.25;
 

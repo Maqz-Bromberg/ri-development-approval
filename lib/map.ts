@@ -1,4 +1,5 @@
 import { RIZA_LAYER_URL } from "./data/atlas";
+import { townRules } from "./data/towns/overlay";
 import type { TreeId } from "./types";
 
 /*
@@ -21,6 +22,10 @@ export type Ring = LatLon[];
 export interface DistrictShape {
   abbr: string;
   name: string;
+  /** The Atlas's kind of district: "Primarily Residential", "Mixed with Residential" or "Nonresidential" */
+  type: string;
+  /** True for an overlay district, which lies on top of base districts */
+  overlay: boolean;
   /** Outer rings and holes together. Leaflet fills them even-odd, so the order doesn't matter. */
   rings: Ring[];
 }
@@ -72,6 +77,64 @@ export const ROUTE_COLOR: Partial<Record<TreeId, string>> = {
   dpr: "#6da7ec",
 };
 
+export type ZoneKind = "res" | "mixed" | "nonres";
+
+/*
+ * The Atlas's three kinds of district, coloured the same in the district picker and on the map.
+ * Yellow, magenta and violet from the reference categorical set: none is used by the parcel or route colours.
+ * Validated all pairs against the page background (CVD ΔE 16.3 worst, normal-vision ΔE 19.6). Yellow and magenta
+ * sit below 3:1 contrast, so a kind is never shown by colour alone: it carries its icon and its name.
+ */
+export const ZONE_KIND: Record<ZoneKind, { label: string; color: string; sub: string }> = {
+  res: {
+    label: "Primarily residential", color: "#eda100",
+    sub: "Mostly homes. Some allow only single-family houses, others two-family, multi-family or accessory units.",
+  },
+  mixed: {
+    label: "Mixed with residential", color: "#e87ba4",
+    sub: "Shops, offices or mills with homes allowed alongside: village centres, commercial corridors, mixed-use overlays.",
+  },
+  nonres: {
+    label: "Nonresidential", color: "#6250d6",
+    sub: "Industrial, open space and other districts where new homes are generally not allowed.",
+  },
+};
+export const ZONE_KIND_ORDER: ZoneKind[] = ["res", "mixed", "nonres"];
+
+/** The kind of a district, from the Atlas's `type`. An unknown type reads as nonresidential, the most cautious. */
+export function zoneKind(type: string | null | undefined): ZoneKind {
+  if (type === "Primarily Residential") return "res";
+  if (type === "Mixed with Residential") return "mixed";
+  return "nonres";
+}
+
+export interface TownShape {
+  name: string;
+  /** Number of zoning districts, and the share of land where 4+ family housing is allowed by right, as the Atlas states them */
+  districts: number | null;
+  by4: string | null;
+  rings: Ring[];
+}
+
+let townCache: Promise<TownShape[]> | null = null;
+
+/** The 39 municipal outlines from the Zoning Atlas's jurisdictions layer, simplified to about 80 m. Cached for the visit. */
+export function townShapes(): Promise<TownShape[]> {
+  if (!townCache) {
+    const params = new URLSearchParams({
+      where: "1=1", outFields: "JURISDICTION,NumZoningDistricts,Per4_ByRight", returnGeometry: "true",
+      outSR: "4326", geometryPrecision: "4", maxAllowableOffset: "0.0008", f: "json",
+    });
+    townCache = getJSON<{ features: { attributes: { JURISDICTION: string; NumZoningDistricts: number | null; Per4_ByRight: string | null }; geometry?: { rings: number[][][] } }[] }>(
+      `${RIZA_LAYER_URL.replace(/\/\d+$/, "/12")}/query?${params}`,
+    ).then((r) => r.features.filter((f) => f.geometry).map((f) => ({
+      name: f.attributes.JURISDICTION, districts: f.attributes.NumZoningDistricts, by4: f.attributes.Per4_ByRight, rings: toRings(f.geometry!.rings),
+    })));
+    townCache.catch(() => { townCache = null; });
+  }
+  return townCache;
+}
+
 const toRings = (rings: number[][][]): Ring[] => rings.map((r) => r.map((p) => [p[1], p[0]] as LatLon));
 
 async function getJSON<T>(url: string, signal?: AbortSignal): Promise<T> {
@@ -90,16 +153,16 @@ export function districtShapes(town: string): Promise<DistrictShape[]> {
   if (!p) {
     const params = new URLSearchParams({
       where: `Jurisdiction='${town.replace(/'/g, "''")}'`,
-      outFields: "abbrvname,name",
+      outFields: "abbrvname,name,type,family4_treatment",
       returnGeometry: "true",
       outSR: "4326",
       geometryPrecision: "5",
       maxAllowableOffset: "0.00005",
       f: "json",
     });
-    p = getJSON<{ features: { attributes: { abbrvname: string; name: string }; geometry?: { rings: number[][][] } }[] }>(
+    p = getJSON<{ features: { attributes: { abbrvname: string; name: string; type: string; family4_treatment: string | null }; geometry?: { rings: number[][][] } }[] }>(
       `${RIZA_LAYER_URL}/query?${params}`,
-    ).then((r) => r.features.filter((f) => f.geometry).map((f) => ({ abbr: f.attributes.abbrvname, name: f.attributes.name, rings: toRings(f.geometry!.rings) })));
+    ).then((r) => r.features.filter((f) => f.geometry).map((f) => ({ abbr: f.attributes.abbrvname, name: f.attributes.name, type: townRules(town).kinds?.[f.attributes.abbrvname] ?? f.attributes.type, overlay: f.attributes.family4_treatment === "Overlay", rings: toRings(f.geometry!.rings) })));
     p.catch(() => districtCache.delete(town));
     districtCache.set(town, p);
   }

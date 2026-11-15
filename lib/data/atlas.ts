@@ -1,4 +1,5 @@
 import { getActiveTown } from "../town";
+import { townRules } from "./towns/overlay";
 import type { AtlasDistrict } from "../types";
 
 /*
@@ -107,7 +108,9 @@ export async function fetchAtlasDistricts(jurisdiction: string, signal?: AbortSi
   if (!res.ok) throw new Error(`Atlas query failed (${res.status})`);
   const json = (await res.json()) as { features?: { attributes: AtlasDistrict }[]; error?: { message: string } };
   if (json.error) throw new Error(json.error.message);
-  return (json.features ?? []).map((f) => f.attributes);
+  // A town whose ordinance was read can correct the Atlas's kind of district (ARD D38).
+  const kinds = townRules(jurisdiction).kinds ?? {};
+  return (json.features ?? []).map((f) => (kinds[f.attributes.abbrvname] ? { ...f.attributes, type: kinds[f.attributes.abbrvname] } : f.attributes));
 }
 
 /** Fields whose live value differs from the snapshot, per district. */

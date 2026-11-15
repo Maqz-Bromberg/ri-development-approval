@@ -1,4 +1,4 @@
-import { DEFAULT_INPUTS } from "./engine";
+import { DEFAULT_INPUTS, normalizeInputs } from "./engine";
 import type { ProjectInputs, TreeId } from "./types";
 
 /** Everything a project carries: the facts entered, the route override, ticked considerations and notes. */
@@ -8,6 +8,8 @@ export interface Saved {
   checked: Record<string, boolean>;
   /** Free-text notes, keyed "tree/step" */
   notes: Record<string, string>;
+  /** Questions picked for the hearing sheet, by objection id */
+  hearing?: string[];
 }
 
 interface Packed {
@@ -16,6 +18,8 @@ interface Packed {
   o: TreeId | "auto";
   c: string[];
   n: Record<string, string>;
+  /** Hearing sheet picks. Optional, so links made before it was added still open. */
+  h?: string[];
 }
 
 function pack(s: Saved): Packed {
@@ -24,15 +28,16 @@ function pack(s: Saved): Packed {
   (Object.keys(s.inputs) as (keyof ProjectInputs)[]).forEach((k) => { if (s.inputs[k] !== DEFAULT_INPUTS[k]) i[k] = s.inputs[k]; });
   const n: Record<string, string> = {};
   Object.entries(s.notes).forEach(([k, v]) => { if (v.trim()) n[k] = v; });
-  return { v: 1, i: i as Partial<ProjectInputs>, o: s.override, c: Object.keys(s.checked).filter((k) => s.checked[k]), n };
+  return { v: 1, i: i as Partial<ProjectInputs>, o: s.override, c: Object.keys(s.checked).filter((k) => s.checked[k]), n, ...(s.hearing?.length ? { h: s.hearing } : {}) };
 }
 
 function unpack(p: Packed): Saved {
   return {
-    inputs: { ...DEFAULT_INPUTS, ...p.i },
+    inputs: normalizeInputs(p.i),
     override: p.o ?? "auto",
     checked: Object.fromEntries((p.c ?? []).map((k) => [k, true])),
     notes: p.n ?? {},
+    hearing: p.h ?? [],
   };
 }
 

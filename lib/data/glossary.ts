@@ -47,6 +47,8 @@ export const GLOSSARY: GlossaryTerm[] = [
   { id: "wetlands", term: "Freshwater wetlands permit", match: ["freshwater wetlands"], def: "RIDEM's review of work in or near wetlands, streams and their buffers. The wetland edge is usually verified by RIDEM before design is fixed." },
   { id: "adu", term: "ADU", match: ["accessory dwelling unit", "ADUs", "ADU"], def: "Accessory dwelling unit: a second, smaller home on the same lot as a house, such as a basement or garage apartment." },
   { id: "co", term: "Certificate of occupancy", match: ["certificates of occupancy", "certificate of occupancy"], def: "The Building Official's sign-off that a finished building meets the code and the approved plans, and may be lived in." },
+  { id: "gfa", term: "Gross floor area", match: ["gross floor area"], def: "The total floor area inside a building's outside walls, on every floor. State law and town regulations use it to sort commercial and mixed-use projects into minor and major review.", src: "s3932" },
+  { id: "usetable", term: "Use table", match: ["table of uses", "use table"], def: "The table in a zoning ordinance that lists, for each district, which uses are permitted by right, which need a special use permit, and which are not allowed." },
   { id: "atlas", term: "Zoning Atlas", match: ["rhode island zoning atlas", "zoning atlas"], def: "HousingWorks RI's statewide map of what each zoning district allows, built with the National Zoning Atlas method. It reflects zoning as of September 2024." },
 ];
 

@@ -1,7 +1,7 @@
 export type Kind = "elected" | "appointed" | "staff" | "state" | "utility";
 
 /** Site conditions a document, authority or step can depend on. "a|b" means either. */
-export type FlagKey = "wet" | "dot" | "acre" | "transit" | "rezone" | "relief" | "always";
+export type FlagKey = "wet" | "dot" | "acre" | "transit" | "rezone" | "relief" | "septic" | "pubwater" | "pubsewer" | "always";
 export type Flags = Record<FlagKey, boolean>;
 
 export type TreeId = "major" | "minor" | "comp" | "dpr" | "byright";
@@ -9,6 +9,8 @@ export type TreeId = "major" | "minor" | "comp" | "dpr" | "byright";
 export interface Source {
   label: string;
   url: string;
+  /** The municipality the document belongs to, or "State". Only where the label does not name it. Used to file the local copy. */
+  town?: string;
 }
 
 export interface Contact {
@@ -68,9 +70,36 @@ export interface Tree {
   steps: Step[];
 }
 
+/** What is being built. Each kind has its own facts, route rule and coverage (ARD D30, D31). */
+export type ProjectKind = "homes" | "mixed" | "commercial";
+
+/** The short list of non-residential uses read so far (ARD D30). "institutional" covers schools, healthcare, cultural facilities and places of worship. */
+export type CommercialUse = "retail" | "office" | "restaurant" | "industrial" | "institutional";
+
+/** Building work for a commercial project: new floor area, an expansion of a building, or a change of use of one. */
+export type CommercialWork = "new" | "expand" | "change";
+
 export interface ProjectInputs {
+  /** Homes, homes with commercial space, or commercial (non-residential) */
+  kind: ProjectKind;
+  /** The non-residential use, for commercial projects and the commercial part of mixed use */
+  use: CommercialUse;
+  /** Commercial projects: new construction, an expansion, or a change of use */
+  work: CommercialWork;
+  /** Commercial projects: gross floor area built new (or added, for an expansion; or of the building, for a change of use), sq ft */
+  gfa: number;
+  /** Commercial expansions: the building's existing gross floor area, sq ft */
+  existingGfa: number;
+  /** Commercial change of use: whether extensive construction or exterior work is planned */
+  extensive: boolean;
   /** Municipality of the site; set by the address lookup or the town picker */
   town: string;
+  /** Overlay districts the site lies in, by abbreviation (from the lookup or the picker) */
+  overlays: string[];
+  /** Set by the lookup when the site is on tribal land the Atlas maps: town zoning may not govern it (ARD D38) */
+  reservation?: string;
+  /** Which agency regulates wetlands at the site, from the lookup: CRMC on the coast, RIDEM inland */
+  wetAgency?: "CRMC" | "DEM";
   /** Street address the site facts were looked up from, if any */
   address: string;
   parcel: string;
@@ -89,7 +118,7 @@ export interface ProjectInputs {
   rezone: boolean;
   /** Conservation development (Cumberland Zoning Art. 11): density bonus in exchange for open space */
   conservation: boolean;
-  /** Gross sq ft of commercial floor area in the project. Used only where a town's rules sort projects by it (Providence). */
+  /** Gross sq ft of commercial floor area in a mixed-use project. Asked in every town since D30 (the state's mixed-use line). */
   commercial: number;
   /** ISO date the project starts (day 0 of the schedule) */
   startDate: string;
@@ -100,6 +129,8 @@ export interface ProjectInputs {
 
 export interface Finding {
   st: "pass" | "flag" | "fail" | "info";
+  /** Set when the finding marks something not read, or not public: what would answer it. Gaps are shown as such (ARD D31). */
+  gap?: string;
   t: string;
   p: string;
   src?: string;
@@ -151,6 +182,8 @@ export interface TimelineEvent {
   unverified?: string;
   /** True when the quote was read by eye from a scanned page with no text layer, so no script has matched it. */
   scan?: boolean;
+  /** Why a decision rests on a recording's machine captions and not on minutes: the minutes are missing, scanned or silent. Required for such a decision. */
+  gap?: string;
 }
 
 export interface Party {
@@ -173,10 +206,32 @@ export type Timeline = Pick<Precedent, "events" | "parties" | "coverage" | "chec
 export interface TownRules {
   /** Which route a project takes, where the town's thresholds differ from the state defaults */
   classify?: (i: ProjectInputs) => TreeId;
+  /** Whether the housing type is allowed in the district, from the town's own use table. Used in place of the Zoning Atlas when it answers. */
+  use?: (i: ProjectInputs) => { value: "allowed" | "hearing" | "prohibited"; finding: Finding } | null;
+  /** The route for a commercial project, where the town's regulations draw their own floor-area lines */
+  classifyCommercial?: (i: ProjectInputs) => TreeId;
+  /** An overlay district's own findings, where its article has been read. Null leaves the overlay as a named gap. */
+  overlayRules?: (i: ProjectInputs, abbr: string) => Finding[] | null;
+  /** Overlays the ordinance has that the Atlas does not map: offered as ticks, since the lookup cannot find them */
+  unmappedOverlays?: { abbr: string; name: string }[];
+  /** The Atlas's kind of district corrected from the ordinance, by abbreviation ("Primarily Residential" and so on) */
+  kinds?: Record<string, string>;
+  /** Parking, dimensions and the like for a non-residential use; "mixed" for the commercial space of a mixed-use building */
+  commercialFindings?: (i: ProjectInputs, part: "all" | "mixed") => Finding[];
+  /** The route finding for a commercial project, quoting the town's own lines */
+  commercialRoute?: (i: ProjectInputs, tree: TreeId) => Finding;
+  /** Floor-area lines (sq ft of new floor area) that change a commercial project's review, for the alternatives */
+  commercialLines?: number[];
+  /** Whether a non-residential use is allowed in the district, from the town's own use table. Null where that row or district was not read. */
+  useCommercial?: (i: ProjectInputs) => { value: "allowed" | "hearing" | "prohibited"; finding: Finding } | null;
+  /** State-law steps this town does not have on a route, by step id */
+  omit?: Partial<Record<TreeId, string[]>>;
   /** The stage by which state permits must be in hand. Cumberland's regulations say preliminary. */
   permitsBefore?: "prelim" | "final";
   /** True when the route depends on commercial floor area, so the intake form asks for it */
   asksCommercial?: boolean;
+  /** Districts the Zoning Atlas lists that the town's current ordinance no longer has. The district picker marks them. */
+  retired?: { zones: string[]; note: string };
   /** Route names and rules as the town defines them, where they differ from the state defaults */
   routeText?: Partial<Record<TreeId, { name?: string; rule: string; blurb: string }>>;
 }
@@ -196,6 +251,8 @@ export interface Heard {
   src: string[];
   /** A sentence from src[0], word for word, that the summary rests on. Checked by scripts/towns/verify_quotes.py. */
   q?: string;
+  /** Seconds into the recording, when src[0] is a meeting recording. The link opens there. */
+  t?: number;
 }
 
 export interface Objection {

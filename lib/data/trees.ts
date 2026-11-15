@@ -13,7 +13,7 @@ function stepZoning(): Step {
   return {
     id: "zoning", title: "Zoning and site check", app: "Site data package: plat and lot, zoning district, utilities, constraints",
     clock: { text: "Before filing" },
-    what: "Confirm the parcel's zoning district, whether multi-household use is allowed, the density the lot supports, and which state permits the site will trigger. The address lookup and the law check on the Check page cover this step.",
+    what: "Confirm the parcel's zoning district, whether multi-household use is allowed, the density the lot supports, and which state permits the site will trigger. Site selection's lookup and the law check on the Check page cover this step.",
     authLabel: "Rules set by",
     auth: [
       { c: "council", role: "Adopts the zoning ordinance, the zoning map and the Comprehensive Plan" },
@@ -33,7 +33,7 @@ function stepZoning(): Step {
       },
       {
         title: "Lot area per dwelling unit", src: "cz3", pin: "Art. 3",
-        q: "10,000 square feet minimum lot size for the first unit plus 5,000 square feet for each additional unit.",
+        q: "10,000 square feet minimum lot size for the first unit plus 5,000 square feet for each additional unit",
         checklist: [
           "Use the surveyed lot area, not the assessor's figure",
           "Confirm both public water and public sewer are available at the lot line. The density changes if either is missing.",
@@ -269,7 +269,7 @@ function stepOccupy(improvements: boolean): Step {
 /* ---------- Trees ---------- */
 
 const major: Tree = {
-  id: "major", name: "Major land development", rule: "10 or more multifamily units", status: "Fully sourced",
+  id: "major", name: "Major land development", rule: "10 or more multifamily units; over 7,500 sq ft of new commercial floor area; mixed use over 6 units or 2,500 sq ft of commercial space", status: "Fully sourced",
   blurb: "Pre-application meeting, then master, preliminary and final plans. Each Planning Board stage has public notice.",
   steps: [
     stepZoning(),
@@ -411,9 +411,9 @@ const major: Tree = {
       clock: { text: "Runs in parallel, on each agency's timeline" },
       what: "Cumberland's regulations require every state and federal permit before preliminary approval. State law, as amended in 2026, sets the timing of permits at the final review stages. Confirm with staff which applies. Until permits are in, the decision clock is extended.",
       auth: [
-        { c: "water", role: "Water service confirmation" },
-        { c: "dpw", role: "Sewer service confirmation" },
-        { c: "ridem", role: "Wetlands and stormwater permits", cond: "wet|acre" },
+        { c: "water", role: "Water service confirmation", cond: "pubwater" },
+        { c: "dpw", role: "Sewer service confirmation", cond: "pubsewer" },
+        { c: "ridem", role: "Wetlands, stormwater and septic approvals", cond: "wet|acre|septic" },
         { c: "ridot", role: "Physical Alteration Permit for the curb cut", cond: "dot" },
       ],
       docs: [
@@ -426,7 +426,7 @@ const major: Tree = {
           ],
         },
         {
-          title: "Water service confirmation", src: "cregs", pin: "App. C(A)", q: "written confirmation from the Cumberland Water Department that the proposed water service is acceptable",
+          title: "Water service confirmation", cond: "pubwater", src: "cregs", pin: "App. C(A)", q: "written confirmation from the Cumberland Water Department that the proposed water service is acceptable",
           checklist: [
             "Send the domestic and fire flow demand",
             "Get a hydrant flow test if needed for sprinkler design",
@@ -434,7 +434,7 @@ const major: Tree = {
           ],
         },
         {
-          title: "Sewer service confirmation", src: "cregs", pin: "App. C(A)", q: "written confirmation from the Cumberland Public Works Department that the sewer service is acceptable",
+          title: "Sewer service confirmation", cond: "pubsewer", src: "cregs", pin: "App. C(A)", q: "written confirmation from the Cumberland Public Works Department that the sewer service is acceptable",
           checklist: [
             "Send the design flow for the unit count",
             "Find the connection point and its invert elevations",
@@ -448,6 +448,18 @@ const major: Tree = {
             "Delineate the wetland and confirm the edge",
             "Ask RIDEM whether the project falls outside its jurisdiction, or apply for the permit",
             "Submit RIDEM-stamped plans and conditions to the town",
+          ],
+        },
+        {
+          title: "RIDEM approval of the septic system (OWTS)", cond: "septic", src: "owts", pin: "250-RICR-150-10-6, § 6.9(C)",
+          q: "No person shall install, construct, alter or repair or cause to be installed, constructed, altered or repaired any OWTS without first obtaining the Director",
+          note: "Without public sewer, the onsite wastewater treatment system needs RIDEM's written approval of its plans before construction, and a certificate of conformance before use.",
+          checklist: [
+            "Have a licensed soil evaluator test the soils and the seasonal high groundwater",
+            "Have a licensed designer size the system: 115 gallons a day per bedroom for homes",
+            "Check the setbacks from wells, wetlands and drinking water supplies",
+            "Ask whether the site is in a critical resource area, where nitrogen-reducing technology is required",
+            "Submit the application to RIDEM and wait for written approval before building",
           ],
         },
         {
@@ -642,7 +654,7 @@ const major: Tree = {
 };
 
 const minor: Tree = {
-  id: "minor", name: "Minor land development", rule: "3 to 9 multifamily units", status: "Fully sourced",
+  id: "minor", name: "Minor land development", rule: "3 to 9 multifamily units; up to 7,500 sq ft of new commercial floor area; mixed use up to 6 units and 2,500 sq ft of commercial space; a change of use without extensive construction", status: "Fully sourced",
   blurb: "Two stages, preliminary and final. Usually decided by the Administrative Officer. The Planning Board decides only if relief or a new street is involved.",
   steps: [
     stepZoning(),

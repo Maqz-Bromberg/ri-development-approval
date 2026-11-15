@@ -1,6 +1,8 @@
 import type { AtlasDistrict, Finding, ProjectInputs, Step, StepPlan, TownRules, TreeId } from "../../types";
 import { providenceFindings, PROVIDENCE_SCHEDULE } from "./providence/rules";
 import { PROVIDENCE_RULES, PROVIDENCE_STEPS } from "./providence/steps";
+import { cumberlandCommercialFindings, cumberlandCommercialUse } from "./cumberland/commercial";
+import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
 /*
  * What each town lays over the state-law route. This is the first step of the split planned in
@@ -10,7 +12,13 @@ import { PROVIDENCE_RULES, PROVIDENCE_STEPS } from "./providence/steps";
 export type TownFindings = (i: ProjectInputs, tree: TreeId, generic: Finding[], d: AtlasDistrict | undefined) => Finding[];
 
 const STEPS: Record<string, Partial<Record<TreeId, Step[]>>> = { Providence: PROVIDENCE_STEPS };
-const RULES: Record<string, TownRules> = { Providence: PROVIDENCE_RULES };
+const RULES: Record<string, TownRules> = {
+  Providence: PROVIDENCE_RULES,
+  // Cumberland's housing rules are still inside trees.ts and engine.ts (debt 1); its commercial rules start here.
+  Cumberland: { useCommercial: cumberlandCommercialUse, commercialFindings: cumberlandCommercialFindings },
+  // Read to scope the design changes a town with overlays forces (ARD D38). Its use table answers in place of the Atlas.
+  Charlestown: { use: charlestownUse, useCommercial: charlestownCommercialUse, overlayRules: charlestownOverlay, unmappedOverlays: CHARLESTOWN_UNMAPPED, kinds: CHARLESTOWN_KINDS },
+};
 const FINDINGS: Record<string, TownFindings> = { Providence: providenceFindings };
 const SCHEDULES: Record<string, Record<string, StepPlan>> = { Providence: PROVIDENCE_SCHEDULE };
 

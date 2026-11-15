@@ -10,6 +10,7 @@
  * bar appearing once it scrolls away, the form beside the map and district, and the status as a word alone.
  * Decided later the same day: the project summary as a panel on the left on wide screens, over the bar; the
  * affordable share's key in a card on hover or click of the share, over a key stacked beside it.
+ * Decided 2026-11-14 (map key): shapes for the zoning and parcel keys, and a layout that follows the width (see ARD D40).
  */
 export interface Variant {
   label: string;
@@ -20,24 +21,7 @@ export interface Variant {
 }
 
 /** Empty now: every trial so far has been decided. Add one here, read it with useTrial(), and delete it when chosen. */
-export const VARIANTS: Record<string, Variant> = {
-  mapKey: {
-    label: "Zoning map key",
-    note: "How the zoning key and the parcel key are told apart and laid out. Shapes and Columns come from the first round; the overlays put the key on the map itself.",
-    pages: ["/site"],
-    options: {
-      responsive: "Responsive: on the map when wide, in the margin when wider, columns below when narrow",
-      shapes: "Shapes: wide bars for zoning, dots for parcels, under the map",
-      columns: "Columns: shapes, zoning and parcels side by side",
-      split: "Split: shapes, parcels in two columns",
-      "overlay-side": "Overlay: key panel down the left of the map",
-      "overlay-bottom": "Overlay: key strip along the bottom of the map",
-      groups: "Groups: boxed and titled",
-      rail: "Rail: a rule down the left of each key",
-      plain: "Plain: as first built",
-    },
-  },
-};
+export const VARIANTS: Record<string, Variant> = {};
 
 export type TrialKey = string;
 export type TrialState = Record<string, string>;

@@ -16,7 +16,6 @@ import { LEVELS, townInfo } from "@/lib/data/towns";
 import type { PrecedentStatus, TreeId } from "@/lib/types";
 import { useAtlas } from "./useAtlas";
 import { useProject } from "./ProjectProvider";
-import { useTrial } from "./Trial";
 import type { Pin } from "./ZoningMapView";
 import { routeText } from "@/lib/engine";
 
@@ -82,10 +81,6 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
   const [keyOpen, setKeyOpen] = useState(true);
   const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void } | null>(null);
   const [hideParcels, setHideParcels] = useState(false);
-  // Design trial (lib/trials.ts): how the key is laid out. The first option is the published one.
-  const keyStyle = useTrial().mapKey ?? "responsive";
-  const overlay = keyStyle === "overlay-side" || keyStyle === "overlay-bottom";
-  const responsive = keyStyle === "responsive";
   const zoningOff = hideZoning || kindOnly !== null;
   const [picked, setPicked] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -349,7 +344,7 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
     <>
     {expanded && <div className="zm-backdrop" onClick={() => setExpanded(false)} aria-hidden="true" />}
     <div
-      className={`${placement === "address" || placement === "site" ? "zm-inset" : "panel"} zm zm-${placement}${expanded ? " is-expanded" : ""}${onPick ? " can-pick" : ""}${statewide ? " zm-statewide" : ""} zm-ks-${keyStyle}`}
+      className={`${placement === "address" || placement === "site" ? "zm-inset" : "panel"} zm zm-${placement}${expanded ? " is-expanded" : ""}${onPick ? " can-pick" : ""}${statewide ? " zm-statewide" : ""} zm-keyed`}
       ref={box}
       {...(expanded ? { role: "dialog", "aria-modal": true, "aria-label": "Zoning map, expanded" } : {})}
     >
@@ -398,15 +393,13 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
             onTown={(n) => { onTown?.(n); setStatewide(false); }}
           />
         ) : <div className="zm-canvas zm-wait">The map loads when you scroll to it.</div>}
-        {(overlay || responsive) && !statewide && (
-          <div className={`zm-overlay zm-ov-${responsive ? "auto" : keyStyle === "overlay-side" ? "side" : "bottom"}`}>
+        {!statewide && (
+          <div className="zm-overlay">
             <div className="zm-ovhead"><span className="zm-ovctl">{mapButtons}</span></div>
-            {(!responsive || keyOpen) && <div className="zm-ovbody">{zoneKey}<div className="zm-keycol">{parcelHead}{parcelLegend}</div></div>}
-            {responsive && (
-              <button type="button" className="zm-tab" aria-expanded={keyOpen} aria-label={keyOpen ? "Hide the key" : "Show the key"} title={keyOpen ? "Hide the key" : "Show the key"} onClick={() => setKeyOpen(!keyOpen)}>
-                {keyOpen ? "›" : "‹"}
-              </button>
-            )}
+            {keyOpen && <div className="zm-ovbody">{zoneKey}<div className="zm-keycol">{parcelHead}{parcelLegend}</div></div>}
+            <button type="button" className="zm-tab" aria-expanded={keyOpen} aria-label={keyOpen ? "Hide the key" : "Show the key"} title={keyOpen ? "Hide the key" : "Show the key"} onClick={() => setKeyOpen(!keyOpen)}>
+              {keyOpen ? "›" : "‹"}
+            </button>
           </div>
         )}
         {seen && <div className="zm-mapctl">{mapButtons}</div>}
@@ -426,13 +419,11 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
         </ul>
       ) : (
       <>
-      {!overlay && (
-        <div className={`zm-keycols${responsive ? " zm-below-auto" : ""}`}>
-          {zoneKey}
-          <div className="zm-keycol">{parcelHead}{parcelLegend}{keyExtras}</div>
-        </div>
-      )}
-      {overlay && keyExtras}
+      <div className="zm-keycols zm-below-key">
+        {zoneKey}
+        <div className="zm-keycol">{parcelHead}{parcelLegend}</div>
+      </div>
+      {keyExtras}
       </>
       )}
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { shortAddress } from "@/lib/lookup";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -8,12 +9,14 @@ import { historyFor, precedentId } from "@/lib/data/history";
 import { TREES } from "@/lib/data/trees";
 import { fmt } from "@/lib/engine";
 import {
-  RADIUS, ROUTE_COLOR, STRUCTURE, STRUCTURE_ORDER, districtShapes, esc, inRings, metresBetween, parcelsNear, ringCenter,
-  type DistrictShape, type LatLon, type Parcel, type StructureClass,
+  RADIUS, ROUTE_COLOR, STRUCTURE, STRUCTURE_ORDER, ZONE_KIND, ZONE_KIND_ORDER, districtShapes, esc, inRings, metresBetween, parcelsNear, ringCenter, townShapes, zoneKind,
+  type DistrictShape, type LatLon, type Parcel, type StructureClass, type TownShape, type ZoneKind,
 } from "@/lib/map";
+import { LEVELS, townInfo } from "@/lib/data/towns";
 import type { PrecedentStatus, TreeId } from "@/lib/types";
 import { useAtlas } from "./useAtlas";
 import { useProject } from "./ProjectProvider";
+import { useTrial } from "./Trial";
 import type { Pin } from "./ZoningMapView";
 import { routeText } from "@/lib/engine";
 
@@ -36,24 +39,54 @@ function circleBox([lat, lon]: LatLon, m: number): LatLon[] {
 const NO_DISTRICTS: DistrictShape[] = [];
 const distLabel = (m: number) => (m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`);
 
-export type MapPlacement = "wide" | "beside" | "address";
+export type MapPlacement = "wide" | "beside" | "address" | "site";
+
+/** Shade of a town in the statewide view: darker for more of it read. */
+const LEVEL_FILL: Record<number, number> = { 1: 0.08, 2: 0.2, 3: 0.34, 4: 0.55 };
 
 /**
  * Where the project sits: its district among the town's, the parcels around it by structure type, and recent
  * projects by route. In the address step (`placement="address"`) it also previews a found place before its
  * facts are applied, and a click on the map looks up that point (`onPick`).
  */
-export function ZoningMap({ placement = "beside", preview = null, onPick }: {
+export function ZoningMap({ placement = "beside", preview = null, onPick, onTown, startStatewide = false }: {
   placement?: MapPlacement;
   /** A place the address lookup found but hasn't applied yet */
   preview?: { at: LatLon; label: string } | null;
   onPick?: (lat: number, lon: number) => void;
+  /** With this, the map can show all 39 towns, and a click on one picks it */
+  onTown?: (name: string) => void;
+  /** Open on the statewide view */
+  startStatewide?: boolean;
 }) {
   const { inputs } = useProject();
+  const [statewide, setStatewide] = useState(startStatewide && !!onTown);
+  // A town picked anywhere (the list or the map) brings the map down to that town.
+  const firstTown = useRef(inputs.town);
+  useEffect(() => { if (inputs.town !== firstTown.current) { firstTown.current = inputs.town; setStatewide(false); } }, [inputs.town]);
+  // A place found by the lookup is shown in its town, not on the statewide view.
+  useEffect(() => { if (preview) setStatewide(false); }, [preview]);
+  // The statewide start follows the project: on for the example, off once a site is placed or a saved project loads.
+  useEffect(() => { setStatewide(startStatewide && !!onTown); }, [startStatewide]); // eslint-disable-line react-hooks/exhaustive-deps
   const { districts: atlas } = useAtlas();
   const [mode, setMode] = useState<Mode>("structure");
   // "Open in the zoning map" links from the records arrive with ?map=route.
   useEffect(() => { if (new URLSearchParams(window.location.search).get("map") === "route") setMode("route"); }, []);
+  // The key filters the zoning: hover fades the other kinds, a click keeps only that kind, a second click resets.
+  const [kindOnly, setKindOnly] = useState<ZoneKind | null>(null);
+  const [kindHover, setKindHover] = useState<ZoneKind | null>(null);
+  const [structOnly, setStructOnly] = useState<StructureClass | null>(null);
+  const [structHover, setStructHover] = useState<StructureClass | null>(null);
+  const [hideZoning, setHideZoning] = useState(false);
+  const [satellite, setSatellite] = useState(false);
+  const [keyOpen, setKeyOpen] = useState(true);
+  const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void } | null>(null);
+  const [hideParcels, setHideParcels] = useState(false);
+  // Design trial (lib/trials.ts): how the key is laid out. The first option is the published one.
+  const keyStyle = useTrial().mapKey ?? "responsive";
+  const overlay = keyStyle === "overlay-side" || keyStyle === "overlay-bottom";
+  const responsive = keyStyle === "responsive";
+  const zoningOff = hideZoning || kindOnly !== null;
   const [picked, setPicked] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
   const expandBtn = useRef<HTMLButtonElement>(null);
@@ -91,7 +124,23 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
       .catch(() => { if (alive) setShapes({ town, list: [], error: true }); });
     return () => { alive = false; };
   }, [seen, town]);
-  const districts = shapes?.town === town ? shapes.list : NO_DISTRICTS;
+  const districts = statewide ? NO_DISTRICTS : shapes?.town === town ? shapes.list : NO_DISTRICTS;
+  const [towns, setTowns] = useState<TownShape[] | null>(null);
+  const [townsError, setTownsError] = useState(false);
+  useEffect(() => {
+    if (!seen || !statewide || towns) return;
+    let alive = true;
+    townShapes().then((t) => { if (alive) setTowns(t); }).catch(() => { if (alive) setTownsError(true); });
+    return () => { alive = false; };
+  }, [seen, statewide, towns]);
+  const townTip = (name: string) => {
+    const t = townInfo(name), shape = towns?.find((x) => x.name === name);
+    return `<b>${esc(name)}</b><br>Level ${t.level}: ${esc(LEVELS[t.level].name)}${t.trial ? " (trial)" : ""}`
+      + (t.part ? `<br>${esc(t.part.name)}: level ${t.part.level}` : "")
+      + (shape?.districts ? `<br>${shape.districts} zoning districts` : "")
+      + (shape?.by4 ? `<br>4+ family by right on ${esc(shape.by4)} of the land (Atlas)` : "")
+      + (name === town ? "<br><i>The project's town</i>" : "<br><i>Click to choose</i>");
+  };
 
   // Points are memoised: a new array each render would redraw every parcel on every keystroke in the form.
   const site = useMemo<LatLon | null>(() => (inputs.lat != null && inputs.lon != null ? [inputs.lat, inputs.lon] : null), [inputs.lat, inputs.lon]);
@@ -102,7 +151,7 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
   const focusKey = focus ? `${focus[0].toFixed(6)},${focus[1].toFixed(6)}` : "";
   const [near, setNear] = useState<{ key: string; parcels: Parcel[] | null; truncated?: boolean; error?: boolean } | null>(null);
   useEffect(() => {
-    if (!seen || !focusKey) return;
+    if (!seen || !focusKey || statewide) return;
     const [lat, lon] = focusKey.split(",").map(Number);
     const ac = new AbortController();
     setNear({ key: focusKey, parcels: null });
@@ -110,9 +159,9 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
       .then((r) => setNear({ key: focusKey, parcels: r.parcels, truncated: r.truncated }))
       .catch(() => { if (!ac.signal.aborted) setNear({ key: focusKey, parcels: [], error: true }); });
     return () => ac.abort();
-  }, [seen, focusKey]);
-  const parcels = near?.key === focusKey && focusKey ? near.parcels : null;
-  const loadingParcels = !!focusKey && seen && (!near || near.key !== focusKey || near.parcels === null);
+  }, [seen, focusKey, statewide]);
+  const parcels = !statewide && near?.key === focusKey && focusKey ? near.parcels : null;
+  const loadingParcels = !statewide && !!focusKey && seen && (!near || near.key !== focusKey || near.parcels === null);
 
   /** The parcel outlined: the found place's, or the site's (by plat/lot when the form has one, else by the point) */
   const siteParcel = useMemo(() => {
@@ -139,18 +188,18 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
   const elsewhere = projects.length - shown.length;
   const routes = [...new Set(shown.map((p) => p.h.route))] as TreeId[];
 
-  const pins: Pin[] = useMemo(() => (mode === "route" ? shown.map(({ h, at, dist }) => ({
+  const pins: Pin[] = useMemo(() => (mode === "route" && !statewide ? shown.map(({ h, at, dist }) => ({
     key: h.name, at, color: ROUTE_COLOR[h.route] ?? "#a3a9a2", shape: SHAPE[h.status],
     tip: `<b>${esc(h.name)}</b><br>${h.units} unit${h.units === 1 ? "" : "s"}${h.aff ? `, ${h.aff} affordable` : ""} · ${esc(routeText(h.route, h.town).name)}<br>${esc(h.statusLabel)}`
       + (dist !== null ? `<br>${distLabel(dist)} from your site` : "")
       + (h.at!.exact ? "" : "<br><i>Placed at the street address; parcel not confirmed</i>"),
-  })) : []), [mode, shown]);
+  })) : []), [mode, shown, statewide]);
 
   const districtTip = (abbr: string) => {
     const d = atlas.find((x) => x.abbrvname === abbr);
     const shape = districts.find((x) => x.abbr === abbr);
     const t = treatmentFor(d, inputs.units);
-    return `<b>${esc(abbr)}</b> ${esc(shape?.name ?? d?.name ?? "")}`
+    return `<b>${esc(abbr)}</b> ${esc(shape?.name ?? d?.name ?? "")}<br><span class="zm-sub">${esc(ZONE_KIND[zoneKind(shape?.type ?? d?.type)].label)}</span>`
       + `<br>${housingTypeLabel(inputs.units)} housing: ${t.raw ? esc(t.raw.toLowerCase()) : "not in the atlas"}`
       + (abbr === inputs.zone ? "<br><i>The project's district</i>" : "");
   };
@@ -168,91 +217,96 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
     return lines.filter(Boolean).join("<br>");
   };
   const previewTip = preview ? `<b>Found: not applied yet</b><br>${esc(preview.label.split(",").slice(0, 2).join(","))}` : "";
-  const siteTip = `<b>Your site</b>${inputs.address ? `<br>${esc(inputs.address.split(",")[0])}` : ""}${siteParcel ? `<br>${esc(siteParcel)}` : ""}`;
+  const siteTip = `<b>Your site</b>${inputs.address ? `<br>${esc(shortAddress(inputs.address))}` : ""}${siteParcel ? `<br>${esc(siteParcel)}` : ""}`;
 
   // Refit when the site, the town or the mode changes; not when parcels finish loading.
   const fit = useMemo(() => {
     const own = districts.filter((d) => d.abbr === inputs.zone).flatMap((d) => d.rings.flat());
     const all = districts.flatMap((d) => d.rings.flat());
     let points: LatLon[];
+    if (statewide) return { key: `state|${towns?.length ?? 0}`, points: (towns ?? []).flatMap((t) => t.rings.flat()) };
     if (mode === "route" && !focus && shown.length) points = shown.map((p) => p.at);
     else if (focus) points = circleBox(focus, RADIUS);
     else points = own.length ? own : all;
     return { key: `${mode}|${focusKey}|${town}|${inputs.zone}|${districts.length > 0}`, points };
-  }, [mode, focusKey, town, inputs.zone, districts, shown]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mode, focusKey, town, inputs.zone, districts, shown, statewide, towns]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pick = (key: string) => {
     setPicked(key);
     document.getElementById(`zm-p-${precedentId(key)}`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
   };
 
-  return (
+  // The map's own buttons, drawn here so they can sit in the corner of the map or at the top of the key laid over it.
+  const mapButtons = (
     <>
-    {expanded && <div className="zm-backdrop" onClick={() => setExpanded(false)} aria-hidden="true" />}
-    <div
-      className={`${placement === "address" ? "zm-inset" : "panel"} zm zm-${placement}${expanded ? " is-expanded" : ""}${onPick ? " can-pick" : ""}`}
-      ref={box}
-      {...(expanded ? { role: "dialog", "aria-modal": true, "aria-label": "Zoning map, expanded" } : {})}
-    >
-      <div className="zm-head">
-        <div>
-          {placement !== "address" && <h3>Where it sits</h3>}
-          <p className="sub">
-            {preview
-              ? `The place found, with the parcels within ${RADIUS} m. Use its facts below the map${onPick ? ", or click elsewhere to look up another point" : ""}.`
-              : focus
-                ? `Parcels within ${RADIUS} m of the site, coloured by ${mode === "structure" ? "the building the state records on each" : "nothing: the pins carry the colour"}. Hover for details.`
-                : onPick
-                  ? `${town}'s zoning districts. Search an address above, or click the map to look up a point.`
-                  : `${town}'s zoning districts, with ${inputs.zone === "other" ? "no district chosen yet" : `${inputs.zone} tinted`}. Look up an address to see the parcels around your site.`}
-          </p>
-        </div>
-        <div className="zm-tools">
-          <div className="seg zm-mode" role="group" aria-label="Colour by">
-            <button type="button" aria-pressed={mode === "structure"} onClick={() => setMode("structure")}>Structure type</button>
-            <button type="button" aria-pressed={mode === "route"} onClick={() => setMode("route")}>Approval route</button>
-          </div>
-          {expanded
-            ? <button type="button" ref={closeBtn} className="btn ghost zm-expand" onClick={() => setExpanded(false)}>Close ✕</button>
-            : <button type="button" ref={expandBtn} className="btn ghost zm-expand" onClick={() => setExpanded(true)} aria-label="Expand the map">Expand ⤢</button>}
-        </div>
-      </div>
-
-      <div className="zm-frame">
-        {seen ? (
-          <ZoningMapView
-            districts={districts} zone={inputs.zone} districtTip={districtTip}
-            parcels={parcels} parcelTip={parcelTip} mode={mode}
-            site={site} siteTip={siteTip} siteParcel={siteParcel}
-            preview={previewAt} previewTip={previewTip} ring={focus}
-            pins={pins} onPin={pick} fit={fit} onMapClick={onPick}
-          />
-        ) : <div className="zm-canvas zm-wait">The map loads when you scroll to it.</div>}
-        {loadingParcels && <p className="zm-status" role="status">Reading the parcels around the site…</p>}
-        {shapes?.error && <p className="zm-status" role="status">The Zoning Atlas didn't answer, so district outlines are missing.</p>}
-        {near?.error && near.key === focusKey && <p className="zm-status" role="status">The state parcel map didn't answer. Try again later.</p>}
-      </div>
-
-      {mode === "structure" ? (
-        <>
-          <ul className="zm-legend" aria-label={site ? `Parcels within ${RADIUS} m by structure type` : "Structure types"}>
+      <span className="zm-zoom" role="group" aria-label="Zoom">
+        <button type="button" aria-label="Zoom in" onClick={() => zoomApi.current?.zoomIn()}>+</button>
+        <button type="button" aria-label="Zoom out" onClick={() => zoomApi.current?.zoomOut()}>&minus;</button>
+      </span>
+      <span className="seg zm-base zm-icons" role="group" aria-label="Base map">
+        <button type="button" aria-pressed={!satellite} aria-label="Map" title="Map" onClick={() => setSatellite(false)}>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true">
+            <path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z" /><path d="M9 4v13.5M15 6.5V20" />
+          </svg>
+        </button>
+        <button type="button" aria-pressed={satellite} aria-label="Satellite" title="Satellite" onClick={() => setSatellite(true)}>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true">
+            <rect x="9" y="9" width="6" height="6" rx="1" transform="rotate(45 12 12)" /><path d="M5.5 5.5 8.5 8.5M15.5 15.5l3 3M14.5 3.5l6 6M3.5 14.5l6 6" />
+          </svg>
+        </button>
+      </span>
+    </>
+  );
+  const zoneKey = (
+    <div className="zm-keycol">
+      <p className="zm-keyhead zm-kh-zone">
+        <button type="button" className={zoningOff ? "is-off" : undefined} aria-pressed={!hideZoning} onClick={() => { if (hideZoning) setHideZoning(false); else { setKindOnly(null); setHideZoning(true); } }}>
+          <span aria-hidden="true" className="zm-kh-icon" />Zoning district
+        </button>
+      </p>
+      <ul className="zm-legend zm-kinds" aria-label="Zoning districts by kind">
+        {ZONE_KIND_ORDER.map((k) => (
+          <li key={k}>
+            <button
+              type="button" className={`zm-kind${kindOnly === k ? " is-on" : ""}`} aria-pressed={kindOnly === k}
+              onClick={() => { setHideZoning(false); setKindOnly(kindOnly === k ? null : k); }}
+              onMouseEnter={() => setKindHover(k)} onMouseLeave={() => setKindHover(null)}
+              onFocus={() => setKindHover(k)} onBlur={() => setKindHover(null)}
+            >
+              <span className="zm-swatch" style={{ background: ZONE_KIND[k].color }} aria-hidden="true" />{ZONE_KIND[k].label}
+            </button>
+          </li>
+        ))}
+        {inputs.zone !== "other" && <li><span className="zm-swatch site" aria-hidden="true" />{inputs.zone}, the project&apos;s district</li>}
+      </ul>
+    </div>
+  );
+  const parcelHead = (
+      <p className="zm-keyhead zm-kh-parcel"><button type="button" className={hideParcels ? "is-off" : undefined} aria-pressed={!hideParcels} onClick={() => setHideParcels(!hideParcels)}><span aria-hidden="true" className="zm-kh-icon" />{mode === "structure" ? `Parcels within ${RADIUS}m` : `Projects within ${RADIUS}m`}</button></p>
+  );
+  const parcelLegend = mode === "structure" ? (
+    <>
+          <ul className="zm-legend zm-parcelkey" aria-label={site ? `Parcels within ${RADIUS} m by structure type` : "Structure types"}>
             {STRUCTURE_ORDER.map((k) => (
               <li key={k} title={STRUCTURE[k].note}>
-                <span className={`zm-swatch${STRUCTURE[k].color ? "" : " empty"}`} style={STRUCTURE[k].color ? { background: STRUCTURE[k].color } : undefined} aria-hidden="true" />
-                {STRUCTURE[k].label}{parcels ? <b className="mono">{counts[k]}</b> : null}
+                <button
+                  type="button" className={`zm-kind${structOnly === k ? " is-on" : ""}`} aria-pressed={structOnly === k}
+                  onClick={() => setStructOnly(structOnly === k ? null : k)}
+                  onMouseEnter={() => setStructHover(k)} onMouseLeave={() => setStructHover(null)}
+                  onFocus={() => setStructHover(k)} onBlur={() => setStructHover(null)}
+                >
+                  <span className={`zm-swatch${STRUCTURE[k].color ? "" : " empty"}`} style={STRUCTURE[k].color ? { background: STRUCTURE[k].color } : undefined} aria-hidden="true" />
+                  {STRUCTURE[k].label}{parcels ? <b className="mono">{counts[k]}</b> : null}
+                </button>
               </li>
             ))}
             {site && <li><span className="zm-swatch site" aria-hidden="true" />Your site</li>}
             {preview && <li><span className="zm-swatch found" aria-hidden="true" />Place found, not applied</li>}
           </ul>
-          <p className="small muted zm-note">
-            Types are the state's E-911 structure points on each tax parcel, not zoning uses or unit counts. "Multi-family" covers a two-family house and an apartment block alike.
-            {near?.truncated && " The area is dense, and only the first 6,000 parcels are drawn."}
-          </p>
-        </>
-      ) : (
-        <>
-          <ul className="zm-legend" aria-label="Approval routes">
+    </>
+  ) : (
+    <>
+          <ul className="zm-legend zm-parcelkey" aria-label="Approval routes">
             {routes.map((r) => (
               <li key={r}><span className="zm-swatch" style={{ background: ROUTE_COLOR[r] }} aria-hidden="true" />{TREES[r].name}</li>
             ))}
@@ -260,6 +314,17 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
               <li key={s}><span className={`zm-shape ${s}`} aria-hidden="true" />{SHAPE_LABEL[s]}</li>
             ))}
           </ul>
+    </>
+  );
+  const keyExtras = mode === "structure" ? (
+    <>
+          <p className="small muted zm-note">
+            Types are the state's E-911 structure points on each tax parcel, not zoning uses or unit counts. "Multi-family" covers a two-family house and an apartment block alike.
+            {near?.truncated && " The area is dense, and only the first 6,000 parcels are drawn."}
+          </p>
+    </>
+  ) : (
+    <>
           {shown.length ? (
             <ol className="zm-projects">
               {shown.map(({ h, dist }) => (
@@ -277,7 +342,98 @@ export function ZoningMap({ placement = "beside", preview = null, onPick }: {
             <p className="small muted zm-note">{projects.length ? `No recorded projects lie within ${RADIUS} m of the site.` : `No projects have been read into the records for ${town} yet. Cumberland's are in the precedent table.`}</p>
           )}
           {projects.length > 0 && <p className="small muted zm-note">{town} multifamily projects from board records. Select a pin to find it in the list.{site ? ` Only projects within ${RADIUS} m of your site are shown, with distances from it.${elsewhere ? ` ${elsewhere} more in town are further away; see the precedent table.` : ""}` : ""}</p>}
-        </>
+    </>
+  );
+
+  return (
+    <>
+    {expanded && <div className="zm-backdrop" onClick={() => setExpanded(false)} aria-hidden="true" />}
+    <div
+      className={`${placement === "address" || placement === "site" ? "zm-inset" : "panel"} zm zm-${placement}${expanded ? " is-expanded" : ""}${onPick ? " can-pick" : ""}${statewide ? " zm-statewide" : ""} zm-ks-${keyStyle}`}
+      ref={box}
+      {...(expanded ? { role: "dialog", "aria-modal": true, "aria-label": "Zoning map, expanded" } : {})}
+    >
+      <div className="zm-head">
+        <div>
+          {placement !== "address" && <h3>{statewide ? "Rhode Island's 39 municipalities" : placement === "site" ? `${town}, on the map` : "Where it sits"}</h3>}
+          <p className="sub">
+            {statewide
+              ? "Shaded by how much of each town this site has read. Hover for its zoning, click to choose it."
+              : preview
+              ? `The place found, with the parcels within ${RADIUS} m. Use its facts below the map${onPick ? ", or click elsewhere to look up another point" : ""}.`
+              : focus
+                ? `Parcels within ${RADIUS} m of the site, coloured by ${mode === "structure" ? "the building the state records on each" : "nothing: the pins carry the colour"}. Hover for details.`
+                : onPick
+                  ? `${town}'s zoning districts. Search an address above, or click the map to look up a point.`
+                  : `${town}'s zoning districts, with ${inputs.zone === "other" ? "no district chosen yet" : `${inputs.zone} tinted`}. Look up an address to see the parcels around your site.`}
+          </p>
+        </div>
+        <div className="zm-tools">
+          {onTown && (
+            <button type="button" className="btn ghost zm-expand" aria-pressed={statewide} onClick={() => setStatewide(!statewide)}>
+              {statewide ? `Back to ${town}` : "All 39 towns"}
+            </button>
+          )}
+          {!statewide && <div className="seg zm-mode" role="group" aria-label="Colour by">
+            <button type="button" aria-pressed={mode === "structure"} onClick={() => setMode("structure")}>Structure type</button>
+            <button type="button" aria-pressed={mode === "route"} onClick={() => setMode("route")}>Approval route</button>
+          </div>}
+          {expanded
+            ? <button type="button" ref={closeBtn} className="btn ghost zm-expand" onClick={() => setExpanded(false)}>Close ✕</button>
+            : <button type="button" ref={expandBtn} className="btn ghost zm-expand" onClick={() => setExpanded(true)} aria-label="Expand the map">Expand ⤢</button>}
+        </div>
+      </div>
+
+      <div className="zm-frame">
+        {seen ? (
+          <ZoningMapView
+            districts={districts} zone={inputs.zone} districtTip={districtTip}
+            parcels={parcels} parcelTip={parcelTip} mode={mode}
+            site={site} siteTip={siteTip} siteParcel={siteParcel}
+            preview={previewAt} previewTip={previewTip} ring={focus}
+            structOnly={structOnly} structHover={structHover} satellite={satellite} onApi={(a) => { zoomApi.current = a; }} kindOnly={kindOnly} kindHover={kindHover} hideZoning={hideZoning} hideParcels={hideParcels}
+            pins={pins} onPin={pick} fit={fit} onMapClick={statewide ? undefined : onPick}
+            towns={statewide ? towns ?? [] : null} town={town} townTip={townTip}
+            townFill={(n) => LEVEL_FILL[townInfo(n).level] ?? 0.05}
+            onTown={(n) => { onTown?.(n); setStatewide(false); }}
+          />
+        ) : <div className="zm-canvas zm-wait">The map loads when you scroll to it.</div>}
+        {(overlay || responsive) && !statewide && (
+          <div className={`zm-overlay zm-ov-${responsive ? "auto" : keyStyle === "overlay-side" ? "side" : "bottom"}`}>
+            <div className="zm-ovhead"><span className="zm-ovctl">{mapButtons}</span></div>
+            {(!responsive || keyOpen) && <div className="zm-ovbody">{zoneKey}<div className="zm-keycol">{parcelHead}{parcelLegend}</div></div>}
+            {responsive && (
+              <button type="button" className="zm-tab" aria-expanded={keyOpen} aria-label={keyOpen ? "Hide the key" : "Show the key"} title={keyOpen ? "Hide the key" : "Show the key"} onClick={() => setKeyOpen(!keyOpen)}>
+                {keyOpen ? "›" : "‹"}
+              </button>
+            )}
+          </div>
+        )}
+        {seen && <div className="zm-mapctl">{mapButtons}</div>}
+        {loadingParcels && <p className="zm-status" role="status">Reading the parcels around the site…</p>}
+        {statewide && !towns && !townsError && <p className="zm-status" role="status">Reading the town outlines…</p>}
+        {statewide && townsError && <p className="zm-status" role="status">The Zoning Atlas didn&apos;t answer, so the town outlines are missing. Pick the town from the list.</p>}
+        {shapes?.error && <p className="zm-status" role="status">The Zoning Atlas didn't answer, so district outlines are missing.</p>}
+        {near?.error && near.key === focusKey && <p className="zm-status" role="status">The state parcel map didn't answer. Try again later.</p>}
+      </div>
+
+      {statewide ? (
+        <ul className="zm-legend" aria-label="How much of each town is read">
+          {([4, 3, 1] as const).map((l) => (
+            <li key={l}><span className="zm-swatch" style={{ background: `rgba(46, 109, 180, ${LEVEL_FILL[l]})`, border: "1px solid #9aa39c" }} aria-hidden="true" />Level {l}: {LEVELS[l].name}</li>
+          ))}
+          <li><span className="zm-swatch site" aria-hidden="true" />{town}, the project&apos;s town</li>
+        </ul>
+      ) : (
+      <>
+      {!overlay && (
+        <div className={`zm-keycols${responsive ? " zm-below-auto" : ""}`}>
+          {zoneKey}
+          <div className="zm-keycol">{parcelHead}{parcelLegend}{keyExtras}</div>
+        </div>
+      )}
+      {overlay && keyExtras}
+      </>
       )}
     </div>
     </>

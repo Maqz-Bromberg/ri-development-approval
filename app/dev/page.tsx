@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DEV_PROJECTS } from "@/lib/data/devProjects";
 import { OPEN_QUESTIONS, type QStatus } from "@/lib/data/openQuestions";
+import { PAGE_NAMES, VARIANTS, type TrialKey } from "@/lib/trials";
 import { SOURCE_NOTES, VIEW_NOTES, type CheckState } from "@/lib/data/sourceNotes";
 
 export const metadata: Metadata = { title: "Dev notes", robots: { index: false } };
@@ -18,17 +19,39 @@ export default function DevPage() {
           <p className="eyebrow">For the people building this</p>
           <h1 id="dev-h" className="h2">Dev notes</h1>
         </div>
-        <p>Working pages and the questions still open. This page is not in the navigation. The list lives in <code>lib/data/openQuestions.ts</code>.</p>
+        <p>Working pages and the questions still open. This page is not in the navigation. The list lives in <code>lib/data/openQuestions.ts</code>. How the site is put together, and each decision behind it, is in <code>docs/ARD.md</code>.</p>
       </div>
       <ul className="dev-links">
         <li><Link href="/verification"><b>Verification</b></Link> · how a record gets onto a timeline, with the risk at each stage</li>
         <li><Link href="/after-approval"><b>From build</b></Link> · post-approval milestones (empty so far)</li>
         <li><Link href="/towns"><b>Towns</b></Link> · coverage level for each of the 39 towns</li>
       </ul>
+      <details className="dev-trials" id="trials">
+        <summary><h2 className="h2">Design trials in progress ({(Object.keys(VARIANTS) as TrialKey[]).length})</h2></summary>
+        <p className="muted">
+          Switchable under <code>npm run dev</code> from the Trial button at the bottom right, which appears only on the pages named here. The published site uses the first option of each. Declared in <code>lib/trials.ts</code>; when a choice is made, delete the variant and the losing branches.
+        </p>
+        {Object.keys(VARIANTS).length === 0 && <p><b>None at the moment.</b> Every trial so far has been decided.</p>}
+        <ul className="dev-proj">
+          {(Object.keys(VARIANTS) as TrialKey[]).map((k) => (
+            <li key={k}>
+              <b>{VARIANTS[k].label}</b>
+              <span className="muted"> · on </span>
+              {VARIANTS[k].pages.map((pg, i) => <span key={pg}>{i > 0 && ", "}<Link href={pg}>{PAGE_NAMES[pg] ?? pg}</Link></span>)}
+              <p className="muted">{VARIANTS[k].note}</p>
+              <ol className="dev-opts">
+                {Object.values(VARIANTS[k].options).map((o, i) => <li key={o}>{o}{i === 0 && <span className="q-status p-built"> published</span>}</li>)}
+              </ol>
+            </li>
+          ))}
+        </ul>
+        <p className="muted small">Decided 2026-11-14 and removed: consolidated rows for the approval steps, tickable considerations (saved, in the share link, the project file and the calendar file), Nunito Sans headings, and the Check page: the project open above with a bar that takes over once it scrolls away, the form beside the map and district, and the status as one word that links to the findings.</p>
+      </details>
+
       <h2 className="h2" id="new-town">Taking on a new town: sources, views and how each is kept true</h2>
       <p className="muted">
         From the Providence trial (Nov 13, 2026), which read one part of a second town to level 4. The questions it raised are in <code>docs/providence-trial-review.html</code>.
-        Run the checks with <code>scripts/towns/</code>. This list lives in <code>lib/data/sourceNotes.ts</code>.
+        Run the checks with <code>scripts/towns/</code> against the local source folder, <code>.sources/</code>, filed by town and kind. This list lives in <code>lib/data/sourceNotes.ts</code>.
       </p>
       <ol className="dev-rules">
         <li><b>Nothing is stored without the document it came from.</b> A quote is copied, with its source on the same line, and a script matches it. A summary with no matching text says so.</li>

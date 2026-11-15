@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LEVELS, levelAt, townInfo } from "@/lib/data/towns";
+import { LEVELS, coverageFor, levelAt, townInfo } from "@/lib/data/towns";
 import { useProject } from "./ProjectProvider";
 
 /** What has been read for the town on screen. Shown wherever the site speaks as if it knew the town. */
@@ -10,6 +10,20 @@ export function CoverageNote({ compact = false }: { compact?: boolean }) {
   const t = townInfo(inputs.town);
   const lv = LEVELS[t.level];
   const here = levelAt(inputs.town, inputs.lat, inputs.lon);
+  // A commercial project has its own coverage (ARD D31); hearings and precedent were read for housing only.
+  if (inputs.kind === "commercial") {
+    const c = coverageFor(inputs.town, "commercial");
+    return (
+      <aside className={`coverage level-${c.level}`} aria-label={`Coverage for ${t.name}, commercial projects`}>
+        <p>
+          <b>{t.name}, commercial and institutional projects: level {c.level} of 4, {LEVELS[c.level].name.toLowerCase()}{c.trial ? " (trial, not confirmed by the city)" : ""}.</b>{" "}
+          <span className="muted">{c.gaps} </span>
+          <Link href="/towns">All 39 towns</Link>
+        </p>
+      </aside>
+    );
+  }
+  const mixed = inputs.kind === "mixed" ? coverageFor(inputs.town, "commercial") : null;
   return (
     <aside className={`coverage level-${here.level}`} aria-label={`Coverage for ${t.name}`}>
       <p>
@@ -25,6 +39,7 @@ export function CoverageNote({ compact = false }: { compact?: boolean }) {
             {!compact && <span className="muted">{t.part.note} </span>}
           </>
         )}
+        {mixed && <><b>Its commercial space: level {mixed.level}.</b> <span className="muted">{mixed.gaps} </span></>}
         <Link href="/towns">All 39 towns</Link>
       </p>
     </aside>

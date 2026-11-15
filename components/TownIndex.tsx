@@ -27,9 +27,11 @@ export function TownIndex() {
                 <b>{t.name}</b> <LevelChip level={t.level} />
                 {t.part && <span className="muted small"> · {t.part.name} <LevelChip level={t.part.level} /></span>}
                 {t.trial && <span className="muted small"> · trial</span>}
+                {t.commercial && <span className="muted small"> · commercial <LevelChip level={t.commercial.level} /></span>}
+                {t.code && <span className="small"> · <a href={t.code.url} target="_blank" rel="noopener noreferrer" title={`Official code of ordinances, on ${t.code.host}`}>ordinances ↗</a></span>}
                 {inputs.town === t.name
                   ? <span className="muted small"> · your project</span>
-                  : <Link href="/project" className="link-btn small" onClick={() => { setInput("town", t.name); setInput("zone", "other"); }}>Use this town</Link>}
+                  : <Link href="/site" className="link-btn small" onClick={() => { setInput("town", t.name); setInput("zone", "other"); setInput("lat", undefined); setInput("lon", undefined); setInput("address", ""); }}>Use this town</Link>}
               </li>
             ))}
           </ul>

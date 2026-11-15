@@ -25,7 +25,9 @@ export function AtlasPanel() {
       {d ? (
         <>
           <p className="sub">
-            {housingTypeLabel(inputs.units)} housing here is <b>{t.raw.toLowerCase()}</b>. Each chip shows how the district treats that housing type.
+            {inputs.kind === "commercial"
+              ? <>The Atlas records housing types only, so it says nothing about a {inputs.use === "industrial" ? "light industrial" : inputs.use} use here. The chips show what it says about housing.</>
+              : <>{housingTypeLabel(inputs.units)} housing here is <b>{t.raw.toLowerCase()}</b>. Each chip shows how the district treats that housing type.</>}
           </p>
           <div className="treat-row">
             <TreatChip label="1-family" value={d.family1_treatment} />

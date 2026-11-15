@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 
 const NAV = [
   { href: "/", label: "Overview" },
+  { href: "/site", label: "Site selection" },
   { href: "/project", label: "Check" },
   { href: "/steps", label: "Steps" },
   { href: "/schedule", label: "Schedule" },

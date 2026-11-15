@@ -6,7 +6,8 @@ import { TREES } from "@/lib/data/trees";
 import { verdict } from "@/lib/engine";
 import { SHARE_PARAM, encodeState, fromFile, toFile } from "@/lib/share";
 import { useProject } from "./ProjectProvider";
-import { routeText } from "@/lib/engine";
+import { projectLabel, routeText } from "@/lib/engine";
+import { useCalendarFile } from "./useCalendarFile";
 
 const ORIGIN_NOTE = {
   example: "You're looking at the example project.",
@@ -19,10 +20,11 @@ const ORIGIN_NOTE = {
 export function ShareTools({ printHere = false }: { printHere?: boolean }) {
   const { saved, importState, inputs, tree, steps, progress, notes, origin } = useProject();
   const [msg, setMsg] = useState("");
+  const downloadCalendar = useCalendarFile();
   const file = useRef<HTMLInputElement>(null);
 
   const link = () => `${window.location.origin}${window.location.pathname}#${SHARE_PARAM}=${encodeState(saved)}`;
-  const name = `${inputs.units} units, ${inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}`;
+  const name = `${projectLabel(inputs)}, ${inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}`;
 
   const copy = async () => {
     try {
@@ -83,6 +85,7 @@ export function ShareTools({ printHere = false }: { printHere?: boolean }) {
           : <Link href="/summary" className="btn ghost">Printable summary</Link>}
         <button type="button" className="btn ghost" onClick={email}>Email a summary</button>
         <button type="button" className="btn ghost" onClick={download}>Download project file</button>
+        <button type="button" className="btn ghost" onClick={() => { downloadCalendar(); setMsg("Calendar downloaded, with the considerations you have ticked."); }}>Download calendar (.ics)</button>
         <button type="button" className="btn ghost" onClick={() => file.current?.click()}>Open a project file</button>
         <input ref={file} type="file" accept=".json,application/json" hidden onChange={(e) => load(e.target.files?.[0])} />
       </div>

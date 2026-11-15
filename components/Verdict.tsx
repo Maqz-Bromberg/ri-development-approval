@@ -1,10 +1,11 @@
 "use client";
 
+import { shortAddress } from "@/lib/lookup";
 import Link from "next/link";
 import { useMemo } from "react";
 import { CONTACTS, shortName } from "@/lib/data/contacts";
 import { TREES, TREE_ORDER } from "@/lib/data/trees";
-import { fmt, hearingBody, verdict } from "@/lib/engine";
+import { fmt, hearingBody, projectLabel, verdict } from "@/lib/engine";
 import { buildSchedule, fmtDate } from "@/lib/schedule";
 import type { ProjectInputs, TreeId } from "@/lib/types";
 import { useProject } from "./ProjectProvider";
@@ -18,9 +19,8 @@ const ORIGIN = { example: "Example project", browser: "Your project", link: "Pro
 /** The facts the answer rests on, each tied to the form field that sets it. */
 export function projectBasis(i: ProjectInputs): { field: string; t: string }[] {
   const out: { field: string; t: string }[] = [];
-  const s = i.units === 1 ? "" : "s";
-  out.push({ field: "f-units", t: i.type === "reuse" ? `${i.units} unit${s} in a reused building` : `${i.units} new unit${s}` });
-  if (i.aff) out.push({ field: "f-aff", t: `${i.aff} affordable` });
+  out.push({ field: i.kind === "commercial" ? "f-gfa" : "f-units", t: projectLabel(i) });
+  if (i.aff && i.kind !== "commercial") out.push({ field: "f-aff", t: `${i.aff} affordable` });
   out.push({ field: "f-zone", t: i.zone === "other" ? `${i.town}, district not chosen` : `${i.zone}, ${i.town}` });
   out.push({ field: "f-lot", t: `${fmt(i.lot)} sq ft lot` });
   out.push({
@@ -54,7 +54,7 @@ export function ProjectFacts({ check = false, onPick, className = "verdict-basis
   const go = onPick ?? focusField;
   return (
     <p className={className}>
-      {inputs.address && <span className="basis-addr">{inputs.address.split(",")[0]}: </span>}
+      {inputs.address && <span className="basis-addr">{shortAddress(inputs.address)}: </span>}
       {projectBasis(inputs).map((b, i) => (
         <span key={`${b.field}-${b.t}`}>
           {i > 0 && <span className="basis-sep" aria-hidden="true"> · </span>}
@@ -156,8 +156,8 @@ export function Verdict({ compact = false, check = false, premise = true }: { co
       )}
       {compact && (
         <div className="verdict-actions">
-          <Link href="/project" className="btn">{origin === "example" ? "Check your own project" : "Edit the project"}</Link>
-          <Link href="/steps" className="btn ghost">See the steps</Link>
+          <Link href="/project" className="btn">See the check</Link>
+          <Link href="/site" className="btn ghost">Edit the project</Link>
         </div>
       )}
     </div>

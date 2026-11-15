@@ -4,32 +4,21 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CoverageNote } from "./Coverage";
 import { CONTACTS, shortName } from "@/lib/data/contacts";
-import { TREES } from "@/lib/data/trees";
-import { hearingBody, verdict } from "@/lib/engine";
-import { FlowChart } from "./FlowChart";
+import { hearingBody } from "@/lib/engine";
 import { PrecedentTable } from "./PrecedentTable";
 import { useProject } from "./ProjectProvider";
 import { RouteFlow } from "./RouteFlow";
 import { ShareTools } from "./ShareTools";
-import { StepSheets } from "./StepSheets";
-import { useTrial } from "./Trial";
-import { routeText } from "@/lib/engine";
+import { ProjectFrame } from "./ProjectSummary";
 import { townInfo } from "@/lib/data/towns";
 import { historyFor } from "@/lib/data/history";
 
-/** The Work page: a sticky summary of the project, then the approval steps, ways to keep them, and precedent. */
+/** The Steps page: the project kept in view (ProjectSummary), then the approval steps, ways to keep them, and precedent. */
 export function StepsWorkspace() {
-  const { inputs, tree, steps, clearChecks, checked } = useProject();
-  const trial = useTrial();
+  const { inputs, steps, clearChecks, checked } = useProject();
   const [open, setOpen] = useState<Set<string>>(new Set());
   const [confirmClear, setConfirmClear] = useState(false);
-  const v = verdict(inputs, tree, steps);
   const anyTicked = Object.values(checked).some(Boolean);
-
-  const openSheet = (id: string) => {
-    setOpen((prev) => new Set(prev).add(id));
-    requestAnimationFrame(() => document.getElementById(`d-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }));
-  };
 
   // Deep links such as /steps#d-master open that step.
   useEffect(() => {
@@ -42,18 +31,7 @@ export function StepsWorkspace() {
   }, []);
 
   return (
-    <>
-      <div className="summary-bar">
-        <div className="summary-bar-main">
-          <b>{inputs.units} unit{inputs.units === 1 ? "" : "s"} · {inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}</b>
-          <span>{routeText(tree).name}</span>
-          {v.fails.length > 0 && <span className="st fail">{v.fails.length} blocker{v.fails.length > 1 ? "s" : ""}</span>}
-          {v.flags.length > 0 && <span className="st flag">{v.flags.length} open</span>}
-          {!v.fails.length && !v.flags.length && <span className="st pass">Clear</span>}
-        </div>
-        <Link href="/project" className="link-btn">Change the facts</Link>
-      </div>
-
+    <ProjectFrame page="steps">
       <CoverageNote />
 
       <section className="sec" aria-labelledby="h-steps">
@@ -65,14 +43,7 @@ export function StepsWorkspace() {
             before filing, and the questions to expect. Hearings are held by the {shortName(CONTACTS[hearingBody(steps)]?.name ?? "Planning Board")}.
           </p>
         </div>
-        {trial.routeLayout === "consolidated" ? (
-          <RouteFlow open={open} setOpen={setOpen} />
-        ) : (
-          <>
-            <FlowChart onOpen={openSheet} />
-            <div className="sec"><StepSheets open={open} setOpen={setOpen} /></div>
-          </>
-        )}
+        <RouteFlow open={open} setOpen={setOpen} />
       </section>
 
       <section className="sec" aria-labelledby="h-keep">
@@ -80,12 +51,12 @@ export function StepsWorkspace() {
           <p className="eyebrow">Keep it</p>
           <h2 id="h-keep">Take this project with you</h2>
           <p>
-            Ticks and notes live in this browser, which is easy to lose. A share link carries the whole project in the link itself,
+            Ticks and notes are saved in this browser, which is easy to lose. A share link carries the whole project in the link itself, the calendar file lists what you have ticked,
             and a project file or a printed summary works without this site.
           </p>
         </div>
         <ShareTools />
-        {anyTicked && trial.considerations === "tick" && (
+        {anyTicked && (
           <div className="clear-row">
             {confirmClear ? (
               <>
@@ -113,6 +84,6 @@ export function StepsWorkspace() {
             </>
           : <p className="muted">No projects from {inputs.town} have been read yet. Cumberland's are on the <Link href="/records">Records page</Link>, and show how one town applied the same state law.</p>}
       </section>
-    </>
+    </ProjectFrame>
   );
 }

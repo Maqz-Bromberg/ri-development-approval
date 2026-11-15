@@ -2,6 +2,7 @@
 
 import { TREES, TREE_ORDER } from "@/lib/data/trees";
 import { analyze } from "@/lib/engine";
+import { townInfo } from "@/lib/data/towns";
 import type { TreeId } from "@/lib/types";
 import { Cite } from "./Cite";
 import { useProject } from "./ProjectProvider";
@@ -14,6 +15,7 @@ const LABEL = { fail: "Blocker", flag: "Open", info: "Note", pass: "Pass" } as c
 /** `head={false}` leaves the route and its override to a verdict shown just above. */
 export function LawCheck({ head = true }: { head?: boolean }) {
   const { inputs, tree, auto, override, setOverride, steps } = useProject();
+  const code = townInfo(inputs.town).code;
   const findings = analyze(inputs, tree).map((f, i) => ({ f, i })).sort((a, b) => ORDER[a.f.st] - ORDER[b.f.st] || a.i - b.i).map(({ f }) => f);
   const timed = steps.filter((s) => s.clock.days && !s.branch);
   const total = timed.reduce((a, s) => a + (s.clock.days ?? 0), 0);
@@ -38,8 +40,14 @@ export function LawCheck({ head = true }: { head?: boolean }) {
           <li key={f.t}>
             <span className={`st ${f.st}`}>{LABEL[f.st]}</span>
             <div>
-              <b>{f.t}</b>
+              <b>{f.t}{f.gap && <span className="gap-tag" title="Not read into this site, or not public">Gap</span>}</b>
               <p><Gloss text={f.p} /></p>
+              {f.gap && (
+                <p className="gap-fill">
+                  What would answer it: {f.gap}.
+                  {code && /ordinance|regulations/i.test(f.gap) && <> <a href={code.url} target="_blank" rel="noopener noreferrer">{inputs.town}&apos;s code on {code.host} ↗</a></>}
+                </p>
+              )}
               <Cite src={f.src} pin={f.pin} q={f.q} />
             </div>
           </li>

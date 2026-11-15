@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ApprovalTrail } from "@/components/ApprovalTrail";
 import { TrailHeading } from "@/components/TrailHeading";
-import { Verdict } from "@/components/Verdict";
+import { StartCard } from "@/components/StartCard";
 
 export default function Home() {
   return (
@@ -15,12 +15,12 @@ export default function Home() {
           with a checklist, and every requirement links to the law that sets it.
         </p>
         <div className="hero-actions">
-          <Link href="/project" className="btn">Check your project</Link>
+          <Link href="/site" className="btn">Start with your site</Link>
           <Link href="/hearing" className="btn ghost">Prepare for the hearing</Link>
         </div>
         </div>
-        <aside className="hero-aside" aria-label="The example project at a glance">
-          <Verdict compact />
+        <aside className="hero-aside" aria-label="Start with your site">
+          <StartCard />
         </aside>
       </section>
 
@@ -30,10 +30,10 @@ export default function Home() {
       </section>
 
       <section className="sec features" aria-label="What's inside">
-        <Link href="/project" className="feature">
+        <Link href="/site" className="feature">
           <span className="f-icon" aria-hidden="true">⌂</span>
-          <h3>A verdict from an address</h3>
-          <p>Type an address to get the district, the parcel and the utilities, then see the route, the blockers and the nearby alternatives.</p>
+          <h3>Site selection from an address or a map</h3>
+          <p>Type an address or click the map to get the district, the parcel and the utilities, with state roads, wetlands and bus stops suggested. Then compare the route with nearby alternatives.</p>
         </Link>
         <Link href="/steps" className="feature">
           <span className="f-icon" aria-hidden="true">✓</span>

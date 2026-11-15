@@ -20,8 +20,10 @@ npm run build && npm start
 
 | Route | What it does |
 |---|---|
-| `/` | Landing page: the example project's verdict, and the cartoon approval trail. Select a stop to see who decides it and what you file. |
-| `/project` | **Check.** Address lookup (district, parcel, lot area, water and sewer from public map layers), site facts, a verdict line, the zoning and law check with blockers first, a what-if comparison of nearby alternatives, the district's Atlas figures, and the five routes. Lists every part of the site that is a stand-in. |
+| `/` | Landing page: "Where is your site?" until a project is entered (then its verdict), and the cartoon approval trail. Select a stop to see who decides it and what you file. |
+| `/site` | **Site selection**, where an applicant starts. First, what you plan to build: homes, homes with commercial space, or a commercial or institutional building (retail, office, restaurant, light industrial, institutional). The town from a searchable list or a statewide map, then an address or a click on the map: district, parcel, lot area, water and sewer from public layers, with state road, mapped wetlands and bus stops applied too, each yours to change. The zoning district by typing or by browsing its kind (residential, mixed, nonresidential), coloured as on the map. The project and land facts in groups, each with an (i) and a check against the map. The route, with nearby alternatives to compare side by side and try, keeping the entry to return to; and the five routes. |
+| `/docs` | **Documentation**, meant to grow: how site facts are found (each layer, how it is asked, what it misses, with a diagram), how records are checked, the glossary, town coverage. |
+| `/project` | **Check.** The project kept in view in a panel on the left (a bar on narrower screens), where the route can be swapped, then the zoning and law check with blockers first and the verdict. Lists every part of the site that is a stand-in. |
 | `/steps` | **Approval steps.** One row per step: what you file, who holds the decision (an icon per kind of authority, with role and contacts on hover or tap), and the clock. Each row opens to its documents, considerations, likely hearing questions, your notes and contacts. Share link, project file, email and printable summary. Precedent table. |
 | `/summary` | The whole project on one printable page, with notes and the considerations dealt with |
 | `/schedule` | The approval route laid out from your start date. **Timeline** view (approvals by default, or through move-in) with a today marker, statutory clocks and estimates, and ticks that open the documents due then. **Calendar** view. **Download .ics**. |
@@ -34,7 +36,7 @@ Project inputs, ticks and notes are saved in the browser (`localStorage`, key `r
 
 ### Trying design variants
 
-Under `npm run dev` a **Trial** button sits at the bottom right. It switches between variants (the consolidated steps list against the older flowchart and step sheets, tickable against read-only considerations, heading typeface, verdict on or off). Variants are declared in `components/Trial.tsx`. The published site always uses the first option of each.
+Under `npm run dev` a **Trial** button sits at the bottom right, on the pages that have a design on trial (none at the moment: the last ones were decided). Variants are declared in `lib/trials.ts` and every active one is listed, with links, under "Design trials in progress" on `/dev`. The published site always uses the first option of each.
 
 ## Where the data lives
 
@@ -54,16 +56,21 @@ Everything the backend will eventually serve sits in `lib/data/`, one file per c
 
 ## Adding a municipality
 
-1. Add its sources to `sources.ts` and its offices to `contacts.ts`.
-2. Copy the trees in `trees.ts`, then change the local pinpoints, quotes and checklists.
-3. Add its record links to `records.ts`.
-4. Query its districts from the Zoning Atlas layer (`fetchAtlasDistricts("<Town>")`), and add any ordinance-specific density rule to `requiredArea` in `engine.ts`.
-5. Read its hearing minutes and videos into `heard` entries, then set `indexed: true` in `records.ts`.
+How the data is shaped, and each decision behind it, is in `docs/ARD.md`. Providence is the worked example.
+
+1. Add its sources to `sources.ts`, with a short prefix on each id.
+2. Give it a folder, `lib/data/towns/<town>/`, with its steps and route rule, findings and schedule, contacts and calendar, recorded projects with dated events, and hearing concerns. Register it in `lib/data/towns/overlay.ts`.
+3. Set its level in `towns.ts`, marked `trial` until its planning office has confirmed the reading. A part of a town can carry a higher level.
+4. Fetch what it cites into `.sources/` and run the checks in `scripts/towns/README.md`. Every quote must match its document.
+5. Districts come live from the Zoning Atlas. Nothing to add unless the ordinance differs from it.
+
+Cumberland predates this shape: its steps are still inside `trees.ts`.
 
 ## Not yet built
 
 - Plan-set extraction: uploaded files are only listed.
-- Wetlands, flood, state-road and transit lookups. The address lookup covers district, parcel, lot area, water and sewer.
+- Flood zone lookup. A bus stop's frequency and mobility hubs are not checked.
+- Commercial use tables beyond Providence, parking and dimensional rules for commercial uses, and commercial hearings and precedent. The check names each of these as a gap.
 - Fees: Cumberland's current fee schedule was not available.
 - Precedent outcomes: read from minutes through May 2026. Later minutes are not yet read.
 - Video transcription: meeting videos are linked, not transcribed. The backend should transcribe them and tag objections the way the minutes were tagged by hand.

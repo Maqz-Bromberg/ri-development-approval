@@ -1,0 +1,219 @@
+# Architectural Review Document
+
+RI Building Plan Approval. Started 2026-11-14. Last updated 2026-11-14 (Site selection).
+
+This is the living record of how the site is put together, why, and what is still unsettled. It is updated in the same change as any decision that alters the shape of the data, the engine, the sources or the checks. Plans for single features stay in `docs/plans/`. Reviews of finished work stay as dated HTML files in `docs/`. This document is the thread between them.
+
+**How to keep it**
+
+- A new decision gets a row in section 5 with a date and a status: `decided`, `trial` (built, may change) or `open`.
+- A decision that is reversed is not deleted. Its status becomes `replaced by Dn`.
+- Section 7 is the debt list. An item leaves it only when the code changes.
+- Every change to this file adds one line to the log in section 9.
+
+## 1. What the site is
+
+A static Next.js site with no server and no database. Every page is prerendered, and a project lives in the visitor's browser and in a share link. The applicant, a small developer or owner, enters a site and a project, and the site answers three questions: can this be built here, by which route and who decides each step, and how long may the town take.
+
+Everything shown is one of four things:
+
+| Kind | Example | Where it lives | How it reaches the page |
+| --- | --- | --- | --- |
+| Statewide data, live | Zoning Atlas districts and town outlines, tax parcels, address search; state roads, mapped wetlands and bus stops as suggestions | Public services, queried from the browser | `lib/lookup.ts`, `lib/map.ts`, `components/useAtlas.ts` |
+| State law | The five routes, statutory clocks, appeals | `lib/data/trees.ts` (mixed with Cumberland, see debt 1) | `lib/engine.ts` |
+| A town's own reading | Steps, checklists, contacts, calendar, findings | Cumberland: `trees.ts`, `contacts.ts`, `calendars/`. Providence: `lib/data/towns/providence/` | `lib/data/towns/overlay.ts` |
+| A town's record | Projects, dated events, hearing concerns | `history.ts`, `timelines.json`, `objections.ts`, and each town's folder | `lib/timelines.ts`, components |
+
+## 2. Current priority
+
+Set by Maqz on 2026-11-14, after the Providence trial:
+
+> As much information as possible, with as low a maintenance footprint as possible. Validation for public use comes later.
+
+What follows from it, until it changes:
+
+- **Prefer a source a script can fetch.** The state Open Meetings site, the courts, the parcel layer and YouTube captions all are. One fetcher that serves every town beats a better source that serves one.
+- **Imperfect information is admitted with a label, not held back.** A machine transcript, a date read from a scan, an ordinance quoted through a court decision: each is stored, and each carries a mark that travels to the page.
+- **A file fetched by hand is acceptable.** It goes in the local source folder (D9) and the checks then cover it.
+- **No new moving parts for upkeep yet.** No new scheduled actions, no services. The checks run when someone runs them.
+- **Nothing is removed from the trust markings to make the site look further along.** The trial mark, coverage levels and read dates stay. They are what lets validation happen later without re-reading everything.
+
+## 3. Shape of the data
+
+```
+lib/data/
+  trees.ts            state-law routes, with Cumberland's local detail still inside   (debt 1)
+  contacts.ts         Cumberland's offices + state agencies; other towns via the overlay
+  sources.ts          every cited document, by id. Providence ids start with p.
+  towns.ts            the 39 towns: level, trial mark, gaps, and any better-read part
+  towns/
+    overlay.ts        the seam: a town's steps, route rule, findings and schedule
+    providence/
+      steps.ts        whole steps per route, and the town's route rule
+      rules.ts        findings for a site, and schedule durations
+      town.ts         contacts, board calendar, where records are published
+      history.ts      recorded projects        timelines.json   their dated events
+      hearings.ts     documented concerns, by concern id
+  sourceNotes.ts      what each kind of source needs to stay true (shown on /dev)
+.sources/             local copies of cited documents and transcripts. Not committed.
+  <town>/<kind>/      one file per source id, with its text beside it. INDEX.md lists what is in hand.
+scripts/
+  sourcelib.py        where a source's file belongs, and how to find it by id
+  timelines/          fetch, find and verify for Cumberland's monthly check
+  towns/              fetch_sources, fetch_captions, organize_sources, verify_quotes
+```
+
+**The local source folder.** `state/`, `cumberland/`, `providence/`, and a folder for each town added later. Inside each: `rules` (statutes, ordinances, regulations, forms, schedules), `meetings` (agendas and minutes), `recordings` (machine transcripts), `projects` (staff reports, court decisions), `press`, `pages` (saved web pages). Nothing is filed by hand. A source's town and kind are worked out from its entry in `sources.ts`, the scripts find a file by its id wherever it sits, and a file saved from a browser under its own name is recognised and filed by `organize_sources.py`. Parts of towns are not a folder level, because a board's minutes cover the whole town.
+
+**The engine asks, the town answers.** `lib/engine.ts` builds a route like this: the town's own steps for that route if it has them, then any state-law steps it did not cover and did not name as absent. `classify`, the permitted-use check, `analyze` and the schedule each ask `overlay.ts` first and fall back to the state default or the Zoning Atlas. A town with nothing in the overlay gets state law only, which is level 1.
+
+**Evidence travels with the fact.** Every requirement carries a source id, a pinpoint and a quote. Every dated event carries a source and, for a decision, a quote. `lib/timelines.ts` turns that into an evidence class the page shows.
+
+## 4. Principles that constrain design
+
+These were stated by Maqz or settled in review. A change that breaks one needs a new decision here first.
+
+1. **Who decides is on the first line of every step.** Elected, appointed, staff, state, utility.
+2. **An answer is never shown before, or apart from, the facts it rests on.** An example says it is an example where the answer is.
+3. **No more precision than the data has.** No scores, no averages over a handful of projects.
+4. **A stand-in is labelled and listed.** `components/Demo.tsx` holds the list.
+5. **A project is kept by share link and export.** Browser storage is a convenience, not the record.
+6. **Nothing is stored without the document it came from**, and a script matches every quote it can.
+7. **Residents are described by role, never by name**, whatever the source does.
+8. **Automation reports. It does not edit.** A check opens an issue or a pull request for a person.
+9. **Coverage is claimed only as read**, with a date, per town, per part of a town and per kind of project.
+10. **A gap is shown, not hidden.** Where a rule or record has not been read, or is not public, the page says so and names what would answer it. The project is partly a map of where public information runs out (Maqz, 2026-11-14).
+
+## 5. Decisions
+
+| # | Date | Decision | Status | Why, and what it costs |
+| --- | --- | --- | --- | --- |
+| D1 | 2026-11-13 | A town supplies **whole steps** for a route. They are not merged field by field onto the state step. | trial | Providence's version of a step differs in title, clock, who decides and every document. Cost: a state-law change must be carried into each town's copy by hand. |
+| D2 | 2026-11-13 | **The route rule is per town.** `classify` asks the town first. | decided | State law lets a town raise the minor thresholds, and Providence did. The statewide plan's "classify is state law" is wrong. |
+| D3 | 2026-11-13 | **Coverage levels can apply to part of a town.** | decided 2026-11-14 | Offices and regulations are townwide. Hearings and precedent are local. |
+| D4 | 2026-11-14 | **Parts are drawn where they are most useful to a developer**, not along official neighbourhood lines. Source access may also force a part: where permission to fetch covers only some records, coverage follows it. | decided | Replaces the trial's suggestion to adopt the city's neighbourhood polygons. Cost: a part needs a stated reason for its edges, and a town may need several. Today `towns.ts` allows one box per town (debt 6). |
+| D5 | 2026-11-13 | **A town can ask for its own site facts.** Providence asks for commercial floor area. | trial | Its minor and major line depends on it. Each new town may add one or two. The pattern for many towns is open (Q3). |
+| D6 | 2026-11-13 | **Evidence classes:** quote checked, read from a scan, machine transcript, source linked, press report, not yet checked. | decided | A class is computed from the data, never typed. |
+| D7 | 2026-11-14 | **A machine transcript is evidence for a concern, not for a decision.** YouTube's automatic captions are fetched with `yt-dlp` and quoted exactly as the machine heard them, marked as such and linked to the moment in the recording. A decision comes from the minutes. The exception is a gap: where the minutes are missing, scanned or silent, or there is clear evidence otherwise, a decision may rest on the recording, and the event must say why (`gap`), which `verify.py` enforces. | decided | The minutes say least about the most contested hearings. Cost: no punctuation, misheard names and numbers, and the fetch depends on YouTube. **Watch as other districts and towns are read:** their minutes and recordings may be better or worse, so the line between concern and decision may need to move. |
+| D8 | 2026-11-13 | **An ordinance may be quoted through a court decision**, with the pinpoint saying so. | ended 2026-11-14 for Providence | The ordinance was read and the three findings now quote it. One had gone stale: the court's 2024 text gave a 20 ft rear setback and listed C-1. Kept as a permitted stopgap for other towns. |
+| D9 | 2026-11-14 | **Cited documents are kept in `.sources/<town>/<kind>/`, outside the repository.** Scripts fetch what they can. A person saves the rest from a browser, under any name, and the organizer files it. | decided | Lowest upkeep that still lets every quote be checked. Not committed because transcripts and minutes name residents, and to keep the repository small. Cost: a fresh clone cannot run the checks until the folder is filled. Filing rests on the town named in a source's label, with a `town` field for the three that name none. |
+| D10 | 2026-11-13 | **The permit gate is per town.** Cumberland wants state permits before the preliminary plan, Providence before the final. | decided | Read from each town's regulations. |
+| D11 | 2026-11-13 | **A town's reading is marked trial** until its planning office confirms it, with a name and a date. | decided | The only route to the data being trusted. Nobody has been asked yet. |
+| D12 | 2026-11-14 | **Sources that refuse scripts are fetched by hand for now.** No request to the city yet. | decided for now | Follows the current priority. Revisit when maintenance is taken up. |
+| D13 | 2026-11-13 | **Where a town's own documents disagree, both values are kept** and the note says so. | decided | Three of five Providence projects. A structured field for it is not built. |
+| D14 | 2026-11-14 | **A town read to level 3 answers the permitted-use question from its own ordinance, not the Zoning Atlas.** The town supplies a use rule; the Atlas answers only where the town's table was not read. | decided | Providence's ordinance of July 2026 allows four or more units by special use permit in R-1 and R-3 and by right in R-4, where the 2024 Atlas says prohibited, and has dropped R-2 and C-1. An Atlas answer there would turn applicants away wrongly. Cost: each level 3 town carries its own use table, to be re-read when the ordinance changes. |
+| D15 | 2026-11-14 | **A town can drop a state-law step from a route**, as well as replace one. | decided | Providence reviews 4 to 9 new units in one staff stage, with no final stage. |
+| D16 | 2026-11-14 | **Design trials are declared in `lib/trials.ts`, each naming its pages.** The trial panel shows only on those pages and `/dev` lists every active trial. A decided trial is deleted with its losing branches. | decided | Maqz: point to where the change is, and show it only where relevant. Cost: none at runtime, the published site takes the first option. |
+| D17 | 2026-11-14 | **Decided in trial** (the project panel on the Check page replaced by D18 the same day): approval steps as consolidated rows; considerations tickable; Nunito Sans headings; Check page as one project bar under the header (facts and a single Blocker, Open or Clear), opening to the lookup, form and atlas, with the findings in detail below and the verdict after. | decided | The flowchart and step sheets were deleted. Ticks are saved in the browser, are in the share link and project file, and now in the .ics: each event lists its considerations as done or open and is marked "Done" when all are. Second round, same day: the project stays open above and the bar takes over once it scrolls away; form left, map and district right; status is one word that links to the findings. No trials are active. |
+
+| D18 | 2026-11-14 | **Site selection is its own page (`/site`) and the first step.** It holds the town (a searchable list and a statewide map), the address or a map click, the zoning district, the project and land facts, the route and the nearby alternatives. The Check page shows only the answer, with the project kept in view; every fact there links back to its field. The overview asks "Where is your site?" until a project of the visitor's own exists. | decided | Maqz: the flow presupposed a project already entered, on the overview and the Check page. Cost: the project is now edited on one page and read on another; the summary's links carry the visitor between them. |
+| D19 | 2026-11-14 | **Facts the applicant used to tick by hand are now set from public layers, and checked against them.** Amended the same day: first only suggested, then applied by default when the lookup's facts are used (Maqz). Each stays the applicant's to untick, and `/docs/site-facts` says how each is found. State road (RIDOT centrelines, 15 m of the parcel), wetlands (National Wetlands Inventory 2014, about 100 ft), transit (RIPTA stops, October 2026, 1/8 mile). Water, sewer, parcel and lot area are checked against the lookup too. Each shows "matches" or what the layer says, with a button to take it. | decided | Maqz: they should remain user inputs, perhaps suggested or verified. Follows the current priority: more information from script-reachable sources, labelled. Cost: three more live services; the inventory misses small wetlands and a stop's frequency is not known. |
+| D20 | 2026-11-14 | **The Atlas's three kinds of district (primarily residential, mixed with residential, nonresidential) carry one colour and one mark each**, the same in the district picker, the map and the project summary. Validated as a categorical set, all pairs (CVD ΔE 16.3 worst). Never colour alone: each has an icon and its name. | decided | Maqz: the selection should be coloured by the zoning used in the maps. The map previously drew every district grey. |
+| D21 | 2026-11-14 | **Comparing an alternative never changes the project; trying one keeps the entry.** `ProjectProvider` holds the entered facts while an alternative is tried, and a banner on Site selection, Check and Steps offers the way back. The kept entry is saved in the browser only, not in the share link. | decided | Maqz: immediate comparison while allowing a clear return to whatever was input. |
+| D22 | 2026-11-14 | **The project summary is a panel on the left of the page from 1200 px**, in the left margin itself from 1900 px; narrower, a bar under the header with its facts in four columns. Its route opens to the five, with the one the facts pick outlined in green. | decided after trial | Maqz preferred the side panel, on the left. The trial is removed from `lib/trials.ts`. |
+| D23 | 2026-11-14 | **Open documentation at `/docs`, one page per part, starting with how site facts are found.** Each fact's (i) ends with a link to its section. The page is data (`lib/data/factSources.ts`), so a new layer adds an entry. | decided | Maqz asked for the discovery process explained in documentation that can grow. Cost: the page must be kept true to `lib/lookup.ts` by hand. |
+| D24 | 2026-11-14 | **The affordable share is shaded against the lines in law it meets** (`lib/data/affordability.ts`): 20% and 40% (federal tax-credit set-asides, which also depend on incomes the form does not ask) and 25% of 3 or more units (Rhode Island's comprehensive permit, the only one that changes the route). | decided | Maqz asked for the percentage, darker green for each standard met, with a key. The site holds no other state threshold; more are added here as they are read. |
+
+| D25 | 2026-11-14 | **The affordable share's key is a card on hover or click of the share**, which is shaded and the height of its input. | decided after trial | Chosen over a key stacked beside it. |
+| D26 | 2026-11-14 | **Every input the applicant makes is to be downloadable in one project file, and summaries printable per stage or complete.** The tools move to a download icon in the project summary. No leave warning: everything can be stored (Maqz). Built: hearing picks in the project (`Saved.hearing`, in the link and file too) and saved sites (D28). | open, part built | Maqz's redesign notes. Plan: `docs/plans/statewide-redesign.md`, sections 1 and 2. Print formatting waits for the design to settle. |
+| D27 | 2026-11-14 | **The site moves from one site in one district to Rhode Island-wide clearance: any site in any town, one at a time.** The Zoning atlas page to be removed (link to the Atlas instead). Records to be redesigned around a static map of the towns, with filters and search, linked from Hearing prep (which stays its own page) and the documentation. | open, planned | Maqz's redesign notes and answers. Plan sections 3 to 5. |
+| D28 | 2026-11-14 | **Any number of sites can be saved in the browser**, each the whole project, listed on Site selection whenever the visitor returns. Local storage, not cookies. | decided | Maqz asked for "save site", loadable when detected. Cost: still one device; the project file remains the way across (principle 5). |
+| D29 | 2026-11-14 | **Project timelines carry an approval column** (master, preliminary, final, denied, or none recorded), taken from the latest decision on a review stage, so a vacated approval counts as it stands. The status line moved into its card. Lanes run continuously; seasonal accents are a seeded random scatter at about 30% of the former number. | decided | Maqz's review of the timeline. Approval is computed from events, never typed (as D6). |
+
+| D30 | 2026-11-14 | **Mixed-use and commercial projects are checked as well as housing.** A project is homes, homes with commercial space, or commercial (`ProjectInputs.kind`). A commercial project's route follows § 45-23-32(19)(i) (A), (B), (E) unless the town's rules give their own (`TownRules.classifyCommercial`; Providence's 10,000 and 20,000 sq ft lines). Mixed use beyond line (C) keeps the route the units give and is flagged open. Permitted use comes only from a town's own table (`TownRules.useCommercial`), never the Atlas. The short list: retail, office, restaurant, light industrial, institutional. | decided, phases 0 to 2 built | Maqz. Plan: `docs/plans/commercial-mixed-use.md`. Providence's Table 12-1 rows for the short list were read by column position and checked against the hand-read multi-family row. |
+| D32 | 2026-11-14 | **Cumberland's commercial rules are its first rules outside `trees.ts`** (`lib/data/towns/cumberland/commercial.ts`, registered in `overlay.ts`). A town supplies `commercialFindings` (parking, loading, dimensions) as well as `useCommercial`; where it does, they replace the generic gap. Read: Cumberland Table 1, Appendix A, § 5-3, § 14-3 (fetched by script from eCode360 and Zoneomics); Providence Table 14-1, § 1410, Table 14-2 and Tables 5-1 to 9-1 (already in hand). | decided | Maqz: resolve the gaps with public information. Cost: two more of Cumberland's rules live outside trees.ts, which makes the split (debt 1) more pressing. |
+| D33 | 2026-11-14 | **Cumberland housing parking follows the ordinance: one space per unit** (§ 14-3, amended April 15, 2026), not the Atlas's two. Mixed use in C-1 and C-2 takes the ordinance's density (one unit per 5,000 sq ft with water and sewer), not the Atlas's. | decided | Found while reading Article 14 for commercial uses. The 2024 Atlas and the 2024 Waterman Pond memo predate the amendment. The mixed-use density matches what staff told Blackstone Residences in 2025. |
+| D34 | 2026-11-14 | **Whole ordinances are kept for reading in `.sources/<town>/ordinance/`, apart from cited sources.** `fetch_ecode.py` fills it for the eCode360 towns and writes a survey (`.sources/ECODE.md`); a person saves the rest there by hand, and `organize_sources.py` turns them to text and lists them. A passage becomes a source in `sources.ts` only when it is read into the data. | decided | Reading a town starts with its whole ordinance, but registering every chapter as a source would bury the cited ones. Extends D9. |
+| D35 | 2026-11-14 | **Each town carries its official ordinance link** (`towns.ts` `code`, from the Secretary of State's list), shown on the Towns page and beside every gap an ordinance would answer. | decided | Principle 10: a gap should say where to look. The state's list is the authority where it differs from a publisher's own list (Lincoln, and four towns whose eCode360 copies are not the official ones). |
+| D36 | 2026-11-14 | **Overlay districts are kept apart from base districts.** The Atlas keeps them in the same layer (treatment "Overlay"); the lookup now takes the base district and lists overlays separately, the picker offers them as ticks, the map draws them dashed, and the check names each as an open gap. `ProjectInputs.overlays`. | decided | A point inside an overlay was read as a district boundary, and the picker offered overlays as districts: ten overlays in nine towns. Found while surveying Charlestown. |
+| D37 | 2026-11-14 | **Charlestown is the next town to read, for what it would force**: overlay rules combined with base districts (a use table whose overlay column can defer), land the town's zoning may not govern (the Narragansett Reservation, mapped in the Atlas's Native Lands layer), CRMC or RIDEM as the wetlands authority by place, septic permits, and a town overriding the Atlas's kind of district. | open, proposed | `docs/plans/commercial-mixed-use.md`, section 11. Westerly second; inclusionary zoning in four towns needs a decision too. |
+| D38 | 2026-11-14 | **Charlestown read far enough to scope the design**: its Land Use Table and two overlays (`lib/data/towns/charlestown/`). General changes made from it: a town's use table replaces the Atlas's for any town (`withTownUse`, extending D14 below level 3); overlay rules (`TownRules.overlayRules`), overlays the Atlas does not map (`unmappedOverlays`) and corrections to the Atlas's kind of district (`kinds`); the lookup reads tribal land (Atlas Native Lands) and the wetlands agency (RIDEM's jurisdiction layer), and the check stops on the first and names CRMC for the second. | decided | Maqz: read Charlestown to scope the changes before the next ordinances are fetched. The remaining design needs are listed in the plan, section 11a. |
+| D39 | 2026-11-14 | **Without public sewer, RIDEM's septic approval is a state permit** (250-RICR-150-10-6, amendment effective July 1, 2022, `owts`, fetched by script from the Secretary of State's code of regulations). A `septic` flag adds it to the State permits step (with RIDEM as a decider), the triggered permits and a finding; the large-system line (5,000 gallons a day, about 44 bedrooms) and, in the six towns with land in them, the Salt Pond and Narrow River critical resource areas (nitrogen-reducing technology) are flagged. Water and sewer letters and offices now appear only where the site has public water or sewer (`pubwater`, `pubsewer`). | decided | Maqz. Found while reading Charlestown, which has no public sewer. The critical areas are named by town because RIDEM's layer of that name holds only small unlabelled polygons. |
+| D31 | 2026-11-14 | **Coverage per kind of project, and gaps as findings.** `towns.ts` carries a commercial level per town (Cumberland 3, Providence 3, others 1) with what it leaves out; a finding can carry `gap`, what would answer it, shown as a Gap tag. | decided | Principle 10. |
+
+## 6. Sources, and how each is reached
+
+`.sources/INDEX.md`, written by `organize_sources.py`, lists every source with whether it is in hand. On 2026-11-14: 68 of 83.
+
+| Source | Reach | Kept in |
+| --- | --- | --- |
+| Zoning Atlas, tax parcels, address search | Live, from the browser | Not kept. Cumberland has a bundled district snapshot. |
+| Statutes, court decisions | Script | `.sources/` |
+| State Open Meetings site: agendas and minutes for every public body | Script, with a two-second pause | `.sources/` |
+| ClerkBase: Cumberland agendas and minutes | Script (`scripts/timelines/fetch.py`) | Fetched fresh by the monthly action |
+| providenceri.gov: regulations, forms, staff reports, schedule, **zoning ordinance** | By hand. It answers 403 to a script. | `.sources/<id>.pdf` |
+| YouTube meeting recordings | Script (`fetch_captions.py`), captions only | `.sources/<id>.txt` |
+| Scanned minutes | Fetched, but no text. Read by eye. | `.sources/`, marked `scan` in the data |
+| Zoning ordinances on eCode360: 14 towns officially (the Secretary of State's list), 4 more as copies | Script. Tables are PDF attachments with a text layer, listed on the zoning chapter's page | `.sources/<town>/rules/` |
+| Zoneomics (third-party ordinance text) | Script. Leaves out attached tables; its page numbers run one behind the article numbers after Article 10 | `.sources/` |
+| Municode | Refuses scripts (403). By hand | `.sources/` |
+| Town outlines (Zoning Atlas layer 12), RIDOT road centrelines, National Wetlands Inventory 2014 and RIPTA stops (both on RIGIS) | Live, from the browser, for Site selection's map and suggestions (D19) | Not kept |
+
+The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and read for Table 12-1 (uses), Tables 4-1, 5-1 and 9-1 (heights), Article 14 (parking) and Article 19 §§ 1903 to 1906.
+
+## 7. Debts and risks in the structure
+
+
+1. **The split is not done.** Cumberland's local steps are inside `trees.ts` with state law, and `engine.ts` removes them for other towns by matching the word "Cumberland" and a list of source-id patterns. A third town will strain this. It is the statewide plan's step 1.
+2. **The active town is a module-level variable** (`lib/town.ts`), set by the provider before render. It works because one project is on screen at a time. It would not survive a page that compares two towns.
+3. **No stored tests.** Routes and findings were checked by running sample projects by hand. A before-and-after comparison exists only as a throwaway script.
+4. **The glossary and the `relief` flag assume the state's definitions.** Providence's "minor" and its dimensional adjustments do not fit either.
+5. **State-law steps carry town wording** ("Town Council", "Town Clerk") into cities.
+6. **One part per town, as a box.** D4 wants parts drawn for usefulness, possibly several, possibly by district or corridor.
+7. **Checks are not run automatically** on a pull request, and the monthly action knows only Cumberland's platform.
+8. **Hearing prep is built around objections.** Supporters' requests have no place.
+9. **Only approved projects are recorded.** Withdrawals and denials are in the agendas and not in the data.
+10. **One recording has no captions** (Sept 16, 2025, the meeting whose minutes are also scanned). Reading it needs local speech recognition, which is a larger tool than anything used so far.
+11. **Scripts read `sources.ts` as text.** Each entry must stay on one line in the form `id: { label, url }`. A reformat would silently hide sources from the fetch and filing scripts.
+12. **Town and kind of a source are inferred**, from its label and URL. A wrong guess only misfiles a local copy, since lookups are by id, but the index would mislead.
+13. **The district list for every town comes from the 2024 Atlas.** For Providence it offers two districts that no longer exist and cannot say where their land went. The findings flag it, and the district picker now marks both (`TownRules.retired`); the list itself is not corrected.
+14. **Applied facts rest on four more live services** (D19). If one moves or changes its fields, its fact is left as it was ("couldn't read") rather than set wrong, but nothing reports it. Frequency of transit and mobility hubs are not checked at all, yet a nearby stop now ticks transit, which lowers the parking finding; the applicant must untick it if service is infrequent.
+15. **The kept entry while an alternative is tried lives only in the browser** (D21). A share link made mid-trial carries the alternative, not the entry.
+16. **Mixed use beyond the state's line is flagged, not routed** (D30): the route stays the one the units give. Was: ignored outright. (§ 45-23-32(19)(i)(C): minor only up to 6 units and 2,500 sq ft of commercial space). Outside Providence, 7 to 9 units with commercial space are shown as minor. Phase 0 of the commercial plan.
+17. **Housing assumptions remain in shared parts:** Cumberland's step checklists were read for housing; precedent records and hearing concerns are housing only, and Hearing prep says so for a commercial project; the example project is housing.
+18. **On tribal land the route, steps and schedule still show the ordinary route**, though the check says the town's rules may not apply (D38).
+19. **The State permits step names RIDEM as the wetlands decider even where CRMC is** (D38); the finding is right, the step is not.
+20. **Coverage levels don't express a town whose zoning is read but whose steps are not** (Charlestown, D38).
+
+## 8. Open questions
+
+Kept in full in `lib/data/openQuestions.ts` and shown on `/dev`. The ones that bear on structure:
+
+- **Q1.** Settled as D7. Still open: how the line holds in towns whose minutes are fuller or thinner than Providence's.
+- **Q2.** What is the smallest set of ordinance articles that must be read for level 3? Providence has the use table, heights, parking and review thresholds. Setbacks, coverage and design standards are unread.
+- **Q3.** How do town-specific site facts scale past two towns?
+- **Q4.** Settled from the ordinance (D15): 4 to 9 new units, staff review in one stage. Still open: reuse of an existing building, which the thresholds do not count. Staff should confirm.
+- **Q7.** Should a level 3 town's district list come from its ordinance too (debt 13)?
+- **Q5.** How is a part of a town described so that its edges and the reason for them are data, not prose?
+- **Q6.** When validation for public use is taken up, what is the unit of sign-off: a town, a part, a step, a fact?
+- **Q8.** Any site, one at a time (answered). Commercial and mixed-use to come in (Maqz), planned in `docs/plans/commercial-mixed-use.md`. Still open there: which uses first, how to treat the mixed-use line, coverage per kind of project. What each would need is in the plan, section 3: mixed-use housing is near; pure commercial needs each town's use table, thresholds and dimensional rules read.
+
+## 9. Log
+
+- **2026-11-14, septic.** RIDEM's onsite wastewater rules fetched and read (D39): septic approval as a state permit wherever there is no public sewer, with large systems and critical resource areas flagged; water and sewer letters made conditional on the utilities.
+
+- **2026-11-14, Charlestown.** Land Use Table, Mixed-Use Zoning Overlay and the Groundwater Protection overlay's column read; tribal land and the wetlands agency added to the lookup (D38). Scoping list for the design update in the plan, section 11a. Debts 18 to 20 added. 246 quotes checked.
+
+- **2026-11-14, eCode360 survey.** `fetch_ecode.py` fetched the zoning (and most subdivision) chapters of 18 eCode360 towns into `.sources/<town>/ordinance/` (D34), with a survey; each town's official ordinance link added from the Secretary of State's list (D35), with `docs/ordinance-hosts.md` for the 25 towns to save by hand. The survey found overlays misread as district boundaries statewide, fixed (D36), and picked Charlestown as the town that would change the form most (D37).
+
+- **2026-11-14, commercial gaps resolved.** Cumberland's use table, use definitions, dimensions and parking fetched by script and read; Providence's parking, loading and dimensions read from the ordinance already in hand (D32). Cumberland housing parking corrected to the April 2026 ordinance, and its mixed-use density taken from the ordinance (D33). Remaining gaps named: loading, signs and design standards in Cumberland, residential-district setbacks and design standards in Providence, overlays, commercial hearings. 231 quotes checked.
+
+- **2026-11-14, commercial built.** Phases 0 to 2 of the commercial plan: kinds of project on Site selection, the state's commercial and mixed-use lines, Providence's own lines and use table rows for the short list, coverage per kind, gaps as findings (D30, D31, principle 10). Debt 16 eased. Debt 17 added. 201 quotes checked word for word.
+
+- **2026-11-14, commercial and mixed use.** Plan written for mixed-use and commercial projects (D30), from state law's own thresholds and Providence's use table already in hand. Found the mixed-use gap in the route rule and listed it as debt 16.
+
+- **2026-11-14, redesign answers.** Affordable key decided (D25). Saved sites (D28) and hearing picks in the project (D26). Timeline approval column and continuous lanes (D29). Plan updated with Maqz's answers; Q8 narrowed. Fixed: the Site selection form's verification notes shared a class name with the verification page's stages and broke its layout.
+
+- **2026-11-14, redesign notes.** Affordable share key put on trial (D25). Maqz's notes on saving, printing, the statewide vision, the Atlas page and Records recorded as D26 and D27 (open), with a plan for review in `docs/plans/statewide-redesign.md` and question Q8.
+
+- **2026-11-14, Site selection, second round.** Services and constraints applied from the layers by default (D19 amended). The side panel chosen, on the left (D22), with the route swappable from it. Documentation section begun (D23). Affordable share shaded by the lines it meets (D24). Project timelines: each stage's duration moved from a row under the lane into its decision's card. Hover cards now measure themselves and keep 24 px from the window's edges.
+
+- **2026-11-14, Site selection.** Maqz's redesign of the Check page: Site selection added as the first step (D18), facts suggested and checked from public layers (D19), district kinds coloured alike in picker and map (D20), alternatives compared and tried with a way back (D21), the project summary's place on trial (D22). The overview now asks for the site. Debts 14 and 15 added, 13 eased. Also fixed: a returning visitor's untouched example was called "Your project", and the trial panel's choice was overwritten on mount in development.
+
+- **2026-11-14, later.** `.sources/` organised by town and kind, with a shared layout helper, an organizer and an index (D9). Machine transcripts admitted for concerns (D7), with the first ten from the Wickenden Street hearing. Providence Zoning Ordinance read: use table replaces the Atlas (D14), staff-reviewed route for 4 to 9 units (D15), court-quoted findings replaced (D8 ended). First full quote check of the site: 186 match, one Cumberland quote corrected. Debts 11, 12 and 13 added. Trial worktree and branch removed after the merge into `dev`.
+- **2026-11-14.** Document started. Recorded D1 to D13 from the Providence trial and Maqz's answers to its review. Added the local source folder, the caption fetcher and seven recordings as sources. Parts of towns confirmed (D3) and their basis set (D4).
+- **2026-11-14, design trials.** Recorded D16 and D17. Trials moved to `lib/trials.ts` with per-page panels and a list on `/dev`. Three new Check variants added.
+- **2026-11-14, trials decided.** The three Check variants were chosen and removed; `lib/trials.ts` is empty and ready for the next.
+- **2026-11-14, hearing prep.** Topic filters became icon tiles with a subtitle each, plus a search box with the print/save button inline beside it. Presentation only; no decision or debt changed.
+- **2026-11-14, header.** Dev notes link moved to the far right edge of the header so it no longer wraps below the nav.
+- **2026-11-14, zoning map key.** The key is now a filter (hover fades, click keeps one kind; same for building types) and its layout is a trial, `mapKey` in `lib/trials.ts`, chosen in the dev trial panel on `/site`: shapes (first, published), columns, split, two on-map overlays, groups, rail, plain. The earlier in-page bar is gone. Delete the losing variants when one is chosen.

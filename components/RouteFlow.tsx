@@ -1,23 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { OBJECTIONS } from "@/lib/data/objections";
 import { condOK, visibleDocs } from "@/lib/engine";
 import { buildSchedule, fmtDate } from "@/lib/schedule";
-import { AuthBadge, KindKey } from "./Authority";
 import { ContactCard } from "./ContactCard";
 import { DocChecklist } from "./DocChecklist";
+import { Icon } from "./Icon";
+import { KindChip } from "./KindChip";
+import { NoteButton } from "./NoteButton";
+import { PinButton } from "./PinButton";
 import { useProject } from "./ProjectProvider";
 import { Gloss } from "./Term";
 
+/** Progress as a ring and a count, "3/18" (ARD D42: a recorded exception to principle 3, until reviewed with subject experts). */
+function Ring({ done, total }: { done: number; total: number }) {
+  const r = 11, c = 2 * Math.PI * r;
+  return (
+    <span className="ring" title={`${done} of ${total} considerations dealt with`}>
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+        <circle cx="15" cy="15" r={r} className="bg" />
+        <circle cx="15" cy="15" r={r} className="fg" strokeDasharray={`${total ? (done / total) * c : 0} ${c}`} transform="rotate(-90 15 15)" />
+      </svg>
+      <b>{done}/{total}</b>
+    </span>
+  );
+}
+
 /**
- * The approval route as one list. Each row's first line says what you file, who holds the decision
- * and how long they have. Everything else (documents, considerations, likely questions, notes,
- * contact details) opens underneath.
+ * The approval route as one list. Each row's first line says what you file, who holds the decision (as coloured chips with their mode)
+ * and how long they have. Everything else opens underneath: documents, the step's moments on the calendar, the questions to expect, notes.
  */
 export function RouteFlow({ open, setOpen }: { open: Set<string>; setOpen: (fn: (prev: Set<string>) => Set<string>) => void }) {
-  const { steps, flags, progress, tree, inputs, notes, setNote } = useProject();
+  const { steps, flags, progress, tree, inputs, notes, pins } = useProject();
   const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   const allOpen = steps.every((s) => open.has(s.id));
   const toggle = (id: string) => setOpen((prev) => {
@@ -26,11 +42,20 @@ export function RouteFlow({ open, setOpen }: { open: Set<string>; setOpen: (fn: 
     return next;
   });
 
+  // The rail, the tray and deep links ask for a step by its element id; open it first.
+  useEffect(() => {
+    const h = (e: Event) => {
+      const id = (e as CustomEvent<string>).detail;
+      if (typeof id === "string" && id.startsWith("d-")) setOpen((prev) => new Set(prev).add(id.slice(2)));
+    };
+    window.addEventListener("goto", h);
+    return () => window.removeEventListener("goto", h);
+  }, [setOpen]);
+
   return (
     <div className="route">
       <div className="route-key">
         <span className="route-key-label">Who holds the decision</span>
-        <KindKey />
         <button type="button" className="link-btn" onClick={() => setOpen(() => (allOpen ? new Set() : new Set(steps.map((s) => s.id))))}>
           {allOpen ? "Collapse all" : "Expand all"}
         </button>
@@ -45,6 +70,8 @@ export function RouteFlow({ open, setOpen }: { open: Set<string>; setOpen: (fn: 
           const when = plan.find((x) => x.step.id === s.id);
           const objs = (s.objections ?? []).map((id) => OBJECTIONS.find((o) => o.id === id)).filter((o) => !!o);
           const note = notes[`${tree}/${s.id}`] ?? "";
+          const hearing = when?.ticks.some((t) => t.kind === "hearing");
+          const pinned = pins.some((x) => x.id.startsWith(`d:${s.id}|`));
           return (
             <li key={s.id} id={`d-${s.id}`} className={`rstep${s.branch ? " branch" : ""}${isOpen ? " is-open" : ""}`}>
               <button type="button" className="rnum" aria-expanded={isOpen} aria-controls={`rb-${s.id}`} aria-label={`${isOpen ? "Collapse" : "Expand"} step ${s.n}: ${s.title}`} onClick={() => toggle(s.id)}>{s.n}</button>
@@ -55,6 +82,11 @@ export function RouteFlow({ open, setOpen }: { open: Set<string>; setOpen: (fn: 
                       <button type="button" className="rtitle" aria-expanded={isOpen} aria-controls={`rb-${s.id}`} onClick={() => toggle(s.id)}>
                         <span className="sr-only">Step {s.n}: </span>{s.title}
                       </button>
+                      <span className="marks">
+                        {note.trim() && <NoteButton stepId={s.id} compact />}
+                        {hearing && <span className="mk" title="A hearing or meeting in this step"><Icon name="hear" size={14} /></span>}
+                        {pinned && <span className="mk" title="Something in this step is pinned"><Icon name="pin" size={14} /></span>}
+                      </span>
                     </h3>
                     <p className="rapp"><span className="rlabel">You file</span> {s.app}</p>
                   </div>
@@ -62,16 +94,15 @@ export function RouteFlow({ open, setOpen }: { open: Set<string>; setOpen: (fn: 
                     <span className="chip clk">{s.clock.text}</span>
                     {when && <span className="rdates">{fmtDate(when.start, { month: "short", year: "numeric" })} to {fmtDate(when.end, { month: "short", year: "numeric" })}</span>}
                   </div>
+                  {p.total > 0 && <Ring done={p.done} total={p.total} />}
                 </div>
                 <div className="rwho">
                   <span className="rlabel">{s.authLabel ?? "Decided by"}</span>
-                  {auth.map((a) => <AuthBadge key={a.c} id={a.c} role={a.role} />)}
+                  {auth.map((a) => <KindChip key={a.c} id={a.c} role={a.role} />)}
                 </div>
                 <button type="button" className="rmore" aria-expanded={isOpen} aria-controls={`rb-${s.id}`} onClick={() => toggle(s.id)}>
                   <span className="rchev" aria-hidden="true">{isOpen ? "–" : "+"}</span>
                   {docs.length} document{docs.length === 1 ? "" : "s"} · {p.total} considerations
-                  {p.done > 0 && <span className="rdone">{p.done} dealt with</span>}
-                  {note.trim() && <span className="rdone">note</span>}
                   {objs.length > 0 && <span className="muted"> · {objs.length} likely questions</span>}
                 </button>
                 {isOpen && (
@@ -79,31 +110,34 @@ export function RouteFlow({ open, setOpen }: { open: Set<string>; setOpen: (fn: 
                     <div>
                       <h4>What happens</h4>
                       <p className="what"><Gloss text={s.what} /></p>
-                      <h4>Documents and considerations</h4>
+                      <h4 className="h-notes">Documents and considerations <NoteButton stepId={s.id} /></h4>
                       <ul className="docs">
                         {docs.map((d) => <DocChecklist key={d.title} stepId={s.id} doc={d} />)}
                       </ul>
                       {hidden > 0 && <p className="hidden-note">{hidden} conditional item{hidden > 1 ? "s" : ""} hidden because they don't apply to the site facts entered.</p>}
                     </div>
                     <div>
-                      {objs.length > 0 && (
-                        <div className="obj-box">
-                          <h4>Questions to expect at this step</h4>
+                      {when && when.ticks.length > 0 && (
+                        <div className="moments">
+                          <h4>This step on the calendar</h4>
                           <ul>
-                            {objs.map((o) => <li key={o.id}><Link href={`/hearing#${o.id}`}>"{o.said}"</Link></li>)}
+                            {when.ticks.map((t) => (
+                              <li key={t.id} className={`k-${t.kind}`}>
+                                <Link href={`/calendar#m-${t.id}`}><span className="mono">{fmtDate(t.date, { month: "short", day: "numeric" })}</span> {t.label}</Link>
+                                <PinButton id={`t:${t.id}`} what={t.label} />
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       )}
-                      <label className="step-note">
-                        <span>Your notes on this step</span>
-                        <textarea
-                          rows={3}
-                          value={note}
-                          placeholder="Who you spoke to, what they asked for, what's still open"
-                          onChange={(e) => setNote(s.id, e.target.value)}
-                        />
-                        <span className="muted small">Travels with the share link, the project file and the printed summary.</span>
-                      </label>
+                      {objs.length > 0 && (
+                        <div className="obj-box">
+                          <h4>Questions to expect at its hearing</h4>
+                          <ul>
+                            {objs.map((o) => <li key={o.id}><Link href={`/hearing#${o.id}`}>&ldquo;{o.said}&rdquo;</Link></li>)}
+                          </ul>
+                        </div>
+                      )}
                       <h4>Contacts</h4>
                       {auth.map((a) => <ContactCard key={a.c} id={a.c} role={a.role} />)}
                     </div>

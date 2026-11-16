@@ -19,7 +19,7 @@ export const RECORDS: Flow = {
     n("appr", "step", "Approval degree", 3.8, 5, "The latest decision on a review stage (master, preliminary, final, or recording and after) sets the degree, so a vacated approval counts as it stands. A decision whose text says denied counts as denied. Appeals are left out. With no decision recorded, the status line is read for a master plan approval; otherwise nothing is claimed.", { where: ["lib/timelines.ts#approvalOf"], note: "ARD D29." }),
     n("hist", "gap", "Only approved projects are recorded", 1.9, 6.3, "Withdrawals and denials appear in the agendas and not yet in the data, so the times are those of projects that got somewhere.", { note: "Debt 9." }),
 
-    n("card", "output", "Documented times beside each step", 0, 7.7, "On the Schedule page, under a step: how long this town took on this route, project by project, with the evidence behind each date.", { where: ["components/ScheduleView.tsx"], to: { href: "/schedule", label: "Open the Schedule" } }),
+    n("card", "output", "Documented times beside each step", 0, 7.7, "On the Schedule page, under a step: how long this town took on this route, project by project, with the evidence behind each date.", { where: ["components/ScheduleView.tsx"], to: { href: "/calendar", label: "Open the Schedule" } }),
     n("tl", "output", "Timeline lanes and hover cards", 3.8, 7.7, "A lane for each project, its events marked by evidence class, the approval column, and a card for each event with its quote and source.", { where: ["components/ProjectTimeline.tsx"], to: { href: "/records", label: "Open Records" } }),
   ],
   edges: [

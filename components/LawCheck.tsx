@@ -1,22 +1,22 @@
 "use client";
 
 import { TREES, TREE_ORDER } from "@/lib/data/trees";
-import { analyze } from "@/lib/engine";
 import { townInfo } from "@/lib/data/towns";
 import type { TreeId } from "@/lib/types";
 import { Cite } from "./Cite";
 import { useProject } from "./ProjectProvider";
 import { Gloss } from "./Term";
 import { routeText } from "@/lib/engine";
+import { sortedFindings } from "@/lib/findings";
+import { PinButton } from "./PinButton";
 
-const ORDER = { fail: 0, flag: 1, info: 2, pass: 3 } as const;
 const LABEL = { fail: "Blocker", flag: "Open", info: "Note", pass: "Pass" } as const;
 
 /** `head={false}` leaves the route and its override to a verdict shown just above. */
 export function LawCheck({ head = true }: { head?: boolean }) {
   const { inputs, tree, auto, override, setOverride, steps } = useProject();
   const code = townInfo(inputs.town).code;
-  const findings = analyze(inputs, tree).map((f, i) => ({ f, i })).sort((a, b) => ORDER[a.f.st] - ORDER[b.f.st] || a.i - b.i).map(({ f }) => f);
+  const findings = sortedFindings(inputs, tree);
   const timed = steps.filter((s) => s.clock.days && !s.branch);
   const total = timed.reduce((a, s) => a + (s.clock.days ?? 0), 0);
 
@@ -37,10 +37,10 @@ export function LawCheck({ head = true }: { head?: boolean }) {
       <p className="sub">Blockers and open questions first. Each finding quotes the rule it comes from.</p>
       <ul className="check-list">
         {findings.map((f) => (
-          <li key={f.t}>
+          <li key={f.id} id={`fd-${f.id}`}>
             <span className={`st ${f.st}`}>{LABEL[f.st]}</span>
             <div>
-              <b>{f.t}{f.gap && <span className="gap-tag" title="Not read into this site, or not public">Gap</span>}</b>
+              <b>{f.t} <PinButton id={`f:${f.id}`} what={f.t} />{f.gap && <span className="gap-tag" title="Not read into this site, or not public">Gap</span>}</b>
               <p><Gloss text={f.p} /></p>
               {f.gap && (
                 <p className="gap-fill">
@@ -53,7 +53,7 @@ export function LawCheck({ head = true }: { head?: boolean }) {
           </li>
         ))}
       </ul>
-      <div className="clock">
+      <div className="clock" id="clocks">
         <h4 className="eyebrow muted-eyebrow">Town review clocks, statutory maximums</h4>
         <div className="clock-bar" role="img" aria-label={`Statutory review clocks total ${total} days`}>
           {timed.length ? timed.map((s) => (

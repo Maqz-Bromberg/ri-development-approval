@@ -8,7 +8,7 @@ export const SITE_LOOKUP: Flow = {
     "The lookup runs in the visitor's browser against public map services. It finds a point, asks several layers what is at that point in parallel, and turns the answers into site facts. " +
     "It never guesses: on a district boundary it lists the candidates, and a layer that fails is named as failed and its fact is left as it was. " +
     "The applicant can correct every fact it fills.",
-  shows: [{ href: "/site", label: "Site selection" }, { href: "/docs/site-facts", label: "How site facts are found" }],
+  shows: [{ href: "/site", label: "Site" }, { href: "/docs/site-facts", label: "How site facts are found" }],
   nodes: [
     n("addr", "data", "Address typed, or a click on the map", 2.2, 0, "Free text from the Site selection page, or a click on the zoning map. A map click skips the geocoding and goes straight to the point. \"Rhode Island\" is added to the address if it is not there.", { where: ["components/AddressLookup.tsx"] }),
     n("geo", "step", "Geocode with OpenStreetMap", 2.2, 1, "Nominatim turns the address into up to five candidate points, bounded to a box around Rhode Island. A match counts as precise only if it is a building or address point and not just a street.", { where: ["lib/lookup.ts#geocode"], note: "The service is OpenStreetMap's, not the state's, so a new building may not be on it yet." }),

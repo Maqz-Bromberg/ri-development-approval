@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { calendarFor } from "@/lib/calendar";
 import { CUMBERLAND_CALENDAR } from "@/lib/data/calendars/cumberland";
 import { SOURCES } from "@/lib/data/sources";
@@ -14,8 +14,11 @@ import { SeasonAccents } from "./Season";
 import { seasonOf, type Season } from "@/lib/timelines";
 import { DocChecklist } from "./DocChecklist";
 import { DemoTag } from "./Demo";
+import { CONTACTS } from "@/lib/data/contacts";
+import { condOK } from "@/lib/engine";
+import { KindChip } from "./KindChip";
+import { PinButton } from "./PinButton";
 import { useProject } from "./ProjectProvider";
-import { useCalendarFile } from "./useCalendarFile";
 import { routeText } from "@/lib/engine";
 
 const KIND_LABEL = { file: "You file", deadline: "Deadline", hearing: "Meeting or hearing", milestone: "Milestone" } as const;
@@ -45,6 +48,7 @@ function TickPanel({ p, t, docs, onClose, onPick }: { p: PlannedStep; t: Planned
             {t.published ? " (published meeting date)" : t.est ? " (est., projected from the usual pattern)" : p.plan.statutory ? " (statutory clock)" : " (estimate)"}
           </span>
         </div>
+        <PinButton id={`t:${t.id}`} what={t.label} />
         <button type="button" className="btn ghost small-btn" onClick={onClose}>Close</button>
       </div>
       {onPick && p.ticks.length > 1 && (
@@ -57,15 +61,19 @@ function TickPanel({ p, t, docs, onClose, onPick }: { p: PlannedStep; t: Planned
         </div>
       )}
       {t.note && <p className="tp-note">{t.note}</p>}
+      <div className="tp-who">
+        <span className="rlabel">Who you deal with</span>
+        {p.step.auth.filter((a) => condOK(a.cond, flags) && CONTACTS[a.c]).map((a) => <KindChip key={a.c} id={a.c} role={a.role} />)}
+      </div>
       {docs.length > 0 ? (
         <ul className="docs">{docs.map((d) => <DocChecklist key={d.title} stepId={p.step.id} doc={d} defaultOpen compact />)}</ul>
       ) : (
         <p className="muted small">
           Nothing to file at this moment. {all.length > 0 && <>This step has {all.length} documents. </>}
-          <Link href={`/steps#d-${p.step.id}`}>Open the step</Link>
+          <Link href={`/route#d-${p.step.id}`}>Open the step</Link>
         </p>
       )}
-      {docs.length > 0 && <p className="small"><Link href={`/steps#d-${p.step.id}`}>Open the full step, with sources and contacts →</Link></p>}
+      {docs.length > 0 && <p className="small"><Link href={`/route#d-${p.step.id}`}>Open the full step, with sources and contacts →</Link></p>}
     </div>
   );
 }
@@ -100,7 +108,7 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
   );
 
   return (
-    <div className="tl-scroll">
+    <div className="tl-scroll" id="gantt">
       <div className="tl-grid">
         <div className="tl-axis-label" />
         <div className="tl-axis">
@@ -141,6 +149,7 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
                     <button
                       key={t.id}
                       type="button"
+                      id={`m-${t.id}`}
                       className={`tick k-${t.kind}${st.complete ? " done" : ""}${selected === t.id ? " is-open" : ""}`}
                       style={{ left: pct(t.date) }}
                       aria-expanded={selected === t.id}
@@ -231,11 +240,19 @@ function Calendar({ plan }: { plan: PlannedStep[] }) {
 }
 
 export function ScheduleView() {
-  const { tree, steps, inputs, setInput } = useProject();
+  const { tree, steps, inputs } = useProject();
   const [view, setView] = useState<"timeline" | "calendar">("timeline");
   const [selected, setSelected] = useState<string | null>(null);
   const [zoom, setZoom] = useState<"approvals" | "all">("approvals");
   const cal = calendarFor(inputs.town);
+  // A link to /calendar#m-<moment> (from a step or the tray) opens that moment.
+  useEffect(() => {
+    const open = (id: string) => { if (id.startsWith("m-")) { setView("timeline"); setSelected(id.slice(2)); } };
+    open(window.location.hash.slice(1));
+    const h = (e: Event) => open(String((e as CustomEvent<string>).detail));
+    window.addEventListener("goto", h);
+    return () => window.removeEventListener("goto", h);
+  }, []);
   const plan = useMemo(() => buildSchedule(tree, steps, inputs.startDate, inputs.town), [tree, steps, inputs.startDate, inputs.town]);
   if (!plan.length) return null;
 
@@ -250,15 +267,9 @@ export function ScheduleView() {
   const later = approvalEnd ? plan.filter((p) => !p.step.branch && p.start >= approvalEnd) : [];
   const early = plan.filter((p) => !later.includes(p));
 
-  const download = useCalendarFile();
-
   return (
     <>
       <div className="sched-controls panel">
-        <div className="field">
-          <label htmlFor="f-start">Start date</label>
-          <input id="f-start" type="date" value={inputs.startDate} onChange={(e) => e.target.value && setInput("startDate", e.target.value)} />
-        </div>
         <div className="sched-stats">
           <div className="stat"><b>{approvalEnd ? fmtDate(approvalEnd, { month: "short", year: "numeric" }) : "—"}</b><span>approvals recorded</span></div>
           <div className="stat"><b>{permit ? fmtDate(permit, { month: "short", year: "numeric" }) : "—"}</b><span>building permit</span></div>
@@ -267,10 +278,9 @@ export function ScheduleView() {
         </div>
         <div className="sched-actions">
           <div className="seg" role="group" aria-label="View">
-            <button type="button" aria-pressed={view === "timeline"} onClick={() => setView("timeline")}>Timeline</button>
-            <button type="button" aria-pressed={view === "calendar"} onClick={() => setView("calendar")}>Calendar</button>
+            <button type="button" aria-pressed={view === "timeline"} onClick={() => setView("timeline")}>Gantt</button>
+            <button type="button" aria-pressed={view === "calendar"} onClick={() => setView("calendar")}>Month</button>
           </div>
-          <button type="button" className="btn ghost" onClick={download} title="Includes which considerations you have ticked">Download .ics</button>
         </div>
       </div>
       <ul className="legend tick-legend" aria-label="Tick types">

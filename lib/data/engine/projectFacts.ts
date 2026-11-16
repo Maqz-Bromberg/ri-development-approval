@@ -7,7 +7,7 @@ export const PROJECT_FACTS: Flow = {
   intro:
     "One record, ProjectInputs, is everything the engine is given. Four sources can fill it; it is completed with defaults, held in the browser, and handed to the engine, which recomputes the route, flags and steps on every change. " +
     "Nothing leaves the browser: a project is kept by share link and file, and browser storage is a convenience.",
-  shows: [{ href: "/site", label: "Site selection" }, { href: "/project", label: "Check" }],
+  shows: [{ href: "/site", label: "Site" }, { href: "/law", label: "Check" }],
   nodes: [
     n("example", "data", "The example project", 0, 0, "A ten-unit homes project in Cumberland's R-3 district, so the first visit shows a worked answer. It says it is an example wherever the answer is shown.", { where: ["lib/engine.ts#DEFAULT_INPUTS"], note: "Principle 2: an answer is never shown apart from the facts it rests on." }),
     n("lookup", "data", "Site lookup", 1, 0, "Town, district, overlays, utilities, parcel, tribal land and wetlands agency from public map layers.", { to: { href: "/engine/site-lookup", label: "How the lookup works" } }),
@@ -22,7 +22,7 @@ export const PROJECT_FACTS: Flow = {
     n("persist", "step", "Keep it", 4.2, 3.6, "On every change the project (facts, route choice, ticked considerations, notes, hearing picks) is written to this browser's storage. A link packs only the facts that differ from the defaults, as base64url, so links stay short.", { where: ["lib/share.ts#pack", "components/ProjectProvider.tsx"] }),
 
     n("derive", "step", "Recompute: route, flags, steps", 1.5, 4.9, "Memoised on the facts: classify gives the route, deriveFlags the flags, stepsFor the steps; progress counts ticked considerations. Then the pages ask for findings, schedule and verdict from these.", { where: ["components/ProjectProvider.tsx#ProjectProvider"], to: { href: "/engine/route", label: "Route classification" } }),
-    n("pages", "output", "The pages", 1.5, 6.1, "Check, Steps, Schedule, Hearing prep and the printed summary all read the same state, so they cannot disagree.", { to: { href: "/project", label: "Open the Check page" } }),
+    n("pages", "output", "The pages", 1.5, 6.1, "Check, Steps, Schedule, Hearing prep and the printed summary all read the same state, so they cannot disagree.", { to: { href: "/law", label: "Open the Check page" } }),
   ],
   edges: [
     e("example", "norm"), e("lookup", "norm"), e("form", "norm"), e("saved", "norm"),

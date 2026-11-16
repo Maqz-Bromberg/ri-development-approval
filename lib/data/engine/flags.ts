@@ -7,7 +7,7 @@ export const FLAGS: Flow = {
   intro:
     "The engine does not hold a separate list of steps for each kind of site. It holds one list per route, and every step, document and authority may carry a condition written in the flags. " +
     "The flags are derived once from the project and the route, and everything that is shown is filtered through them. A condition \"a|b\" holds when either flag is true.",
-  shows: [{ href: "/steps", label: "Steps" }],
+  shows: [{ href: "/route", label: "Route & people" }],
   nodes: [
     n("facts", "data", "Site facts", 0.4, 0, "Wetlands present, state road access, acres disturbed, public water, public sewer, near frequent transit, zone change needed.", { where: ["lib/types.ts#ProjectInputs"], to: { href: "/engine/project-facts", label: "Project facts" } }),
     n("treat", "data", "Use treatment", 2.4, 0, "Allowed, hearing, prohibited or unknown, from the town's table or the Atlas.", { to: { href: "/engine/use-density", label: "Use and density" }, where: ["lib/engine.ts#useTreatment"] }),

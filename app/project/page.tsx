@@ -1,8 +1,5 @@
-import type { Metadata } from "next";
-import { ProjectWorkspace } from "@/components/ProjectWorkspace";
+import { Moved } from "@/components/Moved";
 
-export const metadata: Metadata = { title: "Check your project" };
-
-export default function ProjectPage() {
-  return <ProjectWorkspace />;
+export default function ProjectMoved() {
+  return <Moved to="/law" name="Zoning & law" />;
 }

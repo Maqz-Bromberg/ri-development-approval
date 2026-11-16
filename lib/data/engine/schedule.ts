@@ -7,7 +7,7 @@ export const SCHEDULE: Flow = {
   intro:
     "The schedule walks the steps in order from the start date. Each step gets a length, from the town's own plan if it has one and the shared plan if not; some run alongside another step; one waits for state permits; and filing dates are snapped to the board's published meeting calendar. " +
     "All dates are UTC days, so the plan does not shift with the viewer's timezone.",
-  shows: [{ href: "/schedule", label: "Schedule" }],
+  shows: [{ href: "/calendar", label: "Schedule" }],
   nodes: [
     n("in", "data", "Steps, start date and town", 2.2, 0, "The numbered steps, the project's start date, and the town. The cursor starts at the start date.", { where: ["lib/schedule.ts#buildSchedule"], to: { href: "/engine/steps", label: "Route steps" } }),
     n("plan", "decision", "Does the town have a plan for this step?", 2.2, 1.2, "A town's plan gives the step's length in days and its key moments (filing, notice, hearing, decision deadline).", { where: ["lib/schedule.ts#planFor"], town: true }),
@@ -24,7 +24,7 @@ export const SCHEDULE: Flow = {
     n("pat", "step", "Published rows, then the town's pattern", 0, 12.1, "Where the published calendar runs out, rows are projected from the town's usual pattern (Cumberland's last Thursday; Providence's nth weekday) and marked as estimates. Joint and special meetings are never predicted.", { where: ["lib/calendar.ts#rowsWithPattern"], note: "Dates from a published schedule and projected ones are shown differently." }),
     n("off", "step", "Moments at their offsets", 4.4, 10.9, "Without a calendar each moment is the step's start plus its offset in days.", {}),
     n("out", "output", "PlannedStep[]", 2.2, 13.3, "Each step with its start, end and dated moments. The cursor moves to the end unless the step ran alongside.", { where: ["lib/schedule.ts#PlannedStep"] }),
-    n("use", "output", "Schedule page, timeline and calendar file", 4.6, 13.3, "The Schedule page and project timeline draw it; toICS writes one all-day event per moment, with each step's considerations listed as done or open.", { where: ["lib/schedule.ts#toICS"], to: { href: "/schedule", label: "Open the Schedule" } }),
+    n("use", "output", "Schedule page, timeline and calendar file", 4.6, 13.3, "The Schedule page and project timeline draw it; toICS writes one all-day event per moment, with each step's considerations listed as done or open.", { where: ["lib/schedule.ts#toICS"], to: { href: "/calendar", label: "Open the Schedule" } }),
   ],
   edges: [
     e("in", "plan"),

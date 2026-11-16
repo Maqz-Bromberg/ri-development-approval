@@ -371,6 +371,24 @@ function analyzeRaw(i: ProjectInputs, tree: TreeId): Finding[] {
 
 /** Findings for the site. Outside Cumberland, the ones that rest on Cumberland's ordinance, minutes or precedent are neutralised. */
 export function analyze(i: ProjectInputs, tree: TreeId): Finding[] {
+  return withIds(analyzeAll(i, tree));
+}
+
+/**
+ * Every finding gets an id that survives a change of numbers: its source and its title with the digits taken out.
+ * "Density: 12 units" and "Density: 14 units" are the same finding. A rule may set its own id, and a repeat gets a suffix.
+ */
+function withIds(list: Finding[]): Finding[] {
+  const seen = new Map<string, number>();
+  return list.map((f) => {
+    const base = f.id ?? `${f.src ?? "x"}:${f.t.toLowerCase().replace(/[0-9][0-9,.]*/g, "").replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "").slice(0, 44)}`;
+    const n = (seen.get(base) ?? 0) + 1;
+    seen.set(base, n);
+    return { ...f, id: n === 1 ? base : `${base}-${n}` };
+  });
+}
+
+function analyzeAll(i: ProjectInputs, tree: TreeId): Finding[] {
   // On tribal land the town's rules may not apply at all, so none are run as if they did (ARD D38).
   if (i.reservation) {
     return [{

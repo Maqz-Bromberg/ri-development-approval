@@ -17,7 +17,7 @@ export function useCalendarFile() {
       const items = tickDocs(t, visibleDocs(p.step, flags)).flatMap((d) => d.checklist.map((text, i) => ({ text, on: !!checked[itemKey(tree, p.step.id, d, i)] })));
       return { items, done: items.filter((x) => x.on).length, total: items.length };
     };
-    const link = `${window.location.origin}/project#${SHARE_PARAM}=${encodeState(saved)}`;
+    const link = `${window.location.origin}/law#${SHARE_PARAM}=${encodeState(saved)}`;
     const blob = new Blob([toICS(plan, `${inputs.units} units, ${inputs.zone}, ${inputs.town}`, progress, link)], { type: "text/calendar" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

@@ -1,13 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Fredoka, Nunito_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Atkinson_Hyperlegible, Bitter, IBM_Plex_Mono, Nunito_Sans } from "next/font/google";
+import { IconSprite } from "@/components/Icon";
 import { ProjectProvider } from "@/components/ProjectProvider";
-import { SiteHeader } from "@/components/SiteHeader";
 import { TrialProvider } from "@/components/Trial";
-import Link from "next/link";
 import "./globals.css";
+import "./shell.css";
+import "./stages.css";
 
-const display = Fredoka({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-display", display: "swap" });
-const body = Nunito_Sans({ subsets: ["latin"], weight: ["400", "600", "700", "800"], variable: "--font-body", display: "swap" });
+// Bitter for headings and Atkinson Hyperlegible for text, on trial against Nunito Sans for both (ARD D42, trial k).
+const heading = Bitter({ subsets: ["latin"], variable: "--font-heading", display: "swap" });
+const text = Atkinson_Hyperlegible({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-text", display: "swap" });
+const nunito = Nunito_Sans({ subsets: ["latin"], weight: ["400", "600", "700", "800"], variable: "--font-body", display: "swap" });
 const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-data", display: "swap" });
 
 export const metadata: Metadata = {
@@ -19,27 +22,18 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#F6F8F3",
+  themeColor: "#F2F4F6",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${heading.variable} ${text.variable} ${nunito.variable} ${mono.variable}`} data-type="bitter">
       <body>
         <TrialProvider>
-        <ProjectProvider>
-          <SiteHeader />
-          <main className="wrap">{children}</main>
-          <footer className="site-footer">
-            <div className="wrap">
-              <p>
-                RI Building Plan Approval reads state and local rules as published (October 2026). It is not legal advice and does not
-                replace a determination by a municipality or a state agency. Town staff verify final versions. Only Cumberland has been read in full beyond state law. Providence is a trial reading that the city has not confirmed.{" "}
-                <Link href="/docs">Documentation</Link>{" · "}<Link href="/glossary">Glossary of terms</Link>{" · "}<Link href="/docs/site-facts">How site facts are found</Link>{" · "}<Link href="/verification">How records are checked</Link>
-              </p>
-            </div>
-          </footer>
-        </ProjectProvider>
+          <ProjectProvider>
+            <IconSprite />
+            {children}
+          </ProjectProvider>
         </TrialProvider>
       </body>
     </html>

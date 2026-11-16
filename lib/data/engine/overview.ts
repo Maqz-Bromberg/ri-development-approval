@@ -14,10 +14,10 @@ export const OVERVIEW: Flow = {
     "It runs in the visitor's browser, with no server, on every change to the facts. The boxes below are its parts, in the order of work. " +
     "Hover a box for what it does; click it for the flowchart of how it works.",
   shows: [
-    { href: "/site", label: "Site selection" },
-    { href: "/project", label: "Check" },
-    { href: "/steps", label: "Steps" },
-    { href: "/schedule", label: "Schedule" },
+    { href: "/site", label: "Site" },
+    { href: "/law", label: "Check" },
+    { href: "/route", label: "Route & people" },
+    { href: "/calendar", label: "Schedule" },
   ],
   nodes: [
     n("lookup", "data", "Site lookup", 0, 0, "Turns an address or a map click into site facts: the town, the zoning district and its overlays, whether public water and sewer reach the site, the tax parcel, whether it is tribal land, and which agency regulates wetlands. All from public map services, queried from the browser.", {

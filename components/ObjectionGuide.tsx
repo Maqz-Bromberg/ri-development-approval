@@ -13,6 +13,7 @@ import { sourceKind as srcKind } from "@/lib/sourceKind";
 import type { Heard, MediaItem, Objection, ProjectInputs } from "@/lib/types";
 import { DemoTag } from "./Demo";
 import { useProject } from "./ProjectProvider";
+import { PinButton } from "./PinButton";
 import { Gloss } from "./Term";
 
 const TOPICS = Array.from(new Set(OBJECTIONS.map((o) => o.topic)));
@@ -114,6 +115,13 @@ export function ObjectionGuide() {
       setOpen(new Set([id]));
       setTimeout(() => document.getElementById(id)?.scrollIntoView({ block: "start" }), 50);
     }
+  }, []);
+
+  // The tray and the rail ask for a question by its id; open it.
+  useEffect(() => {
+    const h = (e: Event) => { const id = String((e as CustomEvent<string>).detail); if (OBJECTIONS.some((o) => o.id === id)) { setTarget(id); setOpen((p) => new Set(p).add(id)); } };
+    window.addEventListener("goto", h);
+    return () => window.removeEventListener("goto", h);
   }, []);
 
   const flip = (set: (fn: (prev: Set<string>) => Set<string>) => void, id: string) => set((prev) => {
@@ -243,7 +251,7 @@ export function ObjectionGuide() {
                   <div className="bring">
                     <span className="muted small">Bring:</span>
                     {o.bring.map((b) => (
-                      <Link key={`${b.step}-${b.doc}`} href={`/steps#d-${b.step}`} className="chip">{b.doc}</Link>
+                      <Link key={`${b.step}-${b.doc}`} href={`/route#d-${b.step}`} className="chip">{b.doc}</Link>
                     ))}
                   </div>
                 </div>
@@ -251,6 +259,7 @@ export function ObjectionGuide() {
                   <button type="button" className="link-btn" aria-expanded={isOpen} onClick={() => flip(setOpen, o.id)}>
                     {isOpen ? "Show less" : `What the board weighs, what to do${heard.length ? ", and when it came up" : ""}`}
                   </button>
+                  <PinButton id={`o:${o.id}`} what="this question" />
                   <label className="pick">
                     <input type="checkbox" checked={isPicked} onChange={() => toggleHearing(o.id)} />
                     On my sheet

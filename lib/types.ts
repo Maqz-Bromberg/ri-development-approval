@@ -128,6 +128,8 @@ export interface ProjectInputs {
 }
 
 export interface Finding {
+  /** Stable across changes to the numbers in the facts, so a pin or a link can point at it. Set by `analyze` when a rule does not give one. */
+  id?: string;
   st: "pass" | "flag" | "fail" | "info";
   /** Set when the finding marks something not read, or not public: what would answer it. Gaps are shown as such (ARD D31). */
   gap?: string;
@@ -358,3 +360,17 @@ export interface BoardCalendar {
   /** `rule` names the usual meeting day (weekday 0 = Sunday; nth week of the month). Without it, Cumberland's last-Thursday pattern is used. */
   pattern: { cutoffDaysBefore: number; note: string; rule?: { weekday: number; nth: number } };
 }
+
+/** Something kept in the tray. The id points at a thing on the site (ARD D42): f:<finding>, d:<step>|<document>, c:<contact>, t:<tick>, x:<field>, o:<objection>. */
+export type PinType = "finding" | "doc" | "contact" | "date" | "fact" | "question";
+
+export interface Pin {
+  id: string;
+  type: PinType;
+  /** Marked as dealt with in the tray */
+  resolved?: boolean;
+  /** ISO time it was pinned */
+  at: string;
+}
+
+export const PIN_TYPE_OF: Record<string, PinType> = { f: "finding", d: "doc", c: "contact", t: "date", x: "fact", o: "question" };

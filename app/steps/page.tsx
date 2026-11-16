@@ -1,8 +1,5 @@
-import type { Metadata } from "next";
-import { StepsWorkspace } from "@/components/StepsWorkspace";
+import { Moved } from "@/components/Moved";
 
-export const metadata: Metadata = { title: "Approval steps" };
-
-export default function StepsPage() {
-  return <StepsWorkspace />;
+export default function StepsMoved() {
+  return <Moved to="/route" name="Route & people" />;
 }

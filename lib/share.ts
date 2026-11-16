@@ -1,5 +1,5 @@
 import { DEFAULT_INPUTS, normalizeInputs } from "./engine";
-import type { ProjectInputs, TreeId } from "./types";
+import type { Pin, ProjectInputs, TreeId } from "./types";
 
 /** Everything a project carries: the facts entered, the route override, ticked considerations and notes. */
 export interface Saved {
@@ -10,6 +10,8 @@ export interface Saved {
   notes: Record<string, string>;
   /** Questions picked for the hearing sheet, by objection id */
   hearing?: string[];
+  /** Things pinned in the tray (ARD D42) */
+  pins?: Pin[];
 }
 
 interface Packed {
@@ -20,6 +22,8 @@ interface Packed {
   n: Record<string, string>;
   /** Hearing sheet picks. Optional, so links made before it was added still open. */
   h?: string[];
+  /** Pins, as [id, type, resolved, at]. Optional, so older links still open. */
+  k?: [string, Pin["type"], 0 | 1, string][];
 }
 
 function pack(s: Saved): Packed {
@@ -28,7 +32,7 @@ function pack(s: Saved): Packed {
   (Object.keys(s.inputs) as (keyof ProjectInputs)[]).forEach((k) => { if (s.inputs[k] !== DEFAULT_INPUTS[k]) i[k] = s.inputs[k]; });
   const n: Record<string, string> = {};
   Object.entries(s.notes).forEach(([k, v]) => { if (v.trim()) n[k] = v; });
-  return { v: 1, i: i as Partial<ProjectInputs>, o: s.override, c: Object.keys(s.checked).filter((k) => s.checked[k]), n, ...(s.hearing?.length ? { h: s.hearing } : {}) };
+  return { v: 1, i: i as Partial<ProjectInputs>, o: s.override, c: Object.keys(s.checked).filter((k) => s.checked[k]), n, ...(s.hearing?.length ? { h: s.hearing } : {}), ...(s.pins?.length ? { k: s.pins.map((p) => [p.id, p.type, p.resolved ? 1 : 0, p.at] as [string, Pin["type"], 0 | 1, string]) } : {}) };
 }
 
 function unpack(p: Packed): Saved {
@@ -38,6 +42,7 @@ function unpack(p: Packed): Saved {
     checked: Object.fromEntries((p.c ?? []).map((k) => [k, true])),
     notes: p.n ?? {},
     hearing: p.h ?? [],
+    pins: (p.k ?? []).map(([id, type, r, at]) => ({ id, type, ...(r ? { resolved: true } : {}), at })),
   };
 }
 

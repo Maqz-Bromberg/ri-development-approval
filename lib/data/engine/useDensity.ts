@@ -7,7 +7,7 @@ export const USE_DENSITY: Flow = {
   intro:
     "Two questions about the land, answered separately. Use: is this kind of building allowed in the district, needs a hearing, or is prohibited. Density: how much lot area the unit count needs, and whether the lot has it. " +
     "Both ask the town's own reading first, and where it has none the Zoning Atlas answers, or the engine says it has no answer.",
-  shows: [{ href: "/site", label: "Site selection" }, { href: "/project", label: "Check" }],
+  shows: [{ href: "/site", label: "Site" }, { href: "/law", label: "Check" }],
   nodes: [
     n("site", "data", "District, units and kind of project", 2.2, 0, "The zoning district (from the lookup or the picker), the unit count, the kind of project and the town.", { where: ["lib/types.ts#ProjectInputs"] }),
     n("ck", "decision", "Commercial project?", 2.2, 1.1, "Non-residential uses are answered from the town's table alone. The Atlas records housing types and nothing else.", { where: ["lib/engine.ts#useTreatment"] }),

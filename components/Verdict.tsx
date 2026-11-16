@@ -156,7 +156,7 @@ export function Verdict({ compact = false, check = false, premise = true }: { co
       )}
       {compact && (
         <div className="verdict-actions">
-          <Link href="/project" className="btn">See the check</Link>
+          <Link href="/law" className="btn">See the check</Link>
           <Link href="/site" className="btn ghost">Edit the project</Link>
         </div>
       )}

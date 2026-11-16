@@ -41,6 +41,11 @@ export function TrialProvider({ children }: { children: React.ReactNode }) {
     return next;
   });
 
+  // The type trial sets an attribute on the page, which the stylesheet reads.
+  useEffect(() => {
+    if (DEV) document.documentElement.dataset.type = state.type ?? "bitter";
+  }, [state.type]);
+
   const here = (Object.keys(VARIANTS) as TrialKey[]).filter((k) => (VARIANTS[k].pages as readonly string[]).includes(path));
   const changed = here.filter((k) => state[k] !== DEFAULT_TRIAL[k]).length;
 

@@ -8,7 +8,7 @@ export const ALTERNATIVES: Flow = {
     "The rules have lines that make small changes matter: nine units or ten, a quarter of the units affordable, a conservation layout. " +
     "The engine proposes the few variations that cross such a line, runs each one through the whole pipeline as if it were the project, and lays the results beside the project as entered. " +
     "Comparing never changes the project; trying one keeps the entered facts so the visitor can go back.",
-  shows: [{ href: "/site", label: "Site selection" }, { href: "/steps", label: "Steps" }],
+  shows: [{ href: "/site", label: "Site" }, { href: "/route", label: "Route & people" }],
   nodes: [
     n("in", "data", "The project as entered", 2.2, 0, "The facts, including the town and kind of project. The route choice is ignored here: each scenario is classified from its own facts.", { where: ["lib/whatif.ts#scenarios"] }),
     n("gen", "step", "Propose variations that cross a line", 2.2, 1.2, "Each candidate is a patch to the facts, with a one-sentence reason. A candidate that equals the project or one already proposed (compared as JSON) is dropped.", { where: ["lib/whatif.ts#scenarios"] }),

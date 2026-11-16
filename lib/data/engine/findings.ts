@@ -7,7 +7,7 @@ export const FINDINGS: Flow = {
   intro:
     "The law check returns a list of findings. Each has a status (pass, flag, fail or info), a title and an explanation, and where the rule was read, the document, the pinpoint and the quote it rests on. " +
     "Where a rule has not been read, the finding is a named gap and says what would answer it. The list is assembled in layers: tribal land stops it, then the kind of project and the town decide the base list, then overlays, septic and wetlands add to it.",
-  shows: [{ href: "/project", label: "Check" }, { href: "/summary", label: "Summary" }],
+  shows: [{ href: "/law", label: "Check" }, { href: "/summary", label: "Summary" }],
   nodes: [
     n("in", "data", "Project, route and town", 2.2, 0, "The facts and the route (a TreeId). Called for the page on every change.", { where: ["lib/engine.ts#analyze"] }),
     n("res", "decision", "Is the site on tribal land?", 2.2, 1.1, "Set by the site lookup from the Atlas's Native Lands layer.", { where: ["lib/engine.ts#analyze"] }),
@@ -26,7 +26,7 @@ export const FINDINGS: Flow = {
     n("swy", "step", "Septic findings", 4.8, 8.5, "RIDEM's approval of the system's plans (250-RICR-150-10-6 § 6.9(C)). A large system, designed for 5,000 gallons a day or more, is probable above about 44 bedrooms at 115 gallons each. In the Salt Pond and Narrow River towns, nitrogen-reducing technology may be required, with the critical resource area maps named as a gap.", { where: ["lib/engine.ts#septicFindings"], note: "ARD D39. Whether the site is inside the critical area is not looked up." }),
     n("crmc", "decision", "Wetlands under CRMC?", 2.2, 9.7, "RIDEM's wetland jurisdiction layer puts coastal sites with CRMC, whose permit is an Assent decided by an appointed council.", { where: ["lib/engine.ts#analyze"] }),
     n("crmcy", "step", "Note that the permit is CRMC's", 4.8, 9.7, "An info finding that the wetlands permit is CRMC's and the coastal program's rules apply.", { where: ["lib/engine.ts#analyze"] }),
-    n("out", "output", "Finding[]", 2.2, 10.9, "Each finding: st (pass, flag, fail, info), t (what), p (why it matters), src, pin and q (the document, the section and the exact quote) and gap (what would answer it, when it was not read).", { where: ["lib/types.ts#Finding"], to: { href: "/engine/sources", label: "How claims are traced" } }),
+    n("out", "output", "Finding[]", 2.2, 10.9, "Each finding: id (set last, by withIds: its source and its title with the digits taken out, so a pin or a link survives a change of numbers), st (pass, flag, fail, info), t (what), p (why it matters), src, pin and q (the document, the section and the exact quote) and gap (what would answer it, when it was not read).", { where: ["lib/types.ts#Finding", "lib/engine.ts#withIds"], note: "ARD D42: pins and the rail point at findings by this id.", to: { href: "/engine/sources", label: "How claims are traced" } }),
   ],
   edges: [
     e("in", "res"),

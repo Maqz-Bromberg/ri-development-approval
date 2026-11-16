@@ -21,17 +21,47 @@ export interface Variant {
 }
 
 /** Empty now: every trial so far has been decided. Add one here, read it with useTrial(), and delete it when chosen. */
-export const VARIANTS: Record<string, Variant> = {};
+export const VARIANTS: Record<string, Variant> = {
+  type: {
+    label: "Type",
+    note: "Headings and text on every page (ARD D42, trial k).",
+    pages: ["/", "/site", "/law", "/route", "/calendar", "/hearing", "/towns", "/records", "/docs"],
+    options: { bitter: "Bitter headings, Atkinson Hyperlegible text", nunito: "Nunito Sans for both (the site until now)" },
+  },
+  gate: {
+    label: "Choosing a site first",
+    note: "Whether the other four stages wait for a chosen site (ARD D42, trial c).",
+    pages: ["/", "/site", "/law", "/route", "/calendar", "/hearing"],
+    options: { open: "Open: every stage can be opened, showing the example with its tag", gated: "Gated: the other stages wait for a chosen site" },
+  },
+  landing: {
+    label: "Landing",
+    note: "What leads on the first page. Every option keeps the same parts (ARD D42, trial c).",
+    pages: ["/"],
+    options: { find: "Find your site: the find box first, then who you'll meet and the five stages", map: "Map first: the statewide town map with the search box over it", three: "Three ways in: three equal cards, recent and saved sites below" },
+  },
+  alts: {
+    label: "Alternatives",
+    note: "Where the list of nearby alternatives, as routes, sits (ARD D42, trial g).",
+    pages: ["/site", "/law"],
+    options: { site: "On Site, as the list of routes at the end of the page", check: "In the check, folded under the verdict on Zoning & law" },
+  },
+};
 
 export type TrialKey = string;
 export type TrialState = Record<string, string>;
 
 /** Page names for the links on /dev and in the panel. */
 export const PAGE_NAMES: Record<string, string> = {
-  "/site": "Site selection",
-  "/project": "Check",
-  "/steps": "Steps",
-  "/schedule": "Schedule",
+  "/": "Landing",
+  "/site": "Site",
+  "/law": "Zoning & law",
+  "/route": "Route & people",
+  "/calendar": "Calendar",
+  "/hearing": "Hearing",
+  "/towns": "Towns",
+  "/records": "Records",
+  "/docs": "Documentation",
 };
 
 export const DEFAULT_TRIAL: TrialState = Object.fromEntries(Object.entries(VARIANTS).map(([k, v]) => [k, Object.keys(v.options)[0]]));

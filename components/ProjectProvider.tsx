@@ -6,12 +6,15 @@ import { districtsOf, fetchAtlasDistricts, registerDistricts } from "@/lib/data/
 import { setActiveTown } from "@/lib/town";
 import { isoDay } from "@/lib/schedule";
 import { readShareHash, type Saved } from "@/lib/share";
-import type { Flags, ProjectInputs, TreeId } from "@/lib/types";
+import { touchRecent } from "@/lib/savedSites";
+import { PIN_TYPE_OF, type Flags, type Pin, type ProjectInputs, type TreeId } from "@/lib/types";
 
 const STORE_KEY = "ri-plan-approval:v1";
 const ALT_KEY = "ri-plan-approval:alt";
 /** Whether the project saved in this browser is still the untouched example, so a second visit doesn't call it the visitor's own. */
 const ORIGIN_KEY = "ri-plan-approval:origin";
+/** Set when the visitor opens the example on purpose, which counts as choosing a site (ARD D42). */
+const EXAMPLE_KEY = "ri-plan-approval:example-chosen";
 
 /** What was entered before an alternative was tried, so the visitor can always go back to it. */
 export interface Entered {
@@ -48,6 +51,15 @@ interface ProjectState {
   /** Questions picked for the hearing sheet, by objection id */
   hearing: string[];
   toggleHearing: (id: string) => void;
+  /** Things pinned in the tray */
+  pins: Pin[];
+  /** Pin or unpin something on the site by its id (f:, d:, c:, t:, x:, o:) */
+  togglePin: (id: string) => void;
+  setPinResolved: (id: string, resolved: boolean) => void;
+  /** A site has been chosen: entered, opened or shared, or the example opened on purpose. Until then the example only shows. */
+  chosen: boolean;
+  /** Open the example on purpose */
+  openExample: () => void;
   /** The whole project, for share links, export files and the summary */
   saved: Saved;
   /** Replace the project with an imported, shared or saved one */
@@ -86,6 +98,8 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [hearing, setHearing] = useState<string[]>([]);
+  const [pins, setPins] = useState<Pin[]>([]);
+  const [exampleChosen, setExampleChosen] = useState(false);
   const [origin, setOrigin] = useState<ProjectState["origin"]>("example");
   const [hydrated, setHydrated] = useState(false);
   const [entered, setEntered] = useState<Entered | null>(null);
@@ -113,6 +127,8 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     if (s.checked) setChecked(s.checked);
     if (s.notes) setNotes(s.notes);
     if (s.hearing) setHearing(s.hearing);
+    if (s.pins) setPins(s.pins);
+    try { setExampleChosen(window.localStorage.getItem(EXAMPLE_KEY) === "1"); } catch { /* none */ }
     let savedOrigin: string | null = null;
     try { savedOrigin = window.localStorage.getItem(ORIGIN_KEY); } catch { /* none */ }
     setOrigin(shared ? "link" : s.inputs && savedOrigin !== "example" ? "browser" : "example");
@@ -126,12 +142,19 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     try {
-      window.localStorage.setItem(STORE_KEY, JSON.stringify({ inputs, override, checked, notes, hearing } satisfies Saved));
+      window.localStorage.setItem(STORE_KEY, JSON.stringify({ inputs, override, checked, notes, hearing, pins } satisfies Saved));
       window.localStorage.setItem(ORIGIN_KEY, origin === "example" ? "example" : "own");
     } catch {
       /* storage unavailable: progress lasts for this visit only */
     }
-  }, [inputs, override, checked, notes, hearing, hydrated, origin]);
+  }, [inputs, override, checked, notes, hearing, pins, hydrated, origin]);
+
+  // The five most recent projects are kept for the landing, a moment after the last change.
+  useEffect(() => {
+    if (!hydrated || origin === "example") return;
+    const t = setTimeout(() => touchRecent({ inputs, override, checked, notes, hearing, pins }), 1500);
+    return () => clearTimeout(t);
+  }, [inputs, override, checked, notes, hearing, pins, hydrated, origin]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -169,8 +192,13 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
       setNote: (stepId, text) => setNotes((prev) => ({ ...prev, [`${tree}/${stepId}`]: text })),
       hearing,
       toggleHearing: (id) => setHearing((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id])),
-      saved: { inputs, override, checked, notes, hearing },
-      importState: (next, from = "file") => { setInputs(normalizeInputs(next.inputs)); setOverride(next.override); setChecked(next.checked); setNotes(next.notes); setHearing(next.hearing ?? []); setOrigin(from); setEntered(null); },
+      pins,
+      togglePin: (id) => setPins((prev) => (prev.some((p) => p.id === id) ? prev.filter((p) => p.id !== id) : [...prev, { id, type: PIN_TYPE_OF[id.split(":")[0]] ?? "finding", at: new Date().toISOString() }])),
+      setPinResolved: (id, resolved) => setPins((prev) => prev.map((p) => (p.id === id ? { ...p, resolved } : p))),
+      chosen: origin !== "example" || exampleChosen,
+      openExample: () => { setExampleChosen(true); try { window.localStorage.setItem(EXAMPLE_KEY, "1"); } catch { /* none */ } },
+      saved: { inputs, override, checked, notes, hearing, pins },
+      importState: (next, from = "file") => { setInputs(normalizeInputs(next.inputs)); setOverride(next.override); setChecked(next.checked); setNotes(next.notes); setHearing(next.hearing ?? []); setPins(next.pins ?? []); setOrigin(from); setEntered(null); },
       origin, hydrated,
       progress, current,
       entered,
@@ -189,7 +217,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
       },
       keepAlternative: () => setEntered(null),
     };
-  }, [inputs, override, checked, notes, hearing, origin, hydrated, setInput, districtsIn, entered]);
+  }, [inputs, override, checked, notes, hearing, pins, exampleChosen, origin, hydrated, setInput, districtsIn, entered]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

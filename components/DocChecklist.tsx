@@ -5,6 +5,7 @@ import { itemKey, slug } from "@/lib/engine";
 import type { Doc } from "@/lib/types";
 import { Cite } from "./Cite";
 import { useProject } from "./ProjectProvider";
+import { PinButton } from "./PinButton";
 import { Gloss } from "./Term";
 
 /** One document or form, with its source and a tickable checklist of considerations. */
@@ -21,6 +22,7 @@ export function DocChecklist({ stepId, doc, defaultOpen = false, compact = false
     <li className={`doc${complete ? " complete" : ""}${compact ? " compact" : ""}`}>
       <div className="doc-t">
         <b>{doc.title}</b>
+        {!compact && <PinButton id={`d:${stepId}|${doc.title}`} what={doc.title} />}
         {!compact && (conditional || doc.when
           ? <span className="when-chip">{doc.when ?? "Required for this site"}</span>
           : <span className="when-chip req">Standard</span>)}
@@ -28,7 +30,7 @@ export function DocChecklist({ stepId, doc, defaultOpen = false, compact = false
       {doc.note && !compact && <p className="doc-n"><Gloss text={doc.note} /></p>}
       {!compact && <Cite src={doc.src} pin={doc.pin} q={doc.q} />}
       <button type="button" className="cl-toggle" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(!open)}>
-        <span className={`cl-count${complete ? " ok" : ""}`}>{done === 0 ? keys.length : `${done}/${keys.length}`}</span>
+        <span className={`cl-count${complete ? " ok" : ""}`}>{`${done} of ${keys.length}`}</span>
         {open ? "Hide considerations" : "Show considerations"}
       </button>
       {open && (

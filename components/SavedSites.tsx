@@ -1,9 +1,7 @@
 "use client";
 
-import { shortAddress } from "@/lib/lookup";
-import { projectLabel } from "@/lib/engine";
 import { useEffect, useState } from "react";
-import type { Saved } from "@/lib/share";
+import { onSitesChanged, readSites, sameSite, saveSite, writeSites, type SavedSite } from "@/lib/savedSites";
 import { HoverCard } from "./Popover";
 import { useProject } from "./ProjectProvider";
 
@@ -13,42 +11,6 @@ import { useProject } from "./ProjectProvider";
  * server with every page. Found again whenever the visitor comes back to Site selection. The project file is still the
  * way to move them to another device (ARD principle 5).
  */
-const KEY = "ri-plan-approval:sites";
-
-export interface SavedSite {
-  id: string;
-  name: string;
-  /** ISO time it was last saved */
-  at: string;
-  project: Saved;
-}
-
-function read(): SavedSite[] {
-  try {
-    const raw = window.localStorage.getItem(KEY);
-    return raw ? (JSON.parse(raw) as SavedSite[]) : [];
-  } catch {
-    return [];
-  }
-}
-
-function write(list: SavedSite[]): boolean {
-  try { window.localStorage.setItem(KEY, JSON.stringify(list)); return true; } catch { return false; }
-}
-
-/** A name for the site: its address, or its district and town, with the unit count. */
-function siteName(s: Saved): string {
-  const i = s.inputs;
-  const where = i.address ? shortAddress(i.address) : i.zone === "other" ? i.town : `${i.zone}, ${i.town}`;
-  return `${where} · ${projectLabel(i)}`;
-}
-
-/** The same site, for updating rather than saving twice: the same point, or the same address and town. */
-function sameSite(a: Saved, b: Saved): boolean {
-  if (a.inputs.lat != null && b.inputs.lat != null) return a.inputs.lat === b.inputs.lat && a.inputs.lon === b.inputs.lon;
-  return !!a.inputs.address && a.inputs.address === b.inputs.address && a.inputs.town === b.inputs.town;
-}
-
 const ago = (iso: string) => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
 export function SavedSites() {
@@ -57,19 +19,17 @@ export function SavedSites() {
   const [msg, setMsg] = useState("");
   const [confirm, setConfirm] = useState<string | null>(null);
   const [drop, setDrop] = useState<string | null>(null);
-  useEffect(() => { if (hydrated) setList(read()); }, [hydrated]);
+  useEffect(() => { if (!hydrated) return; setList(readSites()); return onSitesChanged(() => setList(readSites())); }, [hydrated]);
 
   const current = list.find((x) => sameSite(x.project, saved));
   const unchanged = current && JSON.stringify(current.project) === JSON.stringify(saved);
 
   const save = () => {
-    const entry: SavedSite = { id: current?.id ?? `${Date.now()}`, name: siteName(saved), at: new Date().toISOString(), project: saved };
-    const next = current ? list.map((x) => (x.id === current.id ? entry : x)) : [entry, ...list];
-    if (write(next)) { setList(next); setMsg(current ? `Updated "${entry.name}".` : `Saved "${entry.name}".`); }
+    if (saveSite(saved)) setMsg(current ? "Updated the saved site." : "Saved the site.");
     else setMsg("This browser won't keep it (a private window, or storage is blocked). Download the project file instead.");
   };
   const load = (s: SavedSite) => { importState(s.project, "browser"); setConfirm(null); setMsg(`Loaded "${s.name}".`); };
-  const remove = (id: string) => { const next = list.filter((x) => x.id !== id); write(next); setList(next); setDrop(null); };
+  const remove = (id: string) => { writeSites(list.filter((x) => x.id !== id)); setDrop(null); };
 
   // Loading replaces the project on screen; ask first when that project is the visitor's own and not saved as it stands.
   const askLoad = (s: SavedSite) => (origin !== "example" && !unchanged ? setConfirm(s.id) : load(s));

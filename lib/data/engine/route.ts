@@ -10,7 +10,7 @@ export const ROUTE: Flow = {
   intro:
     "The route is the first thing the engine decides, because it fixes every later stage, document and deadline. A project is first split by what is being built. Each town can supply its own rule; where it does not, state law's lines apply, in a fixed order. " +
     "The visitor can then override the result, to see another route's steps.",
-  shows: [{ href: "/site", label: "Site selection" }, { href: "/steps", label: "Steps" }],
+  shows: [{ href: "/site", label: "Site" }, { href: "/route", label: "Route & people" }],
   nodes: [
     n("facts", "data", "Project facts", 2.2, 0, "Kind, units, affordable units, reuse or new, lot area, commercial floor area, and for commercial projects the work (new, expansion, change of use) and floor areas.", { where: ["lib/types.ts#ProjectInputs"] }),
     n("kind", "decision", "What is being built?", 2.2, 1.1, "Commercial or institutional projects take one branch; homes, and homes with commercial space, the other.", { where: ["lib/engine.ts#classify"] }),
@@ -28,7 +28,7 @@ export const ROUTE: Flow = {
     n("d3", "decision", "10 or more units?", 4.1, 7, "Ten or more is a major land development.", { where: ["lib/engine.ts#classify"], note: "Nine units or fewer is the state's minor cap, § 45-23-32." }),
     n("d4", "decision", "3 or more units?", 4.1, 8.1, "Three to nine is a minor land development.", { where: ["lib/engine.ts#classify"] }),
 
-    n("comp", "output", TREES.comp.name, 2.55, 4.8, out("comp"), { to: { href: "/steps", label: "See its steps" } }),
+    n("comp", "output", TREES.comp.name, 2.55, 4.8, out("comp"), { to: { href: "/route", label: "See its steps" } }),
     n("dpr", "output", TREES.dpr.name, 2.55, 5.9, out("dpr")),
     n("major", "output", TREES.major.name, 2.55, 7, out("major")),
     n("minor", "output", TREES.minor.name, 2.55, 8.1, out("minor")),

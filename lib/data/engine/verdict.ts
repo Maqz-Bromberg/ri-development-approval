@@ -7,7 +7,7 @@ export const VERDICT: Flow = {
   intro:
     "The verdict is deliberately plain arithmetic over what the other parts have already produced: it counts, sums and lists, and adds no judgement of its own. " +
     "Next to it, two small functions name who holds the decision, for the route bar and for hearing prep.",
-  shows: [{ href: "/project", label: "Check" }, { href: "/summary", label: "Summary" }, { href: "/hearing", label: "Hearing prep" }],
+  shows: [{ href: "/law", label: "Check" }, { href: "/summary", label: "Summary" }, { href: "/hearing", label: "Hearing prep" }],
   nodes: [
     n("find", "data", "Findings", 0.2, 0, "The law check's list for this project and route.", { to: { href: "/engine/findings", label: "Law check" }, where: ["lib/engine.ts#analyze"] }),
     n("steps", "data", "Numbered steps", 2.2, 0, "The route's steps for this site.", { to: { href: "/engine/steps", label: "Route steps" } }),

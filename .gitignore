@@ -6,6 +6,7 @@ next-env.d.ts
 .env*.local
 
 .claude/
+design/
 
 # Local copies of cited documents and machine transcripts. Not committed: transcripts name residents.
 .sources/

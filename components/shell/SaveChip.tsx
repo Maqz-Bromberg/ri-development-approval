@@ -21,7 +21,7 @@ export function SaveChip() {
 
   const copy = list.find((x) => sameSite(x.project, saved));
   const changes = unsavedChanges(saved, copy?.project);
-  const example = origin === "example";
+  const example = !hydrated || origin === "example";
   const clean = !example && changes.length === 0;
 
   const save = () => {

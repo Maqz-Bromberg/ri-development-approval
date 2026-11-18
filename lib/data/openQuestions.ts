@@ -40,7 +40,9 @@ export const OPEN_QUESTIONS: OpenQuestion[] = [
   { area: "Providence trial", q: "Who asks the city for scripted access to its documents, and for staff to confirm the sheet?", status: "review", note: "Not yet. Files are fetched by hand for now, and validation for public use comes later (Nov 14, 2026)." },
   { area: "Providence trial", q: "The full list, with what was found, is in docs/providence-trial-review.html.", status: "review" },
 
-  { area: "Statewide", q: "Which town is the second with full local steps: North Providence, or one as unlike Cumberland as possible?", status: "open" },
+  { area: "Statewide", q: "Which town is the second with full local steps: North Providence, or one as unlike Cumberland as possible?", status: "decided", note: "Nov 18, 2026 (ARD D53): the whole of Providence first, then one town for each kind of edge case, starting with Westerly. North Providence is the fourth chunk, for its ordinance under amendment." },
+  { area: "Statewide", q: "Westerly's inclusionary share is 15% of \"the basic number dwelling units per acre permitted in the underlying zone\". Is that 15% of the units proposed, or of the units the lot allows?", status: "open", note: "The site takes 15% of the units entered. Only the planning office can say (docs/manual-fetches.md)." },
+  { area: "Providence trial", q: "Does the Capital Center Commission still review development downtown, and where is its district?", status: "open", note: "Its last meeting on the state site was July 9, 2025, and the City's map layer for the district is empty." },
   { area: "Statewide", q: "Is asking town planning staff to confirm their town's sheet part of the plan, and who asks?", status: "open" },
   { area: "Statewide", q: "Housing only, or any development?", status: "open", note: "Housing only keeps the routes to five." },
   { area: "Statewide", q: "Town in the URL (/cumberland/steps), or stay with the town in the project and share link?", status: "open", note: "Currently in the project state." },

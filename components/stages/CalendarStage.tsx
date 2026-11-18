@@ -1,5 +1,6 @@
 "use client";
 
+import { TribalLandNote } from "../Coverage";
 import { ScheduleView } from "../ScheduleView";
 import { Band, Continue } from "./Band";
 
@@ -8,6 +9,7 @@ export function CalendarStage() {
   return (
     <div className="stage">
       <Band id="cal" title="Your approval schedule" lead="Every step laid out from your start date. Select a tick on the Gantt chart, or a marked day on the month view, to open the documents and checklist items due at that moment, and who you deal with." />
+      <TribalLandNote />
       <ScheduleView />
       <Continue id="cal" />
     </div>

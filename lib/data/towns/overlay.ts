@@ -3,6 +3,7 @@ import { providenceFindings, PROVIDENCE_SCHEDULE } from "./providence/rules";
 import { PROVIDENCE_RULES, PROVIDENCE_STEPS } from "./providence/steps";
 import { cumberlandCommercialFindings, cumberlandCommercialUse } from "./cumberland/commercial";
 import { TREES as CUMBERLAND_TREES } from "./cumberland/trees";
+import { WESTERLY_UNMAPPED, airportStep, aquiferStep, westerlyCommercialUse, westerlyFindings, westerlyInclusionary, westerlyOverlay, westerlyOverlayFlags, westerlyUse } from "./westerly/rules";
 import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
 /*
@@ -23,7 +24,18 @@ const RULES: Record<string, TownRules> = {
     routeText: Object.fromEntries(Object.entries(CUMBERLAND_TREES).map(([k, t]) => [k, { rule: t.rule, blurb: t.blurb, stateTerms: true }])),
   },
   // Read to scope the design changes a town with overlays forces (ARD D38). Its use table answers in place of the Atlas.
-  Charlestown: { use: charlestownUse, useCommercial: charlestownCommercialUse, overlayRules: charlestownOverlay, unmappedOverlays: CHARLESTOWN_UNMAPPED, kinds: CHARLESTOWN_KINDS },
+  Charlestown: {
+    use: charlestownUse, useCommercial: charlestownCommercialUse, overlayRules: charlestownOverlay, unmappedOverlays: CHARLESTOWN_UNMAPPED, kinds: CHARLESTOWN_KINDS,
+    // The Mixed-Use Zoning Overlay's own share (§ 218-47 B(2)), on the affordable key (ARD D53 decision 2; D38's open item).
+    affordableLines: (i) => ((i.overlays ?? []).includes("MUZ") && i.units > 1 ? [{ short: "59%: Charlestown Mixed-Use Zoning Overlay", what: "More than one home on a lot in the overlay needs 59% of the homes, rounded down, to be low or moderate income.", src: "chzo", need: Math.floor(i.units * 0.59) }] : []),
+  },
+  // Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3).
+  Westerly: {
+    use: westerlyUse, useCommercial: westerlyCommercialUse, overlayRules: westerlyOverlay, unmappedOverlays: WESTERLY_UNMAPPED,
+    overlayFlags: westerlyOverlayFlags, moreFindings: (i) => westerlyFindings(i), inclusionaryRead: true,
+    extraSteps: [{ step: aquiferStep, before: ["building"] }, { step: airportStep, before: ["building"] }],
+    affordableLines: (i) => (i.kind !== "commercial" && i.units >= 6 ? [{ short: "15%: Westerly inclusionary zoning", what: "Six or more homes need 15% of the units low- or moderate-income, deed-restricted for 99 years, with one bonus market-rate unit for each.", src: "wezo", need: westerlyInclusionary(i.units) }] : []),
+  },
 };
 const FINDINGS: Record<string, TownFindings> = { Providence: providenceFindings };
 const SCHEDULES: Record<string, Record<string, StepPlan>> = { Providence: PROVIDENCE_SCHEDULE };

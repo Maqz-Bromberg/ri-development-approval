@@ -497,9 +497,13 @@
 .rdx-boards li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 8px; align-items: baseline; }
 .media-kind.m-board { white-space: normal; text-align: center; }
 @media (max-width: 720px) { .rdx-boards li { grid-template-columns: 1fr; gap: 2px; } }
+/* A town's required affordable share on the key (ARD D53, decision 2): a mark and a word, not a shade of the scale */
+.aff-key .town-line .aff-sw { background: #fff; border: 1.5px dashed #9b6a00; color: #9b6a00; font: 700 11px/14px var(--ff-data, inherit); text-align: center; }
+.aff-key .town-line.is-met .aff-sw { border-style: solid; border-color: #2e7d4f; color: #2e7d4f; }
 /* Every agenda case on a Records card (D53, chunk 0) */
 .rdx-cases { margin: 10px 0; }
 .rdx-cases summary { cursor: pointer; }
 .rdx-case-table { font-size: 13px; border-collapse: collapse; width: 100%; }
 .rdx-case-table th, .rdx-case-table td { text-align: left; padding: 3px 8px 3px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 .rdx-case-table tr.is-read td:first-child { font-weight: 700; }
+.coverage.tribal { border-left: 4px solid #9b6a00; }

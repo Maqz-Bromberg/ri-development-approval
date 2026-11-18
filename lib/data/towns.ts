@@ -153,6 +153,16 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
       note: "The box is an approximation drawn around them, not the city's neighbourhood boundary.",
     }],
   },
+  Westerly: {
+    marks: {
+      zoning: { read: "2026-11-18", partly: true, note: "Chapter 260: the use tables for housing, mixed use and the short list of other uses, with the aquifer zones' columns; inclusionary zoning (§ 260-50.2); multifamily in HDR-6 and HDR-15 (§ 260-63) and on Appendix G's parcels; the Airport Area and Aquifer and Wellhead overlays' review. Not read: the dimensional schedule, the other overlays' rules and the Watch Hill standards." },
+    },
+    gaps: "Westerly's overlays are not in the Zoning Atlas, so they are ticked by hand: the Town's zoning map with its overlays was not found as a map service.",
+    commercial: {
+      marks: { zoning: { read: "2026-11-18", partly: true, note: "The use tables' rows for the short list of uses, with the aquifer zones' columns and the 2,000 sq ft line for shops. Not read: the dimensions, parking and the town's own review lines." } },
+      gaps: "Its steps and hearings have not been read.",
+    },
+  },
   Charlestown: {
     marks: {
       zoning: { read: "2026-11-14", partly: true, note: "Chapter 218: the Land Use Table for housing and the short list of other uses, with the Groundwater Protection overlay's column, and the Mixed-Use Zoning Overlay's density and affordability rule. Not read: the dimensional table and the other overlays' rules." },

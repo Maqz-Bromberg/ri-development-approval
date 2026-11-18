@@ -36,6 +36,20 @@ function MarkNotes({ marks }: { marks: Marks }) {
   );
 }
 
+/**
+ * On tribal land the town's route may not apply at all (ARD D38, debt 18). Said before anything that shows the route,
+ * the steps or the schedule, which stay the state's ordinary route for reference.
+ */
+export function TribalLandNote() {
+  const { inputs } = useProject();
+  if (!inputs.reservation) return null;
+  return (
+    <aside className="coverage tribal" aria-label="Tribal land">
+      <p><span className="gap-tag">Gap</span> <b>The site is on {inputs.reservation}.</b> Whose rules govern building on tribal land, and who decides, has not been read. The route, steps and schedule here are {inputs.town}&apos;s ordinary route under state law, shown for reference only: they may not apply. Ask the Narragansett Indian Tribe and the Bureau of Indian Affairs&apos; Eastern Regional Office.</p>
+    </aside>
+  );
+}
+
 /** What has been read for the town on screen. Shown wherever the site speaks as if it knew the town. */
 export function CoverageNote({ compact = false }: { compact?: boolean }) {
   const { inputs } = useProject();

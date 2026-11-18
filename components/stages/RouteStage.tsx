@@ -6,7 +6,7 @@ import { CONTACTS, shortName } from "@/lib/data/contacts";
 import { historyFor } from "@/lib/data/history";
 import { townInfo } from "@/lib/data/towns";
 import { hearingBody } from "@/lib/engine";
-import { CoverageNote } from "../Coverage";
+import { CoverageNote, TribalLandNote } from "../Coverage";
 import { PrecedentTable } from "../PrecedentTable";
 import { useProject } from "../ProjectProvider";
 import { RouteFlow } from "../RouteFlow";
@@ -37,6 +37,7 @@ export function RouteStage() {
           Each row says what you file, who decides it and how long they have. Hearings are held by the {shortName(CONTACTS[hearingBody(steps)]?.name ?? "Planning Board")}.
         </p>
       </Band>
+      <TribalLandNote />
       <CoverageNote compact />
       <section className="sec route-verdict" aria-label="The verdict, in short">
         <div className="rv-route"><span className="muted small">Route</span> <RouteMenu /></div>

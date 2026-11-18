@@ -155,6 +155,16 @@ function AffKey({ full = false }: { full?: boolean }) {
           </span>
         </li>
       ))}
+      {townRules(inputs.town).affordableLines?.(inputs).map((l) => (
+        <li key={l.short} className={`town-line${inputs.aff >= l.need ? " is-met" : ""}`} title={full ? undefined : l.what}>
+          <span className="aff-sw" aria-hidden="true">{inputs.aff >= l.need ? "✓" : "!"}</span>
+          <span>
+            <a href={SOURCES[l.src]?.url} target="_blank" rel="noopener noreferrer">{l.short}</a>
+            <span className="aff-route"> required by the town: {l.need} of {inputs.units}{inputs.aff >= l.need ? ", met" : `, ${l.need - inputs.aff} short`}</span>
+            {full && <span className="aff-what">{l.what}</span>}
+          </span>
+        </li>
+      ))}
     </ul>
   );
 }

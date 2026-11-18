@@ -23,6 +23,16 @@ python3 scripts/timelines/verify.py .sources         # dated events, including e
 
 `fetch_captions.py --list https://www.youtube.com/@pvdcpc` prints a channel's videos, to find the id of a meeting.
 
+```
+python3 scripts/towns/fetch_bodies.py                          # every town's boards from the state Open Meetings site -> lib/data/bodies.json
+python3 scripts/towns/fetch_bodies.py Westerly                 # one town; saved pages are reused, --refresh fetches again
+python3 scripts/towns/list_agenda_items.py Providence 2767 2023-01-01   # every case on a board's agendas -> lib/data/towns/<town>/agenda.json
+node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts         # the engine's output against the saved copy
+node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts --save  # after a change that was meant
+```
+
+The boards fetch asks the site's public-body search, which matches a phrase and returns at most 20, once per kind of board per town, and waits two seconds between requests. A full run of 39 towns takes over an hour; a second run reads the saved pages in `.sources/<town>/openmeetings/`.
+
 ## Adding a town
 
 1. Add its sources to `lib/data/sources.ts`, one per line, with the town's name in each label. Where a label names no town, add `town: "<Name>"`.

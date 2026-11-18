@@ -477,6 +477,7 @@
 .rf-card:focus-visible { outline: 2px solid var(--act); outline-offset: 2px; }
 .rf-card.is-focus { cursor: default; }
 .rf-use { margin-top: 4px; padding: 6px 14px; font-size: 13px; }
+
 /* The four marks of coverage (ARD D53): a glyph and a word for each state, never colour alone. */
 .marks { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 6px 0; padding: 0; }
 .mk { font-size: 12px; line-height: 1.6; padding: 0 8px; border-radius: 99px; border: 1px solid rgba(0, 0, 0, .12); white-space: nowrap; cursor: help; }

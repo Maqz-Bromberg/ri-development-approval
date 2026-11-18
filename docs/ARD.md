@@ -1,6 +1,6 @@
 # Architectural Review Document
 
-RI Building Plan Approval. Started 2026-11-14. Last updated 2026-11-18 (agenda layout corrections, sixth round).
+RI Building Plan Approval. Started 2026-11-14. Last updated 2026-11-18 (statewide coverage, chunks 0 to 3 begun).
 
 This is the living record of how the site is put together, why, and what is still unsettled. It is updated in the same change as any decision that alters the shape of the data, the engine, the sources or the checks. Plans for single features stay in `docs/plans/`. Reviews of finished work stay as dated HTML files in `docs/`. This document is the thread between them.
 
@@ -43,7 +43,6 @@ What follows from it, until it changes:
 
 ```
 lib/data/
-  trees.ts            state-law routes, with Cumberland's local detail still inside   (debt 1)
   state/trees.ts      the five routes under state law ("{town}" where a step names the town)
   contacts.ts         Cumberland's offices + state agencies; other towns' boards from bodies.json
   bodies.json         every town's land-use boards from the state Open Meetings site (fetch_bodies.py)
@@ -70,7 +69,7 @@ lib/data/
 scripts/
   sourcelib.py        where a source's file belongs, and how to find it by id
   timelines/          fetch, find and verify for Cumberland's monthly check
-  towns/              fetch_sources, fetch_captions, organize_sources, verify_quotes
+  towns/              fetch_sources, fetch_captions, organize_sources, verify_quotes,
                       fetch_bodies (boards, all 39 towns), list_agenda_items (a board's cases)
   engine/             snapshot.ts: the stored comparison (debt 3), run by hand with Node's type stripping
 ```
@@ -245,6 +244,7 @@ Kept in full in `lib/data/openQuestions.ts` and shown on `/dev`. The ones that b
 - **2026-11-18, fifth round (D51 to trial).** The route comparison is a trial, `routes`: the diff table, the old cards, or a focus row whose neighbours show their differences. "About these answers" runs the full width of the body above it (its text was held to 90 characters). The nearby alternatives stay a table.
 - **2026-11-18, sixth round (D52).** The focus row's hover flicker fixed with hover intent (moved, rested 260 ms, settled 500 ms) and an eased growth that starts 60 ms late; tested in Playwright with the pointer parked, swept and stepped across the row. Step marks on trial in all three route views. The focus row's cards then size by flex-grow alone from one zero basis: a folded card's fixed 120 px basis snapped on each change, so the easing looked as if it started over (measured every 30 ms in Playwright before and after). Then the focus row moved from hover to click: a click opens a card, and the open card has "Use this route".
 - **2026-11-18, statewide coverage plan (D53, open).** Plan written to extend coverage in chunks: all of Providence, foundations (debts 1, 3 and 20, a town template), level 2 everywhere, then edge-case towns starting with Westerly. Nothing built.
+- **2026-11-18, statewide coverage built in part (D53 decided, D54 to D60).** Four marks in place of one level, with the Towns map shaded by any of them. Every town's boards from the state Open Meetings site, as contacts, on the Records cards and in the Calendar's note. The steps split out of Cumberland's trees, checked by a stored comparison that matched every case before and after (debt 3 cleared, debt 1 half). Providence's review areas looked up on the City's zoning service and the state's I-195 layer, with their routes from the ordinance, and the City's own district beside the Atlas's at the address (debt 13 eased). Every City Plan Commission case since 2023 listed on the Records card. Westerly's use tables, overlays, listed parcels, multifamily density and inclusionary zoning; a town's required share on the affordable key, Charlestown's included. CRMC named as a decider where it regulates the wetlands (debt 19 cleared); a tribal-land gap on Route and Calendar (debt 18 eased). Hearing says whose hearings it shows when the project's town has none read. Debts 28 to 31 added. Hand fetches listed in `docs/manual-fetches.md`. providenceri.gov's firewall confirmed; Westerly's overlay count was inflated by two reserved and two repealed overlays.
 
 - **2026-11-16, agenda layout built (D42 to D44).** The five-stage shell, rail, tray, pins, save chip, disclaimer strip and footer, `/docs/sources`, the Gantt and month switch, the hearing band, the three landings and the gate, and alternatives as routes. Four trials declared. Old project panel, trail landing and workspaces deleted; debts 22 to 25 added; engine flowchart for findings notes the ids.
 

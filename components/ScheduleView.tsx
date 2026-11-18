@@ -18,6 +18,8 @@ import { CONTACTS } from "@/lib/data/contacts";
 import { condOK } from "@/lib/engine";
 import { KindChip } from "./KindChip";
 import { PinButton } from "./PinButton";
+import { HoverCard } from "./Popover";
+import { Icon } from "./Icon";
 import { useProject } from "./ProjectProvider";
 import { routeText } from "@/lib/engine";
 
@@ -78,6 +80,28 @@ function TickPanel({ p, t, docs, onClose, onPick }: { p: PlannedStep; t: Planned
   );
 }
 
+/** A step's title on the chart. Where recorded projects show how long the step really took, they are in a card on hover or tap. */
+function StepTitle({ p, tree }: { p: PlannedStep; tree: TreeId }) {
+  const spans = spansFor(tree, p.step.id);
+  if (!spans.length) return <b>{p.step.title}</b>;
+  return (
+    <HoverCard
+      className="tl-title-card"
+      label={`${p.step.title}: how long it has taken`}
+      width={320}
+      card={
+        <>
+          <b className="pop-title">{p.step.title}</b>
+          {p.plan.statutory && <p>Statutory: {p.plan.est} days.</p>}
+          {spans.map((sp) => <p key={sp.project}>{describeSpan(sp)}</p>)}
+        </>
+      }
+    >
+      <b>{p.step.title}</b><span className="tl-more" aria-hidden="true">{spans.length}</span>
+    </HoverCard>
+  );
+}
+
 function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedStep[]; tree: TreeId; selected: string | null; setSelected: (id: string | null) => void }) {
   const tickState = useTickState();
   const { progress } = useProject();
@@ -128,13 +152,8 @@ function Timeline({ plan: all, tree, selected, setSelected }: { plan: PlannedSte
               <div className={`tl-label${p.step.branch ? " branch" : ""}`}>
                 <span className="tl-n">{p.step.n}</span>
                 <span className="tl-t">
-                  <b>{p.step.title}</b>
+                  <StepTitle p={p} tree={tree} />
                   <span className="muted small">{fmtDate(p.start, { month: "short", day: "numeric" })} – {fmtDate(p.end, { month: "short", day: "numeric", year: "numeric" })}{pr.done > 0 ? ` · ${pr.done} of ${pr.total} dealt with` : ""}</span>
-                  {spansFor(tree, p.step.id).map((sp) => (
-                    <span key={sp.project} className="tl-actual small">
-                      {p.plan.statutory ? `Statutory: ${p.plan.est} days. ` : ""}{describeSpan(sp)}
-                    </span>
-                  ))}
                 </span>
               </div>
               <div className="tl-track">
@@ -191,35 +210,44 @@ function Calendar({ plan }: { plan: PlannedStep[] }) {
   while (m <= max) { months.push(m); m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 1)); }
 
   return (
-    <div className="cal-grid">
+    <div className="cal-rows" role="grid" aria-label="Months, one row each, 31 days across">
+      <div className="cal-row cal-head" role="row" aria-hidden="true">
+        <span className="cal-mh" />
+        {Array.from({ length: 31 }).map((_, i) => <span key={i} className="cal-dn">{i + 1}</span>)}
+      </div>
       {months.map((mm) => {
-        const first = mm.getUTCDay();
         const daysIn = new Date(Date.UTC(mm.getUTCFullYear(), mm.getUTCMonth() + 1, 0)).getUTCDate();
         const monthKey = isoDay(mm).slice(0, 7);
-        const events = Array.from(byDay.entries()).filter(([k]) => k.startsWith(monthKey));
+        const count = Array.from(byDay.entries()).filter(([k]) => k.startsWith(monthKey)).reduce((a, [, v]) => a + v.length, 0);
         const openHere = day && day.startsWith(monthKey) ? byDay.get(day) ?? [] : [];
         return (
-          <section key={monthKey} className={`cal-month${events.length ? "" : " quiet"}${openHere.length ? " has-open" : ""}`} aria-label={fmtDate(mm, { month: "long", year: "numeric" })}>
-            <h3>{fmtDate(mm, { month: "long", year: "numeric" })} <span className="muted small">{events.reduce((a, [, v]) => a + v.length, 0) || ""}</span></h3>
-            <div className="cal-days" role="grid">
-              {WEEKDAYS.map((w) => <span key={w} className="cal-wd">{w[0]}</span>)}
-              {Array.from({ length: first }).map((_, i) => <span key={`b${i}`} />)}
-              {Array.from({ length: daysIn }).map((_, i) => {
+          <Fragment key={monthKey}>
+            <div className={`cal-row${count ? "" : " quiet"}${openHere.length ? " has-open" : ""}`} role="row" aria-label={fmtDate(mm, { month: "long", year: "numeric" })}>
+              <span className="cal-mh" role="rowheader">
+                <b>{fmtDate(mm, { month: "short" })}</b> <span>{mm.getUTCFullYear()}</span>
+                {count > 0 && <small>{count} {count === 1 ? "moment" : "moments"}</small>}
+              </span>
+              {Array.from({ length: 31 }).map((_, i) => {
+                if (i >= daysIn) return <span key={i} className="cal-day none" aria-hidden="true" />;
                 const date = addDays(mm, i);
                 const k = isoDay(date);
+                const wd = date.getUTCDay();
+                const we = wd === 0 || wd === 6 ? " we" : "";
                 const ev = byDay.get(k) ?? [];
-                if (!ev.length) return <span key={k} className="cal-day">{i + 1}</span>;
-                const allDone = ev.every(({ p, t }) => { const s = tickState(p, t); return s.total === 0 || s.complete; });
+                if (!ev.length) return <span key={k} className={`cal-day${we}`} role="gridcell" title={fmtDate(date, { weekday: "short", month: "short", day: "numeric" })}><i>{WEEKDAYS[wd][0]}</i></span>;
+                const allDone = ev.every(({ p, t }) => { const st = tickState(p, t); return st.total === 0 || st.complete; });
                 return (
                   <button
                     key={k}
                     type="button"
-                    className={`cal-day has-ev${day === k ? " is-open" : ""}${allDone ? " done" : ""}`}
+                    role="gridcell"
+                    className={`cal-day has-ev${we}${day === k ? " is-open" : ""}${allDone ? " done" : ""}`}
                     aria-expanded={day === k}
                     aria-label={`${fmtDate(date)}: ${ev.map(({ t }) => t.label).join("; ")}`}
+                    title={`${fmtDate(date, { weekday: "short", month: "short", day: "numeric" })}: ${ev.map(({ t }) => t.label).join("; ")}`}
                     onClick={() => setDay(day === k ? null : k)}
                   >
-                    {i + 1}
+                    <i>{WEEKDAYS[wd][0]}</i>
                     <span className="dots">{ev.slice(0, 3).map(({ t }) => <span key={t.id} className={`dot k-${t.kind}`} />)}</span>
                   </button>
                 );
@@ -232,7 +260,7 @@ function Calendar({ plan }: { plan: PlannedStep[] }) {
                 ))}
               </div>
             )}
-          </section>
+          </Fragment>
         );
       })}
     </div>
@@ -266,39 +294,34 @@ export function ScheduleView() {
   // Construction is long enough to squeeze the approvals into a corner, so the default view stops at the recorded approval.
   const later = approvalEnd ? plan.filter((p) => !p.step.branch && p.start >= approvalEnd) : [];
   const early = plan.filter((p) => !later.includes(p));
+  const key = (
+    <ul className="tick-legend" aria-label="Key to the chart">
+      {(Object.keys(KIND_LABEL) as (keyof typeof KIND_LABEL)[]).map((k) => (
+        <li key={k}><span className={`tick-key k-${k}`} />{KIND_LABEL[k]}</li>
+      ))}
+      {view === "timeline" && <><li><span className="tl-bar-key statutory" />Statutory review clock</li><li><span className="tl-bar-key" />Estimate</li><li><span className="today-key" />Today</li></>}
+      <li><DemoTag>Demo: durations other than board meetings are estimates</DemoTag></li>
+    </ul>
+  );
 
   return (
     <>
-      <div className="sched-controls panel">
-        <div className="sched-stats">
-          <div className="stat"><b>{approvalEnd ? fmtDate(approvalEnd, { month: "short", year: "numeric" }) : "—"}</b><span>approvals recorded</span></div>
-          <div className="stat"><b>{permit ? fmtDate(permit, { month: "short", year: "numeric" }) : "—"}</b><span>building permit</span></div>
-          <div className="stat"><b>{moveIn ? fmtDate(moveIn, { month: "short", year: "numeric" }) : "—"}</b><span>move-in</span></div>
-          <div className="stat"><b>{Math.round(totalDays / 30.4)} months</b><span>start to finish</span></div>
-        </div>
-        <div className="sched-actions">
-          <div className="seg" role="group" aria-label="View">
-            <button type="button" aria-pressed={view === "timeline"} onClick={() => setView("timeline")}>Gantt</button>
-            <button type="button" aria-pressed={view === "calendar"} onClick={() => setView("calendar")}>Month</button>
-          </div>
-        </div>
+      <div className="sched-controls">
+        <ol className="sched-flow" aria-label="From your start date to move-in">
+          <li className="sf-start"><span className="sf-ic"><Icon name="flag" size={18} /></span><span className="sf-t">Start</span><b>{fmtDate(plan[0].start, { month: "short", day: "numeric", year: "numeric" })}</b></li>
+          <li><span className="sf-ic"><Icon name="stamp" size={18} /></span><span className="sf-t">approvals recorded</span><b>{approvalEnd ? fmtDate(approvalEnd, { month: "short", year: "numeric" }) : "—"}</b></li>
+          <li><span className="sf-ic"><Icon name="permit" size={18} /></span><span className="sf-t">building permit</span><b>{permit ? fmtDate(permit, { month: "short", year: "numeric" }) : "—"}</b></li>
+          <li><span className="sf-ic"><Icon name="key" size={18} /></span><span className="sf-t">move-in</span><b>{moveIn ? fmtDate(moveIn, { month: "short", year: "numeric" }) : "—"}</b></li>
+        </ol>
+        <p className="sf-total"><span aria-hidden="true" className="sf-brace" /><span><b>{Math.round(totalDays / 30.4)} months</b> start to finish</span></p>
       </div>
-      <ul className="legend tick-legend" aria-label="Tick types">
-        {(Object.keys(KIND_LABEL) as (keyof typeof KIND_LABEL)[]).map((k) => (
-          <li key={k}><span className={`tick-key k-${k}`} />{KIND_LABEL[k]}</li>
-        ))}
-        <li><span className="tl-bar-key statutory" />Statutory review clock</li>
-        <li><span className="tl-bar-key" />Estimate</li>
-        <li><span className="today-key" />Today</li>
-        <li><DemoTag>Demo: durations other than board meetings are estimates</DemoTag></li>
-      </ul>
       <p className="muted small route-note">
-        Route: <b>{routeText(tree).name}</b>. Statutory clocks run to their maximums, and the other durations are estimates.
+        Route: <b>{routeText(tree).name}</b>. Statutory clocks run to their maximums, and the other durations are estimates.{" "}
         {cal ? (
           <>
             {cal.town === "Cumberland" ? "Planning Board and Technical Review Committee" : "City Plan Commission"} dates come from {cal.town}'s published {cal.year} schedule
             (<a href={SOURCES[cal.src].url} target="_blank" rel="noreferrer">meeting schedule and deadlines</a>, read {cal.read}).
-            Dates after it are projected from the board's usual pattern ({cal.pattern.note}) and marked <b>est.</b>
+            Dates after it are projected from the board's usual pattern ({cal.pattern.note}) and marked <b>est.</b>{" "}
             {cal.town === "Providence" && " In 2026 several meetings were held on other days than the schedule gave, so confirm each date against the agenda."}
           </>
         ) : (
@@ -307,10 +330,13 @@ export function ScheduleView() {
         Confirm every date with the Planning Department before relying on it.
         {anyEst && " Some hearings in this plan fall beyond the published calendar."}
       </p>
-      {view === "timeline"
-        ? (
+      <div className="zoom-row">
+        <div className="seg" role="group" aria-label="View">
+          <button type="button" aria-pressed={view === "timeline"} onClick={() => setView("timeline")}>Gantt</button>
+          <button type="button" aria-pressed={view === "calendar"} onClick={() => setView("calendar")}>Month</button>
+        </div>
+        {view === "timeline" && (
           <>
-            <div className="zoom-row">
               <div className="seg small-seg" role="group" aria-label="Timeline range">
                 <button type="button" aria-pressed={zoom === "approvals"} onClick={() => setZoom("approvals")}>Approvals</button>
                 <button type="button" aria-pressed={zoom === "all"} onClick={() => setZoom("all")}>Through move-in</button>
@@ -318,11 +344,15 @@ export function ScheduleView() {
               {zoom === "approvals" && later.length > 0 && (
                 <span className="muted small">After approval: {later.map((p) => p.step.title.toLowerCase()).join(", then ")}. <button type="button" className="link-btn" onClick={() => setZoom("all")}>Show them</button></span>
               )}
-            </div>
-            <Timeline tree={tree} plan={zoom === "approvals" && early.length ? early : plan} selected={selected} setSelected={setSelected} />
           </>
-        )
-        : <Calendar plan={plan} />}
+        )}
+      </div>
+      <div className="chart-box">
+        {key}
+        {view === "timeline"
+          ? <Timeline tree={tree} plan={zoom === "approvals" && early.length ? early : plan} selected={selected} setSelected={setSelected} />
+          : <Calendar plan={plan} />}
+      </div>
     </>
   );
 }

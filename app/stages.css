@@ -99,10 +99,13 @@
 .src-group { margin-top: 26px; }
 .src-group h2 { font-size: 19px; } .src-group h2 small { color: var(--mut); font-family: var(--ff-body); }
 .src-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
-.src-list > li { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font-size: 14px; }
-.src-list details { flex-basis: 100%; font-size: 12.5px; color: var(--mut); padding-left: 4px; }
-.src-list details ul { margin: 4px 0; padding-left: 18px; }
+.src-list > li { position: relative; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font-size: 14px; }
+.src-list > li > a { border-radius: 4px; transition: background-color .12s, box-shadow .12s; }
+.src-list details { margin-left: auto; font-size: 12.5px; color: var(--mut); }
+.src-list summary { cursor: pointer; white-space: nowrap; }
+.src-list details[open] > ul { position: absolute; right: 0; top: 100%; z-index: 5; margin: 2px 0 0; padding: 8px 12px 8px 28px; width: min(460px, 100%); background: var(--bg, #fff); border: 1px solid var(--line, #D5DBE1); border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.12); }
 .src-list details li { display: list-item; }
+.src-list > li:has(details:hover) > a, .src-list > li:has(details[open]) > a, .src-list > li:has(summary:focus-visible) > a { background: var(--act-s); box-shadow: 0 0 0 3px var(--act-s); }
 .ps-fact { color: inherit; text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 3px; }
 .ps-fact:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .rstep { scroll-margin-top: 52px; }
@@ -128,6 +131,52 @@
 .site-where .lk-results .lookup-choose { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 4px 16px; }
 .site-where .lk-results .lookup-choose legend { grid-column: 1 / -1; }
 .lk-dismiss { margin-top: 6px; }
+
+/* Calendar: the dates as a flow of titles, with the span under them */
+.sched-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; margin: 0 0 14px; }
+.sched-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; counter-reset: none; }
+.sched-flow li { position: relative; display: grid; grid-template-columns: 36px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 10px; align-items: center; padding: 10px 30px 10px 0; }
+.sched-flow li:not(:last-child)::after { content: ""; position: absolute; right: 8px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-top: 2.5px solid var(--wink); border-right: 2.5px solid var(--wink); transform: rotate(45deg); opacity: .55; }
+.sf-ic { grid-row: 1 / 3; width: 36px; height: 36px; border-radius: 50%; background: #fff; border: 2px solid var(--wink); color: var(--wink); display: grid; place-items: center; }
+.sf-start .sf-ic { border-style: dashed; }
+.sf-t { font-family: var(--ff-head); font-weight: 700; font-size: 15px; line-height: 1.15; color: var(--ink); }
+.sched-flow b { font-weight: 400; font-size: 13.5px; color: var(--mut); font-variant-numeric: tabular-nums; }
+.sf-total { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 13.5px; color: var(--mut); }
+.sf-total b { color: var(--ink); }
+.sf-brace { flex: 1; max-width: 100%; height: 8px; border: 2px solid var(--rule2); border-top: 0; border-radius: 0 0 6px 6px; order: 0; }
+.sf-total > span:last-child { white-space: nowrap; }
+@media (max-width: 899px) { .sched-flow { grid-template-columns: 1fr 1fr; } .sched-flow li:nth-child(2)::after { display: none; } }
+
+/* The chart and its key, in one card: the key is the chart's first line */
+.zoom-row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 4px 0 10px; }
+.chart-box { background: var(--surface); border: 1px solid var(--rule); border-radius: 18px; padding: 10px 16px 16px; }
+.chart-box .tl-scroll { border: 0; border-radius: 0; padding: 0; background: none; }
+.tick-legend { list-style: none; margin: 0 0 8px; padding: 0 0 8px; display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; font-size: 12.5px; color: var(--mut); border-bottom: 1px solid var(--rule); }
+.tick-legend li { display: inline-flex; gap: 6px; align-items: center; }
+.today-key { width: 2px; height: 12px; background: var(--fail); display: inline-block; }
+.tl-title-card { border: 0; background: none; padding: 0; text-align: left; cursor: help; display: inline-flex; gap: 6px; align-items: baseline; font: inherit; color: inherit; }
+.tl-title-card b { text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 3px; }
+.tl-more { font-size: 10.5px; font-weight: 700; color: var(--act); background: var(--act-s); border-radius: 8px; padding: 0 5px; line-height: 1.5; }
+
+/* Month view: the months stacked, one row each, 31 days across, the month at the left */
+.cal-rows { display: grid; gap: 3px; overflow-x: auto; }
+.cal-row { display: grid; grid-template-columns: 92px repeat(31, minmax(18px, 1fr)); gap: 2px; align-items: stretch; min-width: 720px; }
+.cal-row.quiet { opacity: .62; }
+.cal-head { position: sticky; top: 0; background: var(--surface); z-index: 1; }
+.cal-dn { text-align: center; font-family: var(--ff-data); font-size: 10px; color: var(--mut); }
+.cal-mh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 5px; padding-right: 6px; font-size: 13px; line-height: 1.2; }
+.cal-mh b { font-family: var(--ff-head); font-size: 14px; }
+.cal-mh span { color: var(--mut); font-size: 12px; }
+.cal-mh small { flex-basis: 100%; color: var(--act); font-size: 11px; }
+.cal-rows .cal-day { position: relative; min-height: 34px; padding: 2px 0 0; border-radius: 5px; background: #F4F6F8; text-align: center; font-size: 10px; color: #9AA5B1; }
+.cal-rows .cal-day i { font-style: normal; }
+.cal-rows .cal-day.we { background: #ECEFF3; }
+.cal-rows .cal-day.none { background: repeating-linear-gradient(135deg, transparent 0 3px, #EEF1F4 3px 5px); }
+.cal-rows button.cal-day { border: 1.5px solid var(--accent); background: var(--accent-soft); color: var(--ink); cursor: pointer; font: inherit; font-size: 10px; font-weight: 700; padding: 2px 0 0; }
+.cal-rows button.cal-day.done { border-color: var(--stamp); background: #EAF5EE; }
+.cal-rows button.cal-day.is-open { background: var(--accent); color: #fff; }
+.cal-rows .cal-day .dot { width: 5px; height: 5px; background: var(--kc); margin: 0; }
+.cal-rows .cal-drop { margin: 6px 0 10px; }
 
 /* One outline per card: the form's groups inside a step's panel are divided by a rule, not boxed again */
 .site-step .fgroup { border: 0; border-top: 1px solid var(--rule); border-radius: 0; padding: 14px 0 4px; }
@@ -215,6 +264,15 @@
 .lk-sw.inline { display: inline-block; width: 14px; height: 10px; vertical-align: -1px; margin: 0 3px 0 6px; }
 @media (max-width: 760px) { .rec-top { grid-template-columns: 1fr; } .rdx-items li { grid-template-columns: 1fr; } }
 .alt-routes td .btn { white-space: nowrap; padding: 6px 14px; }
+
+/* ---------- 2026-11-18, second round (D48 to D50) ---------- */
+
+/* Gantt: the chart fits the stage column at wide widths; an opened tick's panel is as wide as the visible chart and stays in view
+   while the chart scrolls sideways. */
+.tl-grid { grid-template-columns: 260px minmax(620px, 1fr); }
+.tl-scroll { container-type: inline-size; }
+.tl-drop { position: sticky; left: 0; width: 100cqw; box-sizing: border-box; justify-self: start; }
+.tl-drop .tick-panel { max-width: none; }
 
 /* Lookup: results with no parcel outline take the full width (they were squeezed into the outline's 64 px column) */
 .lookup-result.no-shape { grid-template-columns: minmax(0, 1fr); }
@@ -306,6 +364,20 @@
 .alt-diff tbody th { min-width: 210px; width: 24%; }
 .alt-diff tbody th small { max-width: none; }
 .alt-diff thead .df-groups th.g-result { border-left: 10px solid var(--surface); }
+
+/* The schedule's four steps: each arrow sits in the middle of the space between one step and the next */
+.sched-flow { grid-template-columns: repeat(3, minmax(0, 1fr)) auto; }
+.sched-flow li { grid-template-columns: 36px auto minmax(28px, 1fr); padding: 10px 0; }
+.sched-flow li:last-child { grid-template-columns: 36px auto; }
+.sched-flow .sf-ic { grid-column: 1; }
+.sched-flow .sf-t, .sched-flow li > b { grid-column: 2; }
+.sched-flow li:not(:last-child)::after {
+  position: static; grid-column: 3; grid-row: 1 / 3; justify-self: center; align-self: center;
+  width: 11px; height: 11px; margin: 0 0 0 -6px; right: auto; top: auto;
+}
+@media (max-width: 899px) { .sched-flow { grid-template-columns: 1fr 1fr; } .sched-flow li:nth-child(2) { grid-template-columns: 36px auto; } }
+/* Room at the chart's right end for a tick on the last day (it is centred on its date, so half of it sat past the end) */
+.tl-grid { padding-right: 14px; }
 
 /* The five routes as a diff against the one you are on (ARD D51) */
 .route-diff tbody th { min-width: 220px; width: 22%; }

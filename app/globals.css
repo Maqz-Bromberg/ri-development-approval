@@ -779,38 +779,42 @@ textarea { resize: vertical; line-height: 1.45; }
 .zm-parcelkey .zm-swatch:not(.site) { border-radius: 50%; }
 .zm-keycol { min-width: 0; }
 .zm-legend.zm-kinds, .zm-keyed .zm-legend { flex-direction: column; flex-wrap: nowrap; align-items: flex-start; gap: 6px; }
-/* Where it sits depends on the width (ARD D40): columns below the map; a panel down the right of the map from 1200 px,
-   with a tab on its left edge; in the left margin from 1900 px, as the project panel is (D22). */
+/* Where it sits depends on the width (ARD D40, amended 2026-11-18): columns below the map up to 1200 px; from there a panel on the
+   map's right edge, centred top to bottom, that folds into a tab at its middle and opens to the left. The statewide key is the
+   same panel at every width. */
 .zm-keyed .zm-keycols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 4px 28px; align-items: start; }
 @media (max-width: 760px) { .zm-keyed .zm-keycols { grid-template-columns: 1fr; } }
-.zm-tab { display: none; }
-.zm-overlay { display: none; position: absolute; z-index: 500; background: color-mix(in srgb, var(--surface) 92%, transparent); border: 1px solid var(--rule); border-radius: 10px; padding: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, .15); font-size: 12.5px; }
-.zm-overlay .zm-legend { font-size: 12.5px; }
+.zm-overlay { display: none; position: absolute; z-index: 500; right: 0; top: 52px; bottom: 28px; align-items: center; pointer-events: none; font-size: 12.5px; }
+.zm-overlay.is-state { display: flex; }
+.zm-overlay > * { pointer-events: auto; }
+.zm-ovhead {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; align-self: center; flex: none;
+  border: 1px solid var(--rule); border-right: 0; border-radius: 9px 0 0 9px; background: var(--surface); box-shadow: -2px 2px 8px rgba(0, 0, 0, .12);
+  padding: 10px 5px; font: inherit; font-weight: 800; font-size: 12px; color: var(--muted); cursor: pointer;
+}
+.zm-ovhead:hover, .zm-ovhead:focus-visible { color: var(--ink); }
+.zm-ovlabel { writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: .04em; }
+.zm-ovchev { font-size: 11px; line-height: 1; }
+.zm-ovbody {
+  display: grid; gap: 10px; align-content: start; width: 250px; max-height: 100%; overflow: auto; box-sizing: border-box;
+  background: color-mix(in srgb, var(--surface) 95%, transparent); border: 1px solid var(--rule); border-right: 0; border-radius: 10px 0 0 10px;
+  padding: 8px 10px; box-shadow: -2px 2px 10px rgba(0, 0, 0, .15);
+}
+.zm-overlay:not(.is-folded) .zm-ovhead { border-radius: 9px 0 0 9px; margin-right: -1px; position: relative; z-index: 1; }
+.zm-overlay .zm-legend { font-size: 12.5px; gap: 4px; }
 .zm-overlay .zm-keyhead { margin: 0 0 4px; font-size: 11px; }
+.zm-overlay.is-state .zm-ovbody { width: auto; max-width: 240px; }
 @media (min-width: 1200px) {
   .zm-below-key { display: none !important; }
-  .zm-overlay { display: flex; flex-direction: column; right: 10px; top: 10px; width: 250px; max-height: calc(100% - 44px); }
-  .zm-ovhead { display: flex; justify-content: flex-end; }
-  .zm-ovbody { display: grid; gap: 10px; margin-top: 8px; overflow: auto; min-height: 0; }
-  .zm-overlay .zm-legend { gap: 4px; }
-  .zm-tab { display: block; position: absolute; left: -21px; top: 12px; width: 21px; height: 44px; padding: 0; border: 1px solid var(--rule); border-right: 0; border-radius: 8px 0 0 8px; background: var(--surface); color: var(--ink); font: inherit; font-size: 18px; font-weight: 800; line-height: 1; cursor: pointer; box-shadow: -2px 2px 6px rgba(0, 0, 0, .12); }
-  .zm-tab:hover { background: var(--bg); }
+  .zm-overlay { display: flex; }
 }
-@media (min-width: 1900px) {
-  .zm-overlay { right: auto; left: -302px; top: 0; width: 270px; max-height: none; background: var(--surface); }
-  .zm-ovhead, .zm-tab { display: none; }
-  .zm-ovbody { margin-top: 0; }
-}
-/* The map's own buttons, in the map's corner or at the top of the key over it */
+/* The map's own buttons, top right; the key's panel starts below them */
 .zm-mapctl { position: absolute; top: 10px; right: 10px; z-index: 500; display: flex; gap: 8px; align-items: flex-start; }
-.zm-ovctl { display: inline-flex; gap: 8px; align-items: center; }
 .zm-zoom { display: inline-flex; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--surface); }
 .zm-zoom button, .zm-icons button { font: inherit; font-weight: 800; color: var(--ink); background: var(--surface); border: 0; padding: 3px 11px; cursor: pointer; }
 .zm-zoom button + button { border-left: 1px solid var(--rule); }
 .zm-zoom button:hover { background: var(--bg); }
-.zm-mapctl .seg, .zm-ovhead .seg { background: var(--surface); }
-@media (min-width: 1200px) and (max-width: 1899.98px) { .zm-mapctl { display: none; } }
-.zm.zm-statewide .zm-mapctl { display: flex !important; }
+.zm-mapctl .seg { background: var(--surface); }
 /* The parcel key's counts align on the right of each entry */
 .zm-parcelkey { display: grid; grid-template-columns: 1fr; gap: 4px 14px; align-items: start; }
 .zm-parcelkey li { min-width: 0; }

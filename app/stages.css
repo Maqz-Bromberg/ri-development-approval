@@ -90,7 +90,7 @@
 .three { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 18px 0; }
 .three .panel h2 { display: flex; gap: 8px; align-items: center; font-size: 17px; margin-bottom: 6px; }
 .landing-map .lm-map { position: relative; }
-.lm-over { position: absolute; left: 16px; bottom: 28px; z-index: 500; max-width: 420px; }
+.lm-over { position: absolute; left: 16px; bottom: 52px; z-index: 500; max-width: 420px; }
 .lm-over h1 { font-size: 20px; margin-bottom: 8px; }
 .lm-side { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 14px; align-items: start; }
 @media (max-width: 899px) { .lv-hero { grid-template-columns: 1fr; } .lm-over { position: static; max-width: none; } }
@@ -107,6 +107,18 @@
 .ps-fact:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .rstep { scroll-margin-top: 52px; }
 
+
+/* Site: lookup results by the address (trial "lookup"). Side: in the municipality's column until the facts are used. Below: straight under both, above the map. */
+/* Lookup results: a full-width card under the address and the municipality, above the map (ARD D46) */
+.site-where .lk-results { grid-column: 1 / -1; background: #F7F9FB; border: 1px solid var(--rule); border-radius: 12px; padding: 12px 16px; }
+.site-where .lk-results .lookup-result { margin-top: 0; padding-top: 0; border-top: 0; }
+.site-where .lk-results .lookup-note:first-child { margin-top: 0; }
+.site-where .lk-results .actions { flex-wrap: wrap; }
+.site-where .lk-results .lookup-result .metrics { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+.site-where .lk-results .lookup-result .lk-suggest { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 16px; }
+.site-where .lk-results .lookup-choose { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 4px 16px; }
+.site-where .lk-results .lookup-choose legend { grid-column: 1 / -1; }
+.lk-dismiss { margin-top: 6px; }
 
 /* ---------- Reference pages: search, the town map, cards ---------- */
 .ix-search { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--rule2); border-radius: 10px; padding: 0 12px; color: var(--mut); }
@@ -190,9 +202,64 @@
 .lk-sw.inline { display: inline-block; width: 14px; height: 10px; vertical-align: -1px; margin: 0 3px 0 6px; }
 @media (max-width: 760px) { .rec-top { grid-template-columns: 1fr; } .rdx-items li { grid-template-columns: 1fr; } }
 .alt-routes td .btn { white-space: nowrap; padding: 6px 14px; }
+
+/* Lookup: results with no parcel outline take the full width (they were squeezed into the outline's 64 px column) */
+.lookup-result.no-shape { grid-template-columns: minmax(0, 1fr); }
+/* Waiting: three dots, then each service as it answers, then after 5 seconds what is still out */
+.lk-wait-note { display: flex; align-items: center; color: var(--ink); }
+.lk-dots { display: inline-flex; gap: 3px; margin-right: 8px; flex: none; }
+.lk-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: lk-dot 1.2s infinite ease-in-out; }
+.lk-dots i:nth-child(2) { animation-delay: .15s; } .lk-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes lk-dot { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+.lk-services { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.lk-services li { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; border: 1px solid var(--rule); border-radius: 999px; padding: 2px 10px 2px 6px; background: var(--surface); color: var(--muted); }
+.lk-sv-mark { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--rule); border-top-color: var(--accent); animation: lk-spin .9s linear infinite; box-sizing: border-box; }
+.lk-services .is-ok { color: var(--ink); }
+.lk-services .is-ok .lk-sv-mark { animation: none; border-color: var(--ok); background: var(--ok); }
+.lk-services .is-fail { color: var(--bad); text-decoration: line-through; }
+.lk-services .is-fail .lk-sv-mark { animation: none; border-color: var(--bad); }
+@keyframes lk-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .lk-dots i, .lk-sv-mark, .zm-status .lk-dots i { animation: none; opacity: .7; } }
+.lk-unreached .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.lk-unreached p { margin: 0 0 6px; }
+.lk-site { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* The map's statuses: one stack, bottom left */
+.zm-statuses { position: absolute; left: 12px; bottom: 12px; z-index: 500; display: grid; gap: 6px; justify-items: start; max-width: min(520px, calc(100% - 300px)); pointer-events: none; }
+.zm-statuses:empty { display: none; }
+.zm-statuses .zm-status { position: static; max-width: none; display: flex; align-items: center; flex-wrap: wrap; gap: 4px; pointer-events: auto; box-shadow: 0 2px 8px rgba(0, 0, 0, .12); }
+.zm-status.is-fail { border-color: color-mix(in srgb, var(--bad) 45%, var(--rule)); color: var(--bad); }
+.zm-status.is-fail .link-btn { color: var(--accent); }
+@media (max-width: 1199px) { .zm-statuses { max-width: calc(100% - 24px); } }
+
+/* A check beside a fact the map layers found too; its card says how. The doc mark beside the site lists what was applied. */
+.fact-mark { flex: none; width: 18px; height: 18px; border-radius: 50%; display: inline-grid; place-items: center; padding: 0; cursor: help; color: #fff; background: var(--ok); border: 0; }
+.fact-mark .i { stroke-width: 2.8; }
+.fact-mark:hover, .fact-mark[aria-expanded="true"] { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 25%, transparent); }
+.fact-mark.is-key { vertical-align: -4px; cursor: default; margin-right: 2px; }
+.fv-legend { margin: 0; }
+.applied-doc { flex: none; width: 24px; height: 24px; border-radius: 6px; display: inline-grid; place-items: center; padding: 0; cursor: help; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 35%, #fff); }
+.applied-doc:hover, .applied-doc[aria-expanded="true"] { background: var(--accent); color: #fff; }
+.applied-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 6px 0 8px; }
+.applied-table th, .applied-table td { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.applied-table th { font-weight: 700; white-space: nowrap; }
+.applied-table tr.is-gap td:nth-child(2) { color: var(--muted); }
+.ap-ok { color: var(--ok); display: inline-flex; gap: 3px; align-items: center; white-space: nowrap; }
+.ap-ok .i { stroke-width: 2.6; }
+.ap-chg { color: var(--warn); }
+
 /* The info (i): a cursive i, a little larger in its circle */
 .info-btn .info-glyph { width: 12px; height: 12px; }
 
 /* Save chip on the example: nothing to save, shown settled rather than pending */
 .save.is-example .badge { background: var(--mut); }
 .save.is-example .st b { color: var(--ink); }
+/* A tick's (i) and its check sit together at the end of the row */
+.ftick-row { justify-content: flex-start; }
+.ftick-row > .cb { flex: 1 1 auto; min-width: 0; }
+.ftick-row .fact-mark { margin-top: 3px; }
+/* Long links in the results card wrap rather than run out of it */
+.site-where .lk-results .link-btn, .site-where .lk-results .lk-how { white-space: normal; text-align: left; }
+.alt-diff tbody th { min-width: 210px; width: 24%; }
+.alt-diff tbody th small { max-width: none; }
+.alt-diff thead .df-groups th.g-result { border-left: 10px solid var(--surface); }

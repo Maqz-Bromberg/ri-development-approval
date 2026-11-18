@@ -1,15 +1,17 @@
 "use client";
 
-import { useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { housingTypeLabel } from "@/lib/data/atlas";
 import { townRules } from "@/lib/data/towns/overlay";
 import { USE_LABEL, useTreatment as treatmentOf } from "@/lib/engine";
-import { ZONE_KIND, ZONE_KIND_ORDER, zoneKind, type ZoneKind } from "@/lib/map";
+import { ZONE_KIND, ZONE_KIND_ORDER, districtShapes, inRings, zoneKind, type ZoneKind } from "@/lib/map";
 import type { AtlasDistrict } from "@/lib/types";
 import { TreatChip, districtMetrics } from "./AtlasBits";
+import { FactMark } from "./FactCheck";
 import { Info } from "./Info";
 import { useProject } from "./ProjectProvider";
 import { useAtlas } from "./useAtlas";
+import { useLookedUp } from "./useLookedUp";
 
 /*
  * The zoning district, chosen by typing (a filtered list) or by browsing the town's districts by kind, each kind
@@ -120,11 +122,35 @@ export function ZonePicker({ onMap }: { onMap?: () => void }) {
     else if (e.key === "Escape") { setListOpen(false); }
   };
 
+  // With the site placed but no district chosen (a town picked after a point, or a lookup on a boundary that was closed),
+  // the district is selected from the Atlas outline the point falls in, where exactly one base district holds it.
+  const tried = useRef("");
+  const [fromOutline, setFromOutline] = useState<string | null>(null);
+  const look = useLookedUp();
+  useEffect(() => {
+    if (inputs.zone !== "other" || inputs.lat == null || inputs.lon == null) return;
+    const key = `${inputs.town}|${inputs.lat}|${inputs.lon}`;
+    if (tried.current === key) return;
+    tried.current = key;
+    const at: [number, number] = [inputs.lat, inputs.lon];
+    districtShapes(inputs.town).then((shapes) => {
+      const hits = Array.from(new Set(shapes.filter((d) => !d.overlay && inRings(at, d.rings)).map((d) => d.abbr)));
+      if (hits.length === 1) { setInput("zone", hits[0]); setFromOutline(hits[0]); }
+    }).catch(() => { /* the picker stays open, to choose by hand */ });
+  }, [inputs.zone, inputs.lat, inputs.lon, inputs.town, setInput]);
+
   const chosen = districts.find((d) => d.abbrvname === inputs.zone);
   const head = (
     <div className="zp-label">
       <span className="legend-like" id="zp-h">Zoning district</span>
       <Info id="zone" />
+      {(() => {
+        const f = look.status === "ready" ? look.data.facts : null;
+        const said = f?.zone && f.zone === inputs.zone
+          ? `The Zoning Atlas puts the site in ${f.zone}${f.zoneName ? `, ${f.zoneName}` : ""}.`
+          : fromOutline && fromOutline === inputs.zone ? `The site's point lies inside ${inputs.zone}'s outline on the Zoning Atlas, so it was chosen for you.` : null;
+        return said ? <FactMark id="zone" label="Zoning district" said={said} /> : null;
+      })()}
     </div>
   );
 

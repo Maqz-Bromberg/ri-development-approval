@@ -8,6 +8,8 @@ import { SOURCES } from "@/lib/data/sources";
 import type { CommercialUse, CommercialWork, ProjectInputs, ProjectKind } from "@/lib/types";
 import { KIND_LABEL, USE_LABEL, fmt } from "@/lib/engine";
 import { DemoTag } from "./Demo";
+import { FactMark } from "./FactCheck";
+import { Icon } from "./Icon";
 import { Info } from "./Info";
 import { useLookedUp } from "./useLookedUp";
 import { HoverCard } from "./Popover";
@@ -22,32 +24,51 @@ import { useProject } from "./ProjectProvider";
 
 type Bool = "water" | "sewer" | "wet" | "dot" | "transit" | "rezone" | "conservation";
 
-function Label({ htmlFor, help, children }: { htmlFor: string; help: string; children: React.ReactNode }) {
+function Label({ htmlFor, help, children, mark }: { htmlFor: string; help: string; children: React.ReactNode; mark?: React.ReactNode }) {
   return (
     <div className="zp-label">
       <label htmlFor={htmlFor}>{children}</label>
       <Info id={help} />
+      {mark}
     </div>
   );
 }
 
 /** A verification note under a fact: matches the map, differs from it, or what the map suggests. */
-function Note({ kind, children, onUse, useLabel = "Use this" }: { kind: "ok" | "diff" | "hint"; children: React.ReactNode; onUse?: () => void; useLabel?: string }) {
+function Note({ kind, children, onUse, useLabel = "Use this" }: { kind: "ok" | "diff" | "hint" | "wait"; children: React.ReactNode; onUse?: () => void; useLabel?: string }) {
   return (
     <p className={`fv fv-${kind}`}>
-      <span className="fv-mark" aria-hidden="true">{kind === "ok" ? "✓" : kind === "diff" ? "!" : "→"}</span>
+      <span className="fv-mark" aria-hidden="true">{kind === "ok" ? "✓" : kind === "diff" ? "!" : kind === "wait" ? "…" : "→"}</span>
       <span>{children}{onUse && <>{" "}<button type="button" className="link-btn" onClick={onUse}>{useLabel}</button></>}</span>
     </p>
   );
 }
 
-/** What the map layers say about one fact, against what is entered. */
-function Verify({ field }: { field: "parcel" | "lot" | Bool }) {
+type Field = "parcel" | "lot" | Bool;
+const FIELD_NAME: Record<string, string> = { parcel: "Parcel", lot: "Lot area", water: "Public water", sewer: "Public sewer", wet: "Wetlands", dot: "State road", transit: "Transit" };
+
+/**
+ * What the map layers say about one fact, against what is entered. A fact that matches gets a check beside its label, whose card
+ * says what was found and how (ARD D48); a difference or a suggestion stays a line under the fact, with its button.
+ */
+function Verify({ field }: { field: Field }) {
+  const el = useVerdict(field);
+  return el && el.props.kind !== "ok" ? el : null;
+}
+
+/** The check beside a fact's label, when the map layers agree with it. */
+function VerifyMark({ field }: { field: Field }) {
+  const el = useVerdict(field);
+  if (!el || el.props.kind !== "ok") return null;
+  return <FactMark id={field} label={FIELD_NAME[field]} said={el.props.children} />;
+}
+
+function useVerdict(field: Field): React.ReactElement<{ kind: "ok" | "diff" | "hint" | "wait"; children: React.ReactNode }> | null {
   const { inputs, setInput } = useProject();
   const look = useLookedUp();
   if (look.status === "none") return null;
-  if (look.status === "loading") return <p className="fv fv-wait">Checking against the map…</p>;
-  if (look.status === "error") return <p className="fv fv-wait">The map layers didn&apos;t answer, so this isn&apos;t checked.</p>;
+  if (look.status === "loading") return <Note kind="wait">Checking against the map…</Note>;
+  if (look.status === "error") return null;
   const { facts: f, suggest: s } = look.data;
   const set = (k: Bool, v: boolean) => () => setInput(k, v);
 
@@ -182,6 +203,7 @@ function Tick({ k, label, verify = true }: { k: Bool; label: string; verify?: bo
           {label}
         </label>
         <Info id={k} />
+        {verify && <VerifyMark field={k} />}
       </div>
       {verify && <Verify field={k} />}
     </div>
@@ -210,6 +232,8 @@ export function IntakeForm() {
     <form className="intake-groups" onSubmit={(e) => e.preventDefault()} aria-label="Project and site facts">
       {origin === "example" && <p className="lookup-note is-warn">These are the example&apos;s values, a 10-unit housing project in {inputs.town}. Change any of them to make it yours.</p>}
       {look.status === "none" && <p className="small muted">Look up an address or click the map above, and each fact a public map knows is checked against it here.</p>}
+      {look.status === "ready" && <p className="small muted fv-legend"><span className="fact-mark is-key" aria-hidden="true"><Icon name="check" size={13} /></span> beside a fact: the public map layers found the same. Hover it for how.</p>}
+      {look.status === "error" && <p className="lookup-note is-warn">The map layers didn&apos;t answer, so the facts below aren&apos;t checked against them. They are yours to enter.</p>}
 
       <fieldset className="fgroup">
         <legend>What you plan to build</legend>
@@ -294,12 +318,12 @@ export function IntakeForm() {
         <legend>The land</legend>
         <div className="form-grid">
           <div className="field">
-            <Label htmlFor="f-parcel" help="parcel">Parcel (plat and lot)</Label>
+            <Label htmlFor="f-parcel" help="parcel" mark={<VerifyMark field="parcel" />}>Parcel (plat and lot)</Label>
             <input id="f-parcel" type="text" value={inputs.parcel} onChange={(e) => setInput("parcel", e.target.value)} />
             <Verify field="parcel" />
           </div>
           <div className="field">
-            <Label htmlFor="f-lot" help="lot">Lot area (sq ft)</Label>
+            <Label htmlFor="f-lot" help="lot" mark={<VerifyMark field="lot" />}>Lot area (sq ft)</Label>
             <input id="f-lot" type="number" min={0} step={100} value={inputs.lot} onChange={num("lot")} />
             <Verify field="lot" />
           </div>

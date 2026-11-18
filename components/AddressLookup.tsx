@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TOWNS, townInfo } from "@/lib/data/towns";
 import { fmt } from "@/lib/engine";
-import { geocode, lookUpPoint, outlinePath, repinParcel, type Candidate, type SiteFacts, type SiteSuggestions } from "@/lib/lookup";
+import { LOOKUP_SERVICES, geocode, lookUpPoint, outlinePath, repinParcel, unanswered, type Candidate, type LookupService, type SiteFacts, type SiteSuggestions } from "@/lib/lookup";
+import { AppliedDoc } from "./FactCheck";
 import { Info } from "./Info";
 import { useProject } from "./ProjectProvider";
 import { TownPicker, useSetTown } from "./TownPicker";
@@ -11,7 +12,10 @@ import { ZoningMap } from "./ZoningMap";
 
 type State =
   | { step: "idle" }
-  | { step: "working"; note: string }
+  /** `services` is filled in as each map service answers; `at` tells one wait from the next */
+  | { step: "working"; note: string; at: number; services?: Partial<Record<LookupService, boolean>> }
+  /** The point is known, but neither the Zoning Atlas nor the parcel map answered */
+  | { step: "unreached"; place: Candidate }
   | { step: "pick"; candidates: Candidate[] }
   | { step: "found"; place: Candidate; facts: SiteFacts; suggest: SiteSuggestions }
   | { step: "error"; message: string };
@@ -34,6 +38,12 @@ export function suggestLines(s: SiteSuggestions): { key: string; label: string; 
   ];
 }
 
+/** The address to keep for a found place: its first three parts, with a house number joined to its street ("250 Wickenden Street"). */
+function siteAddress(label: string): string {
+  if (label.startsWith("Map point")) return "";
+  return label.split(",").slice(0, 3).join(",").replace(/^(\d+[A-Za-z]?(?:-\d+)?),\s*/, "$1 ");
+}
+
 /**
  * Where the project is. The town from a list or from the statewide map, then an address, or a click on the map,
  * which looks up the zoning district, the parcel, its area, public water and sewer, and suggests three facts the
@@ -46,6 +56,8 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
   const [state, setState] = useState<State>({ step: "idle" });
   const [applied, setApplied] = useState(false);
   const abort = useRef<AbortController | null>(null);
+  const townNow = useRef(inputs.town);
+  townNow.current = inputs.town;
   const mapRef = useRef<HTMLDivElement>(null);
 
   const locate = async (place: Candidate) => {
@@ -53,10 +65,17 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
     const ac = new AbortController();
     abort.current = ac;
     setApplied(false);
-    setState({ step: "working", note: "Reading the zoning atlas, the state parcel map, roads, wetlands and bus stops…" });
+    const at = Date.now();
+    setState({ step: "working", note: "Reading the map layers for this point", at, services: {} });
+    const onService = (key: LookupService, ok: boolean) =>
+      setState((st) => (st.step === "working" && st.at === at ? { ...st, services: { ...st.services, [key]: ok } } : st));
     try {
-      const { facts, suggest } = await lookUpPoint(place.lat, place.lon, ac.signal);
-      if (!ac.signal.aborted) setState({ step: "found", place, facts, suggest });
+      const { facts, suggest } = await lookUpPoint(place.lat, place.lon, ac.signal, onService);
+      if (ac.signal.aborted) return;
+      if (unanswered(facts)) { setState({ step: "unreached", place }); return; }
+      // The address and the municipality must not disagree: a place found in another town moves the municipality there at once.
+      if (facts.town && facts.town !== townNow.current && TOWNS.some((t) => t.name === facts.town)) setTown(facts.town);
+      setState({ step: "found", place, facts, suggest });
     } catch {
       if (!ac.signal.aborted) setState({ step: "error", message: "The map services didn't answer. Enter the facts by hand, or try again." });
     }
@@ -68,7 +87,7 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
     abort.current?.abort();
     const ac = new AbortController();
     abort.current = ac;
-    setState({ step: "working", note: "Finding the address…" });
+    setState({ step: "working", note: "Finding the address on OpenStreetMap", at: Date.now() });
     try {
       const found = await geocode(text, ac.signal);
       if (ac.signal.aborted) return;
@@ -92,7 +111,7 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
 
   const use = (place: Candidate, f: SiteFacts, sg: SiteSuggestions) => {
     if (f.town && TOWNS.some((t) => t.name === f.town)) setTown(f.town);
-    setInput("address", place.label.startsWith("Map point") ? "" : place.label.split(",").slice(0, 3).join(","));
+    setInput("address", siteAddress(place.label));
     setInput("lat", place.lat);
     setInput("lon", place.lon);
     if (f.platLot) setInput("parcel", f.platLot);
@@ -134,9 +153,57 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
 
   const yn = (v: boolean | null) => (v === null ? "not found" : v ? "Yes" : "No");
 
+  // People wait about five seconds. After that the wait says what it is still waiting on, and offers a way out.
+  const [slowAt, setSlowAt] = useState(0);
+  const waitAt = state.step === "working" ? state.at : 0;
+  useEffect(() => {
+    if (!waitAt) return;
+    const t = setTimeout(() => setSlowAt(waitAt), 5000);
+    return () => clearTimeout(t);
+  }, [waitAt]);
+  const slow = waitAt !== 0 && slowAt === waitAt;
+  const stop = () => { abort.current?.abort(); setState({ step: "idle" }); };
+  const usePointOnly = (place: Candidate) => {
+    setInput("address", siteAddress(place.label));
+    setInput("lat", place.lat);
+    setInput("lon", place.lon);
+    setState({ step: "idle" });
+  };
+
   const body = (
     <div aria-live="polite">
-      {state.step === "working" && <p className="lookup-note">{state.note}</p>}
+      {state.step === "working" && (
+        <div className="lk-wait">
+          <p className="lookup-note lk-wait-note"><span className="lk-dots" aria-hidden="true"><i /><i /><i /></span>{state.note}</p>
+          {state.services && (
+            <ul className="lk-services" aria-label="Map services">
+              {LOOKUP_SERVICES.map((sv) => {
+                const v = state.services?.[sv.key];
+                return <li key={sv.key} className={v === undefined ? "is-wait" : v ? "is-ok" : "is-fail"}><span className="lk-sv-mark" aria-hidden="true" />{sv.label}<span className="sr-only">{v === undefined ? ": waiting" : v ? ": answered" : ": didn't answer"}</span></li>;
+              })}
+            </ul>
+          )}
+          {slow && (
+            <p className="lookup-note is-warn lk-slow" role="status">
+              {(() => {
+                const waiting = state.services ? LOOKUP_SERVICES.filter((sv) => state.services?.[sv.key] === undefined).map((sv) => sv.label) : ["the address search"];
+                return <>Still waiting on {waiting.join(", ")} after 5 seconds. The state&apos;s map services are often slow; each gets 20 seconds before it counts as not answering.</>;
+              })()}{" "}
+              <button type="button" className="link-btn" onClick={stop}>Stop, and enter the facts by hand</button>
+            </p>
+          )}
+        </div>
+      )}
+      {state.step === "unreached" && (
+        <div className="lk-unreached" role="alert">
+          <p className="lookup-note is-error"><b>None of the map services answered.</b> The Zoning Atlas and the state parcel map both failed or took longer than 20 seconds, so nothing is known about this point yet.</p>
+          <p className="small muted">This usually means the services are down for maintenance, or the network you are on blocks them (some office and public networks do). The rest of the site works without them: the facts below are yours to enter.</p>
+          <div className="actions">
+            <button type="button" className="btn" onClick={() => locate(state.place)}>Try again</button>
+            <button type="button" className="btn ghost" onClick={() => usePointOnly(state.place)}>Enter the facts by hand</button>
+          </div>
+        </div>
+      )}
       {state.step === "error" && <p className="lookup-note is-error">{state.message}</p>}
       {state.step === "pick" && (
         <>
@@ -152,7 +219,7 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
         const { place, facts: f, suggest } = state;
         const covered = f.town !== null && TOWNS.some((t) => t.name === f.town);
         return (
-          <div className="lookup-result">
+          <div className={`lookup-result${f.outline ? "" : " no-shape"}`}>
             {f.outline && (
               <svg className="parcel-shape" viewBox="0 0 120 120" role="img" aria-label="Parcel outline, north up">
                 <path d={outlinePath(f.outline)} fillRule="evenodd" />
@@ -225,8 +292,10 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
   );
 
   if (layout === "site") {
+    // The results take the full width, straight under the address and the municipality, above the map (ARD D46, decided 2026-11-18).
+    const busy = state.step !== "idle" && !(state.step === "found" && applied);
     return (
-      <div className="site-where">
+      <div className={`site-where${busy ? " is-busy" : ""} lk-below`}>
         <div className="field site-where-address">
           <div className="zp-label">
             <label htmlFor="f-address">Street address</label>
@@ -236,13 +305,23 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
           <p className="small muted lk-or">
             Or click the parcel on the map{inputs.address ? "" : ", which looks up that point"}. The address goes to OpenStreetMap&apos;s search, and the point to the Zoning Atlas, RIDEM&apos;s parcel map, RIDOT&apos;s roads, the wetlands inventory and RIPTA&apos;s stops. Nothing is stored.
           </p>
-          {inputs.address && state.step === "idle" && <p className="lookup-note">Site: <b>{inputs.address}</b></p>}
+          {(inputs.address || inputs.lat != null) && !busy && (
+            <p className="lookup-note lk-site">
+              Site: <b>{inputs.address || `map point ${inputs.lat?.toFixed(5)}, ${inputs.lon?.toFixed(5)}`}</b>{applied ? " · facts applied" : ""}
+              <AppliedDoc appliedNow={applied} />
+            </p>
+          )}
         </div>
         <TownPicker />
+        {busy && (
+          <div className="site-where-form lk-results">
+            {body}
+            {state.step !== "working" && <button type="button" className="link-btn small lk-dismiss" onClick={stop}>Close the results</button>}
+          </div>
+        )}
         <div ref={mapRef} className="site-where-map">
           <ZoningMap placement="site" preview={preview} onPick={pickPoint} onTown={setTown} startStatewide={origin === "example" && inputs.lat == null} />
         </div>
-        <div className="site-where-form">{body}</div>
       </div>
     );
   }

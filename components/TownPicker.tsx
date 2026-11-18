@@ -2,8 +2,10 @@
 
 import { useId, useMemo, useState } from "react";
 import { LEVELS, TOWNS } from "@/lib/data/towns";
+import { FactMark } from "./FactCheck";
 import { Info } from "./Info";
 import { useProject } from "./ProjectProvider";
+import { useLookedUp } from "./useLookedUp";
 
 /** Change the project's town, clearing what belonged to the old one. Shared by the list and the map. */
 export function useSetTown() {
@@ -24,6 +26,7 @@ export function useSetTown() {
 export function TownPicker() {
   const { inputs, origin } = useProject();
   const setTown = useSetTown();
+  const look = useLookedUp();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
@@ -52,6 +55,7 @@ export function TownPicker() {
       <div className="zp-label">
         <label htmlFor="f-muni">Municipality</label>
         <Info id="town" />
+        {look.status === "ready" && look.data.facts.town === inputs.town && <FactMark id="town" label="Municipality" said={`The zoning district at the site is ${inputs.town}'s, on the Zoning Atlas.`} />}
       </div>
       <div className="zp-search">
         <input

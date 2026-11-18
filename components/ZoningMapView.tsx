@@ -115,7 +115,13 @@ export default function ZoningMapView(props: MapViewProps) {
     // The wheel zooms only once the map has been clicked or focused, so scrolling the page never gets caught.
     m.on("focus click", () => m.scrollWheelZoom.enable());
     m.on("blur", () => m.scrollWheelZoom.disable());
-    m.on("click", (e: L.LeafletMouseEvent) => tips.current.onMapClick?.(e.latlng.lat, e.latlng.lng));
+    // A click looks up the point, but only once it is plain that it was not the first half of a double-click, which zooms.
+    let pending: ReturnType<typeof setTimeout> | undefined;
+    m.on("click", (e: L.LeafletMouseEvent) => {
+      clearTimeout(pending);
+      pending = setTimeout(() => tips.current.onMapClick?.(e.latlng.lat, e.latlng.lng), 280);
+    });
+    m.on("dblclick zoomstart", () => clearTimeout(pending));
     // The container changes size when the map is expanded into a modal, or a folded section opens.
     const ro = new ResizeObserver(() => m.invalidateSize({ pan: false }));
     ro.observe(el.current);

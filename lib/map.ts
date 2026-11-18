@@ -1,4 +1,5 @@
 import { RIZA_LAYER_URL } from "./data/atlas";
+import { withTimeout } from "./lookup";
 import { townRules } from "./data/towns/overlay";
 import type { TreeId } from "./types";
 
@@ -137,8 +138,9 @@ export function townShapes(): Promise<TownShape[]> {
 
 const toRings = (rings: number[][][]): Ring[] => rings.map((r) => r.map((p) => [p[1], p[0]] as LatLon));
 
-async function getJSON<T>(url: string, signal?: AbortSignal): Promise<T> {
-  const res = await fetch(url, { signal });
+/** A whole town's district outlines is a large answer, so it gets longer than a point query. */
+async function getJSON<T>(url: string, signal?: AbortSignal, ms = 30000): Promise<T> {
+  const res = await fetch(url, { signal: withTimeout(signal, ms) });
   if (!res.ok) throw new Error(`${res.status}`);
   const json = (await res.json()) as T & { error?: { message: string } };
   if (json.error) throw new Error(json.error.message);

@@ -57,8 +57,17 @@ export interface ParcelOption {
   outline: number[][][] | null;
 }
 
+/** How long one request may take before it counts as not answering. The state's services can hang rather than refuse. */
+export const SERVICE_TIMEOUT_MS = 20000;
+
+/** The caller's signal, ended early after `ms`: a hung service then fails like one that refused. */
+export function withTimeout(signal: AbortSignal | undefined, ms = SERVICE_TIMEOUT_MS): AbortSignal {
+  const t = AbortSignal.timeout(ms);
+  return signal ? AbortSignal.any([signal, t]) : t;
+}
+
 async function getJSON<T>(url: string, signal?: AbortSignal): Promise<T> {
-  const res = await fetch(url, { signal });
+  const res = await fetch(url, { signal: withTimeout(signal) });
   if (!res.ok) throw new Error(`${res.status}`);
   const json = (await res.json()) as T & { error?: { message: string } };
   if (json.error) throw new Error(json.error.message);
@@ -91,7 +100,24 @@ const NEAR = 30;
 /** RIDEM's wetland permitting jurisdiction: which of RIDEM or CRMC regulates wetlands at a point. */
 const WET_JURISDICTION = "https://risegis.ri.gov/hosting/rest/services/RIDEM/Boundaries_and_Regulatory_Overlays_v2/MapServer/7";
 
-export async function siteFacts(lon: number, lat: number, signal?: AbortSignal): Promise<SiteFacts> {
+/** The services a point lookup asks, in the order the lookup shows them while it waits. */
+export const LOOKUP_SERVICES = [
+  { key: "atlas", label: "Zoning Atlas" },
+  { key: "parcels", label: "state parcel map" },
+  { key: "roads", label: "RIDOT roads" },
+  { key: "wetlands", label: "wetlands inventory" },
+  { key: "stops", label: "RIPTA stops" },
+] as const;
+export type LookupService = (typeof LOOKUP_SERVICES)[number]["key"];
+/** Told when each service has answered (true) or failed or timed out (false). */
+export type OnService = (key: LookupService, ok: boolean) => void;
+
+function report<T>(p: Promise<T>, key: LookupService, on?: OnService): Promise<T> {
+  if (on) p.then(() => on(key, true), () => on(key, false));
+  return p;
+}
+
+export async function siteFacts(lon: number, lat: number, signal?: AbortSignal, onService?: OnService): Promise<SiteFacts> {
   const facts: SiteFacts = { town: null, zone: null, zoneName: null, water: null, sewer: null, platLot: null, acres: null, outline: null, failed: [], nearby: false, zoneOptions: [], overlays: [], parcelOptions: [], reservation: null, wetAgency: null };
   const count = (layer: number) =>
     getJSON<{ count: number }>(`${ATLAS}/${layer}/query?${pointQuery(lon, lat, { returnCountOnly: "true" })}`, signal).then((r) => r.count > 0);
@@ -105,7 +131,7 @@ export async function siteFacts(lon: number, lat: number, signal?: AbortSignal):
 
   const native = getJSON<{ features: { attributes: { Unit_Nm: string | null; Loc_Own: string | null } }[] }>(`${ATLAS}/2/query?${pointQuery(lon, lat, { outFields: "Unit_Nm,Loc_Own", returnGeometry: "false" })}`, signal);
   const agency = getJSON<{ features: { attributes: { AGENCY: string | null } }[] }>(`${WET_JURISDICTION}/query?${pointQuery(lon, lat, { outFields: "AGENCY", returnGeometry: "false" })}`, signal);
-  const [zone, sewer, water, parcel, nat, ag] = await Promise.allSettled([orNearby(zones), count(9), count(10), orNearby(parcels), native, agency]);
+  const [zone, sewer, water, parcel, nat, ag] = await Promise.allSettled([report(orNearby(zones), "atlas", onService), count(9), count(10), report(orNearby(parcels), "parcels", onService), native, agency]);
   if (nat.status === "fulfilled" && nat.value.features.length) {
     const a = nat.value.features[0].attributes;
     facts.reservation = [a.Unit_Nm, a.Loc_Own].filter(Boolean).join(", ") || "Native land";
@@ -197,12 +223,12 @@ function nearQuery(lon: number, lat: number, outline: number[][][] | null, metre
   }).toString();
 }
 
-export async function siteSuggestions(lon: number, lat: number, outline: number[][][] | null, signal?: AbortSignal): Promise<SiteSuggestions> {
+export async function siteSuggestions(lon: number, lat: number, outline: number[][][] | null, signal?: AbortSignal, onService?: OnService): Promise<SiteSuggestions> {
   type Rows<A> = { features: { attributes: A }[] };
   const [roads, wet, stops] = await Promise.allSettled([
-    getJSON<Rows<{ NAME: string | null; RTNO: string | null; ROADTYPE: string | null }>>(`${ROADS}/query?${nearQuery(lon, lat, outline, outline ? 15 : 30, "NAME,RTNO,ROADTYPE")}`, signal),
-    getJSON<Rows<{ WETLAND_TY: string | null }>>(`${WETLANDS}/query?${nearQuery(lon, lat, outline, 30, "WETLAND_TY")}`, signal),
-    getJSON<Rows<{ stop_name: string | null; route_info: string | null }>>(`${STOPS}/query?${nearQuery(lon, lat, null, EIGHTH_MILE_M, "stop_name,route_info")}`, signal),
+    report(getJSON<Rows<{ NAME: string | null; RTNO: string | null; ROADTYPE: string | null }>>(`${ROADS}/query?${nearQuery(lon, lat, outline, outline ? 15 : 30, "NAME,RTNO,ROADTYPE")}`, signal), "roads", onService),
+    report(getJSON<Rows<{ WETLAND_TY: string | null }>>(`${WETLANDS}/query?${nearQuery(lon, lat, outline, 30, "WETLAND_TY")}`, signal), "wetlands", onService),
+    report(getJSON<Rows<{ stop_name: string | null; route_info: string | null }>>(`${STOPS}/query?${nearQuery(lon, lat, null, EIGHTH_MILE_M, "stop_name,route_info")}`, signal), "stops", onService),
   ]);
   const uniq = <T,>(list: T[], key: (t: T) => string) => [...new Map(list.map((t) => [key(t), t])).values()];
   const title = (s: string) => s.toLowerCase().replace(/\b[a-z]/g, (c) => c.toUpperCase());
@@ -228,16 +254,21 @@ export interface LookedUp { facts: SiteFacts; suggest: SiteSuggestions }
 const lookCache = new Map<string, Promise<LookedUp>>();
 const pointKey = (lat: number, lon: number) => `${lat.toFixed(6)},${lon.toFixed(6)}`;
 
-export function lookUpPoint(lat: number, lon: number, signal?: AbortSignal): Promise<LookedUp> {
+export function lookUpPoint(lat: number, lon: number, signal?: AbortSignal, onService?: OnService): Promise<LookedUp> {
   const key = pointKey(lat, lon);
   let p = lookCache.get(key);
   if (!p) {
-    p = siteFacts(lon, lat, signal).then(async (facts) => ({ facts, suggest: await siteSuggestions(lon, lat, facts.outline, signal) }));
+    p = siteFacts(lon, lat, signal, onService).then(async (facts) => ({ facts, suggest: await siteSuggestions(lon, lat, facts.outline, signal, onService) }));
     p.catch(() => lookCache.delete(key));
+    // A lookup the services never answered is not kept, so trying again asks them again.
+    p.then((r) => { if (unanswered(r.facts)) lookCache.delete(key); }, () => {});
     lookCache.set(key, p);
   }
   return p;
 }
+
+/** True when neither the Zoning Atlas nor the parcel map answered: nothing about the site is known beyond the point. */
+export const unanswered = (f: SiteFacts) => f.failed.includes("zoning district") && f.failed.includes("parcel");
 
 /** Replace the parcel a lookup settled on (the visitor picked another of the nearby ones) and redo the parcel-based suggestions. */
 export function repinParcel(lat: number, lon: number, facts: SiteFacts): Promise<LookedUp> {

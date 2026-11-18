@@ -36,6 +36,17 @@ function circleBox([lat, lon]: LatLon, m: number): LatLon[] {
 }
 
 const NO_DISTRICTS: DistrictShape[] = [];
+
+/** True once `key` has stood unchanged for `ms`: a wait that has gone on long enough to say so. Null is not waiting. */
+function useSlow(key: string | null, ms = 5000): boolean {
+  const [slowKey, setSlowKey] = useState<string | null>(null);
+  useEffect(() => {
+    if (!key) return;
+    const t = setTimeout(() => setSlowKey(key), ms);
+    return () => clearTimeout(t);
+  }, [key, ms]);
+  return key !== null && slowKey === key;
+}
 const distLabel = (m: number) => (m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`);
 
 export type MapPlacement = "wide" | "beside" | "address" | "site";
@@ -111,23 +122,27 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
 
   const town = inputs.town;
   const [shapes, setShapes] = useState<{ town: string; list: DistrictShape[]; error?: boolean } | null>(null);
+  // "Try again" after a failure bumps this, which asks the services again.
+  const [retry, setRetry] = useState(0);
   useEffect(() => {
     if (!seen) return;
     let alive = true;
+    setShapes((sh) => (sh?.town === town && !sh.error ? sh : null));
     districtShapes(town)
       .then((list) => { if (alive) setShapes({ town, list }); })
       .catch(() => { if (alive) setShapes({ town, list: [], error: true }); });
     return () => { alive = false; };
-  }, [seen, town]);
+  }, [seen, town, retry]);
   const districts = statewide ? NO_DISTRICTS : shapes?.town === town ? shapes.list : NO_DISTRICTS;
   const [towns, setTowns] = useState<TownShape[] | null>(null);
   const [townsError, setTownsError] = useState(false);
   useEffect(() => {
     if (!seen || !statewide || towns) return;
     let alive = true;
+    setTownsError(false);
     townShapes().then((t) => { if (alive) setTowns(t); }).catch(() => { if (alive) setTownsError(true); });
     return () => { alive = false; };
-  }, [seen, statewide, towns]);
+  }, [seen, statewide, towns, retry]);
   const townTip = (name: string) => {
     const t = townInfo(name), shape = towns?.find((x) => x.name === name);
     return `<b>${esc(name)}</b><br>Level ${t.level}: ${esc(LEVELS[t.level].name)}${t.trial ? " (trial)" : ""}`
@@ -154,9 +169,14 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
       .then((r) => setNear({ key: focusKey, parcels: r.parcels, truncated: r.truncated }))
       .catch(() => { if (!ac.signal.aborted) setNear({ key: focusKey, parcels: [], error: true }); });
     return () => ac.abort();
-  }, [seen, focusKey, statewide]);
+  }, [seen, focusKey, statewide, retry]);
   const parcels = !statewide && near?.key === focusKey && focusKey ? near.parcels : null;
   const loadingParcels = !statewide && !!focusKey && seen && (!near || near.key !== focusKey || near.parcels === null);
+  const loadingDistricts = !statewide && seen && (!shapes || shapes.town !== town);
+  const loadingTowns = statewide && seen && !towns && !townsError;
+  const slowDistricts = useSlow(loadingDistricts ? `d|${town}|${retry}` : null);
+  const slowParcels = useSlow(loadingParcels ? `p|${focusKey}|${retry}` : null);
+  const slowTowns = useSlow(loadingTowns ? `t|${retry}` : null);
 
   /** The parcel outlined: the found place's, or the site's (by plat/lot when the form has one, else by the point) */
   const siteParcel = useMemo(() => {
@@ -355,7 +375,7 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
             {statewide
               ? "Shaded by how much of each town this site has read. Hover for its zoning, click to choose it."
               : preview
-              ? `The place found, with the parcels within ${RADIUS} m. Use its facts below the map${onPick ? ", or click elsewhere to look up another point" : ""}.`
+              ? `The place found, with the parcels within ${RADIUS} m. Use its facts by the address above${onPick ? ", or click elsewhere to look up another point" : ""}.`
               : focus
                 ? `Parcels within ${RADIUS} m of the site, coloured by ${mode === "structure" ? "the building the state records on each" : "nothing: the pins carry the colour"}. Hover for details.`
                 : onPick
@@ -393,31 +413,66 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
             onTown={(n) => { onTown?.(n); setStatewide(false); }}
           />
         ) : <div className="zm-canvas zm-wait">The map loads when you scroll to it.</div>}
-        {!statewide && (
-          <div className="zm-overlay">
-            <div className="zm-ovhead"><span className="zm-ovctl">{mapButtons}</span></div>
-            {keyOpen && <div className="zm-ovbody">{zoneKey}<div className="zm-keycol">{parcelHead}{parcelLegend}</div></div>}
-            <button type="button" className="zm-tab" aria-expanded={keyOpen} aria-label={keyOpen ? "Hide the key" : "Show the key"} title={keyOpen ? "Hide the key" : "Show the key"} onClick={() => setKeyOpen(!keyOpen)}>
-              {keyOpen ? "›" : "‹"}
-            </button>
-          </div>
-        )}
+        {/* The key: a panel on the map's right edge that folds into a tab at its middle and opens to the left (ARD D40, amended 2026-11-18).
+            The district key is in the map from 1200 px, and under it below that; the statewide key is in the map at every width. */}
+        <div className={`zm-overlay${keyOpen ? "" : " is-folded"}${statewide ? " is-state" : ""}`}>
+          <button type="button" className="zm-ovhead" aria-expanded={keyOpen} aria-controls={`${placement}-zm-key`} onClick={() => setKeyOpen(!keyOpen)}>
+            <span className="zm-ovchev" aria-hidden="true">{keyOpen ? "▸" : "◂"}</span><span className="zm-ovlabel">Key</span>
+            <span className="sr-only">{keyOpen ? ": hide it" : ": show it"}</span>
+          </button>
+          {keyOpen && (
+            <div className="zm-ovbody" id={`${placement}-zm-key`}>
+              {statewide ? (
+                <ul className="zm-legend" aria-label="How much of each town is read">
+                  {([4, 3, 1] as const).map((l) => (
+                    <li key={l}><span className="zm-swatch" style={{ background: `rgba(46, 109, 180, ${LEVEL_FILL[l]})`, border: "1px solid #9aa39c" }} aria-hidden="true" />Level {l}: {LEVELS[l].name}</li>
+                  ))}
+                  <li><span className="zm-swatch site" aria-hidden="true" />{town}, the project&apos;s town</li>
+                </ul>
+              ) : <>{zoneKey}<div className="zm-keycol">{parcelHead}{parcelLegend}</div></>}
+            </div>
+          )}
+        </div>
         {seen && <div className="zm-mapctl">{mapButtons}</div>}
-        {loadingParcels && <p className="zm-status" role="status">Reading the parcels around the site…</p>}
-        {statewide && !towns && !townsError && <p className="zm-status" role="status">Reading the town outlines…</p>}
-        {statewide && townsError && <p className="zm-status" role="status">The Zoning Atlas didn&apos;t answer, so the town outlines are missing. Pick the town from the list.</p>}
-        {shapes?.error && <p className="zm-status" role="status">The Zoning Atlas didn't answer, so district outlines are missing.</p>}
-        {near?.error && near.key === focusKey && <p className="zm-status" role="status">The state parcel map didn't answer. Try again later.</p>}
+        {(() => {
+          // One line for what is being read, one for what did not answer, each naming the services (ARD D48, amended).
+          const reading = [
+            loadingTowns && { what: "the town outlines", from: "Zoning Atlas", slow: slowTowns },
+            loadingDistricts && { what: `${town}'s zoning districts`, from: "Zoning Atlas", slow: slowDistricts },
+            loadingParcels && { what: "the parcels around the site", from: "state parcel map", slow: slowParcels },
+          ].filter(Boolean) as { what: string; from: string; slow: boolean }[];
+          const failed = [
+            statewide && townsError && { who: "the Zoning Atlas", missing: "the town outlines" },
+            !statewide && shapes?.error && shapes.town === town && { who: "the Zoning Atlas", missing: `${town}'s district outlines` },
+            near?.error && near.key === focusKey && { who: "the state parcel map", missing: "the parcels around the site" },
+          ].filter(Boolean) as { who: string; missing: string }[];
+          const list = (xs: string[]) => (xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} and ${xs[xs.length - 1]}`);
+          const sources = [...new Set(reading.map((r) => r.from))];
+          const whos = [...new Set(failed.map((f) => f.who))];
+          return (
+            <div className="zm-statuses" role="status">
+              {reading.length > 0 && (
+                <p className="zm-status is-wait">
+                  <span className="lk-dots" aria-hidden="true"><i /><i /><i /></span>
+                  Reading {list(reading.map((r) => r.what))} from the {list(sources)}
+                  {reading.some((r) => r.slow) ? ". Still waiting after 5 seconds; each request gets 20 to 30 before it counts as not answering." : ""}
+                </p>
+              )}
+              {failed.length > 0 && (
+                <p className="zm-status is-fail">
+                  <span>
+                    <b>Not answering: {list(whos)}.</b> Missing: {list(failed.map((f) => f.missing))}.
+                    {failed.some((f) => f.who === "the Zoning Atlas") ? (statewide ? " Pick the town from the list." : " The district can still be chosen from the list.") : ""}
+                  </span>
+                  <button type="button" className="link-btn" onClick={() => setRetry((r) => r + 1)}>Try again</button>
+                </p>
+              )}
+            </div>
+          );
+        })()}
       </div>
 
-      {statewide ? (
-        <ul className="zm-legend" aria-label="How much of each town is read">
-          {([4, 3, 1] as const).map((l) => (
-            <li key={l}><span className="zm-swatch" style={{ background: `rgba(46, 109, 180, ${LEVEL_FILL[l]})`, border: "1px solid #9aa39c" }} aria-hidden="true" />Level {l}: {LEVELS[l].name}</li>
-          ))}
-          <li><span className="zm-swatch site" aria-hidden="true" />{town}, the project&apos;s town</li>
-        </ul>
-      ) : (
+      {!statewide && (
       <>
       <div className="zm-keycols zm-below-key">
         {zoneKey}

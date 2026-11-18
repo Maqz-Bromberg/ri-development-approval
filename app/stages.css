@@ -107,6 +107,89 @@
 .ps-fact:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .rstep { scroll-margin-top: 52px; }
 
+
+/* ---------- Reference pages: search, the town map, cards ---------- */
+.ix-search { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--rule2); border-radius: 10px; padding: 0 12px; color: var(--mut); }
+.ix-search:focus-within { border-color: var(--act); box-shadow: 0 0 0 3px var(--act-s); }
+.ix-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font: inherit; font-size: 15px; padding: 10px 0; color: var(--ink); }
+.town-map { margin: 0; display: grid; gap: 6px; }
+.town-map svg { width: 100%; height: auto; max-height: 460px; display: block; }
+.town-map path { stroke: #fff; stroke-width: .8; cursor: pointer; transition: opacity .12s; }
+.town-map path.faded { opacity: .22; }
+.town-map path.hover, .town-map path:focus-visible { stroke: var(--ink); stroke-width: 1.6; outline: none; }
+.town-map path.picked { stroke: var(--ink); stroke-width: 2.2; }
+.town-map figcaption { font-size: 13px; color: var(--mut); display: grid; gap: 4px; }
+.town-map-hover { font-weight: 700; color: var(--ink); min-height: 1.4em; }
+.town-map-wait { display: grid; place-items: center; min-height: 220px; padding: 20px; text-align: center; background: #F4F6F8; border-radius: 10px; color: var(--mut); font-size: 13.5px; }
+
+.towns-top { display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr); gap: 24px; align-items: start; margin-bottom: 18px; }
+.towns-filters { display: grid; gap: 12px; }
+.towns-ix .level-key { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.lk-btn { display: flex; gap: 10px; align-items: flex-start; width: 100%; text-align: left; border: 1px solid transparent; background: none; border-radius: 8px; padding: 5px 8px; cursor: pointer; font: inherit; font-size: 14px; color: var(--ink); line-height: 1.35; }
+.lk-btn:hover { background: #fff; border-color: var(--rule); }
+.lk-btn.on { background: #fff; border-color: var(--act); }
+.lk-sw { flex: none; width: 22px; height: 16px; border-radius: 4px; border: 1px solid rgba(0, 0, 0, .15); margin-top: 2px; }
+.towns-county { margin-top: 18px; }
+.towns-county h2 { margin-bottom: 8px; }
+.town-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+.town-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 8px; align-items: center; background: #fff; border-radius: 10px; padding: 8px 10px 8px 14px; box-shadow: inset 5px 0 0 var(--lv); border: 1px solid var(--rule); }
+.town-card.is-current { border-color: var(--act); }
+.tc-name { font-family: var(--ff-head); font-weight: 700; font-size: 16px; color: var(--ink); text-decoration: none; }
+.tc-name:hover { color: var(--act); text-decoration: underline; }
+.tc-code { color: var(--mut); display: grid; place-items: center; width: 28px; height: 28px; border-radius: 7px; }
+.tc-code:hover { color: var(--act); background: var(--act-s); }
+.tc-tags { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; font-size: 12px; }
+.tc-tag { color: var(--mut); }
+.tc-tag.tc-mine { color: var(--act); font-weight: 700; }
+.lv-chip-part { color: var(--mut); display: inline-flex; gap: 4px; align-items: center; }
+/* the keyed level chip, everywhere a level is shown */
+.lv-chip, .level-chip { display: inline-block; font-size: 11.5px; font-weight: 700; line-height: 1.5; padding: 0 7px; border-radius: 99px; border: 1px solid rgba(0, 0, 0, .12); color: var(--ink); background: #E3EAF3; }
+.lv-chip.l2, .level-chip.level-2 { background: #C3D5EC; }
+.lv-chip.l3, .level-chip.level-3 { background: #8FB2DD; }
+.lv-chip.l4, .level-chip.level-4 { background: #3E74B8; color: #fff; }
+@media (max-width: 760px) { .towns-top { grid-template-columns: 1fr; } }
+.ix-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+.ix-bar .ix-search { flex: 1 1 320px; }
+.ix-place select { height: 100%; font: inherit; font-size: 14px; border: 1px solid var(--rule2); border-radius: 10px; padding: 0 10px; background: #fff; min-height: 42px; }
+.ix-types { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.ix-types button { font: inherit; font-size: 13px; border: 1px solid var(--rule2); background: #fff; border-radius: 999px; padding: 3px 11px; cursor: pointer; color: var(--ink); }
+.ix-types button small { color: var(--mut); margin-left: 2px; }
+.ix-types button.on { background: var(--act); border-color: var(--act); color: #fff; }
+.ix-types button.on small { color: #dfe7f2; }
+.ix-types button:disabled { opacity: .45; cursor: default; }
+.ix-count { margin: 8px 0 0; }
+.src-place { flex: none; font-size: 11.5px; font-weight: 700; border-radius: 5px; padding: 1px 7px; background: #EEF1F4; color: var(--mut); min-width: 82px; text-align: center; }
+.src-place.st { background: var(--act-s); color: var(--act); }
+
+/* Records: a card file, a tab per municipality, one card open */
+.rec-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(200px, 260px); gap: 20px; align-items: start; }
+.rec-find { display: grid; gap: 8px; }
+.rolodex-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.rdx-tab { font: inherit; font-size: 13px; border: 1px solid var(--rule); border-bottom-width: 3px; border-bottom-color: var(--lv); background: #F7F8FA; color: var(--mut); border-radius: 8px 8px 3px 3px; padding: 4px 9px 3px; cursor: pointer; display: inline-flex; gap: 5px; align-items: baseline; }
+.rdx-tab.read { background: #fff; color: var(--ink); font-weight: 700; }
+.rdx-tab small { font-weight: 700; color: var(--act); font-size: 11px; }
+.rdx-tab:hover { border-color: var(--act); border-bottom-color: var(--lv); }
+.rdx-tab.on { background: var(--act); color: #fff; border-color: var(--act); }
+.rdx-tab.on small { color: #dfe7f2; }
+.rdx-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 16px 20px 18px; margin-top: 16px; box-shadow: 0 6px 0 -3px #fff, 0 6px 0 -2px var(--rule), 0 12px 0 -6px #fff, 0 12px 0 -5px var(--rule); }
+.rdx-card.rdx-state { box-shadow: none; background: #FAFBFC; margin-top: 28px; }
+.rdx-head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin-bottom: 6px; }
+.rdx-head h2 { font-size: 22px; }
+.rdx-intro { margin: 0 0 10px; max-width: 80ch; font-size: 14.5px; }
+.rdx-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.rdx-items li { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 10px; align-items: baseline; font-size: 14px; }
+.rdx-items .media-kind { text-align: center; }
+.pt-open { white-space: normal; text-align: left; padding: 0; }
+.rdx-tips { margin-top: 12px; font-size: 14px; }
+.rdx-tips summary { cursor: pointer; font-weight: 700; }
+.rdx-gap p { margin: 0 0 6px; max-width: 80ch; }
+.rdx-sub { font-size: 16px; margin: 16px 0 6px; }
+.rdx-law h4 { font-family: var(--ff-body); font-size: 12.5px; color: var(--mut); margin: 8px 0 2px; }
+.rdx-law ul { margin: 0; padding-left: 18px; font-size: 14px; display: grid; gap: 2px; }
+.rdx-law .src-place { margin-left: 8px; min-width: 0; }
+.lk-sw.inline { display: inline-block; width: 14px; height: 10px; vertical-align: -1px; margin: 0 3px 0 6px; }
+@media (max-width: 760px) { .rec-top { grid-template-columns: 1fr; } .rdx-items li { grid-template-columns: 1fr; } }
+.alt-routes td .btn { white-space: nowrap; padding: 6px 14px; }
 /* The info (i): a cursive i, a little larger in its circle */
 .info-btn .info-glyph { width: 12px; height: 12px; }
 

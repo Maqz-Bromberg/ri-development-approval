@@ -69,7 +69,8 @@ function ApprovalMark({ h }: { h: Precedent }) {
  * The records as swim lanes on one calendar. Unit counts are coloured on a gradient scaled to these projects, a month-only
  * date is drawn as a band across the month, and a date not yet checked against a document is a hollow marker.
  */
-export function ProjectTimeline({ rows }: { rows: Precedent[] }) {
+/** `onOpen` shows a project's full record (the table row); the name in each lane calls it. */
+export function ProjectTimeline({ rows, onOpen }: { rows: Precedent[]; onOpen?: (name: string) => void }) {
   const g = useMemo(() => {
     const all = rows.flatMap((h) => h.events.map((e) => eventTime(e.date)));
     const latest = Math.max(...all);
@@ -133,7 +134,7 @@ export function ProjectTimeline({ rows }: { rows: Precedent[] }) {
               <div className="pt-lane" key={h.name}>
                 <div className="pt-name">
                   <span className="pt-units" style={{ background: c.bg, color: c.fg }} title={`${h.units} units${h.aff ? `, ${h.aff} affordable` : ""}`}>{h.units}</span>
-                  <span><Link href={`#p-${precedentId(h.name)}`}><b>{h.name}</b></Link></span>
+                  <span>{onOpen ? <button type="button" className="link-btn pt-open" onClick={() => onOpen(h.name)} title="Open its full record in the table"><b>{h.name}</b></button> : <b>{h.name}</b>}</span>
                 </div>
                 <div className="pt-appr-cell"><ApprovalMark h={h} /></div>
                 <div className="pt-track">

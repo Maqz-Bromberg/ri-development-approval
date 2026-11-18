@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { goTo } from "@/lib/goTo";
 import { ProjectTimeline } from "./ProjectTimeline";
 import { historyFor, precedentId } from "@/lib/data/history";
 import { SOURCES } from "@/lib/data/sources";
@@ -12,11 +13,25 @@ import { useProject } from "./ProjectProvider";
 export function PrecedentTable({ rank = true, town }: { rank?: boolean; town?: string }) {
   const { inputs, tree } = useProject();
   const [view, setView] = useState<"timeline" | "table">("timeline");
+  const [want, setWant] = useState<string | null>(null);
   const rows = historyFor(town ?? inputs.town).map((h) => ({
     h,
     score: Math.abs(h.units - inputs.units) + (h.route === tree ? 0 : 6) + (h.zone === inputs.zone ? 0 : 2),
   }));
   if (rank) rows.sort((a, b) => a.score - b.score);
+  const names = rows.map((r) => r.h.name).join("|");
+
+  // A name in the timeline, or a link to #p-<project> from elsewhere, opens the table at that project's row.
+  const open = (name: string) => { setView("table"); setWant(`p-${precedentId(name)}`); };
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (id.startsWith("p-") && names.split("|").some((n) => `p-${precedentId(n)}` === id)) { setView("table"); setWant(id); }
+  }, [names]);
+  useEffect(() => {
+    if (view !== "table" || !want) return;
+    const t = window.setTimeout(() => { goTo(want); setWant(null); }, 60);
+    return () => window.clearTimeout(t);
+  }, [view, want]);
 
   const toggle = (
     <div className="seg small-seg" role="group" aria-label="Show the records as">
@@ -24,7 +39,7 @@ export function PrecedentTable({ rank = true, town }: { rank?: boolean; town?: s
       <button type="button" aria-pressed={view === "table"} onClick={() => setView("table")}>Table</button>
     </div>
   );
-  if (view === "timeline") return <>{toggle}<ProjectTimeline rows={rows.map((r) => r.h)} /></>;
+  if (view === "timeline") return <>{toggle}<ProjectTimeline rows={rows.map((r) => r.h)} onOpen={open} /></>;
 
   return (
     <>{toggle}

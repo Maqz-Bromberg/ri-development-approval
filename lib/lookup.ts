@@ -158,7 +158,15 @@ export async function siteFacts(lon: number, lat: number, signal?: AbortSignal, 
   if (sewer.status === "fulfilled") facts.sewer = sewer.value; else facts.failed.push("public sewer");
   if (water.status === "fulfilled") facts.water = water.value; else facts.failed.push("public water");
   if (parcel.status === "fulfilled") {
-    facts.parcelOptions = parcel.value.rows.features.map((f) => ({ platLot: f.attributes.PlatLot, acres: f.attributes.Acres, outline: f.geometry?.rings ?? null }));
+    // A parcel drawn as several shapes comes back as several features with one PlatLot: keep one option, with every shape.
+    const byLot = new Map<string, ParcelOption>();
+    for (const f of parcel.value.rows.features) {
+      const had = byLot.get(f.attributes.PlatLot);
+      const rings = f.geometry?.rings ?? null;
+      if (!had) byLot.set(f.attributes.PlatLot, { platLot: f.attributes.PlatLot, acres: f.attributes.Acres, outline: rings });
+      else byLot.set(f.attributes.PlatLot, { ...had, acres: Math.max(had.acres, f.attributes.Acres), outline: had.outline && rings ? [...had.outline, ...rings] : had.outline ?? rings });
+    }
+    facts.parcelOptions = Array.from(byLot.values());
     const only = facts.parcelOptions.length === 1 ? facts.parcelOptions[0] : null;
     if (only) { facts.platLot = only.platLot; facts.acres = only.acres; facts.outline = only.outline; }
     facts.nearby ||= parcel.value.nearby && facts.parcelOptions.length > 0;

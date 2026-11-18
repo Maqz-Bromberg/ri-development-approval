@@ -51,13 +51,29 @@ function siteAddress(label: string): string {
  */
 export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean; layout?: "stack" | "site" } = {}) {
   const { inputs, setInput, origin } = useProject();
-  const setTown = useSetTown();
+  const setTownRaw = useSetTown();
+  // A town set by the lookup itself, so the watch below can tell it from one the visitor picked.
+  const ownMove = useRef<string | null>(null);
+  const setTown = (name: string) => { if (name !== townNow.current) ownMove.current = name; setTownRaw(name); };
   const [q, setQ] = useState(inputs.address);
   const [state, setState] = useState<State>({ step: "idle" });
   const [applied, setApplied] = useState(false);
   const abort = useRef<AbortController | null>(null);
   const townNow = useRef(inputs.town);
   townNow.current = inputs.town;
+  /*
+   * A town picked by the visitor, from the list or the map, wins over the lookup: a lookup still running is stopped,
+   * and a result from another town is put away, so it cannot move the municipality back when it lands.
+   */
+  useEffect(() => {
+    if (ownMove.current === inputs.town) { ownMove.current = null; return; }
+    ownMove.current = null;
+    setState((st) => {
+      if (st.step === "working" || st.step === "pick" || st.step === "unreached") { abort.current?.abort(); return { step: "idle" }; }
+      if (st.step === "found" && st.facts.town !== inputs.town) { setQ(""); return { step: "idle" }; }
+      return st;
+    });
+  }, [inputs.town]);
   const mapRef = useRef<HTMLDivElement>(null);
 
   const locate = async (place: Candidate) => {
@@ -328,7 +344,7 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
           </div>
         )}
         <div ref={mapRef} className="site-where-map">
-          <ZoningMap placement="site" preview={preview} onPick={pickPoint} onTown={setTown} startStatewide={origin === "example" && inputs.lat == null} />
+          <ZoningMap placement="site" preview={preview} onPick={pickPoint} onTown={setTownRaw} startStatewide={origin === "example" && inputs.lat == null} />
         </div>
       </div>
     );

@@ -168,14 +168,15 @@ export function westerlyFindings(i: ProjectInputs): Finding[] {
 
 /** The overlays Westerly's ordinance has in force. The Zoning Atlas maps none of them. */
 export const WESTERLY_UNMAPPED = [
-  { abbr: "APZ", name: "Aquifer Protection Zone (Aquifer and Wellhead Protection Overlay)" },
-  { abbr: "WPZ", name: "Wellhead Protection Zone (Aquifer and Wellhead Protection Overlay)" },
-  { abbr: "AAO", name: "Airport Area Overlay District" },
-  { abbr: "SPO", name: "Salt Pond Overlay District" },
-  { abbr: "BBO", name: "Bed-and-Breakfast Overlay District" },
-  { abbr: "HMO", name: "Historic Mill Overlay District" },
-  { abbr: "GSO", name: "Granite Street Overlay District" },
-  { abbr: "WSO", name: "Wells Street Overlay District" },
+  // Which are on the Town's own GIS, from its layer legend (source wegis, saved by Maqz on 2026-11-18).
+  { abbr: "APZ", name: "Aquifer Protection Zone (Aquifer and Wellhead Protection Overlay)", where: "not on the Town's online GIS either: ask the Planning office for its map" },
+  { abbr: "WPZ", name: "Wellhead Protection Zone (Aquifer and Wellhead Protection Overlay)", where: "not on the Town's online GIS either: ask the Planning office for its map" },
+  { abbr: "AAO", name: "Airport Area Overlay District", where: "on the Town's online GIS as Airport 1 and 2 Overlay Areas, with the airport hazard zones A to E (westerly.mapxpress.net)" },
+  { abbr: "SPO", name: "Salt Pond Overlay District", where: "not on the Town's online GIS either: ask the Planning office for its map" },
+  { abbr: "BBO", name: "Bed-and-Breakfast Overlay District", where: "on the Town's online GIS (westerly.mapxpress.net): look the parcel up there" },
+  { abbr: "HMO", name: "Historic Mill Overlay District", where: "on the Town's online GIS (westerly.mapxpress.net): look the parcel up there" },
+  { abbr: "GSO", name: "Granite Street Overlay District", where: "on the Town's online GIS (westerly.mapxpress.net): look the parcel up there" },
+  { abbr: "WSO", name: "Wells Street Overlay District", where: "on the Town's online GIS (westerly.mapxpress.net): look the parcel up there" },
 ];
 
 export function westerlyOverlayFlags(i: ProjectInputs): Partial<Flags> {
@@ -188,7 +189,7 @@ export function westerlyOverlay(i: ProjectInputs, abbr: string): Finding[] | nul
       id: `we-${abbr.toLowerCase()}`, st: "flag", t: `${abbr === "WPZ" ? "Wellhead" : "Aquifer"} Protection Zone: the use table's column applies, and some uses need an aquifer protection permit`,
       p: "The permit is decided by the Zoning Board, on evidence that best practices protect the groundwater, and is in addition to any other relief. The use finding above already takes the zone's column into account. Storage of fuel and hazardous materials, impervious cover and car washing have their own rules in the section, which are not read here.",
       src: "wezo", pin: "§ 260-52", q: "an aquifer protection permit shall be required for those uses, as identified on the Zoning District Use Tables",
-      gap: "The Aquifer and Wellhead Protection Overlay's performance standards (§ 260-52 F to H) and the zone maps",
+      gap: "The Aquifer and Wellhead Protection Overlay's performance standards (§ 260-52 F to H) and the zone maps, which are not on the Town's GIS",
     }];
   }
   if (abbr === "AAO") {
@@ -196,7 +197,7 @@ export function westerlyOverlay(i: ProjectInputs, abbr: string): Finding[] | nul
       id: "we-airport", st: "flag", t: "Airport Area Overlay: development plan review by the Planning Board, and height limits near Westerly State Airport",
       p: "Any building other than a single-family home on a lot with a mapped confliction area goes to the Planning Board for development plan review. If it needs a variance, the Planning Board's review is advisory and the Zoning Board decides, sitting as the overlay's board of appeals. In the runway protection zone almost nothing may be built. The confliction area maps come from the airport's FAA Part 77 surfaces.",
       src: "wezo", pin: "§ 260-51 F", q: "the Planning Board review shall be advisory to the Zoning Board sitting as the Airport Area Overlay District Board of Appeals",
-      gap: "The Airport Area Overlay District maps and the confliction area maps 2A to 2D",
+      gap: "The confliction area maps 2A to 2D. The Town's GIS shows the Airport 1 and 2 Overlay Areas and the hazard zones A to E, but not the confliction areas",
     }];
   }
   return null;

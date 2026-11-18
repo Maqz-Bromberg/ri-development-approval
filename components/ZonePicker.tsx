@@ -74,7 +74,7 @@ function OverlayTicks({ overlays }: { overlays: AtlasDistrict[] }) {
         <label key={d.abbrvname} className="cb small"><input type="checkbox" checked={on.includes(d.abbrvname)} onChange={() => flip(d.abbrvname)} /> {d.abbrvname} · {d.name}</label>
       ))}
       {unmapped.map((d) => (
-        <label key={d.abbr} className="cb small"><input type="checkbox" checked={on.includes(d.abbr)} onChange={() => flip(d.abbr)} /> {d.abbr} · {d.name} <span className="muted">{TOWN_LAYERS[inputs.town]?.areas.some((a) => a.abbr === d.abbr) ? `(not on the Atlas map; the lookup finds it on ${inputs.town}'s own map)` : "(not on the Atlas map, so the lookup can't find it: check the town's zoning map)"}</span></label>
+        <label key={d.abbr} className="cb small"><input type="checkbox" checked={on.includes(d.abbr)} onChange={() => flip(d.abbr)} /> {d.abbr} · {d.name} <span className="muted">{TOWN_LAYERS[inputs.town]?.areas.some((a) => a.abbr === d.abbr) ? `(not on the Atlas map; the lookup finds it on ${inputs.town}'s own map)` : d.where ? `(not on the Atlas map: ${d.where})` : "(not on the Atlas map, so the lookup can't find it: check the town's zoning map)"}</span></label>
       ))}
     </fieldset>
   );

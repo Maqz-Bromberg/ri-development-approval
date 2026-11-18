@@ -21,6 +21,7 @@ export const SOURCES: Record<string, Source> = {
   wezo: { label: "Westerly Zoning Ordinance, Chapter 260 (eCode360, print view)", url: "https://ecode360.com/print/WE1997?guid=7756211&children=true" },
   wezt: { label: "Westerly Zoning Ordinance, Attachment 11: Zoning District Use Tables (eCode360)", url: "https://ecode360.com/attachment/336593/WE1997-260k%20Zoning%20Dis%20Use%20Tables.pdf" },
   wezd: { label: "Westerly Zoning Ordinance, Attachment 10: Schedule of Dimensional Regulations (eCode360)", url: "https://ecode360.com/attachment/336593/WE1997-260j%20Schedule%20of%20Dim%20Regs.pdf" },
+  wegis: { label: "Westerly GIS: layer legend, saved from the Town's online GIS (November 2026)", url: "http://westerly.mapxpress.net", town: "Westerly" },
   wer1co: { label: "Westerly Planning Board, Route One Corridor Overlay District: Comprehensive Plan and zoning amendments, final binder (2025)", url: "https://www.westerlyri.gov/DocumentCenter/View/15554/2025-R1CO-CP_ZN---FINAL-BINDER" },
   wezg: { label: "Westerly Zoning Ordinance, Appendix G: Large Parcel Alternative Development (eCode360)", url: "https://ecode360.com/attachment/336593/WE1997-260g%20Appendix%20G.pdf" },
   owts: { label: "RIDEM Regulations: Onsite Wastewater Treatment Systems, 250-RICR-150-10-6", url: "https://rules.sos.ri.gov/regulations/part/250-150-10-6" },

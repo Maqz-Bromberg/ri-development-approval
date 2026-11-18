@@ -23,7 +23,9 @@ A saved web page is now recognised by the address the browser writes inside it, 
 
 No screenshots here: providenceri.gov sits behind a firewall that refuses automated requests, and a headless browser was refused too, so I did not try to get round it. The steps below are exact instead.
 
-### 1a. Six City pages (missing since the first fetch)
+### 1a. Six City pages: in hand
+
+**Done 2026-11-18:** all six arrived and were filed by the address inside each saved page. Kept here for the record.
 
 Open each address in your browser and save it as *Webpage, HTML only*. Each fills a contact card or a step that now says "not read".
 
@@ -46,9 +48,9 @@ These are the City Plan Commission cases since 2023 that give a number of homes 
 
 | Case | Address | Homes | Area | Year page | Meetings to look under |
 | --- | --- | --- | --- | --- | --- |
-| 22-033MA | 116 Waterman Street | 25 | College Hill | [2023](https://www.providenceri.gov/planning/2023-cpc-meeting-materials/), [2025](https://www.providenceri.gov/planning/2025-cpc-meeting-materials/) | Jan 24 and Feb 21, 2023 (the February report is in hand); Aug 19, 2025 |
+| 22-033MA | 116 Waterman Street | 25 | College Hill | [2023](https://www.providenceri.gov/planning/2023-cpc-meeting-materials/), [2025](https://www.providenceri.gov/planning/2025-cpc-meeting-materials/) | **In hand:** the preliminary plan report and the February 2023 report. Still wanted: Aug 19, 2025 |
 | 22-069MA | 541 Hartford Avenue | 30 | Hartford | [2023](https://www.providenceri.gov/planning/2023-cpc-meeting-materials/) | Jan 24, 2023 |
-| 23-030MA | 108–110 Waterman Street | 26 | College Hill | [2023](https://www.providenceri.gov/planning/2023-cpc-meeting-materials/) | Jul 18 and Sep 19, 2023 |
+| 23-030MA | 108–110 Waterman Street | 26 | College Hill | [2023](https://www.providenceri.gov/planning/2023-cpc-meeting-materials/) | **In hand:** the master plan reports (the files say case 22-030MA) |
 | 23-064MI | 106 Reservoir Avenue | 21 | Reservoir | [2024](https://www.providenceri.gov/planning/2024-cpc-meeting-materials/) | Feb 20, 2024 |
 | 24-049MA | 279 Thayer Street | 16 | College Hill | [2024](https://www.providenceri.gov/planning/2024-cpc-meeting-materials/) | Sep 17, 2024 |
 | 24-050MA | 400 Elmwood Avenue | 24 | Elmwood | [2024](https://www.providenceri.gov/planning/2024-cpc-meeting-materials/) | Sep 17 and Oct 15, 2024 |
@@ -86,15 +88,16 @@ Westerly's town site and its GIS show in a browser, so these have screenshots. T
 
 ![The GIS disclaimer, with the Accept button outlined](manual-fetches/westerly-2-accept.png)
 
-**3. In the map, open the layer list and tell me what it offers.** I could not look past the disclaimer. What matters:
-- whether there are layers for the **overlay districts**: Aquifer Protection Zone, Wellhead Protection Zone, Airport Area, Salt Pond, Bed-and-Breakfast, Historic Mill, Granite Street, Wells Street;
-- whether a layer can be clicked to show a district at a point.
+**3. The layer list: done.** Maqz saved the GIS legend on 2026-11-18 (source `wegis`). What it shows, now in the site:
+- **On the Town's GIS:** the Bed-and-Breakfast, Granite Street, Historic Mill and Wells Street overlays; the Airport 1 and 2 Overlay Areas and the airport hazard zones A to E; four historic districts (Wilcox Park, Bradford, Watch Hill, Westerly Downtown), which the ordinance does not treat as zoning overlays (its Historic Overlay is reserved); seven fire districts.
+- **Not on it:** the Aquifer Protection and Wellhead Protection zones, and the Salt Pond Overlay. Each overlay's tick on Site now says which.
+- **An R-6 district** on the zoning layer that the ordinance does not have. Its only R-6 is a 1998 map amendment ("From M-1 to R-6"), so it is probably an old label.
 
-A screenshot of the layer list is enough. If the overlays are there, the next step is to ask whether the town publishes them as a map service the site's lookup could ask, as Providence's does; that would end the hand ticks (debt 29).
+The GIS is a viewer behind a disclaimer, not a service the lookup can ask, so the overlays stay ticks (debt 29). **To ask the Planning office**, when someone does: whether the zoning and overlay layers are published as a map service; where the aquifer, wellhead and Salt Pond maps are; and what R-6 is.
 
 **4. The Official Zoning Map as a PDF**, if one is posted: search the town site for "zoning map" (<https://www.westerlyri.gov/Search?searchPhrase=zoning%20map>), and save the PDF. The ordinance adopts the "Official Zoning Map, Town of Westerly, Rhode Island, July 1, 2019", as amended (§ 260-16).
 
-**5. The Airport Area Overlay's confliction area maps 2A to 2D**, and the Aquifer and Wellhead zone maps, if the Planning or Zoning office posts them.
+**5. The Airport Area Overlay's confliction area maps 2A to 2D** (the GIS shows the overlay areas and hazard zones, not the confliction areas), and the Aquifer, Wellhead and Salt Pond maps, if the Planning or Zoning office posts them.
 
 ## 3. Ordinances for chunks 5 to 7 and later
 

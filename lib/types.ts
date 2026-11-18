@@ -218,7 +218,7 @@ export interface TownRules {
   /** An overlay district's own findings, where its article has been read. Null leaves the overlay as a named gap. */
   overlayRules?: (i: ProjectInputs, abbr: string) => Finding[] | null;
   /** Overlays the ordinance has that the Atlas does not map: offered as ticks, since the lookup cannot find them */
-  unmappedOverlays?: { abbr: string; name: string }[];
+  unmappedOverlays?: { abbr: string; name: string; /** Where to see it on a map when the Atlas has not got it: the town's own GIS, or nowhere found */ where?: string }[];
   /** The Atlas's kind of district corrected from the ordinance, by abbreviation ("Primarily Residential" and so on) */
   kinds?: Record<string, string>;
   /** Parking, dimensions and the like for a non-residential use; "mixed" for the commercial space of a mixed-use building */

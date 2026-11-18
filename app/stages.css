@@ -477,6 +477,21 @@
 .rf-card:focus-visible { outline: 2px solid var(--act); outline-offset: 2px; }
 .rf-card.is-focus { cursor: default; }
 .rf-use { margin-top: 4px; padding: 6px 14px; font-size: 13px; }
+/* The four marks of coverage (ARD D53): a glyph and a word for each state, never colour alone. */
+.marks { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 6px 0; padding: 0; }
+.mk { font-size: 12px; line-height: 1.6; padding: 0 8px; border-radius: 99px; border: 1px solid rgba(0, 0, 0, .12); white-space: nowrap; cursor: help; }
+.mk-read { background: #3E74B8; color: #fff; }
+.mk-partly { background: #C3D5EC; color: var(--ink); }
+.mk-none { background: transparent; color: var(--mut); border-style: dashed; }
+.marks.small { margin: 4px 0 0; gap: 3px 4px; }
+.marks.small .mk { font-size: 11px; padding: 0 6px; }
+.mk-notes { list-style: none; margin: 4px 0 8px; padding: 0; display: grid; gap: 2px; }
+.town-card .marks { grid-column: 1 / -1; }
+.shade-by { border: 0; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.shade-by legend { float: left; margin-right: 6px; color: var(--mut); }
+.shade-by label { font-size: 13px; display: inline-flex; gap: 4px; align-items: center; cursor: pointer; }
+.shade-by label.on { font-weight: 700; }
+.lk-btn.static { cursor: default; }
 /* A town's boards on its Records card (D53, chunk 2) */
 .rdx-boards ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
 .rdx-boards li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 8px; align-items: baseline; }

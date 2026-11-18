@@ -92,7 +92,7 @@ function Actions({ s }: { s: ReturnType<typeof useStart> }) {
 }
 
 function Coverage() {
-  return <p className="small muted landing-cov">All 39 towns run on state law and the Zoning Atlas. Cumberland is read in full, and Providence is a trial reading the city has not confirmed. <Link href="/towns">What has been read, town by town</Link></p>;
+  return <p className="small muted landing-cov">All 39 towns run on state law and the Zoning Atlas, with their boards from the state Open Meetings site. Cumberland is read in full, Providence is a trial reading the city has not confirmed, and Charlestown and Westerly have their zoning partly read. <Link href="/towns">What has been read, town by town</Link></p>;
 }
 
 function Meet() {

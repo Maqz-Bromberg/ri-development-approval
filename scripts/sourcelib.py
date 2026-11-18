@@ -21,8 +21,8 @@ ENTRY = re.compile(r'^\s*(\w+): \{ label: "((?:[^"\\]|\\.)*)", url: "([^"]+)"(?:
 
 def towns():
     text = (ROOT / "lib/data/towns.ts").read_text()
-    names = set(re.findall(r'name: "([^"]+)", county', text))
-    for group in re.findall(r'L1\("[^"]+", \[([^\]]+)\]\)', text): names.update(re.findall(r'"([^"]+)"', group))
+    names = set()
+    for group in re.findall(r'^  (?:Bristol|Kent|Newport|Providence|Washington): \[([^\]]+)\]', text, re.M): names.update(re.findall(r'"([^"]+)"', group))
     return sorted(names, key=len, reverse=True)  # longest first, so "North Providence" wins over "Providence"
 
 

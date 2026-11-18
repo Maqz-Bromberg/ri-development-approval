@@ -262,14 +262,14 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
                 </fieldset>
               )}
               {f.failed.length > 0 && <p className="lookup-note is-warn">Couldn&apos;t read: {f.failed.join(", ")}. Enter those by hand.</p>}
-              {covered && f.town && townInfo(f.town).level < 3 && (
+              {covered && f.town && !townInfo(f.town).marks.steps && (
                 <p className="lookup-note is-warn">
-                  {f.town}: only zoning and state-law steps have been read. Local checklists, contacts and meeting dates are not shown for this town.
+                  {f.town}: local checklists and forms have not been read, so the steps are state law.{townInfo(f.town).marks.offices ? " Its boards and their meetings are from the state Open Meetings site." : " Its boards and contacts have not been read either."}
                 </p>
               )}
               {covered && f.town && townInfo(f.town).trial && (
                 <p className="lookup-note is-warn">
-                  {f.town}: local steps come from a trial reading that the city has not confirmed.{townInfo(f.town).part ? ` Hearings and example projects were read for ${townInfo(f.town).part!.name} only.` : ""}
+                  {f.town}: local steps come from a trial reading that the city has not confirmed.{townInfo(f.town).parts?.length && !townInfo(f.town).marks.hearings ? ` Hearings and example projects were read for ${townInfo(f.town).parts!.map((p) => p.name).join(" and ")} only.` : ""}
                 </p>
               )}
               <div className="actions">

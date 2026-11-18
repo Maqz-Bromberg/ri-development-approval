@@ -9,6 +9,7 @@ import { condOK, fmt, projectLabel, routeText } from "@/lib/engine";
 import { sortedFindings } from "@/lib/findings";
 import { goTo } from "@/lib/goTo";
 import { stageOf } from "@/lib/stages";
+import { MarkChips } from "../Coverage";
 import { Icon } from "../Icon";
 import { useProject } from "../ProjectProvider";
 import { useCalendarFile } from "../useCalendarFile";
@@ -50,6 +51,7 @@ function SiteCard() {
       </dl>
       <p className="verd"><span className={`dot ${standing}`} aria-hidden="true" /><b>{STATE[standing]}</b> <span>{v.fails.length + v.flags.length ? `${v.fails.length + v.flags.length} to settle` : "no blockers or open questions"}</span></p>
       <p className="cov small"><Link href="/towns">{t.name}: level {t.level} of 4, {lv.name.toLowerCase()}{t.trial ? " (trial)" : ""}</Link></p>
+      <MarkChips marks={t.marks} small />
     </div>
   );
 }

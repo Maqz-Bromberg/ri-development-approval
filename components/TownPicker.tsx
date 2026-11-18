@@ -80,7 +80,7 @@ export function TownPicker() {
               >
                 <span className={`tp-level l${t.level}`} aria-hidden="true">{t.level}</span>
                 <span className="zp-opt"><b>{t.name}</b> <span className="muted small">{t.county} County</span></span>
-                <span className="small muted">{LEVELS[t.level].name}{t.trial ? " · trial" : ""}{t.part ? ` · ${t.part.name} level ${t.part.level}` : ""}</span>
+                <span className="small muted">{LEVELS[t.level].name}{t.trial ? " · trial" : ""}{t.parts?.map((p) => ` · ${p.name} level ${p.level}`).join("")}</span>
               </li>
             )) : <li className="zp-none" role="option" aria-selected={false}>No Rhode Island municipality matches.</li>}
           </ul>

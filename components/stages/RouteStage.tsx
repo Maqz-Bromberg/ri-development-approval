@@ -69,7 +69,7 @@ export function RouteStage() {
         </div>
         {historyFor(inputs.town).length > 0
           ? <>
-              {townInfo(inputs.town).part && <p className="muted small">Read for {townInfo(inputs.town).part!.name} only. {townInfo(inputs.town).part!.note}</p>}
+              {!townInfo(inputs.town).marks.hearings && townInfo(inputs.town).parts?.map((p) => <p key={p.name} className="muted small">Read for {p.name} only. {p.reason} {p.note}</p>)}
               <PrecedentTable />
             </>
           : <p className="muted">No projects from {inputs.town} have been read yet. Cumberland's are on the <Link href="/records">Records page</Link>, and show how one town applied the same state law.</p>}

@@ -12,7 +12,7 @@ import {
   RADIUS, ROUTE_COLOR, STRUCTURE, STRUCTURE_ORDER, ZONE_KIND, ZONE_KIND_ORDER, districtShapes, esc, inRings, metresBetween, parcelsNear, ringCenter, townShapes, zoneKind,
   type DistrictShape, type LatLon, type Parcel, type StructureClass, type TownShape, type ZoneKind,
 } from "@/lib/map";
-import { LEVELS, townInfo } from "@/lib/data/towns";
+import { LEVELS, marksLine, townInfo } from "@/lib/data/towns";
 import type { PrecedentStatus, TreeId } from "@/lib/types";
 import { useAtlas } from "./useAtlas";
 import { useProject } from "./ProjectProvider";
@@ -146,7 +146,8 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
   const townTip = (name: string) => {
     const t = townInfo(name), shape = towns?.find((x) => x.name === name);
     return `<b>${esc(name)}</b><br>Level ${t.level}: ${esc(LEVELS[t.level].name)}${t.trial ? " (trial)" : ""}`
-      + (t.part ? `<br>${esc(t.part.name)}: level ${t.part.level}` : "")
+      + `<br>${esc(marksLine(t.marks))}`
+      + (t.parts ?? []).map((p) => `<br>${esc(p.name)}: level ${p.level}`).join("")
       + (shape?.districts ? `<br>${shape.districts} zoning districts` : "")
       + (shape?.by4 ? `<br>4+ family by right on ${esc(shape.by4)} of the land (Atlas)` : "")
       + (name === town ? "<br><i>The project's town</i>" : "<br><i>Click to choose</i>");

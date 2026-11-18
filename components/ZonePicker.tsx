@@ -12,6 +12,7 @@ import { Info } from "./Info";
 import { useProject } from "./ProjectProvider";
 import { useAtlas } from "./useAtlas";
 import { useLookedUp } from "./useLookedUp";
+import { TOWN_LAYERS } from "@/lib/data/townLayers";
 
 /*
  * The zoning district, chosen by typing (a filtered list) or by browsing the town's districts by kind, each kind
@@ -73,7 +74,7 @@ function OverlayTicks({ overlays }: { overlays: AtlasDistrict[] }) {
         <label key={d.abbrvname} className="cb small"><input type="checkbox" checked={on.includes(d.abbrvname)} onChange={() => flip(d.abbrvname)} /> {d.abbrvname} · {d.name}</label>
       ))}
       {unmapped.map((d) => (
-        <label key={d.abbr} className="cb small"><input type="checkbox" checked={on.includes(d.abbr)} onChange={() => flip(d.abbr)} /> {d.abbr} · {d.name} <span className="muted">(not on the Atlas map, so the lookup can&apos;t find it: check the town&apos;s zoning map)</span></label>
+        <label key={d.abbr} className="cb small"><input type="checkbox" checked={on.includes(d.abbr)} onChange={() => flip(d.abbr)} /> {d.abbr} · {d.name} <span className="muted">{TOWN_LAYERS[inputs.town]?.areas.some((a) => a.abbr === d.abbr) ? `(not on the Atlas map; the lookup finds it on ${inputs.town}'s own map)` : "(not on the Atlas map, so the lookup can't find it: check the town's zoning map)"}</span></label>
       ))}
     </fieldset>
   );
@@ -169,7 +170,11 @@ export function ZonePicker({ onMap }: { onMap?: () => void }) {
             <span className="small muted">{ZONE_KIND[k].label}</span>
             <span className="small">{inputs.kind === "commercial" ? `${USE_LABEL[inputs.use].split(" (")[0]} use` : `${housingTypeLabel(inputs.units)} housing`}: <span className={`treat ${f.cls}`}>{f.label}</span></span>
             {note && <span className="small lookup-note is-warn">{note}</span>}
-            {(inputs.overlays ?? []).length > 0 && <span className="small">Also in the {inputs.overlays.join(", ")} overlay: its rules are not read.</span>}
+            {(inputs.overlays ?? []).length > 0 && (() => {
+              const unread = inputs.overlays.filter((o) => !townRules(inputs.town).overlayRules?.(inputs, o));
+              const read = inputs.overlays.filter((o) => !unread.includes(o));
+              return <span className="small">Also in {[read.length ? `${read.join(", ")} (its rules are in the check)` : "", unread.length ? `${unread.join(", ")} (its rules are not read)` : ""].filter(Boolean).join("; ")}.</span>;
+            })()}
           </div>
           <button type="button" className="btn ghost zp-change" onClick={() => { setEditing(true); setTimeout(() => input.current?.focus(), 0); }}>Change</button>
         </div>

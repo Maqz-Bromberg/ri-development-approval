@@ -20,8 +20,8 @@ Everything shown is one of four things:
 | Kind | Example | Where it lives | How it reaches the page |
 | --- | --- | --- | --- |
 | Statewide data, live | Zoning Atlas districts and town outlines, tax parcels, address search; state roads, mapped wetlands and bus stops as suggestions | Public services, queried from the browser | `lib/lookup.ts`, `lib/map.ts`, `components/useAtlas.ts` |
-| A town's own reading | Steps, checklists, contacts, calendar, findings | Cumberland: `trees.ts`, `contacts.ts`, `calendars/`. Providence: `lib/data/towns/providence/` | `lib/data/towns/overlay.ts` |
 | State law | The five routes, statutory clocks, appeals | `lib/data/state/trees.ts` | `lib/engine.ts` |
+| A town's own reading | Steps, checklists, contacts, calendar, findings, review areas | `lib/data/towns/<town>/` (Cumberland's contacts and calendar still in `contacts.ts` and `calendars/`) | `lib/data/towns/overlay.ts` |
 | Every town's boards | Planning, zoning and governing boards, when they meet, how minutes are filed | `lib/data/bodies.json`, from the state Open Meetings site | `lib/data/bodies.ts`, `lib/data/contacts.ts` |
 | A town's record | Projects, dated events, hearing concerns | `history.ts`, `timelines.json`, `objections.ts`, and each town's folder | `lib/timelines.ts`, components |
 
@@ -48,15 +48,18 @@ lib/data/
   contacts.ts         Cumberland's offices + state agencies; other towns' boards from bodies.json
   bodies.json         every town's land-use boards from the state Open Meetings site (fetch_bodies.py)
   bodies.ts           reads it: boards by role, meeting pattern, minutes, a board as a contact
+  townLayers.ts       a town's own map layers the lookup asks (Providence's zoning map and review areas)
   sources.ts          every cited document, by id. Providence ids start with p.
   towns.ts            the 39 towns: four marks (zoning, boards, steps, hearings), trial mark, gaps, parts
   towns/
-    overlay.ts        the seam: a town's steps, route rule, findings and schedule
+    overlay.ts        the seam: a town's steps, route rule, findings, overlays, inserted steps, schedule
     cumberland/       trees.ts (its whole steps for all five routes), commercial.ts
     providence/
       steps.ts        whole steps per route, and the town's route rule
+      areas.ts        review areas: historic districts, downtown and I-195 design review, institutional overlays
       rules.ts        findings for a site, and schedule durations
       town.ts         contacts, board calendar, where records are published
+      agenda.json     every City Plan Commission case since 2023 (list_agenda_items.py)
       history.ts      recorded projects        timelines.json   their dated events
       hearings.ts     documented concerns, by concern id
   sourceNotes.ts      what each kind of source needs to stay true (shown on /dev)
@@ -155,7 +158,9 @@ These were stated by Maqz or settled in review. A change that breaks one needs a
 | D54 | 2026-11-18 | **Four marks in place of one level** (D53, answer 3). Each town, each part and each kind of project carries zoning, boards and records, local steps, and hearings and precedent, each read, partly read or not read, with a date and a note. Levels 1 to 4 are worked out from the last three (`levelOf`), never typed, so the old wording holds; zoning is shown beside the level. Chips carry a glyph and a word for each state, not colour alone. The Towns map shades by the level or by any one mark. | decided | Debt 20: Charlestown and Westerly have zoning read and no steps, which one level could not say. Cost: four short notes per town to keep true. |
 | D55 | 2026-11-18 | **Level 2 for every town from the state Open Meetings site** (`fetch_bodies.py`, `lib/data/bodies.json`). For each town its planning, zoning, governing, technical review, design and historic boards: the body's page, its kind (elected or appointed, or a state body), meetings since 2023, the usual day and time where most meetings follow one, cancellations, how long minutes take to be filed, and whether the planning body's latest minutes have text or are a scan. The boards mark is "partly": the office's address, hours and the town's own record pages are not read. Outside Cumberland and Providence a step's board is the town's own body with these lines, in place of Cumberland's office with the name changed. | decided | The site's search for a public body matches a phrase and returns at most 20, so each kind of board is asked by name. Cost: a snapshot, refreshed by running the script (debt 28). |
 | D56 | 2026-11-18 | **The split** (debt 1): the five state-law routes are `lib/data/state/trees.ts`, generated once from what the engine made of Cumberland's steps for any other town, and edited by hand from here on; Cumberland's whole steps are its overlay (`towns/cumberland/trees.ts`); the word-matching and source-id patterns are gone, and a state step names the town by "{town}". Checked by a stored comparison (`scripts/engine/snapshot.ts`, debt 3): every case matched before and after, including each step's text, clock and documents. Then, on purpose, the state routes stopped naming Cumberland. | decided | Cost: a change to state law is now made in the state routes and in each town's own copy of a step (D1 as before). Cumberland's housing findings are still in `analyze`. |
+| D57 | 2026-11-18 | **A town's own map layers, asked by the lookup** (`lib/data/townLayers.ts`). Once it knows the town, the lookup asks that town's services: its present district (shown beside the Atlas's, with a warning where they differ: the retired R-2 and C-1 are caught at the address, debt 13) and its review areas, which become the project's overlays. Providence's: local historic districts and landmark buildings, the Downcity and East Side I-195 overlays, the I-195 Redevelopment District's parcels (the state's layer), the institutional and transit overlays. All answer a browser and a script. | decided | D53 answer 1, built as areas found at the site rather than drawn parts: a part's edges are the City's own map. Amends D4: the parts that change the route are looked up; drawn parts remain for records. |
 | D58 | 2026-11-18 | **Overlays can set flags, a town can insert steps, and a condition can say "not".** `TownRules.overlayFlags` (historic, ddrc, i195, aquifer, airport), `extraSteps` (placed before a named step, kept by its own condition), and `!flag` in a condition. Also `moreFindings`, `affordableLines`, `inclusionaryRead` and `routeStatus`. | decided | What Providence's review areas and Westerly's overlays needed, kept general for the next towns. |
+| D59 | 2026-11-18 | **Providence's review areas, from the ordinance** (`towns/providence/areas.ts`): in the Downcity or East Side I-195 overlay, or on an I-195 parcel, the route is development plan review by the Downtown Design Review Committee (by the I-195 Commission on its parcels) whatever the number of units, because such development is not a land development project (§ 1904.C.2.b); in a historic district, a certificate of appropriateness from the Historic District Commission on every route (§ 1911), and downtown review does not apply there (§ 1907.C.3); an institutional overlay is flagged for a master plan (§ 1904.C.2.a). Those bodies' clocks are not read. | trial | Part of Providence's trial reading (D11). The ordinance confirmed the note already in `steps.ts`. |
 ## 6. Sources, and how each is reached
 
 `.sources/INDEX.md`, written by `organize_sources.py`, lists every source with whether it is in hand. On 2026-11-14: 68 of 83.
@@ -166,8 +171,10 @@ These were stated by Maqz or settled in review. A change that breaks one needs a
 | Statutes, court decisions | Script | `.sources/` |
 | State Open Meetings site: agendas and minutes for every public body | Script, with a two-second pause | `.sources/` |
 | ClerkBase: Cumberland agendas and minutes | Script (`scripts/timelines/fetch.py`) | Fetched fresh by the monthly action |
-| providenceri.gov: regulations, forms, staff reports, schedule, **zoning ordinance** | By hand. It answers 403 to a script. | `.sources/<id>.pdf` |
+| providenceri.gov: regulations, forms, staff reports, schedule, **zoning ordinance** | By hand. It answers 403 to a script, and a firewall (Sucuri) refuses scripts after a few requests (checked 2026-11-18). | `.sources/<id>.pdf` |
 | State Open Meetings site: every town's boards, their meetings and minutes (D55) | Script (`fetch_bodies.py`), with the site's public-body search by name and a two-second pause; a 429 waits a minute | `lib/data/bodies.json` (committed); raw pages in `.sources/<town>/openmeetings/` |
+| State Open Meetings site: a board's agendas, item by item (chunk 0) | Script (`list_agenda_items.py`) | `lib/data/towns/<town>/agenda.json`; agendas in `.sources/<town>/openmeetings/` |
+| City of Providence zoning service (`webgis.providenceri.gov`, Planning/Zoning): base zoning and overlays; RIGIS I-195 Redevelopment District parcels | Live, from the browser, by the lookup (D57); also answers a script | Not kept |
 | YouTube meeting recordings | Script (`fetch_captions.py`), captions only | `.sources/<id>.txt` |
 | Scanned minutes | Fetched, but no text. Read by eye. | `.sources/`, marked `scan` in the data |
 | Zoning ordinances on eCode360: 14 towns officially (the Secretary of State's list), 4 more as copies | Script. Tables are PDF attachments with a text layer, listed on the zoning chapter's page | `.sources/<town>/rules/` |
@@ -192,7 +199,7 @@ The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and
 10. **One recording has no captions** (Sept 16, 2025, the meeting whose minutes are also scanned). Reading it needs local speech recognition, which is a larger tool than anything used so far.
 11. **Scripts read `sources.ts` as text.** Each entry must stay on one line in the form `id: { label, url }`. A reformat would silently hide sources from the fetch and filing scripts.
 12. **Town and kind of a source are inferred**, from its label and URL. A wrong guess only misfiles a local copy, since lookups are by id, but the index would mislead.
-13. **The district list for every town comes from the 2024 Atlas.** For Providence it offers two districts that no longer exist and cannot say where their land went. The findings flag it, and the district picker now marks both (`TownRules.retired`); the list itself is not corrected.
+13. **The district list for every town comes from the 2024 Atlas.** For Providence it offers two districts that no longer exist. The picker marks both (`TownRules.retired`), and since 2026-11-18 the lookup reads the City's own zoning map and says the present district where it differs (D57). The list itself is not corrected, and a district the Atlas lacks (R-1A, R-4 if absent) cannot be chosen.
 14. **Applied facts rest on four more live services** (D19). If one moves or changes its fields, its fact is left as it was ("couldn't read") rather than set wrong, but nothing reports it. Frequency of transit and mobility hubs are not checked at all, yet a nearby stop now ticks transit, which lowers the parking finding; the applicant must untick it if service is infrequent.
 15. **The kept entry while an alternative is tried lives only in the browser** (D21). A share link made mid-trial carries the alternative, not the entry.
 16. **Mixed use beyond the state's line is flagged, not routed** (D30): the route stays the one the units give. Was: ignored outright. (§ 45-23-32(19)(i)(C): minor only up to 6 units and 2,500 sq ft of commercial space). Outside Providence, 7 to 9 units with commercial space are shown as minor. Phase 0 of the commercial plan.
@@ -209,6 +216,8 @@ The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and
 26. **The Calendar's month view is 31 columns wide** and scrolls sideways under about 820 px of stage. Fine at laptop width and up; on a phone it is a strip to scroll.
 27. **A source's type and jurisdiction are read from its label** (`sourceType`, `sourcePlace`). A label worded unusually lands in the wrong group on Sources and Records (a briefing naming two towns did, until the Atlas ids were made statewide). As debt 12, the cost is a misfiled entry, not a wrong answer.
 28. **Every town's boards are a snapshot** (D55): `bodies.json` holds what the state site said when `fetch_bodies.py` was last run, and the page says the date. A board is found by its name (a board named unusually is missed; a town's boards under "Town of ..." would be), the site lists only a body's latest hundred meetings, and the usual day is said only where most meetings follow it.
+30. **The review bodies' clocks are not read** (D59, D60): Providence's Historic District Commission, Downtown Design Review Committee and I-195 Commission, and Westerly's aquifer and airport reviews, sit in the schedule with the 30-day placeholder any unplanned step gets.
+31. **providenceri.gov is behind a firewall** that refuses scripts after a few requests (checked 2026-11-18). Its staff reports, which turn a listed case into precedent, are fetched by hand (`docs/manual-fetches.md`).
 
 ## 8. Open questions
 

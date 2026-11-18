@@ -1,0 +1,1465 @@
+{
+ "town": "Providence",
+ "body": 2767,
+ "since": "2023-01-01",
+ "read": "2026-11-18",
+ "source": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2767",
+ "meetings": 55,
+ "scanned": [
+  "2024-04-23",
+  "2024-07-16",
+  "2025-02-18"
+ ],
+ "noAgenda": [],
+ "projects": [
+  {
+   "case": "22-033MA",
+   "address": "116 Waterman Street",
+   "lot": "AP 12 Lots 180 and 260",
+   "area": "College Hill",
+   "units": 25,
+   "meetings": [
+    {
+     "date": "2023-01-24",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to demolish the existing buildings to construct a new mixed-use five story building with commercial use on the ground floor and 25 dwelling units on the four upper stories in the C-2 zone. The applicant is seeking preliminary plan approval and requesting a dimensional adjustment to maintain a height of 58’ and five stories where 50’ and four stories are allowed by right ",
+     "meeting": 1036074
+    },
+    {
+     "date": "2023-02-21",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to demolish the existing buildings to construct a new mixed-use five story building with commercial use on the ground floor and 25 dwelling units on the four upper stories in the C-2 zone. The applicant is seeking preliminary plan approval and requesting a dimensional adjustment to maintain a height of 58’ and five stories where 50’ and four stories are allowed by right ",
+     "meeting": 1037408
+    },
+    {
+     "date": "2025-08-19",
+     "heading": "City Council Referral · Major Change",
+     "what": "The applicant is requesting a major change to amend a design waiver granted with an approved plan for a mixed use development in the C-2 zone. The applicant is proposing to add an additional dwelling unit on the first floor – for vote (AP 12 Lot 492, College Hill)",
+     "meeting": 1077673
+    }
+   ]
+  },
+  {
+   "case": "22-069MA",
+   "address": "541 Hartford Ave",
+   "lot": "AP 113 Lots 232, 233, 235 and 244",
+   "area": "Hartford",
+   "units": 30,
+   "meetings": [
+    {
+     "date": "2023-01-24",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is requesting to combine master and preliminary plan approval to construct a 47’ tall, four story, mixed-use development with commercial on the ground floor and 30 dwelling units on the three upper stories in the C-2 zone. A dimensional adjustment for parking is requested where 33 total spaces are required but 20 will be provided. Design waivers for the width of recessed entries, and",
+     "meeting": 1036074
+    }
+   ]
+  },
+  {
+   "case": "22-067MA",
+   "address": "50 Branch Ave",
+   "lot": "AP 74 Lot 98",
+   "area": "Mt Hope",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-02-21",
+     "heading": "Major Land Development Project · Public Informational Meeting",
+     "what": "The applicant is proposing to partially demolish a portion of the existing building and construct a five story, approximately 73’ tall self-storage facility with 1,399 units in the C-3 zone, keeping the front portion of the building. The applicant is seeking a dimensional adjustment for height where the maximum height is 50’ and four stories. A dimensional adjustment for parking is also requested ",
+     "meeting": 1037408
+    },
+    {
+     "date": "2023-05-16",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to partially demolish a portion of the existing building and construct a five story, approximately 73’ tall self-storage facility with 1,399 units in the C-3 zone, keeping the front portion of the building. The applicant is seeking preliminary plan approval – for action (AP 74 Lot 98, Mt Hope)",
+     "meeting": 1042841
+    }
+   ]
+  },
+  {
+   "case": "23-006UDR",
+   "address": "797 Academy Ave",
+   "lot": "AP 85 Lot 555",
+   "area": "Elmhurst",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-02-21",
+     "heading": "Minor Subdivision · Public Hearing – Unified Development Review",
+     "what": "The applicant is proposing to subdivide the subject lot which measures 8,973 SF and zoned R-1, into two lots of 4,354 SF and 4,562 SF. Relief from the minimum lot size requirement of 5,000 SF is requested pursuant to unified development review – for action (AP 85 Lot 555, Elmhurst)",
+     "meeting": 1037408
+    },
+    {
+     "date": "2024-03-19",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one-year extension of the preliminary plan approval of the subject minor subdivision – for vote (AP 85 Lot 555, Elmhurst)",
+     "meeting": 1055904
+    }
+   ]
+  },
+  {
+   "case": "23-007UDR",
+   "address": "740 Plainfield Street",
+   "lot": "AP 110 Lots 143, 148 and 156",
+   "area": "Silver Lake",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-02-21",
+     "heading": "Major Land Development Project · Public Hearing – Unified Development Review",
+     "what": "The applicant is requesting master plan approval to construct an educational facility for grades K-8 on the site of a former market with vacant lots zoned C-2. The building will provide approximately 41,000 SF of space, and will maintain a height of 43’ and 3 stories. The applicant is seeking dimensional variances from the front and corner side setback requirements pursuant to UDR. Buildings are r",
+     "meeting": 1037408
+    },
+    {
+     "date": "2023-04-18",
+     "heading": "Major Land Development Project · Public Hearing – Unified Development Review – Withdrawal Of Application",
+     "what": "The applicant has withdrawn the application – for action (AP 110 Lots 143, 148 and 156, Silver Lake)",
+     "meeting": 1041876
+    }
+   ]
+  },
+  {
+   "case": "23-008MI",
+   "address": "665 Plainfield Street",
+   "lot": "AP 112 Lot 418",
+   "area": "Hartford",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-02-21",
+     "heading": "Minor Subdivision",
+     "what": "Petitioner: Jitender Behl The petitioner is proposing to subdivide the subject lot which is zoned C-2 and measures 18,125 SF, into three lots of 7,245 SF, 5,088 SF and 5,794 SF– for action (AP 112 Lot 418, Hartford)",
+     "meeting": 1037408
+    }
+   ]
+  },
+  {
+   "case": "23-013MI",
+   "address": "55 George M Cohan Boulevard",
+   "lot": "AP 18 Lot 355",
+   "area": "Fox Point",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-03-21",
+     "heading": "Institutional Master Plan Amendment · Minor Subdivision",
+     "what": "The applicant is requesting to subdivide the subject lot also known as parcel 9 of the I-195 Development District, measuring approximately 45,886 SF and zoned C-2, into two lots of 27,834 SF and 18,052 SF – for action (AP 18 Lot 355, Fox Point)",
+     "meeting": 1040398
+    }
+   ]
+  },
+  {
+   "case": "23-016MI",
+   "address": "781 Manton Ave",
+   "lot": "AP 34 Lot 339",
+   "area": "Manton",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-03-21",
+     "heading": "Minor Subdivision",
+     "what": "The applicant is proposing to subdivide the subject lot which measures approximately 49,475 SF and zoned R-2, into four lots measuring approximately 18,449 SF, 9,047 SF, 11,554 SF and 10,426 SF – for action (AP 34 Lot 339, Manton)",
+     "meeting": 1040398
+    }
+   ]
+  },
+  {
+   "case": "23-017UDR",
+   "address": "56 Bridgham Street",
+   "lot": "AP 30 Lot 665",
+   "area": "West End",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-04-18",
+     "heading": "Institutional Master Plan Amendment · Minor Subdivision",
+     "what": "Subdivision of a through lot with frontage on Bridgham and Arch Streets measuring 12,200 SF into two lots measuring approximately 7,142 SF and 5,257 SF in the R-3 zone. Pursuant to Unified Development Review, the applicant is seeking a dimensional variance from the lot width requirement where a width of 50’ is required but 40’ will be provided on Arch Street – for action (AP 30 Lot 665, West End)",
+     "meeting": 1041876
+    }
+   ]
+  },
+  {
+   "case": "23-021MA",
+   "address": "269 Wickenden Street",
+   "lot": "AP 18 Lots 190 and 192",
+   "area": "Fox Point",
+   "units": 75,
+   "meetings": [
+    {
+     "date": "2023-04-18",
+     "heading": "Major Land Development Project",
+     "what": "The applicant is requesting master plan approval to construct a five story mixed-use building with a cellar that will provide commercial space, internal parking and 62 residential units in the C-2 zone. The applicant is seeking a dimensional adjustment for the proposed height of five stories and approximately 65’. A design waiver from the height of window sills over 2’ from grade is also requested",
+     "meeting": 1041876
+    },
+    {
+     "date": "2023-05-16",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is requesting master plan approval to construct a five story mixed-use building with a cellar that will provide commercial space, internal parking and 62 residential units in the C-2 zone. The applicant is seeking a dimensional adjustment for the proposed height of five stories and approximately 65’. A design waiver from the height of window sills over 2’ from grade is also requested",
+     "meeting": 1042841
+    },
+    {
+     "date": "2023-08-15",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is requesting master plan approval to construct a five story mixed-use building with a cellar that will provide commercial space, internal parking and 62 residential units in the C-2 zone. The applicant is seeking a dimensional adjustment for the proposed height of five stories and approximately 65’ where 50’ and four stories are permitted. A design waiver from the height of window s",
+     "meeting": 1046297
+    },
+    {
+     "date": "2023-10-17",
+     "heading": "Major Land Development Project · Public Informational Meeting",
+     "what": "The applicant is requesting master plan approval to construct a five story mixed-use building that will provide commercial space, internal parking and 75 residential units in the C-2 zone. The applicant is seeking a dimensional adjustment for the proposed height of five stories and approximately 66’5” where 50’ and four stories are permitted by right. A dimensional adjustment of 10’ from the rear ",
+     "meeting": 1048403
+    }
+   ]
+  },
+  {
+   "case": "23-024MI",
+   "address": "69 Depinedo Street",
+   "lot": "AP 77 Lot 275",
+   "area": "Charles",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-04-18",
+     "heading": "Minor Subdivision",
+     "what": "The applicants are proposing to subdivide the subject lot which measures approximately 13,584 SF into two lots of 6,412 SF and 7,180 SF in the R-2 zone – for action (AP 77 Lot 275, Charles)",
+     "meeting": 1041876
+    }
+   ]
+  },
+  {
+   "case": "21-018MI",
+   "address": "18 Marcello and 25 Piedmont",
+   "lot": "AP 28 Lots 1092 and 1093",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-05-16",
+     "heading": "Minor Land Development Project · Request For Extension",
+     "what": "The applicant is requesting a second one-year extension to the validity of the preliminary plan for a four story, 19 unit apartment building – for action (AP 28 Lots 1092 and 1093, Federal Hill)",
+     "meeting": 1042841
+    }
+   ]
+  },
+  {
+   "case": "23-027MI",
+   "address": "21 Westmore Street",
+   "lot": "AP 126 Lot 444",
+   "area": "Reservoir",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-05-16",
+     "heading": "City Council Referral · Minor Subdivision",
+     "what": "The applicants are proposing to subdivide the subject lot which measures approximately 10,200 SF into two lots of 5,012 SF and 5,187 SF in the R-1 zone – for action (AP 126 Lot 444, Reservoir)",
+     "meeting": 1042841
+    }
+   ]
+  },
+  {
+   "case": "23-029MA",
+   "address": "371 Pine Street",
+   "lot": "AP 24 Lot 675",
+   "area": "Upper South Providence",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-05-16",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to construct a five story, approximately 58’ (57’9”) tall, 35 unit mixed use building with commercial space on the ground floor and affordable housing on the four upper stories. The applicant is requesting to combine master and preliminary plan approval and also requests a waiver from submission of state approvals at the preliminary plan stage – for action (AP 24 Lot 675",
+     "meeting": 1042841
+    }
+   ]
+  },
+  {
+   "case": "23-023MI",
+   "address": "515 Prairie Ave and 134-138 Gallup Street",
+   "lot": "AP 53 Lots 101, 99 and 98",
+   "area": "Lower South Providence",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-06-27",
+     "heading": "City Council Referral · Minor Land Development Project",
+     "what": "The applicant is requesting preliminary plan approval to construct a three story, 15 unit apartment building. The site is zoned R-3 but a change to R-4 has been requested – for action (AP 53 Lots 101, 99 and 98, Lower South Providence)",
+     "meeting": 1044890
+    },
+    {
+     "date": "2023-07-18",
+     "heading": "City Council Referral · Minor Land Development Project",
+     "what": "The applicant is requesting preliminary plan approval to construct a three story, 15 unit apartment building. The site is zoned R-3 but a change to R-4 has been requested – for action (AP 53 Lots 101, 99 and 98, Lower South Providence)",
+     "meeting": 1045533
+    }
+   ]
+  },
+  {
+   "case": "23-035MI",
+   "address": "25 Sybaris Street",
+   "lot": "AP 95 Lot 311",
+   "area": "Mt Pleasant",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-06-27",
+     "heading": "Minor Subdivision",
+     "what": "The applicant is requesting to subdivide the lot which measures 10,760 SF into two lots of 5,656 SF and 5,104 SF. The lot is zoned R-2 – for action (AP 95 Lot 311, Mt Pleasant)",
+     "meeting": 1044890
+    }
+   ]
+  },
+  {
+   "case": "23-036MI",
+   "address": "547 Chalkstone Ave",
+   "lot": "AP 69 Lot 261",
+   "area": "Smith Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-06-27",
+     "heading": "Minor Land Development Project",
+     "what": "The applicant is requesting preliminary plan approval to construct a four story, 12 unit multifamily dwelling in the C-2 zone – for action (AP 69 Lot 261, Smith Hill)",
+     "meeting": 1044890
+    }
+   ]
+  },
+  {
+   "case": "23-037MI",
+   "address": "572 Elmwood Ave",
+   "lot": "AP 52 Lot 19",
+   "area": null,
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-06-27",
+     "heading": "Minor Subdivision",
+     "what": "The applicant is proposing to subdivide a lot in the C-2 zone measuring approximately 20,103 SF into two lots of 12,103SF and 8,000 SF – for action (AP 52 Lot 19)",
+     "meeting": 1044890
+    }
+   ]
+  },
+  {
+   "case": "23-030MA",
+   "address": "108 – 110 Waterman Street",
+   "lot": "AP 12 Lots 183 and 184",
+   "area": "College Hill",
+   "units": 26,
+   "meetings": [
+    {
+     "date": "2023-07-18",
+     "heading": "Major Land Development Project · Public Informational Meeting",
+     "what": "The applicant is proposing to construct a five story 60’ tall mixed use building with retail on the ground floor and 26 dwelling units, in the C-2 zone under the I-3E overlay. The applicant is seeking a dimensional adjustment for height as the building exceeds the four story, 50’ height limit of the C-2 zone – for action (AP 12 Lots 183 and 184, College Hill)",
+     "meeting": 1045533
+    },
+    {
+     "date": "2023-09-19",
+     "heading": "Major Land Development Project · Public Informational Meeting",
+     "what": "The applicant is proposing to construct a five story 60’ tall mixed use building with retail on the ground floor and 26 dwelling units, in the C-2 zone under the I-3E overlay. The applicant is seeking a dimensional adjustment for height as the building exceeds the four story, 50’ height limit of the C-2 zone – for action (AP 12 Lots 183 and 184, College Hill) – continued from the July 18 CPC meeti",
+     "meeting": 1047509
+    }
+   ]
+  },
+  {
+   "case": "23-039UDR",
+   "address": "661-665 Plainfield Street",
+   "lot": "AP 112 Lots 429, 430 and 431",
+   "area": "Hartford",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-08-15",
+     "heading": "Major Land Development Project – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to construct three mixed use buildings, one on each of the subject lots, with commercial/retail on the first floor and residential. All lots are zoned C-1. The applicant is seeking dimensional relief pursuant to Unified Development Review (UDR) for the corner side and front yard build-to percentage requirements. The applicant is seeking to combine master and preliminary ",
+     "meeting": 1046297
+    }
+   ]
+  },
+  {
+   "case": "23-040MI",
+   "address": "45 Liege Street",
+   "lot": "AP 119 Lot 226",
+   "area": "Wanskuck",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-08-15",
+     "heading": "City Council Referral · Minor Subdivision",
+     "what": "The applicant is requesting to subdivide a lot measuring 10,000 SF into two lots of 5,000 SF – for vote (AP 119 Lot 226, Wanskuck)",
+     "meeting": 1046297
+    }
+   ]
+  },
+  {
+   "case": "23-041MI",
+   "address": "175 Congress Ave",
+   "lot": "AP 49 Lot 149",
+   "area": "Elmwood",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-08-15",
+     "heading": "Minor Subdivision",
+     "what": "The applicant is requesting to subdivide a lot measuring 14,742 SF into two lots of 7,580 SF and 7,163 SF – for vote (AP 49 Lot 149, Elmwood)",
+     "meeting": 1046297
+    }
+   ]
+  },
+  {
+   "case": "23-042MI",
+   "address": "66 Baltimore Street",
+   "lot": "AP 34 Lot 134",
+   "area": "Manton",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-08-15",
+     "heading": "City Council Referral · Minor Subdivision",
+     "what": "The applicant is requesting to subdivide a lot measuring 24,310 SF in the R-1 zone with an existing dwelling into three lots, with one measuring 14,490 SF and two lots of 5,490 SF – for vote (AP 34 Lot 134, Manton)",
+     "meeting": 1046297
+    }
+   ]
+  },
+  {
+   "case": "23-044UDR",
+   "address": "95-101 Dedham Ave",
+   "lot": "AP 53 Lots 101, 99 and 98",
+   "area": "Lower South Providence",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-08-15",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "Subdivision of two lots measuring 5,760 SF and 7,680 SF into three lots with two measuring 4,500 SF and one measuring 4,448 SF in the R-1 zone. The lots measuring 4,500 SF have received an administrative modification. Relief from the minimum lot size requirement of 5,000 SF is requested for the third lot, pursuant to Unified Development Review – for vote (AP 53 Lots 101, 99 and 98, Lower South Pro",
+     "meeting": 1046297
+    }
+   ]
+  },
+  {
+   "case": "19-051MA",
+   "address": "311 Knight",
+   "lot": "AP 32 Lot 610",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-09-19",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one year extension of the final plan approval – for vote (AP 32 Lot 610, Federal Hill)",
+     "meeting": 1047509
+    }
+   ]
+  },
+  {
+   "case": "23-048UDR",
+   "address": "70 Job Street",
+   "lot": "AP 77 Lot 253",
+   "area": null,
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-09-19",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "Subdivision of a lot measuring approximately 10,567 SF into two lots of 5,215 SF and 5,352 SF in the R-1 zone. Pursuant to Unified Development Review (UDR), the applicant is seeking a dimensional variance from the lot width requirement where widths of 41.17’ and 41.18’ will be provided where 50’ are required – for vote (AP 77 Lot 253)",
+     "meeting": 1047509
+    }
+   ]
+  },
+  {
+   "case": "22-063MI",
+   "address": "322 Washington Street",
+   "lot": "AP 25 Lot 464",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-10-17",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one year extension of the preliminary plan approval – for vote (AP 25 Lot 464, Federal Hill) CITY COUNCIL REFERRAL/DEVELOPMENT REVIEW REGULATIONS 2. Referral No. 3555 – Zoning Ordinance and Development Review Regulations Proponent: Department of Planning and Development Review and vote on zoning changes to implement new state laws, and discussion of changes to the dev",
+     "meeting": 1048403
+    },
+    {
+     "date": "2024-11-19",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one-year extension of the preliminary plan approval of the subject land development project – for vote (AP 25 Lot 464, Federal Hill)",
+     "meeting": 1065512
+    },
+    {
+     "date": "2025-11-18",
+     "heading": "Minor Land Development Project · Request For Extension",
+     "what": "Petitioner: LAC Northeast Developer LLC The applicant is requesting a one year extension of the validity of the preliminary plan approval – for vote (AP 25 Lot 464, Federal Hill)",
+     "meeting": 1081161
+    }
+   ]
+  },
+  {
+   "case": "23-050UDR",
+   "address": "45 Parade Street",
+   "lot": "AP 35 Lot 596",
+   "area": "West End",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-10-17",
+     "heading": "Minor Land Development Project – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to construct a four story, 43’ tall, 26 unit apartment building with accessory parking and associated site improvements in the R-4 zone. Pursuant to unified development review, the applicant is seeking relief from the total maximum impervious coverage rear-yard limit, total maximum impervious surface coverage, offstreet parking requirement where 26 spaces are required bu",
+     "meeting": 1048403
+    },
+    {
+     "date": "2024-10-15",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one-year extension of the preliminary plan approval of the subject land development project – for vote (AP 35 Lot 596, West End)",
+     "meeting": 1064126
+    },
+    {
+     "date": "2025-09-16",
+     "heading": "Minor Land Development Project · Request For Extension",
+     "what": "The applicant is requesting a one year extension of the validity of the preliminary plan approval – for vote (AP 35 Lot 596, West End)",
+     "meeting": 1078680
+    }
+   ]
+  },
+  {
+   "case": "23-051UDR",
+   "address": "770 Manton Ave",
+   "lot": "AP 34 Lot 303",
+   "area": "Manton",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-10-17",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the subject lot which measures approximately 16,315 SF, and zoned R-2, into two lots of 7,750 SF and 8,564 SF. Pursuant to unified development review, the applicant is requesting relief from the lot width requirement where a width of 50’ is required for new lots, but widths of approximately 40’ and 41’ will be provided – for vote (AP 34 Lot 303, Manton)",
+     "meeting": 1048403
+    }
+   ]
+  },
+  {
+   "case": "21-048MI",
+   "address": "56 Pratt Street",
+   "lot": "AP 10 Lot 163",
+   "area": "College Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-11-14",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a second one-year extension of the preliminary plan approval – for vote (AP 10 Lot 163, College Hill)",
+     "meeting": 1049999
+    }
+   ]
+  },
+  {
+   "case": "23-053MI",
+   "address": "116 Benevolent Street",
+   "lot": "AP 13 Lot 310",
+   "area": "College Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-11-14",
+     "heading": "Development Plan Review · Minor Subdivision",
+     "what": "The applicant is proposing to subdivide the subject vacant lot in the R-1 zone which measures approximately 16,427 SF into two lots of 9,964 SF and 6,464 SF – for vote (AP 13 Lot 310, College Hill)",
+     "meeting": 1049999
+    }
+   ]
+  },
+  {
+   "case": "23-054UDR",
+   "address": "53 Pomona Ave",
+   "lot": "AP 64 Lot 896",
+   "area": "Mt. Pleasant",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-11-14",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 9,682 SF and is zoned R-2, into two lots of 5,000 SF and 4,682 SF. Pursuant to unified development review, the applicant is seeking relief from the minimum lot size requirements where a minimum of 5,000 SF is required for each new lot – for vote (AP 64 Lot 896, Mt. Pleasant)",
+     "meeting": 1049999
+    },
+    {
+     "date": "2023-12-12",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 9,682 SF and is zoned R-2, into two lots of 5,000 SF and 4,682 SF. Pursuant to unified development review, the applicant is seeking relief from the minimum lot size requirements where a minimum of 5,000 SF is required for each new lot – for vote (AP 64 Lot 896, Mt. Pleasant) – continued from the November 14, 2023 meeting",
+     "meeting": 1051258
+    },
+    {
+     "date": "2024-01-16",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 9,682 SF and is zoned R-2, into two lots of 5,000 SF and 4,682 SF. Pursuant to unified development review, the applicant is seeking relief from the minimum lot size requirements where a minimum of 5,000 SF is required for each new lot – for vote (AP 64 Lot 896, Mt. Pleasant) – continued from the December 12, 2023 meeting",
+     "meeting": 1052666
+    },
+    {
+     "date": "2024-03-19",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 9,682 SF and is zoned R-2, into two lots of 5,000 SF and 4,682 SF. Pursuant to unified development review, the applicant is seeking relief from the minimum lot size requirements where a minimum of 5,000 SF is required for each new lot – for vote (AP 64 Lot 896, Mt. Pleasant) – continued from the January 16, 2024 meeting",
+     "meeting": 1055904
+    },
+    {
+     "date": "2024-04-16",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 9,682 SF and is zoned R-2, into two lots of 5,000 SF and 4,682 SF. Pursuant to unified development review, the applicant is seeking relief from the minimum lot size requirements where a minimum of 5,000 SF is required for each new lot – for vote (AP 64 Lot 896, Mt. Pleasant) – continued from the March 19, 2024 meeting",
+     "meeting": 1057141
+    }
+   ]
+  },
+  {
+   "case": "23-055MI",
+   "address": "150-158 Pitman Street",
+   "lot": "AP 15 Lots 238, 239 and 240",
+   "area": "Fox Point",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2023-12-12",
+     "heading": "City Council Referral · Minor Land Development Project",
+     "what": "The applicant is proposing to construct a five-story, 16 unit multifamily dwelling with internal parking in the C-2 zone. A dimensional adjustment for the height of 57’ and five stories is requested where 50’ and four stories are permitted by right – for vote (AP 15 Lots 238, 239 and 240, Fox Point)",
+     "meeting": 1051258
+    },
+    {
+     "date": "2025-08-19",
+     "heading": "Major Change",
+     "what": "The applicant is requesting a major change consisting of an over 20% reduction in the number of dwelling units and a change to the design of an approved residential development in the C-2 zone – for vote (AP 15 Lot 498, Wayland)",
+     "meeting": 1077673
+    }
+   ]
+  },
+  {
+   "case": "23-056UDR",
+   "address": "2 Ware Ct",
+   "lot": "AP 31 Lot 115",
+   "area": "West End",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-01-16",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 6,200 SF and is occupied by three buildings, into two lots of 2,171 SF and 4,032 SF with lots occupied by one and two buildings respectively. Pursuant to unified development review, the applicant is seeking relief from the requirements for minimum lot size, minimum lot width, impervious surface coverage and relief for two",
+     "meeting": 1052666
+    },
+    {
+     "date": "2024-02-20",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 6,200 SF and is occupied by three buildings, into two lots of 2,171 SF and 4,032 SF with lots occupied by one and two buildings respectively. Pursuant to unified development review, the applicant is seeking relief from the requirements for minimum lot size, minimum lot width, rear yard setback, impervious surface coverage",
+     "meeting": 1054564
+    }
+   ]
+  },
+  {
+   "case": "23-064MI",
+   "address": "106 Reservoir",
+   "lot": "AP 125 Lot 2",
+   "area": "Reservoir",
+   "units": 21,
+   "meetings": [
+    {
+     "date": "2024-02-20",
+     "heading": "City Council Referral · Minor Land Development Project",
+     "what": "Petitioner: KC Holdings LLC The applicant is requesting to construct a three story residential addition to a one story commercial building, providing 21 dwelling units and resulting in a 40’ tall, four story building with landscaping, parking and other site improvements. A dimensional adjustment for parking is requested where 22 spaces are required but 12 will be provided – for vote (AP 125 Lot 2,",
+     "meeting": 1054564
+    }
+   ]
+  },
+  {
+   "case": "24-005UDR",
+   "address": "254 Westwood Ave",
+   "lot": "AP 107 Lot 111",
+   "area": "Hartford",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-03-19",
+     "heading": "Major Land Development Project – Unified Development Review · Public Hearing",
+     "what": "The lot is vacant and measures approximately 35,909 SF in the R-2 zone. It has frontage on Eastwood Ave and Laban and Merino Streets. The applicant is proposing to construct a two-story, 36’ tall middle school building. Pursuant to UDR, the applicant is seeking variances for parking, lot coverage and setbacks. The applicant is requesting to combine master and preliminary plan approval and requesti",
+     "meeting": 1055904
+    },
+    {
+     "date": "2024-04-16",
+     "heading": "Major Land Development Project · Final Plan Presentation",
+     "what": "The lot is vacant and measures approximately 35,909 SF in the R-2 zone. It has frontage on Eastwood Ave and Laban and Merino Streets. The applicant is proposing to construct a two-story, 36’ tall middle school building. The applicant will present the final plan and a traffic study for the area surrounding the school – for vote (AP 107 Lot 111, Hartford)",
+     "meeting": 1057141
+    }
+   ]
+  },
+  {
+   "case": "24-004MA",
+   "address": "60 Camden Ave",
+   "lot": "AP 69 Lots 215 and 186",
+   "area": "Smith Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-04-16",
+     "heading": "Major Land Development Project – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to demolish and redevelop the existing school building with ancillary site, landscaping, parking and roadway improvements. The applicant is seeking to combine master and preliminary plan approval and is requesting a waiver from submission of state approvals at the preliminary plan stage. – for vote (AP 69 Lots 215 and 186, Smith Hill)",
+     "meeting": 1057141
+    }
+   ]
+  },
+  {
+   "case": "24-011MA",
+   "address": "220 Blackstone Street",
+   "lot": "AP 45 Lot 185",
+   "area": "Upper South Providence",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-04-16",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to construct a six-story mixed use residential/commercial building, and a second two story commercial structure proposed for educational use in addition to ancillary site and roadway improvements including parking and landscaping. The applicant is seeking to combine master and preliminary plan approval. A 50% dimensional adjustment from the parking requirement, and a wai",
+     "meeting": 1057141
+    }
+   ]
+  },
+  {
+   "case": "24-021MA",
+   "address": "199 Oxford Street (Mary E Fogarty School)",
+   "lot": "AP 48 Lot 2",
+   "area": "Lower South Providence",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-05-21",
+     "heading": "Land Development Project · Public Hearing",
+     "what": "The applicant is requesting master plan approval for construction of a three-story pre-k to middle school building following demolition of the structure. The applicant is requesting a variance from the corner side yard setback pursuant to Unified Development Review (UDR) – for vote (AP 48 Lot 2, Lower South Providence)",
+     "meeting": 1058780
+    },
+    {
+     "date": "2024-08-20",
+     "heading": "City Council Referral · Major Land Development Project",
+     "what": "The applicant is requesting preliminary plan approval for construction of a three-story pre-k to middle school building following demolition of the structure – for vote (AP 48 Lots 2 and 481, Lower South Providence)",
+     "meeting": 1061802
+    }
+   ]
+  },
+  {
+   "case": "24-039UDR",
+   "address": "118-120 Hawkins Street",
+   "lot": "AP 99 Lot 474",
+   "area": "Wanskuck",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-08-20",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 7,114 SF and is occupied by two buildings, into two lots of 4,668 SF and 2,446 SF resulting in one building on each lot. Pursuant to unified development review (UDR), the applicant is seeking relief from minimum lot size, lot width, side setback, rear setback and rear yard impervious coverage requirements – for vote (AP 9",
+     "meeting": 1061802
+    }
+   ]
+  },
+  {
+   "case": "24-043UDR",
+   "address": "349 Wayland Ave",
+   "lot": "AP 39 Lot 187",
+   "area": "Wayland",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-08-20",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The subject lot measures approximately 15,000 SF and is occupied by a single family dwelling and a carriage house that the applicant is proposing to subdivide into two lots of approximately 8,491 SF and 6,509 SF with each structure on a separate lot, the carriage house converted to a single family dwelling and new detached and attached garages constructed. Pursuant to Unified Development Review (U",
+     "meeting": 1061802
+    }
+   ]
+  },
+  {
+   "case": "24-047UDR",
+   "address": "35 Meader Street",
+   "lot": "AP 32 Lot 171",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-08-20",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 9,600 SF into two lots of 4,800 SF each. Pursuant to unified development review (UDR), the applicant is seeking relief from the minimum lot size requirement of 4,800 SF and the rear yard setback requirement where 30’ is required but 14’ will be provided – for action (AP 32 Lot 171, Federal Hill)",
+     "meeting": 1061802
+    }
+   ]
+  },
+  {
+   "case": "19-015MA",
+   "address": "311 Knight Street",
+   "lot": "AP 85 Lot 555",
+   "area": "Elmhurst",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-09-17",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one-year extension of the preliminary plan approval of the subject major land development project – for vote (AP 85 Lot 555, Elmhurst)",
+     "meeting": 1063003
+    }
+   ]
+  },
+  {
+   "case": "24-049MA",
+   "address": "279 Thayer Street",
+   "lot": "AP 13 Lot 28",
+   "area": "College Hill",
+   "units": 16,
+   "meetings": [
+    {
+     "date": "2024-09-17",
+     "heading": "Major Change · Public Hearing",
+     "what": "The applicant is requesting a major change to an approved plan for a four story, 49’ tall mixed use building with commercial space on the first floor and 12 residential units on the upper stories in the C-2 zone. The applicant is proposing to add an additional story for a height of five stories and 55’ resulting in a total of 16 units. A dimensional adjustment for height is requested as the propos",
+     "meeting": 1063003
+    }
+   ]
+  },
+  {
+   "case": "24-050MA",
+   "address": "400 Elmwood Ave",
+   "lot": "AP 49 Lot 568",
+   "area": "Elmwood",
+   "units": 24,
+   "meetings": [
+    {
+     "date": "2024-09-17",
+     "heading": "Major Land Development Project – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to construct an approximately 55’ tall, five story mixed use building with a vehicle repair station and restaurant on the ground floor, and 24 units on the four upper stories, in the C-2 zone. The applicant is seeking a dimensional adjustment for height as the building exceeds the 50’ four story height limit of the zone and an adjustment for parking where 36 spaces are r",
+     "meeting": 1063003
+    },
+    {
+     "date": "2024-10-15",
+     "heading": "Major Land Development Project – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to construct an approximately 55’ tall, five story mixed use building with a vehicle repair station and restaurant on the ground floor, and 24 units on the four upper stories, in the C-2 zone. The applicant is seeking a dimensional adjustment for height as the building exceeds the 50’ four story height limit of the zone and an adjustment for parking where 36 spaces are r",
+     "meeting": 1064126
+    }
+   ]
+  },
+  {
+   "case": "24-051MI",
+   "address": "11 W Friendship Street",
+   "lot": "AP 30 Lot 720",
+   "area": "Elmwood",
+   "units": 26,
+   "meetings": [
+    {
+     "date": "2024-09-17",
+     "heading": "Minor Land Development Project",
+     "what": "The applicant is proposing to construct a 45’ tall, four story, mixed use building consisting of two retail spaces on the first floor and 26 apartments in the rest of the building in the C-1 zone. A dimensional adjustment for parking is requested where 26 spaces are required but 14 will be provided – for vote (AP 30 Lot 720, Elmwood)",
+     "meeting": 1063003
+    }
+   ]
+  },
+  {
+   "case": "24-040MI",
+   "address": "33 Murray Street",
+   "lot": "AP 110 Lot 187",
+   "area": "Silver Lake",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-10-15",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the 7,000 SF lot in the R-3 zone into two lots of 3,500 SF, with widths of 40’. The applicant is seeking relief from the minimum lot size requirement of 5,000 SF and lot widths of 50’ for new subdivisions. Relief from the front yard impervious coverage requirement is also required where 33% is permitted but 39% is proposed on lot 1 and 82% is proposed on lot",
+     "meeting": 1064126
+    }
+   ]
+  },
+  {
+   "case": "24-041MI",
+   "address": "27 E River Street",
+   "lot": "AP 15 Lot 483",
+   "area": "Wayland",
+   "units": 355,
+   "meetings": [
+    {
+     "date": "2024-10-15",
+     "heading": "Minor Land Development Project",
+     "what": "The applicant is proposing to construct a residential building with 326 units and 163 internal parking spaces. A dimensional adjustment for height is requested where a height of 75’ is permitted but 90’ is proposed. A 50% adjustment for parking is also requested. In addition, the applicant is requesting waivers from submission of certain items at the preliminary plan stage including an erosion con",
+     "meeting": 1064126
+    },
+    {
+     "date": "2025-10-21",
+     "heading": "Minor Land Development Project · Request For Extension",
+     "what": "The applicant is requesting a one year extension of the validity of the preliminary plan approval – for vote (AP 15 Lot 483, Wayland)",
+     "meeting": 1080064
+    },
+    {
+     "date": "2025-12-16",
+     "heading": "Development Plan Review · Minor Land Development Project",
+     "what": "The applicant is proposing to construct a multifamily residential building with 355 units and 281 internal parking spaces in the W-2 zone. A 50% dimensional adjustment for parking is requested in addition to a 15 foot adjustment for height where a height of 75 feet is permitted by right and 90 feet is proposed – for vote (AP 15 Lot 483, Wayland)",
+     "meeting": 1082390
+    }
+   ]
+  },
+  {
+   "case": "22-051MI",
+   "address": "150 Pitman Street",
+   "lot": "AP 15 Lots 238, 239 and 240",
+   "area": "Fox Point",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-11-19",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one-year extension of the preliminary plan approval of the subject land development project – for vote (AP 15 Lots 238, 239 and 240, Fox Point)",
+     "meeting": 1065512
+    }
+   ]
+  },
+  {
+   "case": "24-060MI",
+   "address": "551 Chalkstone Ave",
+   "lot": "AP 69 Lot 260",
+   "area": "Smith Hill",
+   "units": 23,
+   "meetings": [
+    {
+     "date": "2024-11-19",
+     "heading": "Minor Land Development Project",
+     "what": "The applicant is proposing to construct a mixed use building with commercial on the ground floor and 23 apartments, in the C-2 zone. A dimensional adjustment for height is requested where five stories and approximately 55’ are proposed, over the 50’ four story height limit of the zone – for vote (AP 69 Lot 260, Smith Hill)",
+     "meeting": 1065512
+    }
+   ]
+  },
+  {
+   "case": "24-062MI",
+   "address": "663 Admiral Street",
+   "lot": "AP 123 Lots 165, 166 and 171",
+   "area": "Wanskuck",
+   "units": 48,
+   "meetings": [
+    {
+     "date": "2024-11-19",
+     "heading": "Minor Land Development Project",
+     "what": "The applicant is proposing to construct a five story 63’3” tall mixed-use development with 31 internal parking spaces and commercial on the ground floor and 48 residences on the upper stories. The applicant is requesting dimensional adjustments for building height and parking where a height of 45’ and four stories is permitted by right and 48 spaces are required in the C-1 zone. A waiver from subm",
+     "meeting": 1065512
+    }
+   ]
+  },
+  {
+   "case": "24-066UDR",
+   "address": "58 Prudence Ave",
+   "lot": "AP 110 Lot 475",
+   "area": "Silver Lake",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2024-11-19",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 10,388 SF into two lots of 5,934 SF and 4,454 SF each with widths of 40’. Pursuant to unified development review, the applicant is seeking relief from the minimum lot size and width requirements of 5,000 SF and 50’ of width for new subdivisions in the R-3 zone – for vote (AP 110 Lot 475, Silver Lake)",
+     "meeting": 1065512
+    }
+   ]
+  },
+  {
+   "case": "23-012MA",
+   "address": "269 Wickenden Street",
+   "lot": "AP 18 Lots 190 and 192",
+   "area": "Fox Point",
+   "units": 74,
+   "meetings": [
+    {
+     "date": "2025-01-21",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is requesting preliminary plan approval to construct a five-story mixed-use building that will provide commercial space and 74 residential units in the C-2 zone. A waiver from submission of state approvals at the preliminary plan stage is requested – for vote (AP 18 Lots 190 and 192, Fox Point)",
+     "meeting": 1069085
+    }
+   ]
+  },
+  {
+   "case": "24-069MA",
+   "address": "70 Houghton Street",
+   "lot": "AP 78 Lot 457",
+   "area": "Wanskuck",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-01-21",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "Owner: Providence Redevelopment Agency The applicant is proposing to construct three commercial multi-purpose buildings with associated improvements on the vacant subject lot in the M-MU 75 zone. The applicant is requesting master plan approval and is seeking waivers from the height calculation of buildings from average grade, and submission of elevations and renderings of the buildings at the pre",
+     "meeting": 1069085
+    },
+    {
+     "date": "2026-06-16",
+     "heading": "City Council Referral · Major Land Development Project",
+     "what": "Owner: Providence Redevelopment Agency The applicant is proposing to construct seven commercial multi-purpose buildings with associated improvements on the vacant subject lot in the M-MU 75 zone. The applicant is requesting preliminary plan approval and is seeking a waiver from submission of the site survey – for vote (AP 78 Lot 457, Wanskuck)",
+     "meeting": 1090361
+    }
+   ]
+  },
+  {
+   "case": "24-076UDR",
+   "address": "16-22 Grove Street",
+   "lot": "AP 28 Lot 901",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-01-21",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 7,638 SF and is occupied by two three-family dwellings, into two lots of 3,820 SF and 3,817 SF with one building on each lot. Pursuant to unified development review, the applicant is seeking relief for both lots from the requirements for minimum lot size, minimum lot area, minimum lot width, maximum total, front and rear ",
+     "meeting": 1069085
+    },
+    {
+     "date": "2025-07-15",
+     "heading": "Minor Subdivision – Unified Development Review – Major Change · Public Hearing",
+     "what": "The applicant is seeking preliminary plan approval for a major change to an approved subdivision with unified development review in the R-4 zone. The CPC approved a minor subdivision of the subject lot which measures approximately 7,638 SF and is occupied by two three-family dwellings, into two lots of 3,820 SF and 3,817 SF with one building on each lot. The CPC also granted associated relief for ",
+     "meeting": 1076570
+    },
+    {
+     "date": "2026-06-16",
+     "heading": "Minor Subdivision – Request For Extension",
+     "what": "Owner: 16 Grove LLC The petitioner is requesting a one year extension of the validity of the preliminary plan for the subject minor subdivision – for vote (AP 28 Lot 901, Federal Hill)",
+     "meeting": 1090361
+    }
+   ]
+  },
+  {
+   "case": "25-002MI",
+   "address": "217 Angell Street",
+   "lot": "AP 13 Lot 320",
+   "area": "College Hill",
+   "units": 32,
+   "meetings": [
+    {
+     "date": "2025-03-18",
+     "heading": "Minor Land Development Project",
+     "what": "The applicant is requesting preliminary plan approval, proposing to construct a 57’, five story residential building with 32 units and structured parking providing 45 internal parking spaces in the R-P zone. The applicant is seeking the following dimensional adjustments: • A dimensional adjustment for height as the zone permits a maximum height of 45’. • Corner side setback on Angell Street and Fo",
+     "meeting": 1071309
+    }
+   ]
+  },
+  {
+   "case": "25-006MA",
+   "address": "220 Blackstone Street",
+   "lot": "AP 45 Lot 85",
+   "area": "Upper South Providence",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-03-18",
+     "heading": "Major Change To Land Development Project · Public Hearing",
+     "what": "The applicant is requesting a major change to the approved preliminary plan for a development consisting of a six-story mixed use residential/commercial building, and a second two story building for educational use in the M-MU 75 zone. The applicant is proposing to expand the height of the second building to six stories, and is requesting approval of a major change as it exceeds 20% of building he",
+     "meeting": 1071309
+    }
+   ]
+  },
+  {
+   "case": "25-013MI",
+   "address": "327 Elmwood Ave",
+   "lot": "AP 49 Lot 603",
+   "area": "West End",
+   "units": 44,
+   "meetings": [
+    {
+     "date": "2025-04-15",
+     "heading": "City Council Referral · Minor Land Development Project",
+     "what": "Owner: Providence Redevelopment Agency The applicant is proposing to construct a 59’ tall five story mixed use building with commercial on the first floor and 44 residential units in the C-2 zone. The applicant is requesting a dimensional adjustment from the 50’ four story height limit of the zone, and a design waiver for the proposed depth of entrances – for action (AP 49 Lot 603, West End)",
+     "meeting": 1072997
+    }
+   ]
+  },
+  {
+   "case": "25-019MI",
+   "address": "1107 Westminster Street",
+   "lot": "AP 32 Lot 50",
+   "area": "Federal Hill",
+   "units": 17,
+   "meetings": [
+    {
+     "date": "2025-05-20",
+     "heading": "Institutional Master Plan · Minor Land Development Project",
+     "what": "The applicant is requesting preliminary plan approval, proposing to construct a 56’ tall five story mixed use building with commercial on the first floor and 17 residential units in the C-2 zone. The applicant is requesting a dimensional adjustment from the 50’, four story height limit of the zone, and a design waiver from the width of building entrances – for action (AP 32 Lot 50, Federal Hill)",
+     "meeting": 1074416
+    }
+   ]
+  },
+  {
+   "case": "25-036MA",
+   "address": "21 New York Ave",
+   "lot": "AP 56 Lot 352",
+   "area": "Washington Park",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-07-15",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "Owner: Provport The applicant is requesting to combine master and preliminary plan approval for construction of a metal framed fabric, storage building with a footprint of approximately 50,260 SF and associated improvements in the W-3 zone. The project site will occupy approximately 2.37 acres of an 11 acre lot. The applicant is requesting a waiver from submission of building renderings and state ",
+     "meeting": 1076570
+    }
+   ]
+  },
+  {
+   "case": "23-065MI",
+   "address": "125 Tobey Street",
+   "lot": "AP 35 Lot 555",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-08-19",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a two year extension to the validity of the preliminary plan – for vote (AP 35 Lot 555, Federal Hill)",
+     "meeting": 1077673
+    },
+    {
+     "date": "2026-08-18",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one year extension of the validity of the preliminary plan – for vote (AP 35 Lot 555, Federal Hill)",
+     "meeting": 1092387
+    }
+   ]
+  },
+  {
+   "case": "23-066MI",
+   "address": "64 America Street",
+   "lot": "AP 28 Lot 819",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-08-19",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a two year extension to the validity of the preliminary plan – for vote (AP 28 Lot 819, Federal Hill)",
+     "meeting": 1077673
+    },
+    {
+     "date": "2026-02-24",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one year extension to the validity of the preliminary plan – for vote (AP 28 Lot 819, Federal Hill)",
+     "meeting": 1085484
+    },
+    {
+     "date": "2026-03-03",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one year extension to the validity of the preliminary plan – for vote (AP 28 Lot 819, Federal Hill)",
+     "meeting": 1085900
+    }
+   ]
+  },
+  {
+   "case": "23-067MI",
+   "address": "20 America Street",
+   "lot": "AP 28 Lot 1046",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-08-19",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a two year extension to the validity of the preliminary plan – for vote (AP 28 Lot 1046, Federal Hill)",
+     "meeting": 1077673
+    }
+   ]
+  },
+  {
+   "case": "25-044UDR",
+   "address": "290 and 298 Public Street",
+   "lot": "AP 48 Lots 938 and 939",
+   "area": "Lower South Providence",
+   "units": 39,
+   "meetings": [
+    {
+     "date": "2025-08-19",
+     "heading": "Minor Land Development Project – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to construct an approximately 49’, four story multifamily residential building with 39 residential units in the R-P zone. Dimensional adjustments from the height, side setback and parking requirements are requested. Pursuant to Unified Development Review (UDR), the applicant is requesting relief from the rear yard and total maximum impervious surface coverage requirement",
+     "meeting": 1077673
+    },
+    {
+     "date": "2025-09-16",
+     "heading": "Minor Land Development Project – Unified Development Review · Public Hearing",
+     "what": "The applicant is proposing to construct an approximately 49’ tall, four story multifamily residential building with 39 residential units in the R-P zone. A dimensional adjustment from the 45’ height limit of the zone is requested in addition to an adjustment from the side yard setback requirement where 10’ is required but 6’ and 7’ will be provided. A 50% adjustment from the parking requirement is",
+     "meeting": 1078680
+    }
+   ]
+  },
+  {
+   "case": "23-055MIL",
+   "address": "150 Pitman Street",
+   "lot": "AP 15 Lot 498",
+   "area": "Wayland",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-09-16",
+     "heading": "Institutional Master Plan · Major Change",
+     "what": "The applicant is requesting a major change consisting of an over 20% reduction in the number of dwelling units and a change to the design of an approved residential development in the C-2 zone. A design waiver from the build-to percentage requirement is requested where 60% of the building is required to be located within the front build-to zone but approximately 54% will be provided – for vote (AP",
+     "meeting": 1078680
+    }
+   ]
+  },
+  {
+   "case": "24-024MIL",
+   "address": "128 Wayland Ave",
+   "lot": "AP 14 Lot 29",
+   "area": "Wayland",
+   "units": 22,
+   "meetings": [
+    {
+     "date": "2025-09-16",
+     "heading": "Minor Land Development Project",
+     "what": "The applicant is returning to the CPC requesting preliminary plan approval to construct a mixed use building with 22 apartments and commercial space on the ground floor, in the C-2 zone. Preliminary plan approval granted in August 2024 was vacated by a court decision, requiring the CPC to make new findings. A dimensional adjustment for height is requested where a height of five stories and 57’3” i",
+     "meeting": 1078680
+    }
+   ]
+  },
+  {
+   "case": "24-053MIL",
+   "address": "885 Westminster Street",
+   "lot": "AP 29 Lot 137",
+   "area": "Federal Hill",
+   "units": 74,
+   "meetings": [
+    {
+     "date": "2025-09-16",
+     "heading": "Minor Land Development Project",
+     "what": "The applicant is requesting preliminary plan approval to add three stories of residential development to an existing two story building, resulting in a total of 74 units with structured parking in the C-2 zone. The applicant is requesting a dimensional adjustment for a height of approximately 64’ and six stories, consisting of a partial basement and five upper stories, where 50’ and four stories i",
+     "meeting": 1078680
+    }
+   ]
+  },
+  {
+   "case": "25-059MA",
+   "address": "1655 Westminster Street",
+   "lot": "AP 35 Lots 91, 94, 95, 96, 97,98 and 322",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-10-21",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to construct a four story, 54’ tall school building with ancillary improvements serving pre-K to 8th grade students in the PS zone. The applicant is seeking a waiver from submission of state approvals at the preliminary plan stage and requesting to combine master and preliminary plan approval in addition to a dimensional adjustment from the 50’ maximum height limit of th",
+     "meeting": 1080064
+    }
+   ]
+  },
+  {
+   "case": "25-060MA",
+   "address": "434 Mt Pleasant Ave",
+   "lot": "AP 128 Lot 2",
+   "area": "Mt. Pleasant",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-10-21",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to construct a new four story wing for an existing public school in the PS zone. The applicant is seeking to combine master and preliminary plan approval and seeking a waiver from submission of state approvals at the preliminary plan stage – for vote (AP 128 Lot 2, Mt. Pleasant)",
+     "meeting": 1080064
+    }
+   ]
+  },
+  {
+   "case": "25-075MA",
+   "address": "195 Nelson Street (RFK School)",
+   "lot": "AP 85 Lot 195",
+   "area": "Elmhurst",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-11-18",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to construct a four story, 59’ tall school building serving pre-K to 8th grade students in the PS zone. Combined approval of the master/preliminary plan is requested in addition to a dimensional adjustment for height, which is a maximum of 50’ in the zone. The applicant is requesting waivers from submission of city and state approvals, a lighting plan, signage plan, and ",
+     "meeting": 1081161
+    }
+   ]
+  },
+  {
+   "case": "25-081MA",
+   "address": "188 Princeton Ave (Stuart Lima School)",
+   "lot": "AP 44 Lot 552",
+   "area": "West End",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2025-11-18",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is proposing to construct a three story, 40’ tall K-8 school building with associated ancillary improvements including parking, landscaping and recreational areas. The applicant is requesting to combine master and preliminary plan approval and requesting a waiver from submission of city and state approvals at the preliminary plan stage – for vote (AP 44 Lot 552, West End)",
+     "meeting": 1081161
+    }
+   ]
+  },
+  {
+   "case": "25-074UDR",
+   "address": "784 Branch Ave",
+   "lot": "AP 102 Lot 71",
+   "area": "Wanskuck",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-01-20",
+     "heading": "Development Plan Review And Minor Subdivision · Unified Development Review – Public Hearing",
+     "what": "The applicant is proposing to construct a six unit rowhouse development in the R-4 zone and is seeking relief from the front yard setback requirement, front yard impervious coverage requirement, maximum building coverage, rear setback and garage setback from front lot line requirements – for vote (AP 102 Lot 71, Wanskuck)",
+     "meeting": 1083861
+    }
+   ]
+  },
+  {
+   "case": "25-088UDR",
+   "address": "64 Angell Street",
+   "lot": "AP 10 Lot 255",
+   "area": "College Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-01-20",
+     "heading": "Minor Subdivision · Unified Development Review – Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot which measures approximately 29,984 SF and occupied by a single family dwelling, into three lots of 18,977 SF, 6,000 SF and 5,000 SF. In addition, the applicant is seeking to construct a three unit dwelling and a single family dwelling on the newly created lots. The applicant is seeking a special use permit for a three unit dwelling in the R-1 zone i",
+     "meeting": 1083861
+    }
+   ]
+  },
+  {
+   "case": "23-039MA",
+   "address": "661, 663 and 665 Plainfield Street",
+   "lot": "AP 24 Lots 429, 430 and 431",
+   "area": "Hartford",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-03-31",
+     "heading": "Minor Land Development Project – Reinstatement",
+     "what": "The applicant is requesting to reinstate the master and preliminary plan approvals for the subject land development project in the C-2 zone consisting of three mixed use buildings with associated relief for the setback and build-to percentage requirements – for vote (AP 24 Lots 429, 430 and 431, Hartford)",
+     "meeting": 1086853
+    }
+   ]
+  },
+  {
+   "case": "25-019MIL",
+   "address": "1107 Westminster Street",
+   "lot": "AP 32 Lot 50",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-05-07",
+     "heading": "Minor Land Development Project – Request For Extension",
+     "what": "The applicant is requesting a one year extension of the preliminary plan for the subject minor land development project – for vote (AP 32 Lot 50, Federal Hill)",
+     "meeting": 1088760
+    }
+   ]
+  },
+  {
+   "case": "25-009MIL",
+   "address": "386 Ives Street",
+   "lot": "AP 14 Lot 598",
+   "area": "Wayland",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-05-19",
+     "heading": "Minor Land Development Project – Request For Extension",
+     "what": "Owner: Providence Student Living Capital LLC The petitioner is requesting a one year extension of the validity of the preliminary plan for the subject minor land development project – for vote (AP 14 Lot 598, Wayland)",
+     "meeting": 1089305
+    }
+   ]
+  },
+  {
+   "case": "26-046UDR",
+   "address": "14 Cargill Street",
+   "lot": "AP 29 Lots 108 and 550",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-06-16",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "Applicant and Owner: Rhode Island Public Health Institute The applicant is proposing to construct of a four story, approximately 52’ tall medical services building with associated site amenities. The applicant is requesting a design waiver from the build to percentage on West Street and a dimensional variance from the parking requirement. The applicant has requested waivers from submission of a li",
+     "meeting": 1090361
+    },
+    {
+     "date": "2026-08-18",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "Applicant and Owner: Rhode Island Public Health Institute The applicant is proposing to construct of a four story, approximately 52’ tall medical services building with associated site amenities. The applicant is requesting a design waiver from the build to percentage on West Street and a dimensional variance from the parking requirement. The applicant has requested waivers from submission of a li",
+     "meeting": 1092387
+    }
+   ]
+  },
+  {
+   "case": "26-047MIL",
+   "address": "203 Douglas Ave",
+   "lot": "AP 68 Lot 846",
+   "area": "Smith Hill",
+   "units": 21,
+   "meetings": [
+    {
+     "date": "2026-07-28",
+     "heading": "City Council Referral · Minor Land Development Project",
+     "what": "Owner: PMP Group LLC – continued to the August 18 meeting at the applicant’s request The applicant is proposing to construct a mixed use building with commercial use on the first floor and 21 residential units in the rest of the building in the C-2 zone. A dimensional adjustment is requested for the proposed height of 49’2” and five stories where 50’ and four stories are permitted by right in the ",
+     "meeting": 1091666
+    },
+    {
+     "date": "2026-08-18",
+     "heading": "Minor Land Development Project",
+     "what": "Owner: PMP Group LLC The applicant is proposing to construct a mixed use building with commercial use on the first floor and 21 residential units in the rest of the building in the C-2 zone. A dimensional adjustment is requested for the proposed height of 49’2” and five stories where 50’ and four stories are permitted by right in the zone. A waiver from indicating the location of the transformer o",
+     "meeting": 1092387
+    }
+   ]
+  },
+  {
+   "case": "26-062UDR",
+   "address": "25 Fairview Street",
+   "lot": "AP 64 Lot 967",
+   "area": "Mt Pleasant",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-08-18",
+     "heading": "Minor Subdivision · Public Hearing",
+     "what": "The applicant is proposing to subdivide the lot measuring 6,150 SF into two lots, one of 3,525 SF (parcel 1) which will contain the existing single family dwelling, and a lot of 2,625 SF (parcel 2) pursuant to 2003.D of the zoning ordinance. Section 2003.D permits previously merged lots to be subdivided into lots of 3,000 SF with 30’ of lot width. The applicant applied for an administrative modifi",
+     "meeting": 1092387
+    }
+   ]
+  },
+  {
+   "case": "23-053MIL",
+   "address": "885 Westminster Street",
+   "lot": "AP 29 Lots 137 and 135",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-09-15",
+     "heading": "Request For Extension",
+     "what": "The applicant is requesting a one year extension to the validity of the preliminary plan approval for a mixed use building – for vote (AP 29 Lots 137 and 135, Federal Hill)",
+     "meeting": 1093284
+    }
+   ]
+  },
+  {
+   "case": "26-070MAL",
+   "address": "31 DIKE STREET",
+   "lot": "AP 35 Lot 542",
+   "area": "Olneyville",
+   "units": 28,
+   "meetings": [
+    {
+     "date": "2026-09-15",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "The applicant is requesting master plan approval to construct an approximately six story, 66’ tall mixed use building consisting of internal parking on the ground floor, commercial space on the sixth story and 28 residential units on the second through fourth stories in the C-2 zone. The applicant is requesting a dimensional adjustment for the proposed height which exceeds the 50’, four story heig",
+     "meeting": 1093284
+    }
+   ]
+  },
+  {
+   "case": "26-106UDR",
+   "address": "111 Veazie Street",
+   "lot": "AP 123 Lot 520",
+   "area": "Wanskuck",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-10-20",
+     "heading": "Minor Subdivision – Unified Development Review · Public Hearing",
+     "what": "Subdivision of lot measuring approximately 15,440 SF and occupied by a single dwelling into three lots in the R-3 zone where a minimum lot size of 5,000 SF and width of 50’ is required. The applicant is proposing to subdivide the lot into three lots, each of over 5,000 SF. The applicant is seeking relief from the 50’ minimum lot width requirement for two of the lots pursuant to Unified Development",
+     "meeting": 1094684
+    }
+   ]
+  },
+  {
+   "case": "26-120UDR",
+   "address": "257 Dean and 14 Cargill Street",
+   "lot": "AP 29 Lots 108 and 550",
+   "area": "Federal Hill",
+   "units": null,
+   "meetings": [
+    {
+     "date": "2026-11-17",
+     "heading": "Major Land Development Project · Public Hearing",
+     "what": "Applicant and Owner: Rhode Island Public Health Institute The applicant is proposing to construct of a four story, approximately 52’ tall medical services building with associated site amenities. The applicant is requesting a design waiver from the build to percentage on West Street and a dimensional variance from the parking requirement. The applicant is requesting to combine master and prelimina",
+     "meeting": 1095774
+    }
+   ]
+  }
+ ]
+}

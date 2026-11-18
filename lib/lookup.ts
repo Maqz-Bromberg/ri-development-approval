@@ -1,4 +1,5 @@
 import { RIZA_LAYER_URL } from "./data/atlas";
+import { TOWN_LAYERS } from "./data/townLayers";
 
 /*
  * Address to site facts, in the browser. Order of work, after the approach in the Exeter zoning
@@ -46,8 +47,10 @@ export interface SiteFacts {
   reservation: string | null;
   /** Which agency's wetland rules apply here, from RIDEM's wetland jurisdiction layer: CRMC on the coast, RIDEM inland */
   wetAgency: "CRMC" | "DEM" | null;
-  /** Overlay districts at the point. The Atlas keeps them in the same layer as base districts, marked "Overlay". */
+  /** Overlay districts at the point. The Atlas keeps them in the same layer as base districts, marked "Overlay"; a town's own layers add more. */
   overlays: { zone: string; name: string }[];
+  /** The district on the town's own zoning map, where the town publishes one (lib/data/townLayers.ts), and whose map it is */
+  townZone?: { zone: string; label: string } | null;
   parcelOptions: ParcelOption[];
 }
 
@@ -160,7 +163,32 @@ export async function siteFacts(lon: number, lat: number, signal?: AbortSignal, 
     if (only) { facts.platLot = only.platLot; facts.acres = only.acres; facts.outline = only.outline; }
     facts.nearby ||= parcel.value.nearby && facts.parcelOptions.length > 0;
   } else facts.failed.push("parcel");
+  if (facts.town && TOWN_LAYERS[facts.town]) await townLayers(facts, lon, lat, signal);
   return facts;
+}
+
+/** The town's own layers at the point: its present district, and the areas where its other reviews apply. A layer that fails is named. */
+async function townLayers(facts: SiteFacts, lon: number, lat: number, signal?: AbortSignal) {
+  const t = TOWN_LAYERS[facts.town!];
+  type Rows = { features: { attributes: Record<string, string | number | null> }[] };
+  const ask = (url: string, fields: string) => getJSON<Rows>(`${url}/query?${pointQuery(lon, lat, { outFields: fields, returnGeometry: "false" })}`, signal);
+  const [zone, ...areas] = await Promise.allSettled([
+    t.zoning ? ask(t.zoning.url, t.zoning.field) : Promise.resolve(null),
+    ...t.areas.map((a) => ask(a.url, a.nameField ?? "OBJECTID")),
+  ]);
+  if (t.zoning) {
+    if (zone.status === "fulfilled" && zone.value) {
+      const codes = Array.from(new Set(zone.value.features.map((f) => String(f.attributes[t.zoning!.field] ?? "")).filter((c) => c && c !== "None")));
+      facts.townZone = codes.length === 1 ? { zone: codes[0], label: t.zoning.label } : null;
+    } else facts.failed.push(`${facts.town}'s zoning map`);
+  }
+  areas.forEach((r, k) => {
+    const a = t.areas[k];
+    if (r.status !== "fulfilled") { facts.failed.push(`${facts.town}'s ${a.name}`); return; }
+    if (!r.value?.features.length || facts.overlays.some((o) => o.zone === a.abbr)) return;
+    const part = a.nameField ? String(r.value.features[0].attributes[a.nameField] ?? "").trim() : "";
+    facts.overlays.push({ zone: a.abbr, name: part && a.nameField !== "Category" ? `${a.name}: ${part}` : a.name });
+  });
 }
 
 /** Outline rings as an SVG path in a size-by-size box, north up. */

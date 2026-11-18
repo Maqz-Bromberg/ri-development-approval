@@ -1,4 +1,5 @@
 import type { Step, TownRules, TreeId } from "../../../types";
+import { PROVIDENCE_AREAS, coaStep, designReviewStep, providenceDesignReview, providenceOverlayFlags, providenceOverlayRules } from "./areas";
 import { PROVIDENCE_GONE, providenceClassifyCommercial, providenceCommercialFindings, providenceCommercialRoute, providenceCommercialUse, providenceUse } from "./rules";
 
 /*
@@ -418,7 +419,7 @@ const majorState: Step = {
   what: "Providence's regulations ask for state and federal permits before the final plan is approved, not before the preliminary plan. The preliminary decision clock is extended if evidence of state permits is missing, and applicants here have asked the Commission to waive state approvals at the preliminary stage.",
   auth: [
     { c: "dpw", role: "Stormwater plan, drainage and traffic study" },
-    { c: "ridem", role: "Wetlands, stormwater and site remediation", cond: "wet|acre" },
+    { c: "ridem", role: "Freshwater wetlands, stormwater and site remediation", cond: "wet|acre" },
     { c: "crmc", role: "Coastal zone review, for sites on the river", cond: "wet" },
     { c: "ridot", role: "Physical Alteration Permit", cond: "dot" },
   ],
@@ -628,7 +629,8 @@ const appeal: Step = {
 export const PROVIDENCE_STEPS: Partial<Record<TreeId, Step[]>> = {
   minor: [zoning, rezone, preapp(false), minorPrelim, minorFinal, record("minor"), appeal],
   major: [zoning, rezone, preapp(true), master, majorState, majorPrelim, majorFinal, record("major"), appeal],
-  dpr: [zoning, preapp(false), adpr, record("dpr"), appeal],
+  // In the Downcity and East Side I-195 overlays, and on I-195 parcels, the downtown design review takes the place of staff review (areas.ts).
+  dpr: [zoning, preapp(false), { ...adpr, cond: "!ddrc" }, designReviewStep, record("dpr"), appeal],
 };
 
 export const PROVIDENCE_RULES: TownRules = {
@@ -642,12 +644,18 @@ export const PROVIDENCE_RULES: TownRules = {
    */
   classify: (i) => {
     if (i.units >= 3 && i.aff / i.units >= 0.25) return "comp";
+    // Development the Downtown Design Review Committee or the I-195 Commission reviews is not land development (§ 1904.C.2.b).
+    if (providenceDesignReview(i) && i.units >= 1) return "dpr";
     if (i.type === "reuse") return i.lot >= 40000 ? "dpr" : "byright";
     if (i.units >= 10) return (i.commercial ?? 0) > 2500 ? "major" : "minor";
     return i.units >= 4 ? "dpr" : "byright";
   },
   use: providenceUse,
-  classifyCommercial: providenceClassifyCommercial,
+  classifyCommercial: (i) => (providenceDesignReview(i) ? "dpr" : providenceClassifyCommercial(i)),
+  overlayRules: providenceOverlayRules,
+  overlayFlags: providenceOverlayFlags,
+  unmappedOverlays: PROVIDENCE_AREAS,
+  extraSteps: [{ step: coaStep, before: ["record", "building"] }],
   commercialLines: [10000, 20000],
   commercialRoute: providenceCommercialRoute,
   commercialFindings: providenceCommercialFindings,

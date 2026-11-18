@@ -79,6 +79,26 @@ export const PROVIDENCE_CONTACTS: Record<string, Contact> = {
     verify: "Providers and contacts were not read.",
     src: ["pregs"],
   },
+  hdc: {
+    name: "Providence Historic District Commission", kind: "appointed",
+    lines: [
+      ["Covers", "The local historic districts on the City's zoning map (Historic Overlay District), and listed landmark and industrial buildings"],
+      ["Records", "Agendas and minutes on the state Open Meetings site"],
+    ],
+    note: "Decides certificates of appropriateness for construction, alteration and demolition in the local historic districts. Its decisions are appealed to the Zoning Board of Review.",
+    verify: "Its meeting pattern, staff and filing deadlines were not read. Read from the Zoning Ordinance, §§ 1707 and 1911, on 2026-11-18.",
+    src: ["pzo"], links: [{ label: "Meetings, agendas and minutes", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2829" }],
+  },
+  i195: {
+    name: "I-195 Redevelopment District Commission", kind: "state",
+    lines: [["Covers", "The parcels freed by moving Route I-195, on the state's I-195 parcel map"], ["Applications", "To the Commission's own staff, not the City's"]],
+    note: "A state commission. On its parcels in D-1 and the East Side I-195 Overlay it sits as the Downtown Design Review Committee and decides waivers there.",
+    verify: "Its procedure, clocks and contacts were not read. Read from the Zoning Ordinance, §§ 1705 and 1716, on 2026-11-18.",
+    src: ["pzo"], links: [
+      { label: "Meetings, agendas and minutes", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1531" },
+      { label: "The I-195 District's own site", url: "https://www.195district.com/" },
+    ],
+  },
   crmc: {
     name: "RI Coastal Resources Management Council", kind: "state",
     lines: [["Web", "crmc.ri.gov"]],

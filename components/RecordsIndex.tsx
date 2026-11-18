@@ -6,6 +6,7 @@ import { LOCALITIES } from "@/lib/data/records";
 import { SOURCES } from "@/lib/data/sources";
 import { TOWNS } from "@/lib/data/towns";
 import { bodiesOf, bodiesRead, meetsLine, minutesLine, ROLE_LABEL, type Body } from "@/lib/data/bodies";
+import { agendaOf, kindOf, KIND_WORD, readInto } from "@/lib/data/agenda";
 import { sourcePlace, sourceType, SOURCE_TYPES } from "@/lib/sourceKind";
 import type { Locality } from "@/lib/types";
 import { Icon } from "./Icon";
@@ -26,6 +27,45 @@ function itemsOf(l: Locality): Item[] {
 }
 
 const has = (words: string[], text: string) => words.every((w) => text.toLowerCase().includes(w));
+
+/**
+ * Every case on the planning body's agendas since a date (D53, chunk 0): which became recorded projects here, and which
+ * are listed only, so the rest of the reading is a named gap. Closed by default: it is long.
+ */
+function AgendaCases({ town }: { town: string }) {
+  const a = agendaOf(town);
+  if (!a) return null;
+  const rows = a.projects.map((c) => ({ c, read: readInto(town, c), kind: kindOf(c) }));
+  const homes = rows.filter((r) => r.kind === "homes");
+  const readN = rows.filter((r) => r.read).length;
+  const fmt = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
+  return (
+    <details className="rdx-cases">
+      <summary>
+        <b>Every case on its agendas since {fmt(a.since)}: {rows.length}</b>{" "}
+        <span className="muted small">{readN} read into the projects here · {homes.filter((r) => !r.read).length} with homes not yet read <span className="gap-tag">Gap</span> · listed {a.read} from {a.meetings} agendas{a.scanned.length ? `, ${a.scanned.length} of them scans not read` : ""}</span>
+      </summary>
+      <p className="small muted">From the agendas on the state Open Meetings site. A case listed but not read has only what its agenda says; its staff report and minutes would make it a recorded project. Applicants are left out.</p>
+      <div className="table-wrap">
+        <table className="rdx-case-table">
+          <thead><tr><th>Case</th><th>Address</th><th>Kind</th><th>Homes</th><th>On the agenda</th><th>Read</th></tr></thead>
+          <tbody>
+            {rows.map(({ c, read, kind }) => (
+              <tr key={c.case} className={read ? "is-read" : ""}>
+                <td>{c.case}</td>
+                <td>{c.address}{c.area ? <span className="muted small"> · {c.area}</span> : null}</td>
+                <td className="small">{KIND_WORD[kind]}<span className="muted"> · {c.meetings[c.meetings.length - 1].heading.toLowerCase()}</span></td>
+                <td>{c.units ?? ""}</td>
+                <td className="small">{c.meetings.length === 1 ? fmt(c.meetings[0].date) : `${fmt(c.meetings[0].date)} to ${fmt(c.meetings[c.meetings.length - 1].date)} (${c.meetings.length})`}</td>
+                <td className="small">{read ? `✓ ${read.name}` : kind === "homes" ? <span className="gap-tag">Gap</span> : ""}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  );
+}
 
 /** A town's boards as the state Open Meetings site lists them (ARD D53, chunk 2): when each meets and how its minutes are filed. */
 function Boards({ town, bodies }: { town: string; bodies: Body[] }) {
@@ -140,6 +180,7 @@ export function RecordsIndex() {
               {l.tips && !words.length && (
                 <details className="rdx-tips"><summary>Reading tips for {current}</summary><ul>{l.tips.map((t) => <li key={t}>{t}</li>)}</ul></details>
               )}
+              {!words.length && <AgendaCases town={current} />}
               {!words.length && <Boards town={current} bodies={bodiesOf(current)} />}
             </>
           ) : (

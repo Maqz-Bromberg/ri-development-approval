@@ -232,6 +232,9 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
               <dl className="metrics">
                 <div><dt>Town</dt><dd>{f.town ?? "not found"}</dd></div>
                 <div><dt>Zoning district</dt><dd>{f.zone ? `${f.zone} · ${f.zoneName}` : f.zoneOptions.length > 1 ? "choose below" : "not found"}</dd></div>
+                {f.townZone && (
+                  <div><dt>On {f.townZone.label}</dt><dd>{f.townZone.zone}{f.zone && f.townZone.zone.replace("RP", "R-P") !== f.zone.replace("RP", "R-P") ? ` (the 2024 Atlas says ${f.zone})` : " (the same)"}</dd></div>
+                )}
                 {f.overlays.length > 0 && <div><dt>Overlay</dt><dd>{f.overlays.map((o) => `${o.zone} · ${o.name}`).join("; ")}</dd></div>}
                 {f.wetAgency && <div><dt>Wetlands regulated by</dt><dd>{f.wetAgency === "CRMC" ? "CRMC (coastal)" : "RIDEM"}</dd></div>}
                 <div><dt>Parcel</dt><dd>{f.platLot ?? (f.parcelOptions.length > 1 ? "choose below" : "not found")}</dd></div>
@@ -260,6 +263,11 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
                     <label key={o.platLot}><input type="radio" name="lk-parcel" checked={f.platLot === o.platLot} onChange={() => choose({ platLot: o.platLot, acres: o.acres, outline: o.outline })} /> {o.platLot} · {o.acres.toFixed(2)} acres</label>
                   ))}
                 </fieldset>
+              )}
+              {f.townZone && f.zone && f.townZone.zone.replace("RP", "R-P") !== f.zone.replace("RP", "R-P") && (
+                <p className="lookup-note is-warn">
+                  {f.town}&apos;s own zoning map puts the site in {f.townZone.zone}, where the 2024 Zoning Atlas has {f.zone}. The town&apos;s map is the newer of the two; choose {f.townZone.zone} below if it is in the list, and confirm with the planning office.
+                </p>
               )}
               {f.failed.length > 0 && <p className="lookup-note is-warn">Couldn&apos;t read: {f.failed.join(", ")}. Enter those by hand.</p>}
               {covered && f.town && !townInfo(f.town).marks.steps && (

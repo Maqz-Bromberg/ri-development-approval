@@ -169,6 +169,28 @@ export function ObjectionGuide() {
             <span className="gap-tag">Gap</span> These concerns were read from hearings on housing. Hearings on commercial and institutional projects have not been read, and they turn on other things: traffic and deliveries, hours, noise, lighting and signs. The recordings and minutes below cover them too.
           </p>
         )}
+        <div className="sheet-bar no-print">
+          <input type="search" className="sheet-search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search questions, answers and what was heard" aria-label="Search questions" />
+          <div className="sheet-actions">
+            <span className="small muted">{picked.size ? `${picked.size} on your sheet` : "Add questions to build a one-page sheet"}</span>
+            <button type="button" className="btn" disabled={!picked.size} onClick={printSheet}>Print/Save my hearing prep sheet</button>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec" aria-label="Questions to expect">
+        <div className="topic-tiles no-print" role="group" aria-label="Filter by topic">
+          {(["all", ...TOPICS] as const).map((t) => {
+            const n = t === "all" ? OBJECTIONS.length : OBJECTIONS.filter((o) => o.topic === t).length;
+            return (
+              <button key={t} type="button" className="topic-tile" aria-pressed={topic === t} onClick={() => setTopic(t)}>
+                <TopicIcon topic={t} />
+                <span className="topic-name">{t === "all" ? "All topics" : t}</span>
+                <span className="topic-sub">{t === "all" ? "Every question" : TOPIC_NOTE[t]} · {n}</span>
+              </button>
+            );
+          })}
+        </div>
         {locality.media && locality.media.length > 0 && (
           <details className="media-box" open={!locality.indexed}>
             <summary>
@@ -188,28 +210,6 @@ export function ObjectionGuide() {
             </ul>
           </details>
         )}
-      </section>
-
-      <section className="sec" aria-label="Questions to expect">
-        <div className="topic-tiles no-print" role="group" aria-label="Filter by topic">
-          {(["all", ...TOPICS] as const).map((t) => {
-            const n = t === "all" ? OBJECTIONS.length : OBJECTIONS.filter((o) => o.topic === t).length;
-            return (
-              <button key={t} type="button" className="topic-tile" aria-pressed={topic === t} onClick={() => setTopic(t)}>
-                <TopicIcon topic={t} />
-                <span className="topic-name">{t === "all" ? "All topics" : t}</span>
-                <span className="topic-sub">{t === "all" ? "Every question" : TOPIC_NOTE[t]} · {n}</span>
-              </button>
-            );
-          })}
-        </div>
-        <div className="sheet-bar no-print">
-          <input type="search" className="sheet-search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search questions, answers and what was heard" aria-label="Search questions" />
-          <div className="sheet-actions">
-            <span className="small muted">{picked.size ? `${picked.size} on your sheet` : "Add questions to build a one-page sheet"}</span>
-            <button type="button" className="btn" disabled={!picked.size} onClick={printSheet}>Print/Save my hearing prep sheet</button>
-          </div>
-        </div>
         <p className="print-only sheet-title">
           <b>{body} hearing sheet</b> · {inputs.units} units, {inputs.zone === "other" ? inputs.town : `${inputs.zone}, ${inputs.town}`}{inputs.address ? ` · ${inputs.address}` : ""}
         </p>

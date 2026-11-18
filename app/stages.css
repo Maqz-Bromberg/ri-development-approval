@@ -264,6 +264,8 @@
 .lk-sw.inline { display: inline-block; width: 14px; height: 10px; vertical-align: -1px; margin: 0 3px 0 6px; }
 @media (max-width: 760px) { .rec-top { grid-template-columns: 1fr; } .rdx-items li { grid-template-columns: 1fr; } }
 .alt-routes td .btn { white-space: nowrap; padding: 6px 14px; }
+/* Hearing: the note inside a question card is a tint, not a second outline */
+.obj .note { border: 0; }
 
 /* ---------- 2026-11-18, second round (D48 to D50) ---------- */
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { onSitesChanged, readSites, sameSite, saveSite, unsavedChanges, type SavedSite } from "@/lib/savedSites";
 import { Icon } from "../Icon";
 import { useProject } from "../ProjectProvider";
+import { SavedSites } from "../SavedSites";
 import { ShareTools } from "../ShareTools";
 import { Dropdown } from "./Dropdown";
 
@@ -34,21 +35,24 @@ export function SaveChip() {
       <span className="st hc-tip" tabIndex={0}>
         <span className="disk">
           <Icon name="save" size={20} />
-          {!example && <span className="badge" aria-hidden="true">{clean ? "✓" : changes.length || 1}</span>}
+          <span className="badge" aria-hidden="true">{example || clean ? "✓" : changes.length || 1}</span>
         </span>
         <span>
-          <b>{example ? "Example project" : clean ? "Saved" : changes[0] === "Not saved yet" ? "Not saved yet" : `${changes.length} change${changes.length > 1 ? "s" : ""} not saved`}</b>
-          <small>{example ? "Nothing of yours to save" : "Your sites, this browser"}</small>
+          <b>{example ? "No changes to save" : clean ? "Saved" : changes[0] === "Not saved yet" ? "Not saved yet" : `${changes.length} change${changes.length > 1 ? "s" : ""} not saved`}</b>
+          <small>{example ? "The example, as it comes" : "Your sites, this browser"}</small>
         </span>
         <span className="tip" role="tooltip">
-          {example ? "Choose a site, or change a fact, and the project becomes yours to save." : clean ? "The project on screen matches its saved copy." : <>Not saved: <ul>{changes.map((c) => <li key={c}>{c}</li>)}</ul></>}
+          {example ? "This is the example project, unchanged, and it is always here. Choose a site or change a fact, and the project becomes yours to save." : clean ? "The project on screen matches its saved copy." : <>Not saved: <ul>{changes.map((c) => <li key={c}>{c}</li>)}</ul></>}
+          <span className="tip-foot">Save keeps the whole project, with its pins, ticks and notes, under Your sites. A pin only marks something inside the project.</span>
         </span>
       </span>
       <button type="button" className="go" onClick={save} disabled={example || clean}>Save</button>
-      <Dropdown label="Keep this project: file, share link, printed review" button={<Icon name="chev" size={14} className="rot" />} className="save-more" panelClass="save-card">
-        <b className="t">Keep this project</b>
-        <p className="small muted">Your sites is this browser only: clearing site data or switching device loses it. A project file or a share link carries everything, notes and pins included.</p>
+      <Dropdown label="Your sites, and other ways to keep this project" button={<Icon name="chev" size={14} className="rot" />} className="save-more" panelClass="save-card">
+        <h4 className="sc-h">Your sites <small>this browser only</small></h4>
+        <SavedSites inMenu />
+        <h4 className="sc-h">Take it with you <small>works on any device</small></h4>
         <ShareTools printHere={false} />
+        <p className="small muted sc-foot">Clearing site data or switching device loses Your sites. A project file or a share link carries everything, notes and pins included.</p>
         <p className="small" aria-live="polite">{msg}</p>
       </Dropdown>
     </div>

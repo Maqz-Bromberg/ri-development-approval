@@ -2,19 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { STAGES, stageOf } from "@/lib/stages";
 import { Icon } from "../Icon";
 import { useProject } from "../ProjectProvider";
 import { useStageFacts } from "../useStages";
 import { useTrial } from "../Trial";
+import { BrandMark } from "./BrandMark";
 import { RefMenu } from "./RefMenu";
 import { SaveChip } from "./SaveChip";
 
-/** The header: the brand, the five stages with a live subtitle each, the Reference menu and the save chip (ARD D42). */
+/**
+ * The header: the brand, the five stages with a live subtitle each, the Reference menu and the save chip (ARD D42).
+ * With no stage open the five are spaced evenly. On a stage, the stages before it gather at the left end and the ones after at
+ * the right, and a dotted arrow in the stage's colour runs into it and out of it (ARD D49). The gaps are one flat row of
+ * separators, so a change of stage slides them rather than redrawing the bar.
+ */
 export function Header({ onOutline }: { onOutline?: () => void }) {
   const path = usePathname();
   const here = stageOf(path);
+  const curIdx = STAGES.findIndex((s) => s.id === here?.id);
   const { subs, standing, hydrated } = useStageFacts();
   const { origin, chosen } = useProject();
   const trial = useTrial();
@@ -34,19 +41,17 @@ export function Header({ onOutline }: { onOutline?: () => void }) {
   return (
     <header className="top" ref={ref}>
       <Link href="/" className="brand">
-        <span className="mark" aria-hidden="true" />
-        <span>
-          <b>RI Building Plan Approval</b>
-          <small>All 39 towns · Cumberland read in full · Providence on trial</small>
-        </span>
+        <BrandMark />
+        <b>RI Building Plan Approval</b>
       </Link>
-      <nav className="stages" aria-label="Stages">
+      <nav className={`stages${curIdx >= 0 ? ` has-cur ${STAGES[curIdx].wash}` : " no-cur"}`} aria-label="Stages">
         {STAGES.map((s, i) => {
           const cur = here?.id === s.id;
           const dim = gated && s.id !== "site";
+          const arrow = curIdx >= 0 && (i === curIdx || i - 1 === curIdx);
           return (
-            <span key={s.id} className="stg-wrap">
-              {i > 0 && <span className="sep" aria-hidden="true"><Icon name="chev" size={14} /></span>}
+            <Fragment key={s.id}>
+              {i > 0 && <span className={`sep${arrow ? " arrow" : ""}`} aria-hidden="true"><span className="sep-line" /><Icon name="chev" size={14} /></span>}
               <Link href={s.href} className={`stg ${s.wash}${cur ? " cur" : ""}${dim ? " dim" : ""}`} aria-current={cur ? "page" : undefined}>
                 <span className="ic"><Icon name={s.icon} size={19} /></span>
                 <span className="nm">
@@ -58,7 +63,7 @@ export function Header({ onOutline }: { onOutline?: () => void }) {
                   {dim ? "Choose a site first" : hydrated ? subs[s.id] : " "}
                 </span>
               </Link>
-            </span>
+            </Fragment>
           );
         })}
       </nav>

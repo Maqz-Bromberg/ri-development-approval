@@ -976,8 +976,9 @@ textarea { resize: vertical; line-height: 1.45; }
 .zp-label label, .zp-label .legend-like { margin-bottom: 0; }
 .info-btn {
   flex: none; width: 18px; height: 18px; border-radius: 50%; display: inline-grid; place-items: center; padding: 0; cursor: help;
-  font: italic 800 12px/1 Georgia, serif; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--surface));
+  line-height: 0; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--surface));
 }
+.info-btn .info-glyph { display: block; }
 .info-btn:hover, .info-btn[aria-expanded="true"] { background: var(--accent); color: var(--surface); }
 .field > .zp-label { margin-bottom: 4px; }
 

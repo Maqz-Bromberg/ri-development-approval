@@ -31,7 +31,7 @@ function Pinned() {
     router.push(href);
     if (target) window.setTimeout(() => goTo(target), 350);
   };
-  if (!pins.length) return <p className="small muted tray-empty">Nothing pinned yet. Use the <Icon name="pin" size={13} /> on a finding, a document, a contact, a date, a site fact or a hearing question to keep it here, on every stage.</p>;
+  if (!pins.length) return <p className="small muted tray-empty">Nothing pinned yet. Use the <Icon name="pin" size={13} /> on a finding, a document, a contact, a date, a site fact or a hearing question.</p>;
   return (
     <ul className="pins">
       {pins.map((p) => {
@@ -113,6 +113,7 @@ export function Tray({ open, setOpen }: { open: boolean; setOpen: (v: boolean) =
         <button type="button" className="tray-close link-btn small" onClick={() => setOpen(false)}>Close <Icon name="x" size={12} /></button>
         <section aria-labelledby="tr-pin">
           <h3 id="tr-pin"><Icon name="pin" size={16} /> Pinned <span className="count">{n.pins}</span></h3>
+          <p className="tray-what small muted">Bookmarks inside this project, kept in view on every stage. They are kept with the project when you save it.</p>
           <Pinned />
         </section>
         <section aria-labelledby="tr-sheet">

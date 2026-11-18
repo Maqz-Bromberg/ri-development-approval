@@ -106,3 +106,10 @@
 .ps-fact { color: inherit; text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 3px; }
 .ps-fact:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .rstep { scroll-margin-top: 52px; }
+
+/* The info (i): a cursive i, a little larger in its circle */
+.info-btn .info-glyph { width: 12px; height: 12px; }
+
+/* Save chip on the example: nothing to save, shown settled rather than pending */
+.save.is-example .badge { background: var(--mut); }
+.save.is-example .st b { color: var(--ink); }

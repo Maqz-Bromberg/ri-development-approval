@@ -32,7 +32,20 @@ export function Info({ id }: { id: string }) {
         </>
       }
     >
-      <span aria-hidden="true">i</span>
+      <InfoGlyph />
     </HoverCard>
+  );
+}
+
+/**
+ * The "i" of an (i), drawn rather than typeset, so it sits in the middle of its circle whatever the font: a cursive i, its dot
+ * set clear of the stroke, which leads in from the left and tails off to the right.
+ */
+export function InfoGlyph() {
+  return (
+    <svg className="info-glyph" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+      <circle cx="6.75" cy="1.85" r="1.1" fill="currentColor" />
+      <path d="M4.1 5.9C4.9 5.1 6.3 4.7 6.2 5.6L5.35 8.85C5.1 9.85 5.9 10.25 7.5 8.9" fill="none" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { onSitesChanged, readSites, sameSite, saveSite, writeSites, type SavedSite } from "@/lib/savedSites";
+import { InfoGlyph } from "./Info";
 import { HoverCard } from "./Popover";
 import { useProject } from "./ProjectProvider";
 
@@ -13,7 +14,8 @@ import { useProject } from "./ProjectProvider";
  */
 const ago = (iso: string) => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
-export function SavedSites() {
+/** `inMenu`: the list alone, for the save chip's card, where the chip's own Save button does the saving. */
+export function SavedSites({ inMenu = false }: { inMenu?: boolean } = {}) {
   const { saved, importState, origin, hydrated } = useProject();
   const [list, setList] = useState<SavedSite[]>([]);
   const [msg, setMsg] = useState("");
@@ -35,8 +37,10 @@ export function SavedSites() {
   const askLoad = (s: SavedSite) => (origin !== "example" && !unchanged ? setConfirm(s.id) : load(s));
 
   return (
-    <div className="saved-sites" aria-label="Saved sites">
-      <div className="ss-head">
+    <div className={`saved-sites${inMenu ? " in-menu" : ""}`} aria-label="Saved sites">
+      {inMenu ? (
+        !list.length && <p className="small muted">None yet. Save writes the project on screen here, under its address.</p>
+      ) : <div className="ss-head">
         <button type="button" className="btn ghost ss-save" onClick={save} disabled={origin === "example" || !!unchanged}>
           {unchanged ? "Site saved ✓" : current ? "Update saved site" : "Save site"}
         </button>
@@ -48,11 +52,11 @@ export function SavedSites() {
             <p>Saved sites are listed here whenever you come back, to load again. They stay on this device only: to move one, or keep it safe, download the project file.</p>
           </>}
         >
-          <span aria-hidden="true">i</span>
+          <InfoGlyph />
         </HoverCard>
         {origin === "example" && <span className="small muted">Enter your own site to save it.</span>}
         {list.length > 0 && <span className="small muted">{list.length} saved in this browser</span>}
-      </div>
+      </div>}
       {list.length > 0 && (
         <ul className="ss-list">
           {list.map((s) => (

@@ -14,9 +14,11 @@
 .w-cal { --wash: #ECEDF7; --wink: #474C8F; } .w-hear { --wash: #F5E8EE; --wink: #8E2F5C; }
 .shell svg.i { flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .shell svg.i.rot { transform: rotate(90deg); }
-.shell button { font: inherit; color: inherit; }
+/* :where keeps this at zero specificity, so a .btn's own colour wins (the Look up and Copy share link buttons had dark text on blue). */
+:where(.shell) button { font: inherit; color: inherit; }
 
-.app { height: 100vh; height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; background: var(--bg); overflow: hidden; position: relative; }
+/* clip, not hidden: a hidden box can still be scrolled by scrollIntoView, which slid the whole frame up, disclaimer strip and all */
+.app { height: 100vh; height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; background: var(--bg); overflow: clip; position: relative; }
 .ref-page { min-height: 100vh; background: var(--bg); padding-bottom: 44px; }
 .ref-page .top { position: sticky; top: 0; z-index: 20; }
 .ref-page main.wrap { padding-block: 8px 24px; }
@@ -24,11 +26,8 @@
 /* ---------- header ---------- */
 .top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 6px 16px; padding: 8px 16px; background: var(--sf); border-bottom: 1px solid var(--rule); position: relative; z-index: 20; }
 .brand { display: flex; gap: 10px; align-items: center; text-decoration: none; color: var(--ink); }
-.brand b { display: block; font-family: var(--ff-head); font-size: 17px; line-height: 1.1; font-weight: 700; }
-.brand small { font-size: 12px; color: var(--mut); }
-.mark { width: 30px; height: 30px; border-radius: 9px; background: var(--act-s); border: 2px solid var(--act); position: relative; flex: none; }
-.mark::before { content: ""; position: absolute; left: 50%; top: 5px; bottom: 5px; width: 2px; margin-left: -1px; background: var(--act); border-radius: 2px; }
-.mark::after { content: ""; position: absolute; left: 50%; top: 10px; width: 8px; border-top: 2px solid var(--act); }
+.brand b { display: block; font-family: var(--ff-head); font-size: 21px; line-height: 1.1; font-weight: 700; letter-spacing: -.01em; }
+.brand-mark { flex: none; }
 .stages { display: flex; justify-content: center; align-items: center; gap: 2px; min-width: 0; }
 .stg-wrap { display: flex; align-items: center; gap: 2px; }
 .stg { display: grid; grid-template-columns: 34px auto; column-gap: 9px; align-items: center; text-align: left; border-radius: 10px; padding: 6px 12px 7px 7px; position: relative; text-decoration: none; color: var(--ink); }
@@ -74,7 +73,23 @@
 .hc-tip:hover .tip, .hc-tip:focus .tip { visibility: visible; opacity: 1; }
 .tip ul { margin: 4px 0 0; padding-left: 16px; }
 .save-card { width: 360px; max-width: calc(100vw - 24px); }
-.save-card .t { font-family: var(--ff-head); }
+.save-card { padding: 4px 14px 10px; }
+.sc-h { display: flex; align-items: baseline; gap: 8px; margin: 12px 0 6px; font-family: var(--ff-body); font-size: 13px; color: var(--ink); }
+.sc-h small { font-weight: 400; color: var(--mut); font-size: 12px; }
+.sc-h + .saved-sites { margin: 0; }
+.save-card .ss-list { display: grid; gap: 2px; }
+.save-card .ss-list li { border: 0; border-radius: 6px; background: #F4F6F8; padding: 5px 8px; font-size: 13px; }
+.save-card .ss-list li.is-current { background: var(--act-s); }
+/* the take-away actions as a plain menu: no outlined pills inside the card's own outline */
+.save-card .share { border: 0; padding: 0; background: none; border-radius: 0; }
+.save-card .share-actions { display: grid; gap: 0; margin: 0 -14px; }
+.save-card .share-actions .btn { border: 0; border-radius: 0; background: none; color: var(--ink); font-weight: 400; font-size: 13.5px; padding: 6px 14px; justify-content: flex-start; }
+.save-card .share-actions .btn:hover { background: #F4F6F8; filter: none; }
+.save-card .share-actions .btn:first-child { color: var(--act); font-weight: 700; }
+.save-card .share > p { margin: 4px 0 0; }
+.sc-foot { border-top: 1px solid var(--rule); padding-top: 8px; margin-top: 8px !important; }
+.tip-foot { display: block; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--rule); color: var(--mut); }
+.tray-what { margin: -2px 0 8px; font-size: 12px; }
 
 /* ---------- body: rail, stage, tray ---------- */
 .body { display: grid; grid-template-columns: 252px minmax(0, 1fr) 300px; min-height: 0; position: relative; }
@@ -133,6 +148,7 @@
 .olist .n { font-weight: 700; color: var(--mut); font-size: 12px; text-align: center; }
 .olist .mini { width: 42px; height: 5px; border-radius: 3px; background: #E1E5EA; overflow: hidden; }
 .olist .mini i { display: block; height: 100%; background: var(--pass); }
+.olist li.after-rule { border-top: 1px solid var(--rule2); margin-top: 4px; padding-top: 4px; }
 .olist li.branch button { color: var(--mut); font-style: italic; }
 .olist .kd { display: flex; gap: 2px; grid-column: 2 / 4; }
 .olist .kd i { width: 12px; height: 3px; border-radius: 2px; background: var(--k); }
@@ -156,7 +172,10 @@
 .full-disclaimer { margin: 40px 0 0; padding: 22px 26px 30px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--mut); background: transparent; }
 .stage-in + .full-disclaimer, .main > .full-disclaimer { max-width: 1040px; margin-inline: auto; }
 .full-disclaimer h2 { font-size: 15px; color: var(--ink); margin-bottom: 6px; }
-.full-disclaimer p, .full-disclaimer li { max-width: 90ch; }
+/* As wide as the body above it: the stage column on a stage, the page's own width on a reference page */
+.full-disclaimer p, .full-disclaimer li { max-width: none; }
+.app.pre .main > .full-disclaimer { max-width: 1120px; }
+.wrap > .full-disclaimer { padding-inline: 0; }
 .full-disclaimer ul { padding-left: 18px; display: grid; gap: 4px; }
 .scrim { position: absolute; inset: 0; z-index: 25; border: 0; background: rgba(27, 35, 48, .35); cursor: default; }
 
@@ -207,7 +226,7 @@
   .top { grid-template-columns: minmax(0, 1fr) auto; }
   .top .save { width: 100%; }
   .top .save .st { flex: 1; min-width: 0; }
-  .brand b { font-size: 15px; }
+  .brand b { font-size: 16px; }
   .stage-in, .main { min-width: 0; max-width: 100vw; }
   .band { margin-inline: -14px; }
 }
@@ -225,18 +244,17 @@
 }
 
 /* ---------- fit fixes ---------- */
-@media (max-width: 1499px) {
+@media (max-width: 1699px) {
   .top { grid-template-columns: auto minmax(0, 1fr) auto auto; grid-template-areas: "brand . tools save" "stages stages stages stages"; }
   .top .brand { grid-area: brand; } .top .top-tools { grid-area: tools; } .top .save { grid-area: save; } .top .stages { grid-area: stages; justify-content: flex-start; }
   .stg.cur::after { bottom: -7px; }
 }
-@media (min-width: 1500px) and (max-width: 1749px) { .save .st small { display: none; } .sep { display: none; } }
+@media (min-width: 1700px) and (max-width: 1899px) { .save .st small { display: none; } .sep:not(.arrow) { display: none; } .stg .sub { max-width: 14ch !important; } }
 .stages { justify-content: flex-start; }
 .outline-btn { display: none; }
 @media (max-width: 959px) and (min-width: 720px) { .outline-btn { display: inline-flex; } }
 .stages { overflow: hidden; }
 .stg .sub { max-width: 17ch; }
-@media (max-width: 1699px) { .brand small { display: none; } }
 .tray-contacts li { min-width: 0; }
 .tray-contacts .kchip { white-space: normal; min-width: 0; flex: 0 1 auto; text-align: left; }
 .tray-contacts .kchip small { display: none; }
@@ -246,4 +264,28 @@
 @media (max-width: 719px) {
   .top { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "brand tools" "save save" "stages stages"; }
   .top .stages { overflow-x: auto; }
+}
+
+/* ---------- the stages as a flow (ARD D49) ----------
+   No stage open: the five spaced evenly. On a stage: the stages before it gather at the left end, the ones after at the right end,
+   and a dotted arrow in the stage's colour runs into it and out of it. The separators are one flat row, so their growth slides. */
+.stages .sep { flex: 0 0 auto; display: flex; align-items: center; min-width: 14px; padding: 0 2px; transition: flex-grow .4s ease, min-width .4s ease, color .4s; }
+.sep-line { flex: 1 1 0; width: 0; height: 0; border-top: 2px dotted transparent; transition: border-color .4s; }
+.stages.no-cur .sep { flex-grow: 1; }
+.stages .sep.arrow { flex-grow: 1; min-width: 44px; color: var(--wink); padding: 0 6px; }
+.stages .sep.arrow .sep-line { border-top-color: color-mix(in srgb, var(--wink) 70%, #fff); margin-right: -7px; }
+.stages .sep.arrow .i { stroke-width: 2.2; }
+@media (prefers-reduced-motion: reduce) { .stages .sep, .sep-line { transition: none; } }
+@media (max-width: 719px) { .stages .sep.arrow { min-width: 28px; } .stages.no-cur .sep { flex-grow: 0; } }
+@media (max-width: 959px) {
+  .stages .sep { min-width: 8px; padding: 0; }
+  .stages .sep.arrow { min-width: 22px; padding: 0 2px; }
+  .stages .sep.arrow .sep-line { margin-right: -5px; }
+  .stg { padding-right: 9px; column-gap: 7px; }
+}
+@media (min-width: 720px) and (max-width: 959px) { .save .st small { display: none; } .save .st b { white-space: nowrap; } }
+@media (max-width: 959px) {
+  .stg { grid-template-columns: 30px auto; padding-left: 5px; }
+  .stg .ic { width: 30px; height: 30px; }
+  .top .stages { overflow-x: auto; scrollbar-width: thin; }
 }

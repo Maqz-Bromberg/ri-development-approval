@@ -62,8 +62,8 @@ function Outline() {
   if (!stage) return null;
 
   if (stage.id === "site") {
-    const items = [["sg-where", "Where"], ["sg-zone", "District"], ["sg-facts", "Project and land"], ["compare", "Alternatives"], ["routes", "The five routes"]];
-    return <><h3>On this stage</h3><ul className="olist plain">{items.map(([id, l]) => <li key={id}><button type="button" onClick={() => goTo(id)}><span className="n" /><span>{l}</span></button></li>)}</ul></>;
+    const items = [["sg-where", "1", "Where"], ["sg-facts", "2", "Project and land"], ["sg-zone", "3", "District"], ["routes", "", "Route and alternatives"]];
+    return <><h3>On this stage</h3><ul className="olist plain">{items.map(([id, n, l]) => <li key={id} className={n ? undefined : "after-rule"}><button type="button" onClick={() => goTo(id)}><span className="n">{n}</span><span>{l}</span></button></li>)}</ul></>;
   }
   if (stage.id === "law") {
     const list = sortedFindings(inputs, tree).filter((f) => f.st !== "pass");
@@ -106,10 +106,6 @@ function Outline() {
       <>
         <h3>Start date</h3>
         <input type="date" className="rail-date" value={inputs.startDate} aria-label="Start date" onChange={(e) => e.target.value && setInput("startDate", e.target.value)} />
-        <h3>Key</h3>
-        <ul className="legend">
-          <li><Icon name="file" size={15} /> You file</li><li><Icon name="deadline" size={15} /> Deadline</li><li><Icon name="hear" size={15} /> Meeting or hearing</li><li><Icon name="milestone" size={15} /> Milestone</li>
-        </ul>
         <h3>Take it with you</h3>
         <p className="rail-acts">
           <button type="button" className="btn ghost" onClick={downloadCalendar}><Icon name="dl" size={15} /> Calendar file (.ics)</button>

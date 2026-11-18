@@ -17,7 +17,7 @@
 .seg { display: inline-flex; border: 1px solid #9aa4ae; border-radius: 6px; overflow: hidden; background: #fff; }
 
 .stage .sec { margin-top: 26px; }
-.next-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.next-row { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 28px; }
 .example-flag { color: var(--fail); font-weight: 800; }
 
 /* route rows */
@@ -107,6 +107,15 @@
 .ps-fact:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .rstep { scroll-margin-top: 52px; }
 
+/* Site: the line under the inputs, after which everything reads them back (review only) */
+.review-rule { display: flex; align-items: center; gap: 14px; margin: 34px 0 6px; color: var(--mut); font-size: 13px; font-weight: 700; }
+.review-rule::before, .review-rule::after { content: ""; flex: 1; border-top: 2px solid var(--rule2); }
+.review-rule + .coverage { margin: 0 auto 4px; text-align: center; background: none; border: 0; padding: 0; font-size: 13px; max-width: 80ch; }
+.site-step.review { margin-top: 18px; }
+.site-step.review > .site-sub { font-size: 22px; margin: 0; }
+.site-sub2 { font-size: 17px; margin: 18px 0 4px; }
+.alts-inline { display: grid; gap: 8px; }
+.alts-inline .sub { margin: 0; }
 
 /* Site: lookup results by the address (trial "lookup"). Side: in the municipality's column until the facts are used. Below: straight under both, above the map. */
 /* Lookup results: a full-width card under the address and the municipality, above the map (ARD D46) */
@@ -119,6 +128,10 @@
 .site-where .lk-results .lookup-choose { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 4px 16px; }
 .site-where .lk-results .lookup-choose legend { grid-column: 1 / -1; }
 .lk-dismiss { margin-top: 6px; }
+
+/* One outline per card: the form's groups inside a step's panel are divided by a rule, not boxed again */
+.site-step .fgroup { border: 0; border-top: 1px solid var(--rule); border-radius: 0; padding: 14px 0 4px; }
+.site-step .fgroup > legend { padding: 0 8px 0 0; }
 
 /* ---------- Reference pages: search, the town map, cards ---------- */
 .ix-search { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--rule2); border-radius: 10px; padding: 0 12px; color: var(--mut); }
@@ -254,6 +267,36 @@
 /* Save chip on the example: nothing to save, shown settled rather than pending */
 .save.is-example .badge { background: var(--mut); }
 .save.is-example .st b { color: var(--ink); }
+
+/* Alternatives as a diff against the entry */
+.alt-diff thead .df-groups th, .alt-diff thead .df-groups td { border-bottom: 0; padding-bottom: 0; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--mut); }
+.alt-diff thead .df-groups th { border-top: 3px solid; padding-top: 6px; }
+.alt-diff .g-change { --g: #2E6DB4; } .alt-diff .g-result { --g: #474C8F; }
+.alt-diff thead .df-groups th.g-change { border-top-color: #9DBBE0; } .alt-diff thead .df-groups th.g-result { border-top-color: #B5B8DA; }
+.alt-diff .df-heads th { vertical-align: bottom; white-space: nowrap; }
+.df-ic { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; margin-bottom: 4px; background: color-mix(in srgb, var(--g, #5A6573) 12%, #fff); color: var(--g, #5A6573); }
+.alt-diff td.df-same { color: #9AA3AD; }
+.alt-diff td.df del, .alt-diff td.df ins { display: block; text-decoration: none; border-radius: 4px; padding: 1px 6px; width: fit-content; }
+.alt-diff td.df del { color: #8A4A45; background: #FBEBE9; text-decoration: line-through; text-decoration-color: #C0716A; font-size: 12px; margin-bottom: 3px; }
+.alt-diff td.df ins { font-weight: 700; }
+.alt-diff td.df-input ins { background: #E3EEF9; color: #1D4F8C; }
+.alt-diff td.df-better ins { background: #E2F2E6; color: #1F6B3F; }
+.alt-diff td.df-worse ins { background: #FBE3E0; color: #9A2F25; }
+.alt-diff td.df-other ins { background: #ECEDF7; color: #3C407E; }
+.alt-diff td.df-words ins { font-weight: 600; font-size: 12.5px; max-width: 22ch; }
+.alt-diff td.df-better ins::before { content: "▾ "; } .alt-diff td.df-worse ins::before { content: "▴ "; }
+.df-gutter { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 6px; border-radius: 4px; font-family: var(--ff-data); font-size: 12px; background: #ECEFF2; color: var(--mut); vertical-align: 1px; }
+.alt-diff tr.is-entry .df-gutter { background: #DCEBDD; color: var(--pass); }
+.alt-diff tbody th small { max-width: 30ch; }
+.df-key { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--mut); }
+.df-key li { display: inline-flex; gap: 6px; align-items: center; }
+.df-sw { border-radius: 4px; padding: 0 6px; font-weight: 700; font-size: 12px; }
+.df-sw.df-del { color: #8A4A45; background: #FBEBE9; text-decoration: line-through; font-weight: 400; }
+.df-sw.df-input { background: #E3EEF9; color: #1D4F8C; } .df-sw.df-better { background: #E2F2E6; color: #1F6B3F; }
+.df-sw.df-worse { background: #FBE3E0; color: #9A2F25; } .df-sw.df-other { background: #ECEDF7; color: #3C407E; }
+.df-sw.df-same-sw { color: #9AA3AD; font-weight: 400; }
+.applied-table { min-width: 0; }
+.applied-table th { font-size: 12.5px; }
 /* A tick's (i) and its check sit together at the end of the row */
 .ftick-row { justify-content: flex-start; }
 .ftick-row > .cb { flex: 1 1 auto; min-width: 0; }
@@ -263,3 +306,100 @@
 .alt-diff tbody th { min-width: 210px; width: 24%; }
 .alt-diff tbody th small { max-width: none; }
 .alt-diff thead .df-groups th.g-result { border-left: 10px solid var(--surface); }
+
+/* The five routes as a diff against the one you are on (ARD D51) */
+.route-diff tbody th { min-width: 220px; width: 22%; }
+.route-diff tbody th small { display: block; font-weight: 400; color: var(--mut); font-size: 12px; margin-top: 3px; }
+.route-diff .rd-name { font: inherit; font-weight: 800; color: var(--ink); background: none; border: 0; padding: 0; cursor: help; text-align: left; text-decoration: underline dotted var(--rule2); text-underline-offset: 3px; }
+.rd-tag { display: inline-block; margin-top: 5px; font-size: 11px; font-weight: 800; color: #fff; background: var(--pass); border-radius: 4px; padding: 1px 6px; }
+.rd-tag.hand { background: var(--open); }
+.route-diff tr.is-auto:not(.is-entry) { box-shadow: inset 3px 0 0 var(--pass); }
+.df-list ul, .df-list ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 3px; }
+.df-list ol { list-style: decimal; padding-left: 18px; font-size: 13px; }
+.df-list li { font-size: 12.5px; line-height: 1.3; }
+.dl-add, .dl-del, .dl-mod { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 4px; border-radius: 4px; padding: 1px 6px 1px 4px; width: fit-content; max-width: 100%; }
+.dl-add > span:first-child, .dl-del > span:first-child, .dl-mod > span:first-child { font-family: var(--ff-data); font-weight: 700; }
+.dl-add { background: #E2F2E6; color: #1F6B3F; }
+.dl-del { background: #FBEBE9; color: #8A4A45; text-decoration: line-through; text-decoration-color: #C0716A; }
+.dl-mod { background: #ECEDF7; color: #3C407E; }
+.df-sw.dl-add-sw { background: #E2F2E6; color: #1F6B3F; } .df-sw.dl-del-sw { background: #FBEBE9; color: #8A4A45; text-decoration: line-through; font-weight: 400; } .df-sw.dl-mod-sw { background: #ECEDF7; color: #3C407E; }
+.route-diff td .btn { white-space: nowrap; padding: 6px 14px; }
+.route-diff { min-width: 860px; }
+.route-diff th, .route-diff td { padding: 8px 8px; }
+.route-diff tbody th { min-width: 190px; width: 20%; }
+.route-diff td:nth-child(5) { min-width: 150px; }
+.route-diff td .btn { padding: 5px 12px; font-size: 13px; }
+/* A site step's parts may not grow past the column (a wide table scrolls inside its wrapper instead) */
+.site-step > * { min-width: 0; }
+.route-diff td:nth-child(2) { width: 26%; }
+.route-diff .dl-add, .route-diff .dl-del, .route-diff .dl-mod { width: auto; }
+.route-diff .df-heads th { white-space: normal; }
+.route-diff tbody th { min-width: 170px; }
+.route-diff td.df del, .route-diff td.df ins { white-space: nowrap; }
+.route-diff .df-gutter { display: none; }
+
+/* Routes trial "focus": one row; the route in focus open, its neighbours with their differences, the rest folded to a title */
+.route-focus { display: flex; gap: 8px; align-items: stretch; }
+.rf-card {
+  display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; min-width: 0;
+  font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; cursor: pointer;
+  flex: 1 1 0; transition: flex-grow .35s ease, background .2s, border-color .2s;
+}
+.rf-card.is-focus { flex-grow: 3.2; border-color: var(--act); box-shadow: 0 0 0 1px var(--act); }
+.rf-card.is-near { flex-grow: 2; }
+.rf-card.is-far { flex: 0 1 120px; background: #F4F6F8; padding: 10px 10px; }
+.rf-card.is-on:not(.is-focus) { border-color: var(--act); }
+.rf-card.is-auto { border-left: 4px solid var(--pass); }
+.rf-name { font-family: var(--ff-head); font-size: 15px; line-height: 1.2; }
+.is-far .rf-name { font-size: 13px; color: var(--mut); }
+.rf-rule { font-size: 13px; font-weight: 700; }
+.rf-blurb { font-size: 13px; color: var(--mut); line-height: 1.4; }
+.rf-diffs { display: grid; gap: 4px; justify-items: start; }
+.rf-vs { font-size: 11.5px; color: var(--mut); font-weight: 700; }
+.rf-diff { font-size: 12.5px; line-height: 1.3; border-radius: 4px; padding: 1px 6px; }
+.rf-diff.dl-del { display: block; }
+.rf-diff.df-better { background: #E2F2E6; color: #1F6B3F; font-weight: 700; }
+.rf-diff.df-worse { background: #FBE3E0; color: #9A2F25; font-weight: 700; }
+.rf-diff.df-same-sw { color: #9AA3AD; }
+.rf-more { font-size: 12px; color: var(--mut); }
+@media (prefers-reduced-motion: reduce) { .rf-card { transition: none; } }
+@media (max-width: 899px) { .route-focus { flex-direction: column; } .rf-card.is-far { flex-basis: auto; } }
+.rf-diff.dl-add, .rf-diff.dl-del { display: block; width: auto; }
+
+/* Focus row: the growth waits a moment and eases, so a card never jumps out from under the pointer */
+.rf-card { transition: flex-grow .45s cubic-bezier(.3, .7, .2, 1) 60ms, background .2s, border-color .2s; }
+
+/* Step marks (trial stepIcons, ARD D52) */
+.step-ic { display: inline-grid; place-items: center; flex: none; color: var(--act); vertical-align: -3px; margin-right: 5px; }
+.step-ic.vig { vertical-align: -8px; }
+.step-ic.who { width: 20px; height: 20px; border-radius: 50%; background: #EEF1F4; color: var(--mut); }
+.step-ic.who.k-elected { color: var(--elected); background: color-mix(in srgb, var(--elected) 12%, #fff); }
+.step-ic.who.k-appointed { color: var(--appointed); background: color-mix(in srgb, var(--appointed) 12%, #fff); }
+.step-ic.who.k-staff { color: var(--staff); background: color-mix(in srgb, var(--staff) 12%, #fff); }
+.step-ic.who.k-state { color: var(--state); background: color-mix(in srgb, var(--state) 12%, #fff); }
+.step-ic.who.k-utility { color: var(--utility); background: color-mix(in srgb, var(--utility) 12%, #fff); }
+.pathway { list-style: none; margin: 2px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.pathway li { display: inline-grid; place-items: center; min-width: 26px; min-height: 26px; border-radius: 7px; background: #F1F4F7; padding: 2px; position: relative; }
+.pathway li + li::before { content: ""; position: absolute; left: -4px; top: 50%; width: 4px; border-top: 1.5px solid var(--rule2); }
+.pathway .step-ic { margin: 0; }
+.pathway li.pw-add { background: #E2F2E6; box-shadow: inset 0 0 0 1.5px #5FA877; }
+.pathway li.pw-add::after { content: "+"; position: absolute; right: -3px; top: -6px; font-size: 11px; font-weight: 800; color: #1F6B3F; }
+.pathway li.pw-del { background: #FBEBE9; opacity: .65; }
+.pathway li.pw-del::after { content: ""; position: absolute; left: 3px; right: 3px; top: 50%; border-top: 1.5px solid #B3362C; transform: rotate(-35deg); }
+.df-list ol.with-ic { list-style: none; padding-left: 0; }
+.df-list ol.with-ic li { display: flex; align-items: center; }
+.dl-add > span:last-child, .dl-del > span:last-child, .dl-mod > span:last-child { display: inline-flex; align-items: center; }
+.tree-card .pathway { margin: 4px 0 2px; }
+/* Every card sizes by flex-grow alone, from the same zero basis, so a change of focus eases from where each card is.
+   (A folded card had a fixed 120 px basis, which does not animate: it snapped to nothing and then grew, so each change seemed to start over.) */
+.route-focus .rf-card { flex: 1 1 0; min-width: 0; }
+.route-focus .rf-card.is-focus { flex-grow: 2.6; }
+.route-focus .rf-card.is-near { flex-grow: 1.7; }
+.route-focus .rf-card.is-far { flex-grow: 1; }
+@media (max-width: 899px) { .route-focus .rf-card, .route-focus .rf-card.is-far { flex: none; } }
+/* Focus row opens on click: the folded and neighbouring cards are the click targets */
+.rf-card:not(.is-focus) { cursor: pointer; }
+.rf-card:not(.is-focus):hover { border-color: var(--rule2); background: #FAFBFC; }
+.rf-card:focus-visible { outline: 2px solid var(--act); outline-offset: 2px; }
+.rf-card.is-focus { cursor: default; }
+.rf-use { margin-top: 4px; padding: 6px 14px; font-size: 13px; }

@@ -18,7 +18,7 @@ export interface Stage {
 }
 
 export const STAGES: Stage[] = [
-  { id: "site", href: "/site", label: "Site", icon: "site", wash: "w-site", lead: "Where it is, the zoning district, what you plan to build, and what the land has." },
+  { id: "site", href: "/site", label: "Site", icon: "site", wash: "w-site", lead: "Where it is, what you plan to build, the zoning district, and what the land has." },
   { id: "law", href: "/law", label: "Zoning & law", icon: "law", wash: "w-law", lead: "What the rules say about this project, each finding with the rule it comes from." },
   { id: "route", href: "/route", label: "Route & people", icon: "route", wash: "w-route", lead: "Every step, who holds each decision, what to file, and who to deal with." },
   { id: "cal", href: "/calendar", label: "Calendar", icon: "cal", wash: "w-cal", lead: "Every filing, deadline and hearing, dated from your start date." },

@@ -40,6 +40,27 @@ export const VARIANTS: Record<string, Variant> = {
     pages: ["/"],
     options: { find: "Find your site: the find box first, then who you'll meet and the five stages", map: "Map first: the statewide town map with the search box over it", three: "Three ways in: three equal cards, recent and saved sites below" },
   },
+  routes: {
+    label: "Routes on Site",
+    note: "How the five routes are compared under \"Your route, and the alternatives\" (ARD D51, Maqz 2026-11-18).",
+    pages: ["/site"],
+    options: {
+      diff: "A table: your route in full, and what each other route adds, drops or changes",
+      cards: "The five routes as cards, each with its rule, what it involves and how well it is sourced",
+      focus: "One row: the route in focus open, its neighbours showing their main differences from it, the rest folded to a title",
+    },
+  },
+  stepIcons: {
+    label: "Step icons",
+    note: "The mark beside each step where the routes are compared on Site (ARD D52, Maqz 2026-11-18).",
+    pages: ["/site"],
+    options: {
+      line: "Line icons, one per kind of step, drawn after the old pathway's pictures",
+      vignette: "The old pathway's pictures, small",
+      who: "Who decides the step, by the mark and colour used for that kind of body elsewhere",
+      none: "No marks: the step names only",
+    },
+  },
   alts: {
     label: "Alternatives",
     note: "Where the list of nearby alternatives, as routes, sits (ARD D42, trial g).",

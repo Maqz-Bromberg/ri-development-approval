@@ -1,6 +1,6 @@
 import { district, readByUtility } from "./data/atlas";
-import { TREES } from "./data/trees";
-import { classify, commercialLines, deciders, deriveFlags, fmt, maxUnits, stepsFor, verdict } from "./engine";
+import { TREES, TREE_ORDER } from "./data/trees";
+import { classify, commercialLines, condOK, deciders, deriveFlags, fmt, maxUnits, stepsFor, verdict } from "./engine";
 import { buildSchedule, daysBetween } from "./schedule";
 import type { ProjectInputs, TreeId } from "./types";
 import { routeText } from "./engine";
@@ -25,11 +25,13 @@ export interface Scenario {
   flags: number;
   /** Who holds the decision on the main line, by contact id */
   deciders: string[];
+  /** The main-line steps before the building permit, by id and title, with who holds each (a contact id) where someone decides it */
+  steps: { id: string; title: string; who?: string }[];
   current?: boolean;
 }
 
-function measure(id: string, label: string, why: string, inputs: ProjectInputs): Scenario {
-  const tree = classify(inputs);
+function measure(id: string, label: string, why: string, inputs: ProjectInputs, forced?: TreeId): Scenario {
+  const tree = forced ?? classify(inputs);
   const f = deriveFlags(inputs, tree);
   const steps = stepsFor(tree, f);
   const v = verdict(inputs, tree, steps);
@@ -46,7 +48,16 @@ function measure(id: string, label: string, why: string, inputs: ProjectInputs):
     fails: v.fails.length,
     flags: v.flags.length,
     deciders: deciders(steps, f),
+    steps: (before === -1 ? main : main.slice(0, before)).map((s) => ({ id: s.id, title: s.title, who: s.auth.find((a) => condOK(a.cond, f))?.c })),
   };
+}
+
+/**
+ * The same project on each of the five routes, for comparing the routes themselves (ARD D51): each is measured as if the town
+ * treated the project that way, whether or not the facts pick it. `current` marks the route the project is on.
+ */
+export function routeScenarios(i: ProjectInputs, current: TreeId): Scenario[] {
+  return TREE_ORDER.map((k) => ({ ...measure(k, routeText(k, i.town).name, routeText(k, i.town).rule, i, k), current: k === current }));
 }
 
 /**

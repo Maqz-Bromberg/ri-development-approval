@@ -1,4 +1,4 @@
-import { TREES } from "./data/trees";
+import { TREES } from "./data/state/trees";
 import { district, districtsOf, housingTypeLabel, readByUtility, treatmentFor, type Treatment } from "./data/atlas";
 import { getActiveTown } from "./town";
 import { townFindings, townRules, townSteps } from "./data/towns/overlay";
@@ -134,8 +134,8 @@ export function requiredArea(i: ProjectInputs): AreaNeed | null {
 /** A route's name, rule and summary as the town defines it. Falls back to the state-law wording. */
 export function routeText(tree: TreeId, town = getActiveTown()): { name: string; rule: string; blurb: string; status: string; local: boolean } {
   const t = TREES[tree], local = townRules(town).routeText?.[tree];
-  const status = town === "Cumberland" ? t.status : townSteps(town, tree) ? "Local steps read (trial, not confirmed)" : "State law only";
-  return { name: local?.name ?? t.name, rule: local?.rule ?? t.rule, blurb: local?.blurb ?? t.blurb, status, local: !!local };
+  const status = townRules(town).routeStatus?.[tree] ?? (townSteps(town, tree) ? "Local steps read (trial, not confirmed)" : "State law only");
+  return { name: local?.name ?? t.name, rule: local?.rule ?? t.rule, blurb: local?.blurb ?? t.blurb, status, local: !!local && !local.stateTerms };
 }
 
 /** Floor-area lines that change a commercial project's review: the town's own, or the state's 7,500 sq ft. */
@@ -185,34 +185,22 @@ export function deriveFlags(i: ProjectInputs, tree: TreeId): Flags {
     rezone: i.rezone,
     relief: !i.rezone && tree !== "comp" && (useRelief || densityFail),
     always: true,
+    // Where RIDEM's jurisdiction map gives CRMC, the wetlands permit is CRMC's (debt 19).
+    coastal: i.wet && i.wetAgency === "CRMC",
+    historic: false, ddrc: false, i195: false, aquifer: false, airport: false,
+    ...townRules(i.town).overlayFlags?.(i),
   };
 }
 
 export function condOK(cond: string | undefined, f: Flags): boolean {
   if (!cond) return true;
-  return cond.split("|").some((k) => f[k as keyof Flags]);
+  // "a|b" is either; "!a" is not a.
+  return cond.split("|").some((k) => (k.startsWith("!") ? !f[k.slice(1) as keyof Flags] : f[k as keyof Flags]));
 }
 
-/** Steps that apply to this site, numbered. Branch steps (zone change, appeal) are labelled separately. */
-/** Sources that are state law or statewide data. Everything else a document cites is Cumberland's own. */
-const STATEWIDE_SRC = /^(s\d|ridsp|sfm|papa|riza|rigis|nza|sosom|owts|ridem)/;
-
-/**
- * A step as it applies outside Cumberland: the stage, who decides it and its statutory clock come from state law,
- * but documents read from Cumberland's regulations are left out and Cumberland-specific wording is replaced.
- * The master plan stage for comprehensive permits is Cumberland's own practice, so it is dropped.
- */
-function forTown(s: Step, town: string): Step | null {
-  if (town === "Cumberland") return s;
-  if (s.id === "master" && s.title.includes("Cumberland")) return null;
-  const local = (t: string) => /Cumberland/.test(t);
-  return {
-    ...s,
-    title: s.title.replace(/ \(Cumberland[^)]*\)/, ""),
-    what: local(s.what) ? `State law sets this stage. ${town}'s own requirements for it have not been read yet, so confirm them with the planning office.` : s.what,
-    clock: { ...s.clock, text: s.clock.text.replace(/\(Cumberland[^)]*\)/, "(Cumberland's local figure; confirm yours)") },
-    docs: s.docs.filter((d) => !d.src || STATEWIDE_SRC.test(d.src)).map((d) => (d.note && local(d.note) ? { ...d, note: undefined } : d)),
-  };
+/** A state-law step with the project's town put in where the step names it. */
+function forTown(s: Step, town: string): Step {
+  return s.what.includes("{town}") ? { ...s, what: s.what.replaceAll("{town}", town) } : s;
 }
 
 /**
@@ -220,13 +208,22 @@ function forTown(s: Step, town: string): Step | null {
  * followed by the state-law steps they do not cover (building permit, occupancy). Otherwise the state-law route.
  */
 function routeSteps(tree: TreeId, town: string): Step[] {
-  const base = TREES[tree].steps.map((s) => forTown(s, town)).filter((s): s is Step => s !== null);
+  const base = TREES[tree].steps.map((s) => forTown(s, town));
   const local = townSteps(town, tree);
-  if (!local) return base;
-  const ids = new Set([...local.map((s) => s.id), ...(townRules(town).omit?.[tree] ?? [])]);
-  return [...local, ...base.filter((s) => !ids.has(s.id))];
+  let out = base;
+  if (local) {
+    const ids = new Set([...local.map((s) => s.id), ...(townRules(town).omit?.[tree] ?? [])]);
+    out = [...local, ...base.filter((s) => !ids.has(s.id))];
+  }
+  for (const x of townRules(town).extraSteps ?? []) {
+    if (x.trees && !x.trees.includes(tree)) continue;
+    const at = x.before.map((id) => out.findIndex((s) => s.id === id)).find((k) => k >= 0) ?? out.length;
+    out = [...out.slice(0, at), x.step, ...out.slice(at)];
+  }
+  return out;
 }
 
+/** Steps that apply to this site, numbered. Branch steps (zone change, appeal) are labelled separately. */
 export function stepsFor(tree: TreeId, f: Flags, town = getActiveTown()): NumberedStep[] {
   let n = 0;
   return routeSteps(tree, town)
@@ -457,8 +454,12 @@ function overlayGap(i: ProjectInputs, abbr: string): Finding {
 function analyzeBase(i: ProjectInputs, tree: TreeId): Finding[] {
   if (i.kind === "commercial") return analyzeCommercial(i, tree);
   const local = townFindings(i.town);
-  const base = local ? local(i, tree, analyzeGeneric(i, tree), district(i.zone)) : withTownUse(i, tree, analyzeGeneric(i, tree));
-  return i.kind === "mixed" ? [...base, ...mixedFindings(i, tree)] : base;
+  const rules = townRules(i.town);
+  let base = local ? local(i, tree, analyzeGeneric(i, tree), district(i.zone)) : withTownUse(i, tree, analyzeGeneric(i, tree));
+  // A town whose required affordable share was read answers the inclusionary question itself.
+  if (rules.inclusionaryRead) base = base.filter((f) => !f.t.startsWith("Inclusionary zoning: check"));
+  const more = rules.moreFindings?.(i, tree) ?? [];
+  return i.kind === "mixed" ? [...base, ...mixedFindings(i, tree), ...more] : [...base, ...more];
 }
 
 /**

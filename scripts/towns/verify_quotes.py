@@ -6,7 +6,7 @@ A quote is any `q: "..."` in a TypeScript data file. Its source is the `src: "id
 The source text is <id>.txt anywhere under the local source folder (see scripts/sourcelib.py).
 
 usage: verify_quotes.py [CACHE_DIR] [FILE ...] [--allow-missing]      (CACHE_DIR defaults to .sources)
-  With no FILE, checks lib/data/towns/*/*.ts. Pass lib/data/trees.ts or lib/engine.ts to check those too.
+  With no FILE, checks lib/data/towns/*/*.ts. Pass lib/data/state/trees.ts or lib/engine.ts to check those too.
 exit 1: a quote was not found in its source, or has no source on its line.
 exit 2: every quote that could be checked passed, but some sources are not in the cache (0 with --allow-missing).
 """

@@ -1,6 +1,6 @@
 "use client";
 
-import { TREES, TREE_ORDER } from "@/lib/data/trees";
+import { TREES, TREE_ORDER } from "@/lib/data/state/trees";
 import { townInfo } from "@/lib/data/towns";
 import type { TreeId } from "@/lib/types";
 import { Cite } from "./Cite";

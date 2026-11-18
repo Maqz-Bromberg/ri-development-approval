@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { GLOSSARY } from "@/lib/data/glossary";
 import { OBJECTIONS } from "@/lib/data/objections";
 import { SOURCES } from "@/lib/data/sources";
-import { TREES } from "@/lib/data/trees";
+import { TREES } from "@/lib/data/state/trees";
+import { TREES as CUMBERLAND_TREES } from "@/lib/data/towns/cumberland/trees";
+import { PROVIDENCE_STEPS } from "@/lib/data/towns/providence/steps";
 import { SourceIndex, type SourceRow } from "@/components/SourceIndex";
 import { sourcePlace, sourceType } from "@/lib/sourceKind";
 
@@ -13,6 +15,8 @@ function citedBy(): Record<string, string[]> {
   const out: Record<string, Set<string>> = {};
   const add = (id: string | undefined, what: string) => { if (id && SOURCES[id]) (out[id] ??= new Set()).add(what); };
   Object.values(TREES).forEach((t) => t.steps.forEach((s) => s.docs.forEach((d) => add(d.src, `${t.name}, ${s.title}: ${d.title}`))));
+  Object.values(CUMBERLAND_TREES).forEach((t) => t.steps.forEach((s) => s.docs.forEach((d) => add(d.src, `Cumberland, ${t.name}, ${s.title}: ${d.title}`))));
+  Object.entries(PROVIDENCE_STEPS).forEach(([tree, steps]) => steps?.forEach((s) => s.docs.forEach((d) => add(d.src, `Providence, ${TREES[tree as keyof typeof TREES].name}, ${s.title}: ${d.title}`))));
   GLOSSARY.forEach((g) => add(g.src, `Glossary: ${g.term}`));
   OBJECTIONS.forEach((o) => o.heard.forEach((h) => h.src.forEach((id) => add(id, `Hearing question: "${o.said.slice(0, 60)}${o.said.length > 60 ? "…" : ""}"`))));
   return Object.fromEntries(Object.entries(out).map(([k, v]) => [k, Array.from(v)]));

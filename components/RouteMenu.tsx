@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { TREE_ORDER } from "@/lib/data/trees";
+import { TREE_ORDER } from "@/lib/data/state/trees";
 import { routeText } from "@/lib/engine";
 import { useProject } from "./ProjectProvider";
 

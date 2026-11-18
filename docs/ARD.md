@@ -20,8 +20,8 @@ Everything shown is one of four things:
 | Kind | Example | Where it lives | How it reaches the page |
 | --- | --- | --- | --- |
 | Statewide data, live | Zoning Atlas districts and town outlines, tax parcels, address search; state roads, mapped wetlands and bus stops as suggestions | Public services, queried from the browser | `lib/lookup.ts`, `lib/map.ts`, `components/useAtlas.ts` |
-| State law | The five routes, statutory clocks, appeals | `lib/data/trees.ts` (mixed with Cumberland, see debt 1) | `lib/engine.ts` |
 | A town's own reading | Steps, checklists, contacts, calendar, findings | Cumberland: `trees.ts`, `contacts.ts`, `calendars/`. Providence: `lib/data/towns/providence/` | `lib/data/towns/overlay.ts` |
+| State law | The five routes, statutory clocks, appeals | `lib/data/state/trees.ts` | `lib/engine.ts` |
 | A town's record | Projects, dated events, hearing concerns | `history.ts`, `timelines.json`, `objections.ts`, and each town's folder | `lib/timelines.ts`, components |
 
 ## 2. Current priority
@@ -44,10 +44,12 @@ What follows from it, until it changes:
 lib/data/
   trees.ts            state-law routes, with Cumberland's local detail still inside   (debt 1)
   contacts.ts         Cumberland's offices + state agencies; other towns via the overlay
+  state/trees.ts      the five routes under state law ("{town}" where a step names the town)
   sources.ts          every cited document, by id. Providence ids start with p.
   towns.ts            the 39 towns: level, trial mark, gaps, and any better-read part
   towns/
     overlay.ts        the seam: a town's steps, route rule, findings and schedule
+    cumberland/       trees.ts (its whole steps for all five routes), commercial.ts
     providence/
       steps.ts        whole steps per route, and the town's route rule
       rules.ts        findings for a site, and schedule durations
@@ -61,11 +63,12 @@ scripts/
   sourcelib.py        where a source's file belongs, and how to find it by id
   timelines/          fetch, find and verify for Cumberland's monthly check
   towns/              fetch_sources, fetch_captions, organize_sources, verify_quotes
+  engine/             snapshot.ts: the stored comparison (debt 3), run by hand with Node's type stripping
 ```
 
 **The local source folder.** `state/`, `cumberland/`, `providence/`, and a folder for each town added later. Inside each: `rules` (statutes, ordinances, regulations, forms, schedules), `meetings` (agendas and minutes), `recordings` (machine transcripts), `projects` (staff reports, court decisions), `press`, `pages` (saved web pages). Nothing is filed by hand. A source's town and kind are worked out from its entry in `sources.ts`, the scripts find a file by its id wherever it sits, and a file saved from a browser under its own name is recognised and filed by `organize_sources.py`. Parts of towns are not a folder level, because a board's minutes cover the whole town.
 
-**The engine asks, the town answers.** `lib/engine.ts` builds a route like this: the town's own steps for that route if it has them, then any state-law steps it did not cover and did not name as absent. `classify`, the permitted-use check, `analyze` and the schedule each ask `overlay.ts` first and fall back to the state default or the Zoning Atlas. A town with nothing in the overlay gets state law only, which is level 1.
+**The engine asks, the town answers.** `lib/engine.ts` builds a route like this: the town's own steps for that route if it has them, then any state-law steps it did not cover and did not name as absent, then any steps the town inserts (a review area's own step), each kept only where its condition holds. `classify`, the permitted-use check, `analyze` and the schedule each ask `overlay.ts` first and fall back to the state default or the Zoning Atlas. A town with nothing in the overlay gets state law only, which is level 1.
 
 **Evidence travels with the fact.** Every requirement carries a source id, a pinpoint and a quote. Every dated event carries a source and, for a decision, a quote. `lib/timelines.ts` turns that into an evidence class the page shows.
 
@@ -145,6 +148,8 @@ These were stated by Maqz or settled in review. A change that breaks one needs a
 | D52 | 2026-11-18 | **Steps carry a mark where the routes are compared**, on trial (`stepIcons`): line icons drawn after the old pathway's pictures (map, town hall, coffee table, blueprint, stamp, ledger, crane, house), the old pictures themselves small (`components/Vignettes.tsx`, back from before D42), the mark of the body that decides the step, or none. In the cards and the focus row each route shows its steps as a strip of marks; against the route in focus, a step added is ringed green and marked +, a step dropped is faded and struck where it would have been. The diff table puts the mark before each step's name. The focus row opens a route on click (on hover at first, with hover intent; the row moving under the pointer was more trouble than a click). | trial | Maqz, 2026-11-18: icons are more use here than elsewhere; hovering the focus row flickered, because a growing card moved the others under a still pointer. Cost: three icon sets to keep in step with the step ids (`STEP_RANK` and the line map in `components/StepIcon.tsx`). |
 
 | D53 | 2026-11-18 | **Coverage grows in chunks: the whole of Providence first, then foundations, then level 2 in all 39 towns, then one edge-case town for each kind** (Westerly's overlay stack and inclusionary zoning, North Providence's ordinance under amendment, New Shoreham's island and unofficial copy, small towns with thin records, busy cities with ordinances saved by hand), then the rest by county. In Providence, parts are drawn where another body takes over review (I-195 Commission, Capital Center Commission, Downtown Design Review, historic districts, CRMC), not where records cluster. | decided, chunks 0 to 3 begun | Maqz, the same day: the recommended answers to 1, 2 and 4; four marks in place of one level (3); level 2 everywhere before the edge cases (4); recent years only for busy cities, with the window stated (5). Plan: `docs/plans/statewide-coverage.md`. Hand fetches: `docs/manual-fetches.md`. |
+| D56 | 2026-11-18 | **The split** (debt 1): the five state-law routes are `lib/data/state/trees.ts`, generated once from what the engine made of Cumberland's steps for any other town, and edited by hand from here on; Cumberland's whole steps are its overlay (`towns/cumberland/trees.ts`); the word-matching and source-id patterns are gone, and a state step names the town by "{town}". Checked by a stored comparison (`scripts/engine/snapshot.ts`, debt 3): every case matched before and after, including each step's text, clock and documents. Then, on purpose, the state routes stopped naming Cumberland. | decided | Cost: a change to state law is now made in the state routes and in each town's own copy of a step (D1 as before). Cumberland's housing findings are still in `analyze`. |
+| D58 | 2026-11-18 | **Overlays can set flags, a town can insert steps, and a condition can say "not".** `TownRules.overlayFlags` (historic, ddrc, i195, aquifer, airport), `extraSteps` (placed before a named step, kept by its own condition), and `!flag` in a condition. Also `moreFindings`, `affordableLines`, `inclusionaryRead` and `routeStatus`. | decided | What Providence's review areas and Westerly's overlays needed, kept general for the next towns. |
 ## 6. Sources, and how each is reached
 
 `.sources/INDEX.md`, written by `organize_sources.py`, lists every source with whether it is in hand. On 2026-11-14: 68 of 83.
@@ -168,9 +173,9 @@ The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and
 ## 7. Debts and risks in the structure
 
 
-1. **The split is not done.** Cumberland's local steps are inside `trees.ts` with state law, and `engine.ts` removes them for other towns by matching the word "Cumberland" and a list of source-id patterns. A third town will strain this. It is the statewide plan's step 1.
+1. **The split is half done** (D56). The steps are split: state law in `lib/data/state/trees.ts`, Cumberland's in its folder. Cumberland's housing findings (parking since April 2026, R-3's area formula, its permit gate, its precedent sentences) are still conditions on the town's name inside `analyze`, and its contacts and calendar are still in `contacts.ts` and `calendars/`.
 2. **The active town is a module-level variable** (`lib/town.ts`), set by the provider before render. It works because one project is on screen at a time. It would not survive a page that compares two towns.
-3. **No stored tests.** Routes and findings were checked by running sample projects by hand. A before-and-after comparison exists only as a throwaway script.
+3. ~~No stored tests.~~ Cleared 2026-11-18: `scripts/engine/snapshot.ts` runs 130 sample projects through the engine in five towns and their review areas and compares them with a saved copy (D56). It covers routes, steps, clocks, documents and findings, not the pages. The copy (about 3 MB) is kept in `.sources/engine-snapshot.json`, not committed: a fresh clone saves one from a commit known to be right.
 4. **The glossary and the `relief` flag assume the state's definitions.** Providence's "minor" and its dimensional adjustments do not fit either.
 5. **State-law steps carry town wording** ("Town Council", "Town Clerk") into cities.
 6. **One part per town, as a box.** D4 wants parts drawn for usefulness, possibly several, possibly by district or corridor.
@@ -186,8 +191,8 @@ The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and
 16. **Mixed use beyond the state's line is flagged, not routed** (D30): the route stays the one the units give. Was: ignored outright. (§ 45-23-32(19)(i)(C): minor only up to 6 units and 2,500 sq ft of commercial space). Outside Providence, 7 to 9 units with commercial space are shown as minor. Phase 0 of the commercial plan.
 17. **Housing assumptions remain in shared parts:** Cumberland's step checklists were read for housing; precedent records and hearing concerns are housing only, and Hearing prep says so for a commercial project; the example project is housing.
 18. **On tribal land the route, steps and schedule still show the ordinary route**, though the check says the town's rules may not apply (D38).
-19. **The State permits step names RIDEM as the wetlands decider even where CRMC is** (D38); the finding is right, the step is not.
 20. **Coverage levels don't express a town whose zoning is read but whose steps are not** (Charlestown, D38).
+19. ~~The State permits step names RIDEM as the wetlands decider even where CRMC is.~~ Cleared 2026-11-18: a `coastal` flag (wetlands entered where RIDEM's jurisdiction map gives CRMC) adds CRMC to the step as a decider, and RIDEM's role there reads "freshwater wetlands".
 21. **The engine flowcharts are prose and layout written by hand** (D41). The check finds a renamed function, not a changed rule. When a part of the engine changes, its chart in `lib/data/engine/` is updated in the same change, as this document is.
 
 22. **Dead styles may remain in `globals.css`.** About a hundred rules for the deleted project panel, trail and landing were removed by a script that looked for class names no component uses any more; rules shared with live parts were left. A later pass can find what remains.

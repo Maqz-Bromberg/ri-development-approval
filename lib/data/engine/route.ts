@@ -1,4 +1,4 @@
-import { TREES } from "../trees";
+import { TREES } from "../state/trees";
 import { e, n, type Flow } from "./types";
 
 const out = (id: keyof typeof TREES) => `${TREES[id].name}. Rule: ${TREES[id].rule}.`;

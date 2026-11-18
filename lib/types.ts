@@ -1,7 +1,8 @@
 export type Kind = "elected" | "appointed" | "staff" | "state" | "utility";
 
 /** Site conditions a document, authority or step can depend on. "a|b" means either. */
-export type FlagKey = "wet" | "dot" | "acre" | "transit" | "rezone" | "relief" | "septic" | "pubwater" | "pubsewer" | "always";
+/** coastal: wetlands entered where CRMC regulates them (debt 19). historic, ddrc, i195, aquifer, airport: set by a town from the project's overlays (TownRules.overlayFlags), false elsewhere */
+export type FlagKey = "wet" | "dot" | "acre" | "transit" | "rezone" | "relief" | "septic" | "pubwater" | "pubsewer" | "always" | "historic" | "ddrc" | "i195" | "aquifer" | "airport" | "coastal";
 export type Flags = Record<FlagKey, boolean>;
 
 export type TreeId = "major" | "minor" | "comp" | "dpr" | "byright";
@@ -20,6 +21,8 @@ export interface Contact {
   note: string;
   verify?: string;
   src: string[];
+  /** Pages that are not cited sources, such as a board's page on the state Open Meetings site */
+  links?: { label: string; url: string }[];
 }
 
 export interface Doc {
@@ -235,7 +238,20 @@ export interface TownRules {
   /** Districts the Zoning Atlas lists that the town's current ordinance no longer has. The district picker marks them. */
   retired?: { zones: string[]; note: string };
   /** Route names and rules as the town defines them, where they differ from the state defaults */
-  routeText?: Partial<Record<TreeId, { name?: string; rule: string; blurb: string }>>;
+  /** `stateTerms`: the town words the route its own way but means what state law means by it, so the glossary applies. */
+  routeText?: Partial<Record<TreeId, { name?: string; rule: string; blurb: string; stateTerms?: boolean }>>;
+  /** How well each route is sourced in this town, where its steps were read. */
+  routeStatus?: Partial<Record<TreeId, string>>;
+  /** Flags the project's overlays set, so a step or document can depend on them (ARD D53: a review area's own step) */
+  overlayFlags?: (i: ProjectInputs) => Partial<Flags>;
+  /** Steps the town adds to any route (or the routes named), placed before the first of `before` that the route has. Their own `cond` decides whether they apply. */
+  extraSteps?: { step: Step; before: string[]; trees?: TreeId[] }[];
+  /** Findings the town adds after the generic ones (its inclusionary zoning, its own conditions on a use) */
+  moreFindings?: (i: ProjectInputs, tree: TreeId) => Finding[];
+  /** Affordable shares the town requires, for the affordable key beside the state's and federal lines (ARD D53, decision 2) */
+  affordableLines?: (i: ProjectInputs) => { short: string; what: string; src: string; need: number }[];
+  /** True when the town's inclusionary zoning was read, so its own findings answer it in place of the generic note */
+  inclusionaryRead?: boolean;
 }
 
 export type ObjectionWeight = "material" | "partly" | "not";

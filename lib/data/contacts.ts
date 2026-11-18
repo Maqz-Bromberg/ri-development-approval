@@ -69,6 +69,13 @@ const CUMBERLAND_CONTACTS: Record<string, Contact> = {
     verify: "Confirm the program contact on dem.ri.gov.",
     src: [],
   },
+  crmc: {
+    name: "RI Coastal Resources Management Council", kind: "state",
+    lines: [["Address", "Oliver H. Stedman Government Center, 4808 Tower Hill Road, Wakefield, RI"], ["Web", "crmc.ri.gov"]],
+    note: "An appointed state council. Regulates development in the coastal zone, and wetlands where RIDEM's jurisdiction map gives CRMC: its permit is an Assent.",
+    verify: "The address was not read from CRMC's own page; confirm it and the program contact on crmc.ri.gov.",
+    src: ["ridemWetJur"],
+  },
   ridot: {
     name: "RIDOT Physical Alteration Permits", kind: "state",
     lines: [["Address", "Division of Highway & Bridge Maintenance, 360 Lincoln Avenue, Warwick, RI 02886"], ["Phone", "(401) 734-4842"]],
@@ -104,7 +111,7 @@ const CUMBERLAND_CONTACTS: Record<string, Contact> = {
 };
 
 /** Offices that belong to the town. State agencies, RIHousing, the court and the General Assembly are the same everywhere. */
-const SHARED = new Set(["ridem", "ridot", "sfm", "rihousing", "court", "ga"]);
+const SHARED = new Set(["ridem", "crmc", "ridot", "sfm", "rihousing", "court", "ga"]);
 const cache = new Map<string, Contact>();
 
 /** Outside Cumberland, a local office keeps its role but carries no Cumberland address, person or hours. */

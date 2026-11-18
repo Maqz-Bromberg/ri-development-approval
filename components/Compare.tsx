@@ -8,7 +8,7 @@ import { addDays, fmtDate, parseISO } from "@/lib/schedule";
 import { routeScenarios, type Scenario } from "@/lib/whatif";
 import type { ProjectInputs } from "@/lib/types";
 import { useEffect, useMemo, useState } from "react";
-import { TREE_ORDER } from "@/lib/data/trees";
+import { TREE_ORDER } from "@/lib/data/state/trees";
 import type { TreeId } from "@/lib/types";
 import { STEP_RANK, StepIcon } from "./StepIcon";
 import { useTrial } from "./Trial";

@@ -1,4 +1,4 @@
-import type { Step, Tree, TreeId } from "../types";
+import type { Step, Tree, TreeId } from "../../../types";
 
 /*
  * Approval trees, one per development type. In production these are served by the backend
@@ -413,7 +413,8 @@ const major: Tree = {
       auth: [
         { c: "water", role: "Water service confirmation", cond: "pubwater" },
         { c: "dpw", role: "Sewer service confirmation", cond: "pubsewer" },
-        { c: "ridem", role: "Wetlands, stormwater and septic approvals", cond: "wet|acre|septic" },
+        { c: "ridem", role: "Freshwater wetlands, stormwater and septic approvals", cond: "wet|acre|septic" },
+        { c: "crmc", role: "Coastal wetlands permit (Assent), where CRMC regulates the site's wetlands", cond: "coastal" },
         { c: "ridot", role: "Physical Alteration Permit for the curb cut", cond: "dot" },
       ],
       docs: [

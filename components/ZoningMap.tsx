@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { housingTypeLabel, treatmentFor } from "@/lib/data/atlas";
 import { historyFor, precedentId } from "@/lib/data/history";
-import { TREES } from "@/lib/data/trees";
+import { TREES } from "@/lib/data/state/trees";
 import { fmt } from "@/lib/engine";
 import {
   RADIUS, ROUTE_COLOR, STRUCTURE, STRUCTURE_ORDER, ZONE_KIND, ZONE_KIND_ORDER, districtShapes, esc, inRings, metresBetween, parcelsNear, ringCenter, townShapes, zoneKind,

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { precedentId } from "@/lib/data/history";
 import { SOURCES } from "@/lib/data/sources";
-import { TREES } from "@/lib/data/trees";
+import { TREES } from "@/lib/data/state/trees";
 import { APPROVAL, approvalOf, EVIDENCE, evidenceOf, eventRange, eventTime, fmtEventDate, isMonthOnly, seasonOf, spanDays, spansOfProject, unitColor, unitScale, type Span } from "@/lib/timelines";
 import type { Precedent, TimelineEvent } from "@/lib/types";
 import { HoverCard } from "./Popover";

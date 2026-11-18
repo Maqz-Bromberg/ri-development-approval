@@ -17,7 +17,7 @@ python3 scripts/towns/fetch_sources.py providence    # download what a script ca
 python3 scripts/towns/fetch_captions.py providence   # machine transcripts of the recordings (needs yt-dlp)
 python3 scripts/towns/organize_sources.py            # file anything loose, convert to text, rewrite INDEX.md
 python3 scripts/towns/verify_quotes.py               # every q: "..." in lib/data/towns/*/*.ts, word for word
-python3 scripts/towns/verify_quotes.py lib/data/trees.ts lib/engine.ts    # the same for Cumberland and state law
+python3 scripts/towns/verify_quotes.py lib/data/state/trees.ts lib/engine.ts    # the same for state law and the engine
 python3 scripts/timelines/verify.py .sources         # dated events, including each town's timelines.json
 ```
 

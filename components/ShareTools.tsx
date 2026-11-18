@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { TREES } from "@/lib/data/trees";
+import { TREES } from "@/lib/data/state/trees";
 import { verdict } from "@/lib/engine";
 import { SHARE_PARAM, encodeState, fromFile, toFile } from "@/lib/share";
 import { useProject } from "./ProjectProvider";

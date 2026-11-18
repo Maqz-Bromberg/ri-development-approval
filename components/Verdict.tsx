@@ -4,7 +4,7 @@ import { shortAddress } from "@/lib/lookup";
 import Link from "next/link";
 import { useMemo } from "react";
 import { CONTACTS, shortName } from "@/lib/data/contacts";
-import { TREES, TREE_ORDER } from "@/lib/data/trees";
+import { TREES, TREE_ORDER } from "@/lib/data/state/trees";
 import { fmt, hearingBody, projectLabel, verdict } from "@/lib/engine";
 import { buildSchedule, fmtDate } from "@/lib/schedule";
 import type { ProjectInputs, TreeId } from "@/lib/types";

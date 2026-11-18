@@ -52,6 +52,7 @@ export function AuthBadge({ id, role }: { id: string; role: string }) {
             {c.lines.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
           </dl>
           {c.verify && <p className="verify">Verify: {c.verify}</p>}
+          {c.links?.map((l) => <p key={l.url} className="small"><a href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a></p>)}
         </div>
       }
     >

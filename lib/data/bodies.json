@@ -1,0 +1,6484 @@
+{
+ "towns": {
+  "Barrington": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 207,
+     "name": "Barrington Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=207",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 18,
+      "count": 33
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-11-05",
+      "2026-10-19",
+      "2026-10-13",
+      "2026-09-08",
+      "2026-08-12"
+     ],
+     "meetings": 91,
+     "since2023": 52,
+     "first": "2019-08-13",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 56
+    },
+    {
+     "id": 218,
+     "name": "Barrington Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=218",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "07:00PM",
+      "perYear": 21,
+      "count": 39
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-11-03",
+      "2026-10-19",
+      "2026-10-06",
+      "2026-09-01",
+      "2026-09-01"
+     ],
+     "meetings": 92,
+     "since2023": 64,
+     "first": "2021-03-02",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-13",
+      "2026-06-22"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 38,
+     "place": "Annual 2026 Calendar, 283 County Road, Barrington, RI, 02806",
+     "phone": "(120) 124-7190",
+     "minutesForm": "scan",
+     "primary": true
+    },
+    {
+     "id": 225,
+     "name": "Barrington Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=225",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 7,
+      "count": 12
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-10-19",
+      "2026-10-06",
+      "2026-05-12",
+      "2026-05-11",
+      "2026-01-15"
+     ],
+     "meetings": 99,
+     "since2023": 25,
+     "first": "2013-03-14",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 68
+    },
+    {
+     "id": 227,
+     "name": "Barrington Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=227",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 31,
+      "count": 56
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-11-02",
+      "2026-10-19",
+      "2026-10-05",
+      "2026-09-14",
+      "2026-09-10"
+     ],
+     "meetings": 95,
+     "since2023": 95,
+     "first": "2023-04-19",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [
+      "2025-09-15",
+      "2026-02-23",
+      "2026-06-22"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    },
+    {
+     "id": 230,
+     "name": "Barrington Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=230",
+     "pattern": {
+      "text": "usually the third Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 17,
+      "count": 31
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-10-19",
+      "2026-09-17",
+      "2026-08-20",
+      "2026-07-16",
+      "2026-06-18"
+     ],
+     "meetings": 91,
+     "since2023": 52,
+     "first": "2020-06-18",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-15",
+      "2026-10-15"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 47,
+     "primary": true
+    }
+   ]
+  },
+  "Bristol": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 302,
+     "name": "Bristol Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=302",
+     "pattern": {
+      "text": "usually the first Tuesday of the month",
+      "time": "05:30PM",
+      "perYear": 11,
+      "count": 21
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-09-15",
+      "2026-07-14",
+      "2026-06-02",
+      "2026-05-05",
+      "2026-04-28"
+     ],
+     "meetings": 100,
+     "since2023": 41,
+     "first": "2018-01-18",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 92,
+     "minutesLagDays": 44
+    },
+    {
+     "id": 308,
+     "name": "Bristol Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=308",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": null,
+      "perYear": 17,
+      "count": 32
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-10-01",
+      "2026-09-03",
+      "2026-08-06",
+      "2026-06-29",
+      "2026-06-04"
+     ],
+     "meetings": 98,
+     "since2023": 65,
+     "first": "2020-12-03",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 56
+    },
+    {
+     "id": 313,
+     "name": "Bristol Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=313",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": null,
+      "perYear": 22,
+      "count": 41
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-22",
+      "2026-10-08",
+      "2026-09-24",
+      "2026-09-10",
+      "2026-08-27"
+     ],
+     "meetings": 97,
+     "since2023": 65,
+     "first": "2020-06-11",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-26",
+      "2026-05-14"
+     ],
+     "minutesFiled": 97,
+     "minutesLagDays": 42,
+     "place": "10 Court Street, Bristol, RI, 02809",
+     "phone": "(401) 253-7000",
+     "minutesForm": "scan",
+     "primary": true
+    },
+    {
+     "id": 320,
+     "name": "Bristol Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=320",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 16,
+      "count": 27
+     },
+     "recent": [
+      "2026-10-28",
+      "2026-10-28",
+      "2026-09-30",
+      "2026-06-30",
+      "2026-05-19",
+      "2026-04-30"
+     ],
+     "meetings": 86,
+     "since2023": 44,
+     "first": "2021-01-01",
+     "last": "2026-10-28",
+     "upcoming": [],
+     "cancelled": [
+      "2025-10-23"
+     ],
+     "minutesFiled": 17,
+     "minutesLagDays": null
+    },
+    {
+     "id": 321,
+     "name": "Bristol Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=321",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": null,
+      "perYear": 27,
+      "count": 49
+     },
+     "recent": [
+      "2026-10-28",
+      "2026-10-07",
+      "2026-09-16",
+      "2026-08-19",
+      "2026-07-29",
+      "2026-06-25"
+     ],
+     "meetings": 96,
+     "since2023": 96,
+     "first": "2023-02-01",
+     "last": "2026-10-28",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-05",
+      "2025-03-24",
+      "2026-03-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 22,
+     "primary": true
+    },
+    {
+     "id": 325,
+     "name": "Bristol Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=325",
+     "pattern": {
+      "text": "usually the first Monday of the month",
+      "time": "07:00PM",
+      "perYear": 13,
+      "count": 23
+     },
+     "recent": [
+      "2026-11-02",
+      "2026-10-05",
+      "2026-09-14",
+      "2026-07-13",
+      "2026-06-01",
+      "2026-05-04"
+     ],
+     "meetings": 100,
+     "since2023": 47,
+     "first": "2019-04-01",
+     "last": "2026-11-02",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-03"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    }
+   ]
+  },
+  "Burrillville": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 343,
+     "name": "Burrillville Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=343",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": "06:30PM",
+      "perYear": 13,
+      "count": 24
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-11-17",
+      "2026-10-20",
+      "2026-10-20",
+      "2026-09-15",
+      "2026-09-15"
+     ],
+     "meetings": 90,
+     "since2023": 40,
+     "first": "2018-05-15",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2026-12-15"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 50
+    },
+    {
+     "id": 346,
+     "name": "Burrillville Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=346",
+     "pattern": null,
+     "recent": [
+      "2005-08-02",
+      "2005-07-14",
+      "2005-07-05",
+      "2005-05-03"
+     ],
+     "meetings": 4,
+     "since2023": 0,
+     "first": "2005-05-03",
+     "last": "2005-08-02",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 10,
+     "minutesLagDays": null
+    },
+    {
+     "id": 353,
+     "name": "Burrillville Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=353",
+     "pattern": {
+      "text": "usually the first Monday of the month",
+      "time": "07:00PM",
+      "perYear": 11,
+      "count": 20
+     },
+     "recent": [
+      "2026-11-02",
+      "2026-10-05",
+      "2026-09-14",
+      "2026-08-03",
+      "2026-06-01",
+      "2026-05-04"
+     ],
+     "meetings": 99,
+     "since2023": 40,
+     "first": "2018-09-10",
+     "last": "2026-11-02",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 9,
+     "place": "Burrillville Middle School, 2220 Bronco Highway, Harrisville, RI, 02830",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 364,
+     "name": "Burrillville Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=364",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "07:00PM",
+      "perYear": 29,
+      "count": 54
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-11-06",
+      "2026-10-28",
+      "2026-10-14",
+      "2026-10-08",
+      "2026-10-07"
+     ],
+     "meetings": 95,
+     "since2023": 95,
+     "first": "2023-05-18",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 15,
+     "primary": true
+    },
+    {
+     "id": 366,
+     "name": "Burrillville Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=366",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 7,
+      "count": 13
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-13",
+      "2026-06-09",
+      "2026-03-10",
+      "2026-02-10",
+      "2025-11-04"
+     ],
+     "meetings": 97,
+     "since2023": 31,
+     "first": "2017-09-12",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2026-10-13"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 2,
+     "primary": true
+    }
+   ]
+  },
+  "Central Falls": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 409,
+     "name": "Central Falls City Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=409",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "06:00PM",
+      "perYear": 26,
+      "count": 47
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-30",
+      "2026-10-15",
+      "2026-10-14",
+      "2026-10-07",
+      "2026-10-05"
+     ],
+     "meetings": 94,
+     "since2023": 78,
+     "first": "2022-05-09",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2026-07-02",
+      "2026-10-29"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 31,
+     "primary": true
+    },
+    {
+     "id": 424,
+     "name": "Central Falls Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=424",
+     "pattern": {
+      "text": "usually the fourth Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 12,
+      "count": 4
+     },
+     "recent": [
+      "2025-05-28",
+      "2025-04-23",
+      "2025-02-26",
+      "2025-01-22",
+      "2024-11-20",
+      "2024-10-23"
+     ],
+     "meetings": 96,
+     "since2023": 22,
+     "first": "2014-04-02",
+     "last": "2025-05-28",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-26",
+      "2026-02-25"
+     ],
+     "minutesFiled": 67,
+     "minutesLagDays": 56,
+     "place": "Council Chambers, 2nd Floor, City Hall, 580 Broad Street, Central Falls, RI, 02863",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 438,
+     "name": "Central Falls Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=438",
+     "pattern": null,
+     "recent": [
+      "2025-05-14",
+      "2024-08-14",
+      "2024-01-10",
+      "2024-01-10",
+      "2023-12-13",
+      "2023-11-08"
+     ],
+     "meetings": 92,
+     "since2023": 10,
+     "first": "2013-05-23",
+     "last": "2025-05-14",
+     "upcoming": [],
+     "cancelled": [
+      "2025-06-11",
+      "2026-02-25"
+     ],
+     "minutesFiled": 72,
+     "minutesLagDays": 104,
+     "primary": true
+    },
+    {
+     "id": 8751,
+     "name": "Central Falls Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8751",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "10:00AM",
+      "perYear": 5,
+      "count": 5
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-09-25",
+      "2026-06-11",
+      "2025-11-13",
+      "2025-10-16"
+     ],
+     "meetings": 5,
+     "since2023": 5,
+     "first": "2025-10-16",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 4,
+     "minutesLagDays": 106
+    }
+   ]
+  },
+  "Charlestown": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 475,
+     "name": "Charlestown Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=475",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "07:00PM",
+      "perYear": 18,
+      "count": 32
+     },
+     "recent": [
+      "2026-10-22",
+      "2026-09-24",
+      "2026-09-17",
+      "2026-08-27",
+      "2026-07-30",
+      "2026-07-23"
+     ],
+     "meetings": 94,
+     "since2023": 63,
+     "first": "2020-10-27",
+     "last": "2026-10-22",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 85,
+     "minutesLagDays": 48
+    },
+    {
+     "id": 486,
+     "name": "Charlestown Planning Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=486",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "07:00PM",
+      "perYear": 26,
+      "count": 47
+     },
+     "recent": [
+      "2026-10-28",
+      "2026-10-14",
+      "2026-09-23",
+      "2026-09-09",
+      "2026-08-26",
+      "2026-08-26"
+     ],
+     "meetings": 92,
+     "since2023": 92,
+     "first": "2023-03-29",
+     "last": "2026-10-28",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 14,
+     "place": "4540 South County Trail, Town Council Chambers, Charlestown, RI, 02813",
+     "phone": "401-364-1225",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 497,
+     "name": "Charlestown Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=497",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 42,
+      "count": 77
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-11-09",
+      "2026-10-26",
+      "2026-10-26",
+      "2026-10-13",
+      "2026-09-28"
+     ],
+     "meetings": 76,
+     "since2023": 76,
+     "first": "2024-07-09",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 30,
+     "primary": true
+    },
+    {
+     "id": 499,
+     "name": "Charlestown Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=499",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": null,
+      "perYear": 8,
+      "count": 15
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-09-15",
+      "2026-08-18",
+      "2026-07-21",
+      "2026-06-16",
+      "2026-04-21"
+     ],
+     "meetings": 89,
+     "since2023": 36,
+     "first": "2018-11-20",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-18",
+      "2025-03-18",
+      "2025-07-15",
+      "2025-08-19",
+      "2025-09-16",
+      "2025-10-21",
+      "2025-11-18",
+      "2026-03-17",
+      "2026-05-19",
+      "2026-10-20"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 16,
+     "primary": true
+    },
+    {
+     "id": 8612,
+     "name": "Charlestown Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8612",
+     "pattern": null,
+     "recent": [
+      "2025-08-07",
+      "2024-12-18",
+      "2024-12-11",
+      "2024-08-07",
+      "2024-02-08",
+      "2024-02-01"
+     ],
+     "meetings": 6,
+     "since2023": 6,
+     "first": "2024-02-01",
+     "last": "2025-08-07",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 4,
+     "minutesLagDays": 12
+    }
+   ]
+  },
+  "Coventry": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 665,
+     "name": "Coventry Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=665",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 13,
+      "count": 24
+     },
+     "recent": [
+      "2026-10-21",
+      "2026-09-10",
+      "2026-08-20",
+      "2026-07-01",
+      "2026-06-11",
+      "2026-05-14"
+     ],
+     "meetings": 100,
+     "since2023": 31,
+     "first": "2012-05-09",
+     "last": "2026-10-21",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 54,
+     "minutesLagDays": 44
+    },
+    {
+     "id": 669,
+     "name": "Coventry Historic Preservation Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=669",
+     "pattern": {
+      "text": "usually the first Thursday of the month",
+      "time": "06:00PM",
+      "perYear": 12,
+      "count": 23
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-10-01",
+      "2026-09-03",
+      "2026-08-06",
+      "2026-07-02",
+      "2026-06-04"
+     ],
+     "meetings": 98,
+     "since2023": 48,
+     "first": "2017-12-14",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [
+      "2025-06-05"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 61
+    },
+    {
+     "id": 679,
+     "name": "Coventry Planning Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=679",
+     "pattern": {
+      "text": "usually the fourth Wednesday of the month",
+      "time": "06:30PM",
+      "perYear": 15,
+      "count": 27
+     },
+     "recent": [
+      "2026-10-28",
+      "2026-10-07",
+      "2026-09-23",
+      "2026-09-14",
+      "2026-08-26",
+      "2026-07-22"
+     ],
+     "meetings": 93,
+     "since2023": 61,
+     "first": "2021-03-24",
+     "last": "2026-10-28",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-04",
+      "2025-12-18"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "place": "1670 Flat River Road, Coventry, RI, 02816",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 698,
+     "name": "Coventry Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=698",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:00PM",
+      "perYear": 34,
+      "count": 64
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-27",
+      "2026-10-13",
+      "2026-09-22",
+      "2026-09-08",
+      "2026-08-25"
+     ],
+     "meetings": 100,
+     "since2023": 100,
+     "first": "2023-11-16",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-04",
+      "2026-01-21"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 9,
+     "primary": true
+    },
+    {
+     "id": 702,
+     "name": "Coventry Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=702",
+     "pattern": {
+      "text": "usually the first Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 12,
+      "count": 23
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-07",
+      "2026-09-02",
+      "2026-06-03",
+      "2026-05-06",
+      "2026-04-01"
+     ],
+     "meetings": 95,
+     "since2023": 50,
+     "first": "2018-12-05",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-09-25",
+      "2026-02-04"
+     ],
+     "minutesFiled": 92,
+     "minutesLagDays": 36,
+     "primary": true
+    },
+    {
+     "id": 7101,
+     "name": "Coventry Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=7101",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "01:30PM",
+      "perYear": 13,
+      "count": 24
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-19",
+      "2026-09-14",
+      "2026-08-17",
+      "2026-07-15",
+      "2026-06-15"
+     ],
+     "meetings": 34,
+     "since2023": 33,
+     "first": "2019-03-14",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 32,
+     "minutesLagDays": 65
+    }
+   ]
+  },
+  "Cranston": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 715,
+     "name": "Cranston City Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=715",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 35,
+      "count": 66
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-10-19",
+      "2026-10-13",
+      "2026-09-22",
+      "2026-09-22",
+      "2026-09-14"
+     ],
+     "meetings": 92,
+     "since2023": 92,
+     "first": "2023-06-26",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 4,
+     "primary": true
+    },
+    {
+     "id": 718,
+     "name": "Cranston Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=718",
+     "pattern": null,
+     "recent": [
+      "2020-12-23",
+      "2020-11-24",
+      "2020-02-25",
+      "2019-12-16",
+      "2019-11-25",
+      "2019-11-06"
+     ],
+     "meetings": 86,
+     "since2023": 0,
+     "first": "2013-02-14",
+     "last": "2020-12-23",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 6,
+     "minutesLagDays": null
+    },
+    {
+     "id": 723,
+     "name": "Cranston Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=723",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": "06:00PM",
+      "perYear": 4,
+      "count": 6
+     },
+     "recent": [
+      "2026-08-11",
+      "2026-06-15",
+      "2026-04-08",
+      "2026-01-12",
+      "2025-03-13",
+      "2025-01-14"
+     ],
+     "meetings": 36,
+     "since2023": 13,
+     "first": "2007-12-17",
+     "last": "2026-08-11",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 19,
+     "minutesLagDays": 81
+    },
+    {
+     "id": 732,
+     "name": "Cranston Planning Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=732",
+     "pattern": {
+      "text": "usually the first Tuesday of the month",
+      "time": "06:30PM",
+      "perYear": 16,
+      "count": 30
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-06",
+      "2026-09-01",
+      "2026-08-04",
+      "2026-07-07",
+      "2026-06-02"
+     ],
+     "meetings": 99,
+     "since2023": 62,
+     "first": "2020-12-01",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-11-19",
+      "2118-11-07"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 37,
+     "place": "869 Park Avenue, Cranston , RI, 02910",
+     "phone": "(401) 780-3222",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 748,
+     "name": "Cranston Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=748",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "06:30PM",
+      "perYear": 12,
+      "count": 22
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-14",
+      "2026-09-09",
+      "2026-08-12",
+      "2026-07-08",
+      "2026-06-10"
+     ],
+     "meetings": 100,
+     "since2023": 44,
+     "first": "2018-04-11",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 8,
+     "primary": true
+    }
+   ]
+  },
+  "Cumberland": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 777,
+     "name": "Cumberland Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=777",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": "06:30PM",
+      "perYear": 7,
+      "count": 13
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-08",
+      "2026-07-09",
+      "2026-06-11",
+      "2026-03-12",
+      "2025-11-13"
+     ],
+     "meetings": 99,
+     "since2023": 25,
+     "first": "2014-03-13",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-13"
+     ],
+     "minutesFiled": 85,
+     "minutesLagDays": 92
+    },
+    {
+     "id": 790,
+     "name": "Cumberland Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=790",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 8,
+      "count": 14
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-13",
+      "2026-09-08",
+      "2026-08-11",
+      "2026-07-14",
+      "2026-03-10"
+     ],
+     "meetings": 99,
+     "since2023": 30,
+     "first": "2012-10-30",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2026-06-09"
+     ],
+     "minutesFiled": 60,
+     "minutesLagDays": 92
+    },
+    {
+     "id": 802,
+     "name": "Cumberland Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=802",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "06:30PM",
+      "perYear": 13,
+      "count": 22
+     },
+     "recent": [
+      "2026-10-29",
+      "2026-09-24",
+      "2026-08-27",
+      "2026-07-30",
+      "2026-06-25",
+      "2026-05-28"
+     ],
+     "meetings": 96,
+     "since2023": 49,
+     "first": "2019-07-17",
+     "last": "2026-10-29",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 43,
+     "place": "45 Broad Street, Cumberland, RI, 02864",
+     "phone": "(401) 728-2400",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 810,
+     "name": "Cumberland Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=810",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": null,
+      "perYear": 9,
+      "count": 16
+     },
+     "recent": [
+      "2026-10-13",
+      "2026-09-08",
+      "2026-08-11",
+      "2026-07-14",
+      "2026-06-09",
+      "2026-05-12"
+     ],
+     "meetings": 100,
+     "since2023": 31,
+     "first": "2011-10-05",
+     "last": "2026-10-13",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 21,
+     "minutesLagDays": 50
+    },
+    {
+     "id": 811,
+     "name": "Cumberland Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=811",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": null,
+      "perYear": 41,
+      "count": 74
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-11-04",
+      "2026-10-21",
+      "2026-10-21",
+      "2026-10-07",
+      "2026-09-30"
+     ],
+     "meetings": 69,
+     "since2023": 69,
+     "first": "2024-05-23",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-05-07",
+      "2026-03-18"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 50,
+     "primary": true
+    },
+    {
+     "id": 813,
+     "name": "Cumberland Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=813",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 4,
+      "count": 8
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-14",
+      "2026-07-08",
+      "2026-04-08",
+      "2025-11-24",
+      "2025-11-12"
+     ],
+     "meetings": 99,
+     "since2023": 22,
+     "first": "2016-10-12",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 57,
+     "minutesLagDays": 6,
+     "primary": true
+    }
+   ]
+  },
+  "East Greenwich": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 930,
+     "name": "East Greenwich Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=930",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "06:30PM",
+      "perYear": 12,
+      "count": 23
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-14",
+      "2026-09-09",
+      "2026-08-12",
+      "2026-08-11",
+      "2026-07-08"
+     ],
+     "meetings": 98,
+     "since2023": 49,
+     "first": "2019-10-10",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-05-14"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 30
+    },
+    {
+     "id": 937,
+     "name": "East Greenwich Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=937",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "07:00PM",
+      "perYear": 24,
+      "count": 42
+     },
+     "recent": [
+      "2026-10-07",
+      "2026-09-16",
+      "2026-09-02",
+      "2026-08-19",
+      "2026-08-05",
+      "2026-07-01"
+     ],
+     "meetings": 99,
+     "since2023": 88,
+     "first": "2022-06-01",
+     "last": "2026-10-07",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-25",
+      "2026-10-21"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 50,
+     "place": "125 Main Street, East Greenwich, RI, 02818",
+     "phone": "(401) 886-8643",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 953,
+     "name": "East Greenwich Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=953",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "03:00PM",
+      "perYear": 8,
+      "count": 14
+     },
+     "recent": [
+      "2026-09-28",
+      "2026-06-15",
+      "2026-01-01",
+      "2025-10-06",
+      "2025-09-15",
+      "2025-08-05"
+     ],
+     "meetings": 69,
+     "since2023": 39,
+     "first": "2018-09-11",
+     "last": "2026-09-28",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 65,
+     "minutesLagDays": 28
+    },
+    {
+     "id": 954,
+     "name": "East Greenwich Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=954",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 27,
+      "count": 50
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-26",
+      "2026-10-13",
+      "2026-09-28",
+      "2026-09-14",
+      "2026-08-17"
+     ],
+     "meetings": 97,
+     "since2023": 97,
+     "first": "2023-05-15",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-26",
+      "2026-02-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 7,
+     "primary": true
+    },
+    {
+     "id": 955,
+     "name": "East Greenwich Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=955",
+     "pattern": {
+      "text": "usually the fourth Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 9,
+      "count": 17
+     },
+     "recent": [
+      "2026-10-27",
+      "2026-09-22",
+      "2026-08-25",
+      "2026-07-28",
+      "2026-05-19",
+      "2026-03-24"
+     ],
+     "meetings": 98,
+     "since2023": 36,
+     "first": "2018-01-23",
+     "last": "2026-10-27",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-24"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    }
+   ]
+  },
+  "East Providence": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 967,
+     "name": "East Providence Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=967",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": "06:30PM",
+      "perYear": 11,
+      "count": 21
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-20",
+      "2026-09-15",
+      "2026-07-21",
+      "2026-06-16",
+      "2026-05-19"
+     ],
+     "meetings": 100,
+     "since2023": 41,
+     "first": "2017-04-18",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 112
+    },
+    {
+     "id": 970,
+     "name": "East Providence Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=970",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "06:30PM",
+      "perYear": 8,
+      "count": 14
+     },
+     "recent": [
+      "2026-10-21",
+      "2026-10-14",
+      "2026-04-08",
+      "2026-03-11",
+      "2026-01-14",
+      "2025-12-10"
+     ],
+     "meetings": 100,
+     "since2023": 34,
+     "first": "2013-08-14",
+     "last": "2026-10-21",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 61,
+     "minutesLagDays": 96
+    },
+    {
+     "id": 980,
+     "name": "East Providence Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=980",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 10,
+      "count": 19
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-09-14",
+      "2026-07-13",
+      "2026-06-08",
+      "2026-05-11",
+      "2026-03-30"
+     ],
+     "meetings": 100,
+     "since2023": 50,
+     "first": "2018-09-10",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-10",
+      "2025-04-14",
+      "2025-06-09",
+      "2025-07-14",
+      "2025-09-08",
+      "2025-11-10",
+      "2026-03-09",
+      "2026-04-13",
+      "2026-08-11",
+      "2026-10-13"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 23,
+     "place": "145 Taunton Ave., East Providence, RI, 02914-4530",
+     "phone": "(401) 435-7530",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 996,
+     "name": "East Providence Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=996",
+     "pattern": {
+      "text": "usually the first Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 11,
+      "count": 20
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-07",
+      "2026-09-02",
+      "2026-08-05",
+      "2026-07-15",
+      "2026-06-03"
+     ],
+     "meetings": 75,
+     "since2023": 48,
+     "first": "2020-12-14",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2026-03-04",
+      "2026-06-03"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 71,
+     "primary": true
+    },
+    {
+     "id": 7267,
+     "name": "East Providence City Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=7267",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:30PM",
+      "perYear": 26,
+      "count": 49
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-11-09",
+      "2026-10-20",
+      "2026-10-13",
+      "2026-10-13",
+      "2026-10-13"
+     ],
+     "meetings": 98,
+     "since2023": 98,
+     "first": "2023-07-26",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-04",
+      "2025-10-21",
+      "2025-12-16",
+      "2026-04-07"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 27,
+     "primary": true
+    }
+   ]
+  },
+  "Exeter": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1175,
+     "name": "Exeter Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1175",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:00PM",
+      "perYear": 25,
+      "count": 46
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-27",
+      "2026-10-13",
+      "2026-09-22",
+      "2026-09-08",
+      "2026-08-25"
+     ],
+     "meetings": 88,
+     "since2023": 88,
+     "first": "2023-04-25",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2026-03-10",
+      "2026-05-12"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 64,
+     "place": "675 Ten Rod Road, Exeter, RI, 02822",
+     "phone": "(401) 294-2592",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1182,
+     "name": "Exeter Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1182",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": "06:30PM",
+      "perYear": 33,
+      "count": 60
+     },
+     "recent": [
+      "2026-11-02",
+      "2026-10-05",
+      "2026-09-28",
+      "2026-09-08",
+      "2026-08-24",
+      "2026-08-03"
+     ],
+     "meetings": 91,
+     "since2023": 91,
+     "first": "2023-07-17",
+     "last": "2026-11-02",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 34,
+     "primary": true
+    },
+    {
+     "id": 1186,
+     "name": "Exeter Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1186",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 11,
+      "count": 20
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-08",
+      "2026-09-10",
+      "2026-08-13",
+      "2026-07-09",
+      "2026-06-11"
+     ],
+     "meetings": 95,
+     "since2023": 43,
+     "first": "2017-11-09",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 88,
+     "minutesLagDays": 60,
+     "primary": true
+    }
+   ]
+  },
+  "Foster": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1248,
+     "name": "Foster Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1248",
+     "pattern": {
+      "text": "usually the third Monday of the month",
+      "time": "06:30PM",
+      "perYear": 8,
+      "count": 15
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-10-19",
+      "2026-09-21",
+      "2026-05-18",
+      "2026-04-13",
+      "2026-03-16"
+     ],
+     "meetings": 97,
+     "since2023": 32,
+     "first": "2014-11-17",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 31
+    },
+    {
+     "id": 1252,
+     "name": "Foster Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1252",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "07:00PM",
+      "perYear": 11,
+      "count": 19
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-07",
+      "2026-08-19",
+      "2026-07-01",
+      "2026-06-03",
+      "2026-05-20"
+     ],
+     "meetings": 95,
+     "since2023": 57,
+     "first": "2020-02-03",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-08",
+      "2025-10-16",
+      "2026-05-13",
+      "2026-05-20"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 34,
+     "place": "Benjamin Eddy Building, 6 South Killingly Road, Foster, RI, 02825",
+     "phone": "(401) 392-9200",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1259,
+     "name": "Foster Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1259",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "06:00PM",
+      "perYear": 34,
+      "count": 63
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-22",
+      "2026-10-08",
+      "2026-09-24",
+      "2026-09-10",
+      "2026-08-13"
+     ],
+     "meetings": 83,
+     "since2023": 83,
+     "first": "2023-11-09",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 21,
+     "primary": true
+    },
+    {
+     "id": 1260,
+     "name": "Foster Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1260",
+     "pattern": null,
+     "recent": [
+      "2026-07-29",
+      "2026-07-08",
+      "2025-01-22",
+      "2024-06-20",
+      "2024-02-14",
+      "2024-01-10"
+     ],
+     "meetings": 98,
+     "since2023": 11,
+     "first": "2014-02-12",
+     "last": "2026-07-29",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 70,
+     "minutesLagDays": 27,
+     "primary": true
+    }
+   ]
+  },
+  "Glocester": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1299,
+     "name": "Glocester Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1299",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 12,
+      "count": 23
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-08",
+      "2026-09-10",
+      "2026-08-13",
+      "2026-07-09",
+      "2026-06-11"
+     ],
+     "meetings": 100,
+     "since2023": 47,
+     "first": "2017-06-29",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 71,
+     "minutesLagDays": 39
+    },
+    {
+     "id": 1301,
+     "name": "Glocester Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1301",
+     "pattern": {
+      "text": "usually the fourth Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 7,
+      "count": 8
+     },
+     "recent": [
+      "2026-04-22",
+      "2026-01-20",
+      "2025-08-27",
+      "2025-07-23",
+      "2025-06-25",
+      "2025-05-28"
+     ],
+     "meetings": 94,
+     "since2023": 17,
+     "first": "2011-10-26",
+     "last": "2026-04-22",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 45,
+     "minutesLagDays": 23
+    },
+    {
+     "id": 1308,
+     "name": "Glocester Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1308",
+     "pattern": {
+      "text": "usually the first Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 19,
+      "count": 35
+     },
+     "recent": [
+      "2026-11-03",
+      "2026-10-06",
+      "2026-09-01",
+      "2026-08-04",
+      "2026-07-07",
+      "2026-06-02"
+     ],
+     "meetings": 99,
+     "since2023": 88,
+     "first": "2022-07-25",
+     "last": "2026-11-03",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 29,
+     "place": "Glocester Town Hall, 1145 Putnam Pike, chepachet, RI, 02814",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1314,
+     "name": "Glocester Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1314",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "07:30PM",
+      "perYear": 33,
+      "count": 62
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-11-09",
+      "2026-11-05",
+      "2026-10-15",
+      "2026-10-01",
+      "2026-09-17"
+     ],
+     "meetings": 97,
+     "since2023": 97,
+     "first": "2023-11-02",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2025-08-20",
+      "2025-09-04",
+      "2025-10-30"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 16,
+     "primary": true
+    },
+    {
+     "id": 1317,
+     "name": "Glocester Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1317",
+     "pattern": {
+      "text": "usually the fourth Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 12,
+      "count": 21
+     },
+     "recent": [
+      "2026-10-22",
+      "2026-09-24",
+      "2026-08-27",
+      "2026-08-27",
+      "2026-07-23",
+      "2026-06-25"
+     ],
+     "meetings": 90,
+     "since2023": 43,
+     "first": "2018-11-29",
+     "last": "2026-10-22",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-26"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 34,
+     "primary": true
+    },
+    {
+     "id": 8707,
+     "name": "Glocester Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8707",
+     "pattern": null,
+     "recent": [
+      "2026-10-27",
+      "2025-03-11"
+     ],
+     "meetings": 2,
+     "since2023": 2,
+     "first": "2025-03-11",
+     "last": "2026-10-27",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 2,
+     "minutesLagDays": 14
+    }
+   ]
+  },
+  "Hopkinton": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1437,
+     "name": "Hopkinton Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1437",
+     "pattern": null,
+     "recent": [
+      "2020-02-25",
+      "2020-01-27",
+      "2019-10-28",
+      "2019-09-23",
+      "2019-02-11",
+      "2017-12-04"
+     ],
+     "meetings": 7,
+     "since2023": 0,
+     "first": "2017-05-01",
+     "last": "2020-02-25",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 2,
+     "minutesLagDays": null
+    },
+    {
+     "id": 1472,
+     "name": "Hopkinton Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1472",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "06:30PM",
+      "perYear": 13,
+      "count": 19
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-13",
+      "2026-09-08",
+      "2026-08-11",
+      "2026-07-14",
+      "2026-06-09"
+     ],
+     "meetings": 83,
+     "since2023": 19,
+     "first": "2017-01-10",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 71,
+     "minutesLagDays": 32
+    },
+    {
+     "id": 1476,
+     "name": "Hopkinton Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1476",
+     "pattern": {
+      "text": "usually the first Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 17,
+      "count": 32
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-07",
+      "2026-09-10",
+      "2026-09-08",
+      "2026-09-02",
+      "2026-07-01"
+     ],
+     "meetings": 97,
+     "since2023": 68,
+     "first": "2021-01-06",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-05",
+      "2025-04-02",
+      "2026-01-26",
+      "2026-08-05",
+      "2026-09-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 30,
+     "place": "Town Council Chambers, 1 Town House Road, Hopkinton, RI, 02833",
+     "phone": "(401) 377-7770",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1479,
+     "name": "Hopkinton Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1479",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 35,
+      "count": 65
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-11-02",
+      "2026-10-19",
+      "2026-10-05",
+      "2026-09-21",
+      "2026-09-08"
+     ],
+     "meetings": 98,
+     "since2023": 98,
+     "first": "2024-02-05",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-24",
+      "2026-02-25",
+      "2026-09-08"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 15,
+     "primary": true
+    },
+    {
+     "id": 1480,
+     "name": "Hopkinton Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1480",
+     "pattern": {
+      "text": "usually the third Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 3,
+      "count": 4
+     },
+     "recent": [
+      "2026-09-17",
+      "2025-08-21",
+      "2025-04-07",
+      "2025-02-20",
+      "2024-11-21",
+      "2024-10-17"
+     ],
+     "meetings": 85,
+     "since2023": 24,
+     "first": "2016-07-07",
+     "last": "2026-09-17",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 68,
+     "minutesLagDays": 43,
+     "primary": true
+    },
+    {
+     "id": 8632,
+     "name": "Hopkinton Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8632",
+     "pattern": null,
+     "recent": [
+      "2026-08-13",
+      "2026-01-22",
+      "2024-03-26"
+     ],
+     "meetings": 3,
+     "since2023": 3,
+     "first": "2024-03-26",
+     "last": "2026-08-13",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 3,
+     "minutesLagDays": 29
+    }
+   ]
+  },
+  "Jamestown": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1625,
+     "name": "Jamestown Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1625",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "06:30PM",
+      "perYear": 12,
+      "count": 22
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-21",
+      "2026-10-13",
+      "2026-09-08",
+      "2026-07-14",
+      "2026-06-09"
+     ],
+     "meetings": 100,
+     "since2023": 44,
+     "first": "2017-05-09",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-06-10"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 41
+    },
+    {
+     "id": 1642,
+     "name": "Jamestown Planning Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1642",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "06:30PM",
+      "perYear": 20,
+      "count": 35
+     },
+     "recent": [
+      "2026-10-07",
+      "2026-09-16",
+      "2026-09-02",
+      "2026-08-05",
+      "2026-06-24",
+      "2026-06-03"
+     ],
+     "meetings": 99,
+     "since2023": 69,
+     "first": "2021-06-16",
+     "last": "2026-10-07",
+     "upcoming": [],
+     "cancelled": [
+      "2025-11-21"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 29,
+     "place": "93 Narragansett Avenue, Town Council Chambers, Jamestown, RI, 02835",
+     "phone": "(401) 423-7210",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1652,
+     "name": "Jamestown Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1652",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": "10:00AM",
+      "perYear": 12,
+      "count": 21
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-21",
+      "2026-09-16",
+      "2026-08-19",
+      "2026-07-15",
+      "2026-05-20"
+     ],
+     "meetings": 88,
+     "since2023": 44,
+     "first": "2018-09-21",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-07-08"
+     ],
+     "minutesFiled": 75,
+     "minutesLagDays": 42
+    },
+    {
+     "id": 1658,
+     "name": "Jamestown Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1658",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 36,
+      "count": 68
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-11-02",
+      "2026-10-19",
+      "2026-10-05",
+      "2026-09-21",
+      "2026-09-08"
+     ],
+     "meetings": 99,
+     "since2023": 99,
+     "first": "2024-01-16",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 26,
+     "primary": true
+    },
+    {
+     "id": 1666,
+     "name": "Jamestown Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1666",
+     "pattern": {
+      "text": "usually the fourth Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 10,
+      "count": 18
+     },
+     "recent": [
+      "2026-10-27",
+      "2026-09-22",
+      "2026-08-25",
+      "2026-06-23",
+      "2026-04-28",
+      "2026-03-24"
+     ],
+     "meetings": 99,
+     "since2023": 40,
+     "first": "2018-04-24",
+     "last": "2026-10-27",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-24"
+     ],
+     "minutesFiled": 92,
+     "minutesLagDays": 31,
+     "primary": true
+    }
+   ]
+  },
+  "Johnston": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1675,
+     "name": "Johnston Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1675",
+     "pattern": {
+      "text": "usually the first Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 12,
+      "count": 23
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-09-01",
+      "2026-08-04",
+      "2026-07-07",
+      "2026-06-02",
+      "2026-05-05"
+     ],
+     "meetings": 91,
+     "since2023": 45,
+     "first": "2019-08-01",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2026-10-06"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "place": "1291 Hartford Ave, Johnston, RI, 02919",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1682,
+     "name": "Johnston Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1682",
+     "pattern": {
+      "text": "usually the second Monday of the month",
+      "time": "07:00PM",
+      "perYear": 18,
+      "count": 33
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-13",
+      "2026-09-14",
+      "2026-08-11",
+      "2026-07-31",
+      "2026-07-13"
+     ],
+     "meetings": 85,
+     "since2023": 68,
+     "first": "2022-02-14",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 4,
+     "primary": true
+    },
+    {
+     "id": 1684,
+     "name": "Johnston Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1684",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "06:30PM",
+      "perYear": 10,
+      "count": 17
+     },
+     "recent": [
+      "2026-10-29",
+      "2026-07-30",
+      "2026-05-28",
+      "2026-04-30",
+      "2026-02-26",
+      "2026-01-29"
+     ],
+     "meetings": 93,
+     "since2023": 39,
+     "first": "2018-05-31",
+     "last": "2026-10-29",
+     "upcoming": [],
+     "cancelled": [
+      "2025-08-28"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 18,
+     "primary": true
+    }
+   ]
+  },
+  "Lincoln": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1786,
+     "name": "Lincoln Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1786",
+     "pattern": {
+      "text": "usually the first Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 11,
+      "count": 20
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-07",
+      "2026-09-02",
+      "2026-08-05",
+      "2026-06-03",
+      "2026-05-06"
+     ],
+     "meetings": 99,
+     "since2023": 38,
+     "first": "2017-12-06",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2026-07-01"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 44
+    },
+    {
+     "id": 1794,
+     "name": "Lincoln Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1794",
+     "pattern": {
+      "text": "usually the fourth Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 15,
+      "count": 26
+     },
+     "recent": [
+      "2026-10-28",
+      "2026-09-23",
+      "2026-08-26",
+      "2026-07-22",
+      "2026-06-24",
+      "2026-05-27"
+     ],
+     "meetings": 99,
+     "since2023": 55,
+     "first": "2019-07-24",
+     "last": "2026-10-28",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 49,
+     "place": "100 OLD RIVER ROAD, LINCOLN, RI, 02865",
+     "phone": "(401) 333-8433",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1799,
+     "name": "Lincoln Planning Board - Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1799",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": null,
+      "perYear": 12,
+      "count": 22
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-10-14",
+      "2026-09-10",
+      "2026-08-13",
+      "2026-07-09",
+      "2026-06-11"
+     ],
+     "meetings": 100,
+     "since2023": 46,
+     "first": "2018-07-17",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 93
+    },
+    {
+     "id": 1807,
+     "name": "Lincoln Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1807",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": "07:00PM",
+      "perYear": 32,
+      "count": 59
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-11-16",
+      "2026-10-20",
+      "2026-10-19",
+      "2026-09-15",
+      "2026-09-14"
+     ],
+     "meetings": 66,
+     "since2023": 66,
+     "first": "2024-05-07",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    },
+    {
+     "id": 1809,
+     "name": "Lincoln Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1809",
+     "pattern": {
+      "text": "usually the first Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 10,
+      "count": 19
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-06",
+      "2026-09-01",
+      "2026-07-14",
+      "2026-05-05",
+      "2026-04-07"
+     ],
+     "meetings": 94,
+     "since2023": 35,
+     "first": "2017-07-11",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 38,
+     "primary": true
+    },
+    {
+     "id": 7341,
+     "name": "Town of Lincoln Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=7341",
+     "pattern": null,
+     "recent": [],
+     "meetings": 0,
+     "since2023": 0,
+     "first": null,
+     "last": null,
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 0,
+     "minutesLagDays": null
+    }
+   ]
+  },
+  "Little Compton": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1827,
+     "name": "Little Compton Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1827",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "07:00PM",
+      "perYear": 11,
+      "count": 19
+     },
+     "recent": [
+      "2026-09-30",
+      "2026-08-26",
+      "2026-07-29",
+      "2026-06-24",
+      "2026-04-29",
+      "2026-03-31"
+     ],
+     "meetings": 97,
+     "since2023": 34,
+     "first": "2017-06-28",
+     "last": "2026-09-30",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-26",
+      "2026-03-25",
+      "2026-10-28"
+     ],
+     "minutesFiled": 93,
+     "minutesLagDays": 43
+    },
+    {
+     "id": 1834,
+     "name": "Little Compton Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1834",
+     "pattern": {
+      "text": "usually the first Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 17,
+      "count": 32
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-11-10",
+      "2026-10-06",
+      "2026-09-01",
+      "2026-08-20",
+      "2026-07-07"
+     ],
+     "meetings": 98,
+     "since2023": 62,
+     "first": "2019-11-05",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [
+      "2026-08-04"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "place": "40 Commons, Council Chambers, Little Compton, RI, 02837",
+     "phone": "(401) 635-2081",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1843,
+     "name": "Little Compton Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1843",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": null,
+      "perYear": 33,
+      "count": 59
+     },
+     "recent": [
+      "2026-10-29",
+      "2026-10-22",
+      "2026-10-15",
+      "2026-10-08",
+      "2026-09-24",
+      "2026-09-10"
+     ],
+     "meetings": 99,
+     "since2023": 99,
+     "first": "2023-10-05",
+     "last": "2026-10-29",
+     "upcoming": [],
+     "cancelled": [
+      "2025-05-27",
+      "2025-09-04",
+      "2026-02-24",
+      "2026-07-02",
+      "2026-11-05"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 19,
+     "primary": true
+    },
+    {
+     "id": 1844,
+     "name": "Little Compton Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1844",
+     "pattern": {
+      "text": "usually the third Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 4,
+      "count": 7
+     },
+     "recent": [
+      "2026-09-16",
+      "2026-03-18",
+      "2026-01-01",
+      "2025-10-15",
+      "2025-07-16",
+      "2025-06-18"
+     ],
+     "meetings": 99,
+     "since2023": 22,
+     "first": "2014-06-18",
+     "last": "2026-09-16",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 56,
+     "minutesLagDays": 57,
+     "primary": true
+    }
+   ]
+  },
+  "Middletown": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 1952,
+     "name": "Middletown Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1952",
+     "pattern": {
+      "text": "usually the second Monday of the month",
+      "time": "05:30PM",
+      "perYear": 6,
+      "count": 10
+     },
+     "recent": [
+      "2026-10-28",
+      "2026-08-26",
+      "2026-07-30",
+      "2026-06-24",
+      "2026-04-13",
+      "2026-02-09"
+     ],
+     "meetings": 94,
+     "since2023": 20,
+     "first": "2016-01-01",
+     "last": "2026-10-28",
+     "upcoming": [],
+     "cancelled": [
+      "2025-06-09"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 23
+    },
+    {
+     "id": 1962,
+     "name": "Middletown Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1962",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": "06:00PM",
+      "perYear": 27,
+      "count": 50
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-30",
+      "2026-10-22",
+      "2026-10-14",
+      "2026-10-07",
+      "2026-10-06"
+     ],
+     "meetings": 100,
+     "since2023": 100,
+     "first": "2023-04-26",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [
+      "2025-10-27",
+      "2026-03-11",
+      "2026-03-16",
+      "2026-03-18",
+      "2026-05-11"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 29,
+     "place": "350 E Main Rd., Planning Department, Middletown, RI, 02842",
+     "phone": "401-849-4027",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 1980,
+     "name": "Middletown Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1980",
+     "pattern": {
+      "text": "usually the fourth Wednesday of the month",
+      "time": "09:00AM",
+      "perYear": 10,
+      "count": 16
+     },
+     "recent": [
+      "2026-08-26",
+      "2026-07-22",
+      "2026-05-27",
+      "2026-04-22",
+      "2026-03-25",
+      "2026-03-04"
+     ],
+     "meetings": 100,
+     "since2023": 35,
+     "first": "2017-02-07",
+     "last": "2026-08-26",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-26",
+      "2025-07-03",
+      "2025-08-27",
+      "2026-02-25"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 15
+    },
+    {
+     "id": 1982,
+     "name": "Middletown Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1982",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 36,
+      "count": 67
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-11-02",
+      "2026-10-19",
+      "2026-10-05",
+      "2026-09-21",
+      "2026-09-08"
+     ],
+     "meetings": 97,
+     "since2023": 97,
+     "first": "2023-12-18",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-21",
+      "2025-05-10",
+      "2025-06-11",
+      "2025-09-30",
+      "2026-03-02"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 31,
+     "primary": true
+    },
+    {
+     "id": 1989,
+     "name": "Middletown Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1989",
+     "pattern": {
+      "text": "usually the fourth Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 12,
+      "count": 21
+     },
+     "recent": [
+      "2026-10-27",
+      "2026-09-22",
+      "2026-08-25",
+      "2026-07-28",
+      "2026-06-23",
+      "2026-05-26"
+     ],
+     "meetings": 97,
+     "since2023": 43,
+     "first": "2019-01-22",
+     "last": "2026-10-27",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-25",
+      "2025-06-24",
+      "2025-07-22"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    }
+   ]
+  },
+  "Narragansett": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 2079,
+     "name": "Narragansett Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2079",
+     "pattern": null,
+     "recent": [
+      "2024-09-03",
+      "2012-12-04",
+      "2011-03-01",
+      "2011-02-07",
+      "2011-02-01",
+      "2011-01-04"
+     ],
+     "meetings": 56,
+     "since2023": 1,
+     "first": "2004-08-03",
+     "last": "2024-09-03",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 1,
+     "minutesLagDays": 108
+    },
+    {
+     "id": 2085,
+     "name": "Narragansett Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2085",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 11,
+      "count": 20
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-09-09",
+      "2026-08-11",
+      "2026-07-14",
+      "2026-06-09",
+      "2026-05-12"
+     ],
+     "meetings": 99,
+     "since2023": 42,
+     "first": "2019-01-16",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2025-04-08",
+      "2025-06-10",
+      "2025-08-12",
+      "2025-10-14",
+      "2025-12-09",
+      "2026-10-13"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 52
+    },
+    {
+     "id": 2097,
+     "name": "Narragansett Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2097",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": "06:00PM",
+      "perYear": 24,
+      "count": 45
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-11-05",
+      "2026-10-26",
+      "2026-10-20",
+      "2026-10-01",
+      "2026-09-28"
+     ],
+     "meetings": 98,
+     "since2023": 81,
+     "first": "2022-01-26",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2026-08-17"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 49,
+     "place": "25 Fifth Avenue, Narragansett, RI, 02882",
+     "phone": "(401) 782-0626",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 2104,
+     "name": "Narragansett Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2104",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 51,
+      "count": 95
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-11-16",
+      "2026-11-02",
+      "2026-11-02",
+      "2026-10-27",
+      "2026-10-19"
+     ],
+     "meetings": 73,
+     "since2023": 73,
+     "first": "2024-11-18",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [
+      "2026-03-26",
+      "2026-06-15"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 2,
+     "primary": true
+    },
+    {
+     "id": 2107,
+     "name": "Narragansett Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2107",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "06:30PM",
+      "perYear": 13,
+      "count": 24
+     },
+     "recent": [
+      "2026-10-22",
+      "2026-09-17",
+      "2026-08-20",
+      "2026-07-23",
+      "2026-06-17",
+      "2026-05-21"
+     ],
+     "meetings": 100,
+     "since2023": 55,
+     "first": "2020-01-01",
+     "last": "2026-10-22",
+     "upcoming": [],
+     "cancelled": [
+      "2025-08-21"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 64,
+     "primary": true
+    }
+   ]
+  },
+  "New Shoreham": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 2138,
+     "name": "New Shoreham Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2138",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "04:30PM",
+      "perYear": 14,
+      "count": 26
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-13",
+      "2026-09-15",
+      "2026-08-11",
+      "2026-06-09",
+      "2026-05-12"
+     ],
+     "meetings": 96,
+     "since2023": 40,
+     "first": "2015-04-14",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-10-28"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 146
+    },
+    {
+     "id": 2143,
+     "name": "New Shoreham Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2143",
+     "pattern": {
+      "text": "usually the fourth Monday of the month",
+      "time": "05:00PM",
+      "perYear": 13,
+      "count": 24
+     },
+     "recent": [
+      "2026-10-26",
+      "2026-09-28",
+      "2026-08-24",
+      "2026-07-27",
+      "2026-06-22",
+      "2026-05-18"
+     ],
+     "meetings": 98,
+     "since2023": 50,
+     "first": "2019-05-30",
+     "last": "2026-10-26",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-26",
+      "2026-09-03"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 162
+    },
+    {
+     "id": 2150,
+     "name": "New Shoreham Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2150",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "04:00PM",
+      "perYear": 20,
+      "count": 38
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-11-09",
+      "2026-10-23",
+      "2026-10-20",
+      "2026-10-14",
+      "2026-10-14"
+     ],
+     "meetings": 80,
+     "since2023": 60,
+     "first": "2021-08-11",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 84,
+     "place": "16 Old Town rd, Block Island, RI, 02807",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 2160,
+     "name": "New Shoreham Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2160",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 47,
+      "count": 89
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-11-12",
+      "2026-11-02",
+      "2026-10-28",
+      "2026-10-28",
+      "2026-10-21"
+     ],
+     "meetings": 93,
+     "since2023": 93,
+     "first": "2024-10-16",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-21",
+      "2026-02-04"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 17,
+     "primary": true
+    },
+    {
+     "id": 2165,
+     "name": "New Shoreham Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2165",
+     "pattern": {
+      "text": "usually the fourth Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 19,
+      "count": 33
+     },
+     "recent": [
+      "2026-10-28",
+      "2026-10-28",
+      "2026-09-03",
+      "2026-08-26",
+      "2026-08-26",
+      "2026-07-22"
+     ],
+     "meetings": 75,
+     "since2023": 48,
+     "first": "2021-01-04",
+     "last": "2026-10-28",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-25",
+      "2026-09-23"
+     ],
+     "minutesFiled": 83,
+     "minutesLagDays": 64,
+     "primary": true
+    }
+   ]
+  },
+  "Newport": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 2181,
+     "name": "Newport City Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2181",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 64,
+      "count": 100
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-28",
+      "2026-10-21",
+      "2026-10-20",
+      "2026-10-14",
+      "2026-09-30"
+     ],
+     "meetings": 92,
+     "since2023": 92,
+     "first": "2025-04-22",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-03",
+      "2025-06-16",
+      "2025-09-10",
+      "2025-09-24",
+      "2026-02-24",
+      "2026-02-25",
+      "2026-03-12",
+      "2026-10-21"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 49,
+     "primary": true
+    },
+    {
+     "id": 2196,
+     "name": "Newport Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2196",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "06:30PM",
+      "perYear": 13,
+      "count": 23
+     },
+     "recent": [
+      "2026-10-13",
+      "2026-09-15",
+      "2026-08-11",
+      "2026-07-14",
+      "2026-06-11",
+      "2026-05-12"
+     ],
+     "meetings": 98,
+     "since2023": 50,
+     "first": "2019-12-17",
+     "last": "2026-10-13",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 90
+    },
+    {
+     "id": 2204,
+     "name": "Newport Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2204",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "06:30PM",
+      "perYear": 14,
+      "count": 26
+     },
+     "recent": [
+      "2026-11-02",
+      "2026-10-05",
+      "2026-09-14",
+      "2026-08-03",
+      "2026-07-20",
+      "2026-06-01"
+     ],
+     "meetings": 97,
+     "since2023": 49,
+     "first": "2020-07-13",
+     "last": "2026-11-02",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-03"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 37,
+     "place": "43 Broadway, Council Chambers, Newport, RI, 02840",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 2240,
+     "name": "Newport Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2240",
+     "pattern": {
+      "text": "usually the fourth Monday of the month",
+      "time": "06:00PM",
+      "perYear": 14,
+      "count": 25
+     },
+     "recent": [
+      "2026-10-26",
+      "2026-09-28",
+      "2026-08-24",
+      "2026-07-27",
+      "2026-06-22",
+      "2026-05-18"
+     ],
+     "meetings": 96,
+     "since2023": 59,
+     "first": "2021-03-25",
+     "last": "2026-10-26",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-26",
+      "2026-02-23"
+     ],
+     "minutesFiled": 91,
+     "minutesLagDays": 99,
+     "primary": true
+    }
+   ]
+  },
+  "North Kingstown": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 2271,
+     "name": "North Kingstown Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2271",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 12,
+      "count": 23
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-09-10",
+      "2026-07-09",
+      "2026-06-11",
+      "2026-04-09",
+      "2026-04-09"
+     ],
+     "meetings": 90,
+     "since2023": 43,
+     "first": "2018-09-12",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 87,
+     "minutesLagDays": 62
+    },
+    {
+     "id": 2280,
+     "name": "North Kingstown Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2280",
+     "pattern": {
+      "text": "usually the first Monday of the month",
+      "time": "07:00PM",
+      "perYear": 9,
+      "count": 17
+     },
+     "recent": [
+      "2026-11-02",
+      "2026-09-10",
+      "2026-08-03",
+      "2026-07-06",
+      "2026-06-01",
+      "2026-04-06"
+     ],
+     "meetings": 97,
+     "since2023": 34,
+     "first": "2016-09-12",
+     "last": "2026-11-02",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-03"
+     ],
+     "minutesFiled": 93,
+     "minutesLagDays": 70
+    },
+    {
+     "id": 2287,
+     "name": "North Kingstown Planning Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2287",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": null,
+      "perYear": 27,
+      "count": 50
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-11-12",
+      "2026-10-29",
+      "2026-10-20",
+      "2026-09-01",
+      "2026-08-25"
+     ],
+     "meetings": 97,
+     "since2023": 95,
+     "first": "2022-12-08",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2026-09-15",
+      "2026-10-30"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 41,
+     "place": "80 Boston Neck Road, North Kingstown, RI, 02852",
+     "phone": "(401) 268-1571",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 2295,
+     "name": "North Kingstown Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2295",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "11:00AM",
+      "perYear": 12,
+      "count": 21
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-10-14",
+      "2026-09-09",
+      "2026-08-12",
+      "2026-07-08",
+      "2026-06-10"
+     ],
+     "meetings": 85,
+     "since2023": 33,
+     "first": "2016-07-14",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [
+      "2025-08-13"
+     ],
+     "minutesFiled": 15,
+     "minutesLagDays": 57
+    },
+    {
+     "id": 2296,
+     "name": "North Kingstown Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2296",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 23,
+      "count": 41
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-19",
+      "2026-09-28",
+      "2026-09-14",
+      "2026-08-17",
+      "2026-07-13"
+     ],
+     "meetings": 98,
+     "since2023": 85,
+     "first": "2022-04-13",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-26",
+      "2026-02-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 38,
+     "primary": true
+    },
+    {
+     "id": 2303,
+     "name": "North Kingstown Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2303",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:00PM",
+      "perYear": 14,
+      "count": 25
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-27",
+      "2026-10-13",
+      "2026-09-22",
+      "2026-08-25",
+      "2026-07-28"
+     ],
+     "meetings": 98,
+     "since2023": 58,
+     "first": "2020-10-27",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 73,
+     "primary": true
+    }
+   ]
+  },
+  "North Providence": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 2312,
+     "name": "North Providence Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2312",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:30PM",
+      "perYear": 6,
+      "count": 8
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-13",
+      "2026-09-23",
+      "2026-07-22",
+      "2026-01-13",
+      "2025-09-09"
+     ],
+     "meetings": 91,
+     "since2023": 26,
+     "first": "2005-04-21",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-07-15"
+     ],
+     "minutesFiled": 53,
+     "minutesLagDays": 217
+    },
+    {
+     "id": 2318,
+     "name": "North Providence Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2318",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 14,
+      "count": 25
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-14",
+      "2026-09-23",
+      "2026-08-12",
+      "2026-06-10",
+      "2026-05-13"
+     ],
+     "meetings": 99,
+     "since2023": 48,
+     "first": "2018-11-14",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-08-21",
+      "2025-09-24",
+      "2026-09-09"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 72,
+     "place": "2000 Smith Street, Town Council Chambers, North Providence, RI, 02911",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 2336,
+     "name": "North Providence Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2336",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 47,
+      "count": 87
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-11-04",
+      "2026-11-04",
+      "2026-10-26",
+      "2026-10-06",
+      "2026-09-16"
+     ],
+     "meetings": 48,
+     "since2023": 48,
+     "first": "2024-08-06",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-04-17",
+      "2025-05-29",
+      "2025-06-02",
+      "2025-06-03",
+      "2025-06-17",
+      "2025-06-23",
+      "2025-06-26",
+      "2026-05-01",
+      "2026-05-26"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 29,
+     "primary": true
+    },
+    {
+     "id": 2345,
+     "name": "North Providence Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2345",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "06:30PM",
+      "perYear": 4,
+      "count": 7
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-06-11",
+      "2025-09-18",
+      "2025-07-17",
+      "2025-02-06",
+      "2025-01-24"
+     ],
+     "meetings": 98,
+     "since2023": 21,
+     "first": "2011-05-19",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [
+      "2025-07-17",
+      "2025-08-21",
+      "2026-05-21"
+     ],
+     "minutesFiled": 37,
+     "minutesLagDays": 120,
+     "primary": true
+    }
+   ]
+  },
+  "North Smithfield": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 2352,
+     "name": "North Smithfield Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2352",
+     "pattern": null,
+     "recent": [
+      "2022-02-08",
+      "2022-01-11",
+      "2021-12-14",
+      "2016-08-23",
+      "2016-06-14"
+     ],
+     "meetings": 5,
+     "since2023": 0,
+     "first": "2016-06-14",
+     "last": "2022-02-08",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 2,
+     "minutesLagDays": null
+    },
+    {
+     "id": 2358,
+     "name": "North Smithfield Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2358",
+     "pattern": {
+      "text": "usually the first Thursday of the month",
+      "time": "06:30PM",
+      "perYear": 14,
+      "count": 5
+     },
+     "recent": [
+      "2026-08-06",
+      "2026-07-09",
+      "2026-06-04",
+      "2026-05-07",
+      "2026-04-02",
+      "2023-10-11"
+     ],
+     "meetings": 96,
+     "since2023": 12,
+     "first": "2015-09-08",
+     "last": "2026-08-06",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 12
+    },
+    {
+     "id": 2362,
+     "name": "North Smithfield Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2362",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "06:30PM",
+      "perYear": 8,
+      "count": 14
+     },
+     "recent": [
+      "2026-09-28",
+      "2026-07-27",
+      "2026-06-10",
+      "2026-05-21",
+      "2026-03-23",
+      "2026-03-03"
+     ],
+     "meetings": 97,
+     "since2023": 31,
+     "first": "2017-02-27",
+     "last": "2026-09-28",
+     "upcoming": [],
+     "cancelled": [
+      "2025-08-25",
+      "2025-10-27",
+      "2026-02-23",
+      "2026-03-23",
+      "2026-10-26",
+      "2026-11-16"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 58
+    },
+    {
+     "id": 2367,
+     "name": "North Smithfield Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2367",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 16,
+      "count": 29
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-09-10",
+      "2026-08-27",
+      "2026-08-13",
+      "2026-07-23",
+      "2026-07-09"
+     ],
+     "meetings": 96,
+     "since2023": 51,
+     "first": "2020-05-07",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-16",
+      "2025-05-15",
+      "2026-01-08"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 95,
+     "place": "83 Greene St, North Smithfield, RI, 02896",
+     "phone": null,
+     "minutesForm": "scan",
+     "primary": true
+    },
+    {
+     "id": 2387,
+     "name": "North Smithfield Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2387",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "06:45PM",
+      "perYear": 33,
+      "count": 61
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-10-19",
+      "2026-10-05",
+      "2026-09-21",
+      "2026-08-17",
+      "2026-08-03"
+     ],
+     "meetings": 98,
+     "since2023": 98,
+     "first": "2024-01-01",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-01",
+      "2026-06-22",
+      "2026-06-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    },
+    {
+     "id": 2390,
+     "name": "North Smithfield Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2390",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 8,
+      "count": 13
+     },
+     "recent": [
+      "2026-09-08",
+      "2026-07-28",
+      "2026-07-14",
+      "2026-04-14",
+      "2026-02-10",
+      "2026-01-01"
+     ],
+     "meetings": 99,
+     "since2023": 32,
+     "first": "2017-09-12",
+     "last": "2026-09-08",
+     "upcoming": [],
+     "cancelled": [
+      "2026-08-25"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 29,
+     "primary": true
+    }
+   ]
+  },
+  "Pawtucket": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 2506,
+     "name": "Pawtucket Board of Appeals",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2506",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "06:30PM",
+      "perYear": 15,
+      "count": 27
+     },
+     "recent": [
+      "2026-10-26",
+      "2026-09-28",
+      "2026-08-03",
+      "2026-07-27",
+      "2026-04-27",
+      "2026-04-06"
+     ],
+     "meetings": 97,
+     "since2023": 63,
+     "first": "2021-04-05",
+     "last": "2026-10-26",
+     "upcoming": [],
+     "cancelled": [
+      "2025-03-31"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 2,
+     "primary": true
+    },
+    {
+     "id": 2515,
+     "name": "Pawtucket City Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2515",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "07:00PM",
+      "perYear": 28,
+      "count": 51
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-21",
+      "2026-10-07",
+      "2026-09-23",
+      "2026-09-10",
+      "2026-08-19"
+     ],
+     "meetings": 96,
+     "since2023": 96,
+     "first": "2023-05-16",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-05-12",
+      "2025-12-17",
+      "2026-02-25"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 8,
+     "primary": true
+    },
+    {
+     "id": 2516,
+     "name": "Pawtucket City Planning Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2516",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 14,
+      "count": 27
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-20",
+      "2026-09-15",
+      "2026-06-16",
+      "2026-06-02",
+      "2026-05-19"
+     ],
+     "meetings": 95,
+     "since2023": 48,
+     "first": "2019-05-21",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2026-04-28"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 21,
+     "place": "100 Freight Street, Pawtucket, RI, 02860",
+     "phone": "(401) 728-0500",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 2525,
+     "name": "Pawtucket Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2525",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 10,
+      "count": 15
+     },
+     "recent": [
+      "2026-06-09",
+      "2026-05-12",
+      "2026-03-10",
+      "2026-02-10",
+      "2026-01-13",
+      "2025-09-09"
+     ],
+     "meetings": 96,
+     "since2023": 35,
+     "first": "2016-05-10",
+     "last": "2026-06-09",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 75,
+     "minutesLagDays": 15
+    }
+   ]
+  },
+  "Portsmouth": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 2639,
+     "name": "Portsmouth Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2639",
+     "pattern": {
+      "text": "usually the third Thursday of the month",
+      "time": "06:00PM",
+      "perYear": 11,
+      "count": 19
+     },
+     "recent": [
+      "2026-10-15",
+      "2026-09-17",
+      "2026-08-20",
+      "2026-06-18",
+      "2026-05-21",
+      "2026-04-16"
+     ],
+     "meetings": 100,
+     "since2023": 39,
+     "first": "2015-10-22",
+     "last": "2026-10-15",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 52,
+     "minutesLagDays": 60
+    },
+    {
+     "id": 2641,
+     "name": "Portsmouth Design Review Board",
+     "role": "design",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2641",
+     "pattern": {
+      "text": "usually the first Monday of the month",
+      "time": "07:00PM",
+      "perYear": 7,
+      "count": 8
+     },
+     "recent": [
+      "2026-03-02",
+      "2026-02-02",
+      "2025-11-03",
+      "2025-06-30",
+      "2025-05-05",
+      "2025-04-07"
+     ],
+     "meetings": 93,
+     "since2023": 13,
+     "first": "2004-09-07",
+     "last": "2026-03-02",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-05"
+     ],
+     "minutesFiled": 0,
+     "minutesLagDays": null
+    },
+    {
+     "id": 2669,
+     "name": "Portsmouth Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2669",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 10,
+      "count": 19
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-07",
+      "2026-05-14",
+      "2026-04-09",
+      "2026-01-08",
+      "2025-12-11"
+     ],
+     "meetings": 98,
+     "since2023": 44,
+     "first": "2018-09-26",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [
+      "2026-06-11",
+      "2026-07-09",
+      "2026-08-13",
+      "2026-09-10"
+     ],
+     "minutesFiled": 72,
+     "minutesLagDays": 75,
+     "place": "2200 East Main, Portsmouth, RI, 02871",
+     "phone": "(401) 643-0332",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 2697,
+     "name": "Portsmouth Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2697",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": null,
+      "perYear": 31,
+      "count": 58
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-26",
+      "2026-10-13",
+      "2026-09-28",
+      "2026-09-14",
+      "2026-08-24"
+     ],
+     "meetings": 98,
+     "since2023": 98,
+     "first": "2023-07-10",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2025-05-01",
+      "2026-01-26",
+      "2026-04-30"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 16,
+     "primary": true
+    },
+    {
+     "id": 2704,
+     "name": "Portsmouth Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2704",
+     "pattern": {
+      "text": "usually the third Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 10,
+      "count": 17
+     },
+     "recent": [
+      "2026-10-15",
+      "2026-09-24",
+      "2026-08-20",
+      "2026-07-23",
+      "2026-05-21",
+      "2026-04-16"
+     ],
+     "meetings": 100,
+     "since2023": 47,
+     "first": "2019-02-21",
+     "last": "2026-10-15",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 72,
+     "minutesLagDays": 57,
+     "primary": true
+    },
+    {
+     "id": 8474,
+     "name": "Portsmouth Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8474",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": null,
+      "perYear": 5,
+      "count": 8
+     },
+     "recent": [
+      "2026-10-27",
+      "2026-09-01",
+      "2026-05-14",
+      "2026-04-07",
+      "2025-10-30",
+      "2025-08-05"
+     ],
+     "meetings": 17,
+     "since2023": 16,
+     "first": "2022-11-02",
+     "last": "2026-10-27",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 6,
+     "minutesLagDays": 65
+    }
+   ]
+  },
+  "Providence": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 382,
+     "name": "Capital Center Commission",
+     "role": "special",
+     "kind": "state",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=382",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "12:00PM",
+      "perYear": 17,
+      "count": 9
+     },
+     "recent": [
+      "2025-07-09",
+      "2025-06-11",
+      "2025-05-14",
+      "2025-04-09",
+      "2025-03-12",
+      "2025-02-19"
+     ],
+     "meetings": 98,
+     "since2023": 32,
+     "first": "2018-01-10",
+     "last": "2025-07-09",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 37
+    },
+    {
+     "id": 383,
+     "name": "Capital Center Design Review Committee",
+     "role": "design",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=383",
+     "pattern": {
+      "text": "usually the fourth Tuesday of the month",
+      "time": "08:00AM",
+      "perYear": 15,
+      "count": 7
+     },
+     "recent": [
+      "2025-06-24",
+      "2025-05-27",
+      "2025-04-22",
+      "2025-03-25",
+      "2025-02-25",
+      "2025-01-28"
+     ],
+     "meetings": 100,
+     "since2023": 33,
+     "first": "2018-01-23",
+     "last": "2025-06-24",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 20,
+     "minutesLagDays": 37
+    },
+    {
+     "id": 1531,
+     "name": "I-195 Redevelopment District Commission",
+     "role": "special",
+     "kind": "state",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1531",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "05:00PM",
+      "perYear": 16,
+      "count": 28
+     },
+     "recent": [
+      "2026-10-07",
+      "2026-09-16",
+      "2026-08-19",
+      "2026-07-15",
+      "2026-06-11",
+      "2026-06-03"
+     ],
+     "meetings": 99,
+     "since2023": 56,
+     "first": "2019-10-16",
+     "last": "2026-10-07",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 35
+    },
+    {
+     "id": 2766,
+     "name": "Providence City Council Meeting",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2766",
+     "pattern": {
+      "text": "usually on a Thursday",
+      "time": "06:00PM",
+      "perYear": 29,
+      "count": 53
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-10-15",
+      "2026-10-01",
+      "2026-09-17",
+      "2026-09-03",
+      "2026-07-30"
+     ],
+     "meetings": 99,
+     "since2023": 99,
+     "first": "2023-04-25",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 18,
+     "primary": true
+    },
+    {
+     "id": 2767,
+     "name": "Providence City Plan Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2767",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": "04:45PM",
+      "perYear": 15,
+      "count": 27
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-20",
+      "2026-09-15",
+      "2026-08-18",
+      "2026-07-28",
+      "2026-06-16"
+     ],
+     "meetings": 100,
+     "since2023": 55,
+     "first": "2020-02-18",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 30,
+     "place": "Joseph Doorley Municipal Building, 444 Westminster Street, 1st floor meeting room, Providence, RI, 02903",
+     "phone": "(401) 680-8525",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 2829,
+     "name": "Providence Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2829",
+     "pattern": {
+      "text": "usually the fourth Monday of the month",
+      "time": "04:45PM",
+      "perYear": 14,
+      "count": 26
+     },
+     "recent": [
+      "2026-10-26",
+      "2026-10-06",
+      "2026-09-28",
+      "2026-08-24",
+      "2026-07-27",
+      "2026-06-22"
+     ],
+     "meetings": 99,
+     "since2023": 54,
+     "first": "2020-07-27",
+     "last": "2026-10-26",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-23",
+      "2026-05-18"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 37
+    },
+    {
+     "id": 2934,
+     "name": "Providence Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2934",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "05:30PM",
+      "perYear": 12,
+      "count": 21
+     },
+     "recent": [
+      "2026-10-07",
+      "2026-10-07",
+      "2026-08-12",
+      "2026-07-08",
+      "2026-06-03",
+      "2026-05-13"
+     ],
+     "meetings": 98,
+     "since2023": 44,
+     "first": "2018-07-12",
+     "last": "2026-10-07",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-12",
+      "2025-08-13",
+      "2026-03-11",
+      "2026-09-09"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 1,
+     "primary": true
+    },
+    {
+     "id": 8776,
+     "name": "Providence Special Commission on the History of the Providence City Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8776",
+     "pattern": null,
+     "recent": [
+      "2026-03-11"
+     ],
+     "meetings": 1,
+     "since2023": 1,
+     "first": "2026-03-11",
+     "last": "2026-03-11",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 1,
+     "minutesLagDays": 14
+    }
+   ]
+  },
+  "Richmond": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3116,
+     "name": "Richmond Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3116",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "06:30PM",
+      "perYear": 15,
+      "count": 28
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-14",
+      "2026-09-08",
+      "2026-08-12",
+      "2026-07-15",
+      "2026-06-10"
+     ],
+     "meetings": 94,
+     "since2023": 56,
+     "first": "2020-01-15",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-08"
+     ],
+     "minutesFiled": 9,
+     "minutesLagDays": 96
+    },
+    {
+     "id": 3123,
+     "name": "Richmond Historic Preservation Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3123",
+     "pattern": null,
+     "recent": [
+      "2006-06-18",
+      "2006-05-15",
+      "2005-12-19",
+      "2005-11-21",
+      "2005-10-18",
+      "2005-09-27"
+     ],
+     "meetings": 17,
+     "since2023": 0,
+     "first": "2004-08-27",
+     "last": "2006-06-18",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 2,
+     "minutesLagDays": null
+    },
+    {
+     "id": 3127,
+     "name": "Richmond Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3127",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:30PM",
+      "perYear": 27,
+      "count": 50
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-27",
+      "2026-10-13",
+      "2026-10-07",
+      "2026-09-24",
+      "2026-09-10"
+     ],
+     "meetings": 99,
+     "since2023": 95,
+     "first": "2022-09-27",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-04-08",
+      "2025-07-08",
+      "2026-02-24",
+      "2026-04-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 34,
+     "place": "5 Richmond Townhouse Rd, Wyoming, RI, 02898",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3136,
+     "name": "Richmond Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3136",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": null,
+      "perYear": 4,
+      "count": 5
+     },
+     "recent": [
+      "2026-10-20",
+      "2026-09-10",
+      "2026-06-02",
+      "2025-06-17",
+      "2025-05-20",
+      "2024-08-07"
+     ],
+     "meetings": 18,
+     "since2023": 6,
+     "first": "2007-02-21",
+     "last": "2026-10-20",
+     "upcoming": [],
+     "cancelled": [
+      "2025-06-17",
+      "2025-07-15",
+      "2025-11-18"
+     ],
+     "minutesFiled": 0,
+     "minutesLagDays": null
+    },
+    {
+     "id": 3138,
+     "name": "Richmond Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3138",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:00PM",
+      "perYear": 31,
+      "count": 59
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-20",
+      "2026-10-06",
+      "2026-09-15",
+      "2026-09-01",
+      "2026-08-18"
+     ],
+     "meetings": 90,
+     "since2023": 90,
+     "first": "2023-09-05",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2025-05-20",
+      "2026-02-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 23,
+     "primary": true
+    },
+    {
+     "id": 3140,
+     "name": "Richmond Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3140",
+     "pattern": {
+      "text": "usually the fourth Monday of the month",
+      "time": "07:00PM",
+      "perYear": 7,
+      "count": 12
+     },
+     "recent": [
+      "2026-09-28",
+      "2026-06-22",
+      "2026-03-23",
+      "2026-01-01",
+      "2025-12-15",
+      "2025-09-22"
+     ],
+     "meetings": 97,
+     "since2023": 24,
+     "first": "2015-10-26",
+     "last": "2026-09-28",
+     "upcoming": [],
+     "cancelled": [
+      "2025-05-19"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 42,
+     "primary": true
+    }
+   ]
+  },
+  "Scituate": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3188,
+     "name": "Scituate Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3188",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "07:00PM",
+      "perYear": 14,
+      "count": 25
+     },
+     "recent": [
+      "2026-11-03",
+      "2026-10-06",
+      "2026-09-01",
+      "2026-08-04",
+      "2026-06-01",
+      "2026-05-05"
+     ],
+     "meetings": 98,
+     "since2023": 54,
+     "first": "2019-09-10",
+     "last": "2026-11-03",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 65
+    },
+    {
+     "id": 3209,
+     "name": "Scituate Plan Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3209",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 9,
+      "count": 17
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-09-15",
+      "2026-07-30",
+      "2026-06-16",
+      "2026-03-17",
+      "2026-01-14"
+     ],
+     "meetings": 98,
+     "since2023": 45,
+     "first": "2018-11-20",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-21",
+      "2026-10-20"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "place": "1315 Chopmist Hill Road, Scituate, RI, 02857",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3222,
+     "name": "Scituate Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3222",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": null,
+      "perYear": 20,
+      "count": 37
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-08",
+      "2026-09-24",
+      "2026-09-10",
+      "2026-08-13",
+      "2026-07-30"
+     ],
+     "meetings": 97,
+     "since2023": 71,
+     "first": "2021-09-09",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [
+      "2025-11-13",
+      "2026-02-26",
+      "2026-10-09"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    },
+    {
+     "id": 3228,
+     "name": "Scituate Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3228",
+     "pattern": {
+      "text": "usually the fourth Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 10,
+      "count": 16
+     },
+     "recent": [
+      "2026-08-25",
+      "2026-04-28",
+      "2026-03-24",
+      "2026-01-27",
+      "2026-01-14",
+      "2025-12-18"
+     ],
+     "meetings": 92,
+     "since2023": 33,
+     "first": "2018-01-23",
+     "last": "2026-08-25",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-24"
+     ],
+     "minutesFiled": 85,
+     "minutesLagDays": 57,
+     "primary": true
+    }
+   ]
+  },
+  "Smithfield": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3285,
+     "name": "Smithfield Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3285",
+     "pattern": {
+      "text": "usually the first Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 13,
+      "count": 24
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-07",
+      "2026-09-02",
+      "2026-08-05",
+      "2026-07-08",
+      "2026-06-03"
+     ],
+     "meetings": 99,
+     "since2023": 49,
+     "first": "2018-10-03",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-07-02",
+      "2026-01-01"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36
+    },
+    {
+     "id": 3294,
+     "name": "Smithfield Historic Preservation Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3294",
+     "pattern": {
+      "text": "usually the third Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 12,
+      "count": 21
+     },
+     "recent": [
+      "2026-10-21",
+      "2026-09-16",
+      "2026-07-15",
+      "2026-06-17",
+      "2026-05-20",
+      "2026-04-15"
+     ],
+     "meetings": 100,
+     "since2023": 41,
+     "first": "2017-07-19",
+     "last": "2026-10-21",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-15",
+      "2025-01-23",
+      "2025-02-19"
+     ],
+     "minutesFiled": 88,
+     "minutesLagDays": 36
+    },
+    {
+     "id": 3301,
+     "name": "Smithfield Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3301",
+     "pattern": {
+      "text": "usually the third Thursday of the month",
+      "time": "06:00PM",
+      "perYear": 16,
+      "count": 29
+     },
+     "recent": [
+      "2026-10-15",
+      "2026-09-17",
+      "2026-08-20",
+      "2026-07-16",
+      "2026-06-30",
+      "2026-05-21"
+     ],
+     "meetings": 98,
+     "since2023": 60,
+     "first": "2020-03-12",
+     "last": "2026-10-15",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-24",
+      "2026-05-21",
+      "2026-10-08"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "place": "Smithfield Town Hall, Town Council Chambers, 64 Farnum Pike, Smithfield, RI, 02917",
+     "phone": "401-233-1010",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3313,
+     "name": "Smithfield Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3313",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": null,
+      "perYear": 38,
+      "count": 71
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-20",
+      "2026-10-06",
+      "2026-10-06",
+      "2026-09-15",
+      "2026-09-01"
+     ],
+     "meetings": 92,
+     "since2023": 92,
+     "first": "2024-01-23",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2025-07-15",
+      "2025-10-28",
+      "2025-11-13"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 23,
+     "primary": true
+    },
+    {
+     "id": 3318,
+     "name": "Smithfield Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3318",
+     "pattern": {
+      "text": "usually the first Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 11,
+      "count": 21
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-07",
+      "2026-09-02",
+      "2026-08-05",
+      "2026-07-08",
+      "2026-05-06"
+     ],
+     "meetings": 98,
+     "since2023": 39,
+     "first": "2017-08-30",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2026-06-03"
+     ],
+     "minutesFiled": 85,
+     "minutesLagDays": 36,
+     "primary": true
+    },
+    {
+     "id": 8529,
+     "name": "Smithfield Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8529",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": null,
+      "perYear": 7,
+      "count": 11
+     },
+     "recent": [
+      "2026-10-07",
+      "2026-07-01",
+      "2026-04-01",
+      "2026-02-18",
+      "2026-01-14",
+      "2025-12-18"
+     ],
+     "meetings": 22,
+     "since2023": 22,
+     "first": "2023-04-28",
+     "last": "2026-10-07",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 9,
+     "minutesLagDays": 43
+    }
+   ]
+  },
+  "South Kingstown": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3335,
+     "name": "South Kingstown Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3335",
+     "pattern": {
+      "text": "usually the first Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 12,
+      "count": 9
+     },
+     "recent": [
+      "2025-10-07",
+      "2025-09-02",
+      "2025-08-05",
+      "2025-06-03",
+      "2025-05-06",
+      "2025-04-01"
+     ],
+     "meetings": 97,
+     "since2023": 33,
+     "first": "2017-06-07",
+     "last": "2025-10-07",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 78,
+     "minutesLagDays": 55
+    },
+    {
+     "id": 3337,
+     "name": "South Kingstown Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3337",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": "05:30PM",
+      "perYear": 12,
+      "count": 22
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-09-24",
+      "2026-08-27",
+      "2026-07-23",
+      "2026-06-25",
+      "2026-05-27"
+     ],
+     "meetings": 97,
+     "since2023": 48,
+     "first": "2017-08-10",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [
+      "2025-09-25",
+      "2026-10-22"
+     ],
+     "minutesFiled": 84,
+     "minutesLagDays": 84
+    },
+    {
+     "id": 3343,
+     "name": "South Kingstown Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3343",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:30PM",
+      "perYear": 29,
+      "count": 53
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-27",
+      "2026-10-06",
+      "2026-10-06",
+      "2026-09-22",
+      "2026-09-10"
+     ],
+     "meetings": 95,
+     "since2023": 95,
+     "first": "2023-04-11",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-11-05",
+      "2026-02-24",
+      "2026-06-17"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 50,
+     "place": "Town Hall Conference Room, 2nd Floor, 180 High Street, Wakefield, RI, 02879",
+     "phone": "(401) 789-9331",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3353,
+     "name": "South Kingstown Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3353",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "09:00AM",
+      "perYear": 11,
+      "count": 20
+     },
+     "recent": [
+      "2026-10-21",
+      "2026-10-14",
+      "2026-09-09",
+      "2026-08-12",
+      "2026-06-10",
+      "2026-03-11"
+     ],
+     "meetings": 96,
+     "since2023": 40,
+     "first": "2018-06-20",
+     "last": "2026-10-21",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 94,
+     "minutesLagDays": 56
+    },
+    {
+     "id": 3354,
+     "name": "South Kingstown Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3354",
+     "pattern": {
+      "text": "on no fixed day",
+      "time": null,
+      "perYear": 38,
+      "count": 70
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-26",
+      "2026-10-22",
+      "2026-10-13",
+      "2026-10-13",
+      "2026-09-28"
+     ],
+     "meetings": 98,
+     "since2023": 98,
+     "first": "2024-01-22",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-23",
+      "2026-03-16",
+      "2026-04-07"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 27,
+     "primary": true
+    },
+    {
+     "id": 3356,
+     "name": "South Kingstown Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3356",
+     "pattern": {
+      "text": "usually the third Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 12,
+      "count": 22
+     },
+     "recent": [
+      "2026-10-26",
+      "2026-10-21",
+      "2026-08-19",
+      "2026-07-15",
+      "2026-06-17",
+      "2026-05-20"
+     ],
+     "meetings": 100,
+     "since2023": 48,
+     "first": "2019-10-16",
+     "last": "2026-10-26",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-21",
+      "2026-09-16"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    }
+   ]
+  },
+  "Tiverton": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3509,
+     "name": "Tiverton Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3509",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": null,
+      "perYear": 11,
+      "count": 20
+     },
+     "recent": [
+      "2026-10-20",
+      "2026-09-15",
+      "2026-08-18",
+      "2026-06-16",
+      "2026-05-19",
+      "2026-04-21"
+     ],
+     "meetings": 99,
+     "since2023": 35,
+     "first": "2016-07-26",
+     "last": "2026-10-20",
+     "upcoming": [],
+     "cancelled": [
+      "2026-07-21"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 68
+    },
+    {
+     "id": 3530,
+     "name": "Tiverton Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3530",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:30PM",
+      "perYear": 23,
+      "count": 42
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-09",
+      "2026-10-06",
+      "2026-09-15",
+      "2026-09-01",
+      "2026-08-12"
+     ],
+     "meetings": 97,
+     "since2023": 80,
+     "first": "2022-05-03",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2026-03-30",
+      "2026-05-19"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 29,
+     "place": "343 Highland Road, Tiverton, RI, 02878",
+     "phone": "(401) 816-5631",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3543,
+     "name": "Tiverton Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3543",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "07:00PM",
+      "perYear": 34,
+      "count": 62
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-26",
+      "2026-10-13",
+      "2026-09-28",
+      "2026-08-24",
+      "2026-08-11"
+     ],
+     "meetings": 96,
+     "since2023": 96,
+     "first": "2023-11-27",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2025-12-08",
+      "2026-04-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 36,
+     "primary": true
+    },
+    {
+     "id": 3549,
+     "name": "Tiverton Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3549",
+     "pattern": {
+      "text": "usually the first Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 10,
+      "count": 18
+     },
+     "recent": [
+      "2026-10-07",
+      "2026-09-02",
+      "2026-08-05",
+      "2026-07-01",
+      "2026-07-01",
+      "2026-05-06"
+     ],
+     "meetings": 84,
+     "since2023": 49,
+     "first": "2019-06-05",
+     "last": "2026-10-07",
+     "upcoming": [],
+     "cancelled": [
+      "2025-08-06",
+      "2025-11-05",
+      "2026-06-03"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 42,
+     "primary": true
+    },
+    {
+     "id": 8617,
+     "name": "Tiverton Planning Board Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8617",
+     "pattern": null,
+     "recent": [],
+     "meetings": 0,
+     "since2023": 0,
+     "first": null,
+     "last": null,
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 0,
+     "minutesLagDays": null
+    },
+    {
+     "id": 8692,
+     "name": "Tiverton Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8692",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": null,
+      "perYear": 6,
+      "count": 10
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-13",
+      "2026-07-14",
+      "2026-05-12",
+      "2026-04-23",
+      "2026-03-23"
+     ],
+     "meetings": 10,
+     "since2023": 10,
+     "first": "2025-02-25",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 3,
+     "minutesLagDays": 8
+    }
+   ]
+  },
+  "Warren": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3685,
+     "name": "Warren Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3685",
+     "pattern": {
+      "text": "usually the third Monday of the month",
+      "time": "07:00PM",
+      "perYear": 14,
+      "count": 25
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-09-21",
+      "2026-08-17",
+      "2026-07-20",
+      "2026-06-15",
+      "2026-05-18"
+     ],
+     "meetings": 97,
+     "since2023": 43,
+     "first": "2017-12-12",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": null
+    },
+    {
+     "id": 3696,
+     "name": "Warren Planning Commission",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3696",
+     "pattern": {
+      "text": "usually the fourth Monday of the month",
+      "time": "06:30PM",
+      "perYear": 13,
+      "count": 23
+     },
+     "recent": [
+      "2026-10-26",
+      "2026-09-28",
+      "2026-09-21",
+      "2026-08-24",
+      "2026-07-27",
+      "2026-07-21"
+     ],
+     "meetings": 97,
+     "since2023": 54,
+     "first": "2020-07-27",
+     "last": "2026-10-26",
+     "upcoming": [],
+     "cancelled": [
+      "2025-07-28",
+      "2026-01-26",
+      "2026-02-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 37,
+     "place": "514 main street, warren, RI, 02885",
+     "phone": null,
+     "minutesForm": "scan",
+     "primary": true
+    },
+    {
+     "id": 3703,
+     "name": "Warren Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3703",
+     "pattern": null,
+     "recent": [
+      "2026-08-11",
+      "2026-06-22",
+      "2025-01-16",
+      "2024-10-11",
+      "2024-09-11",
+      "2024-06-13"
+     ],
+     "meetings": 47,
+     "since2023": 12,
+     "first": "2005-10-13",
+     "last": "2026-08-11",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 25,
+     "minutesLagDays": 103
+    },
+    {
+     "id": 3705,
+     "name": "Warren Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3705",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": null,
+      "perYear": 22,
+      "count": 40
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-13",
+      "2026-09-29",
+      "2026-09-14",
+      "2026-08-11",
+      "2026-07-14"
+     ],
+     "meetings": 97,
+     "since2023": 86,
+     "first": "2022-04-18",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-03"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 29,
+     "primary": true
+    },
+    {
+     "id": 3711,
+     "name": "Warren Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3711",
+     "pattern": {
+      "text": "usually the third Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 15,
+      "count": 27
+     },
+     "recent": [
+      "2026-10-21",
+      "2026-09-16",
+      "2026-08-19",
+      "2026-07-15",
+      "2026-06-17",
+      "2026-05-20"
+     ],
+     "meetings": 88,
+     "since2023": 49,
+     "first": "2020-08-05",
+     "last": "2026-10-21",
+     "upcoming": [],
+     "cancelled": [
+      "2025-06-18"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 37,
+     "primary": true
+    },
+    {
+     "id": 7301,
+     "name": "Warren Zoning Board of Appeals",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=7301",
+     "pattern": null,
+     "recent": [
+      "2021-01-20"
+     ],
+     "meetings": 1,
+     "since2023": 0,
+     "first": "2021-01-20",
+     "last": "2021-01-20",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 1,
+     "minutesLagDays": null
+    }
+   ]
+  },
+  "Warwick": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3729,
+     "name": "Warwick City Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3729",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "06:30PM",
+      "perYear": 27,
+      "count": 51
+     },
+     "recent": [
+      "2026-11-09",
+      "2026-10-19",
+      "2026-10-05",
+      "2026-09-14",
+      "2026-08-26",
+      "2026-08-17"
+     ],
+     "meetings": 96,
+     "since2023": 96,
+     "first": "2023-01-30",
+     "last": "2026-11-09",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-26",
+      "2026-02-23"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 4,
+     "primary": true
+    },
+    {
+     "id": 3754,
+     "name": "Warwick Historic District Commission",
+     "role": "historic",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3754",
+     "pattern": {
+      "text": "usually the third Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 14,
+      "count": 25
+     },
+     "recent": [
+      "2026-10-21",
+      "2026-09-14",
+      "2026-08-17",
+      "2026-07-13",
+      "2026-06-08",
+      "2026-06-08"
+     ],
+     "meetings": 93,
+     "since2023": 43,
+     "first": "2019-01-04",
+     "last": "2026-10-21",
+     "upcoming": [],
+     "cancelled": [
+      "2025-05-21"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 50
+    },
+    {
+     "id": 3765,
+     "name": "Warwick Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3765",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 13,
+      "count": 24
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-14",
+      "2026-09-09",
+      "2026-08-12",
+      "2026-07-08",
+      "2026-06-10"
+     ],
+     "meetings": 96,
+     "since2023": 47,
+     "first": "2018-09-12",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 37,
+     "place": "65 Centerville Road, Meeting Room 2, Warwick, RI, 02886",
+     "phone": "(401) 921-9681",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3802,
+     "name": "Warwick Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3802",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 14,
+      "count": 26
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-13",
+      "2026-09-08",
+      "2026-07-14",
+      "2026-06-09",
+      "2026-06-04"
+     ],
+     "meetings": 94,
+     "since2023": 50,
+     "first": "2019-10-08",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2025-09-25"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 22,
+     "primary": true
+    }
+   ]
+  },
+  "West Greenwich": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3855,
+     "name": "West Greenwich Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3855",
+     "pattern": {
+      "text": "usually the first Thursday of the month",
+      "time": "07:00PM",
+      "perYear": 12,
+      "count": 22
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-10-08",
+      "2026-09-03",
+      "2026-08-06",
+      "2026-06-04",
+      "2026-05-07"
+     ],
+     "meetings": 98,
+     "since2023": 46,
+     "first": "2017-12-14",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 22,
+     "minutesLagDays": 34
+    },
+    {
+     "id": 3860,
+     "name": "West Greenwich Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3860",
+     "pattern": {
+      "text": "usually the third Monday of the month",
+      "time": "06:00PM",
+      "perYear": 12,
+      "count": 23
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-10-19",
+      "2026-09-21",
+      "2026-08-17",
+      "2026-07-20",
+      "2026-05-06"
+     ],
+     "meetings": 99,
+     "since2023": 46,
+     "first": "2018-12-17",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [
+      "2025-02-10",
+      "2025-08-18",
+      "2026-02-23",
+      "2026-05-18",
+      "2026-06-15"
+     ],
+     "minutesFiled": 97,
+     "minutesLagDays": 23,
+     "place": "280 Victory Highway, Council Chambers, West Greenwich, RI, 02817",
+     "phone": "401-392-3800",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3862,
+     "name": "West Greenwich Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3862",
+     "pattern": null,
+     "recent": [
+      "2021-04-15",
+      "2010-04-01",
+      "2009-05-27",
+      "2008-11-26",
+      "2008-10-30",
+      "2008-09-30"
+     ],
+     "meetings": 32,
+     "since2023": 0,
+     "first": "2005-02-16",
+     "last": "2021-04-15",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 0,
+     "minutesLagDays": null
+    },
+    {
+     "id": 3863,
+     "name": "West Greenwich Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3863",
+     "pattern": {
+      "text": "usually on a Wednesday",
+      "time": "07:00PM",
+      "perYear": 18,
+      "count": 33
+     },
+     "recent": [
+      "2026-11-04",
+      "2026-10-14",
+      "2026-09-09",
+      "2026-08-12",
+      "2026-07-08",
+      "2026-06-10"
+     ],
+     "meetings": 98,
+     "since2023": 68,
+     "first": "2021-03-10",
+     "last": "2026-11-04",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 13,
+     "primary": true
+    },
+    {
+     "id": 3865,
+     "name": "West Greenwich Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3865",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 6,
+      "count": 10
+     },
+     "recent": [
+      "2026-10-20",
+      "2026-09-15",
+      "2026-07-14",
+      "2026-06-16",
+      "2026-03-17",
+      "2025-12-31"
+     ],
+     "meetings": 97,
+     "since2023": 27,
+     "first": "2017-12-20",
+     "last": "2026-10-20",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-14",
+      "2025-03-18",
+      "2025-04-15",
+      "2025-06-17",
+      "2025-09-16",
+      "2025-10-14",
+      "2025-11-18",
+      "2025-12-16",
+      "2026-01-20",
+      "2026-02-17",
+      "2026-04-21",
+      "2026-05-19",
+      "2026-11-17"
+     ],
+     "minutesFiled": 78,
+     "minutesLagDays": 27,
+     "primary": true
+    }
+   ]
+  },
+  "West Warwick": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3884,
+     "name": "West Warwick Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3884",
+     "pattern": {
+      "text": "usually the first Monday of the month",
+      "time": "06:00PM",
+      "perYear": 10,
+      "count": 18
+     },
+     "recent": [
+      "2026-10-26",
+      "2026-07-06",
+      "2026-07-06",
+      "2026-07-06",
+      "2026-06-01",
+      "2026-05-04"
+     ],
+     "meetings": 96,
+     "since2023": 38,
+     "first": "2018-03-05",
+     "last": "2026-10-26",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 65,
+     "minutesLagDays": 64,
+     "place": "1170 Main Street, W. Warwick, RI, 02893",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3899,
+     "name": "West Warwick Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3899",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:00PM",
+      "perYear": 31,
+      "count": 57
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-20",
+      "2026-10-06",
+      "2026-09-15",
+      "2026-09-01",
+      "2026-08-18"
+     ],
+     "meetings": 84,
+     "since2023": 84,
+     "first": "2023-11-21",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-24",
+      "2026-04-08"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 24,
+     "primary": true
+    },
+    {
+     "id": 3902,
+     "name": "West Warwick Zoning Board of Review",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3902",
+     "pattern": {
+      "text": "usually the fourth Wednesday of the month",
+      "time": "07:00PM",
+      "perYear": 5,
+      "count": 8
+     },
+     "recent": [
+      "2026-10-28",
+      "2026-08-26",
+      "2026-07-29",
+      "2026-03-25",
+      "2025-06-25",
+      "2025-05-28"
+     ],
+     "meetings": 86,
+     "since2023": 20,
+     "first": "2013-10-30",
+     "last": "2026-10-28",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 99,
+     "minutesLagDays": 12,
+     "primary": true
+    },
+    {
+     "id": 8643,
+     "name": "West Warwick Technical Review Committee",
+     "role": "trc",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=8643",
+     "pattern": {
+      "text": "usually the second Thursday of the month",
+      "time": null,
+      "perYear": 7,
+      "count": 12
+     },
+     "recent": [
+      "2026-11-12",
+      "2026-10-08",
+      "2026-04-09",
+      "2025-12-11",
+      "2025-11-13",
+      "2025-09-11"
+     ],
+     "meetings": 17,
+     "since2023": 17,
+     "first": "2024-06-27",
+     "last": "2026-11-12",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 1,
+     "minutesLagDays": 8
+    }
+   ]
+  },
+  "Westerly": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 3909,
+     "name": "Westerly Architectural Review Board",
+     "role": "design",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3909",
+     "pattern": {
+      "text": "usually the first Thursday of the month",
+      "time": "04:00PM",
+      "perYear": 12,
+      "count": 16
+     },
+     "recent": [
+      "2026-05-07",
+      "2026-04-02",
+      "2026-01-08",
+      "2025-11-04",
+      "2025-10-02",
+      "2025-09-04"
+     ],
+     "meetings": 99,
+     "since2023": 30,
+     "first": "2015-06-29",
+     "last": "2026-05-07",
+     "upcoming": [],
+     "cancelled": [
+      "2025-01-09",
+      "2025-11-06",
+      "2025-12-04",
+      "2026-01-08"
+     ],
+     "minutesFiled": 62,
+     "minutesLagDays": 214
+    },
+    {
+     "id": 3933,
+     "name": "Westerly Conservation Commission",
+     "role": "conservation",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3933",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "07:00PM",
+      "perYear": 8,
+      "count": 15
+     },
+     "recent": [
+      "2026-11-10",
+      "2026-10-13",
+      "2026-06-09",
+      "2026-04-14",
+      "2026-02-10",
+      "2026-01-13"
+     ],
+     "meetings": 97,
+     "since2023": 32,
+     "first": "2014-10-14",
+     "last": "2026-11-10",
+     "upcoming": [],
+     "cancelled": [
+      "2026-09-08"
+     ],
+     "minutesFiled": 0,
+     "minutesLagDays": null
+    },
+    {
+     "id": 3967,
+     "name": "Westerly Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3967",
+     "pattern": {
+      "text": "usually on a Tuesday",
+      "time": "06:00PM",
+      "perYear": 21,
+      "count": 38
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-20",
+      "2026-09-15",
+      "2026-08-18",
+      "2026-07-21",
+      "2026-06-16"
+     ],
+     "meetings": 94,
+     "since2023": 74,
+     "first": "2022-01-11",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2025-09-30",
+      "2026-01-20"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 69,
+     "place": "45 Broad Street, Town Council Chambers, Westerly, RI, 02891",
+     "phone": "(401) 348-2536",
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 3994,
+     "name": "Westerly Town Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3994",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "06:00PM",
+      "perYear": 35,
+      "count": 64
+     },
+     "recent": [
+      "2026-11-02",
+      "2026-10-19",
+      "2026-10-05",
+      "2026-09-28",
+      "2026-09-21",
+      "2026-09-14"
+     ],
+     "meetings": 90,
+     "since2023": 90,
+     "first": "2024-01-25",
+     "last": "2026-11-02",
+     "upcoming": [],
+     "cancelled": [
+      "2026-04-21"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 19,
+     "primary": true
+    },
+    {
+     "id": 3999,
+     "name": "Westerly Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3999",
+     "pattern": {
+      "text": "usually the second Wednesday of the month",
+      "time": "06:00PM",
+      "perYear": 12,
+      "count": 21
+     },
+     "recent": [
+      "2026-10-14",
+      "2026-08-12",
+      "2026-06-10",
+      "2026-04-08",
+      "2026-03-11",
+      "2026-02-11"
+     ],
+     "meetings": 93,
+     "since2023": 43,
+     "first": "2019-08-07",
+     "last": "2026-10-14",
+     "upcoming": [],
+     "cancelled": [
+      "2026-05-13",
+      "2026-07-08",
+      "2026-09-09"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 132,
+     "primary": true
+    },
+    {
+     "id": 7040,
+     "name": "Westerly Zoning Board of  Appeals",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=7040",
+     "pattern": null,
+     "recent": [],
+     "meetings": 0,
+     "since2023": 0,
+     "first": null,
+     "last": null,
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 0,
+     "minutesLagDays": null
+    }
+   ]
+  },
+  "Woonsocket": {
+   "read": "2026-11-18",
+   "bodies": [
+    {
+     "id": 4026,
+     "name": "Woonsocket City Council",
+     "role": "council",
+     "kind": "elected",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=4026",
+     "pattern": {
+      "text": "usually on a Monday",
+      "time": "07:00PM",
+      "perYear": 40,
+      "count": 73
+     },
+     "recent": [
+      "2026-11-16",
+      "2026-11-09",
+      "2026-11-02",
+      "2026-10-20",
+      "2026-10-19",
+      "2026-10-05"
+     ],
+     "meetings": 98,
+     "since2023": 98,
+     "first": "2024-05-28",
+     "last": "2026-11-16",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 100,
+     "minutesLagDays": 16,
+     "primary": true
+    },
+    {
+     "id": 4028,
+     "name": "Woonsocket Design Review Commission",
+     "role": "design",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=4028",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 15,
+      "count": 5
+     },
+     "recent": [
+      "2025-06-17",
+      "2025-05-20",
+      "2025-04-15",
+      "2025-03-18",
+      "2025-02-18",
+      "2024-07-16"
+     ],
+     "meetings": 30,
+     "since2023": 9,
+     "first": "2017-11-07",
+     "last": "2025-06-17",
+     "upcoming": [],
+     "cancelled": [],
+     "minutesFiled": 29,
+     "minutesLagDays": 57
+    },
+    {
+     "id": 4036,
+     "name": "Woonsocket Planning Board",
+     "role": "planning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=4036",
+     "pattern": {
+      "text": "usually the third Tuesday of the month",
+      "time": "06:00PM",
+      "perYear": 11,
+      "count": 21
+     },
+     "recent": [
+      "2026-11-17",
+      "2026-10-20",
+      "2026-09-15",
+      "2026-07-27",
+      "2026-06-16",
+      "2026-05-14"
+     ],
+     "meetings": 94,
+     "since2023": 46,
+     "first": "2019-04-24",
+     "last": "2026-11-17",
+     "upcoming": [],
+     "cancelled": [
+      "2026-01-20",
+      "2026-02-12"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 43,
+     "place": "169 Main Street, 2nd Floor Conference Room, Woonsocket, RI, 02895",
+     "phone": null,
+     "minutesForm": "text",
+     "primary": true
+    },
+    {
+     "id": 4050,
+     "name": "Woonsocket Zoning Board",
+     "role": "zoning",
+     "kind": "appointed",
+     "url": "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=4050",
+     "pattern": {
+      "text": "usually the second Tuesday of the month",
+      "time": "06:30PM",
+      "perYear": 7,
+      "count": 13
+     },
+     "recent": [
+      "2026-11-05",
+      "2026-11-05",
+      "2026-06-25",
+      "2026-06-09",
+      "2026-01-13",
+      "2025-12-16"
+     ],
+     "meetings": 97,
+     "since2023": 33,
+     "first": "2017-08-15",
+     "last": "2026-11-05",
+     "upcoming": [],
+     "cancelled": [
+      "2026-02-10",
+      "2026-04-14"
+     ],
+     "minutesFiled": 100,
+     "minutesLagDays": 112,
+     "primary": true
+    }
+   ]
+  }
+ },
+ "source": "https://opengov.sos.ri.gov/OpenMeetings"
+}

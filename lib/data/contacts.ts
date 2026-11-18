@@ -1,6 +1,7 @@
 import { getActiveTown } from "../town";
 import type { Contact } from "../types";
 import { PROVIDENCE_CONTACTS } from "./towns/providence/town";
+import { contactFromBodies } from "./bodies";
 
 /** Authorities and offices on the route. "verify" marks details from older or secondary sources. */
 const CUMBERLAND_CONTACTS: Record<string, Contact> = {
@@ -136,11 +137,23 @@ function forTown(id: string, c: Contact, town: string): Contact {
 /** Towns whose own offices have been read. An id found here wins; anything else falls back to the role-only version. */
 const TOWN_CONTACTS: Record<string, Record<string, Contact>> = { Providence: PROVIDENCE_CONTACTS };
 
-/** The contacts of the town of the project on screen. Reads the active town each time, so it follows the project. */
+/**
+ * The contacts of the town of the project on screen. Reads the active town each time, so it follows the project.
+ * A town's own reading wins; then its boards as the state Open Meetings site lists them (D53, chunk 2); then the
+ * role-only version of Cumberland's office.
+ */
 export const CONTACTS: Record<string, Contact> = new Proxy(CUMBERLAND_CONTACTS, {
   get: (t, id: string) => {
     const town = getActiveTown();
-    return TOWN_CONTACTS[town]?.[id] ?? (t[id] ? forTown(id, t[id], town) : undefined);
+    const own = TOWN_CONTACTS[town]?.[id];
+    if (own || town === "Cumberland") return own ?? t[id];
+    const key = `${town}/${id}/state`;
+    if (!cache.has(key)) {
+      const generic = t[id] ? forTown(id, t[id], town) : undefined;
+      const fromState = !SHARED.has(id) ? contactFromBodies(town, id, generic?.note) : undefined;
+      if (fromState ?? generic) cache.set(key, (fromState ?? generic)!);
+    }
+    return cache.get(key);
   },
 });
 

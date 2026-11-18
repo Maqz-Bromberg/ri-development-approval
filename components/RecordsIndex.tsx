@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { LOCALITIES } from "@/lib/data/records";
 import { SOURCES } from "@/lib/data/sources";
 import { TOWNS } from "@/lib/data/towns";
+import { bodiesOf, bodiesRead, meetsLine, minutesLine, ROLE_LABEL, type Body } from "@/lib/data/bodies";
 import { sourcePlace, sourceType, SOURCE_TYPES } from "@/lib/sourceKind";
 import type { Locality } from "@/lib/types";
 import { Icon } from "./Icon";
@@ -25,6 +26,27 @@ function itemsOf(l: Locality): Item[] {
 }
 
 const has = (words: string[], text: string) => words.every((w) => text.toLowerCase().includes(w));
+
+/** A town's boards as the state Open Meetings site lists them (ARD D53, chunk 2): when each meets and how its minutes are filed. */
+function Boards({ town, bodies }: { town: string; bodies: Body[] }) {
+  if (!bodies.length) return <p className="small"><span className="gap-tag">Gap</span> No land-use board of {town} was found on the state Open Meetings site. Its meetings may be posted under another name, or only on the town&apos;s own site.</p>;
+  return (
+    <div className="rdx-boards">
+      <h3 className="rdx-sub">Boards, from the state Open Meetings site <span className="muted small">read {bodiesRead(town)}</span></h3>
+      <ul>
+        {bodies.map((b) => (
+          <li key={b.id}>
+            <span className={`media-kind m-board k-${b.kind}`}>{ROLE_LABEL[b.role].toLowerCase()}</span>
+            <span>
+              <a href={b.url} target="_blank" rel="noopener noreferrer">{b.name} ↗</a>{" "}
+              <span className="muted small">{b.kind === "elected" ? "Elected. " : b.kind === "state" ? "A state body. " : "Appointed. "}{meetsLine(b)} Minutes: {minutesLine(b)}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 /**
  * The records, as a card file: a tab per municipality (all 39; a town not yet read has a card that says so and where to look),
@@ -118,11 +140,13 @@ export function RecordsIndex() {
               {l.tips && !words.length && (
                 <details className="rdx-tips"><summary>Reading tips for {current}</summary><ul>{l.tips.map((t) => <li key={t}>{t}</li>)}</ul></details>
               )}
+              {!words.length && <Boards town={current} bodies={bodiesOf(current)} />}
             </>
           ) : (
             <div className="rdx-gap">
-              <p><span className="gap-tag">Gap</span> No records from {current} have been read into this site yet.</p>
-              <p className="small">Its boards file meeting notices and agendas on the state&apos;s <a href={OPEN_MEETINGS} target="_blank" rel="noopener noreferrer">Open Meetings portal ↗</a>; minutes are often on the town&apos;s own site.{town?.code ? <> Its zoning is in its <a href={town.code.url} target="_blank" rel="noopener noreferrer">code of ordinances ↗</a>.</> : null}</p>
+              <p><span className="gap-tag">Gap</span> No minutes or recordings from {current} have been read into concerns or example projects yet. Where its boards meet and file minutes is below; its own record pages and recordings have not been read.</p>
+              <p className="small">{town?.code ? <>Its zoning is in its <a href={town.code.url} target="_blank" rel="noopener noreferrer">code of ordinances ↗</a>. </> : null}Every public body files its notices and agendas on the state&apos;s <a href={OPEN_MEETINGS} target="_blank" rel="noopener noreferrer">Open Meetings portal ↗</a>.</p>
+              <Boards town={current} bodies={bodiesOf(current)} />
             </div>
           )}
         </article>

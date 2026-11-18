@@ -24,6 +24,7 @@ export function KindChip({ id, role, mark = false }: { id: string; role?: string
           <p className="muted">{c.note}</p>
           <dl className="pop-lines">{c.lines.map(([a, b]) => <div key={a}><dt>{a}</dt><dd>{b}</dd></div>)}</dl>
           {c.verify && <p className="verify">Verify: {c.verify}</p>}
+          {c.links?.map((l) => <p key={l.url} className="small"><a href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a></p>)}
         </div>
       }
     >

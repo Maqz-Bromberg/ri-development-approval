@@ -477,3 +477,8 @@
 .rf-card:focus-visible { outline: 2px solid var(--act); outline-offset: 2px; }
 .rf-card.is-focus { cursor: default; }
 .rf-use { margin-top: 4px; padding: 6px 14px; font-size: 13px; }
+/* A town's boards on its Records card (D53, chunk 2) */
+.rdx-boards ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
+.rdx-boards li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 8px; align-items: baseline; }
+.media-kind.m-board { white-space: normal; text-align: center; }
+@media (max-width: 720px) { .rdx-boards li { grid-template-columns: 1fr; gap: 2px; } }

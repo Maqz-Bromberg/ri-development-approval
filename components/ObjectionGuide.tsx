@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { minutesLine, primaryBody } from "@/lib/data/bodies";
 import { useEffect, useMemo, useState } from "react";
 import { OBJECTIONS, WEIGHT_LABEL } from "@/lib/data/objections";
 import { CONTACTS, shortName } from "@/lib/data/contacts";
@@ -164,6 +165,15 @@ export function ObjectionGuide() {
               : <><DemoTag>Not yet read</DemoTag> This town's recordings haven't been read. The notes below are general, and its sources are listed.</>}
           </span>
         </div>
+        {!LOCALITIES.some((l) => l.name === inputs.town && l.indexed) && locality.name !== inputs.town && (() => {
+          const b = primaryBody(inputs.town, "planning");
+          return (
+            <p className="lookup-note">
+              <span className="gap-tag">Gap</span> No hearings from {inputs.town} have been read. These are {locality.name}&apos;s, read as one board&apos;s handling of the same questions under the same state law.
+              {b ? <> {inputs.town}&apos;s {b.name} meets {b.pattern ? b.pattern.text : "on no fixed day"}; its minutes: {minutesLine(b).replace(/^./, (c) => c.toLowerCase())} <a href={b.url} target="_blank" rel="noopener noreferrer">Its meetings ↗</a></> : null}
+            </p>
+          );
+        })()}
         {inputs.kind === "commercial" && (
           <p className="lookup-note is-warn">
             <span className="gap-tag">Gap</span> These concerns were read from hearings on housing. Hearings on commercial and institutional projects have not been read, and they turn on other things: traffic and deliveries, hours, noise, lighting and signs. The recordings and minutes below cover them too.

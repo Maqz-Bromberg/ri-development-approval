@@ -25,7 +25,7 @@ def main(cache):
     for f in sorted(cache.glob("*/ordinance/*")):
         if f.suffix.lower() in (".pdf", ".html", ".htm") and not f.with_suffix(".txt").exists() and not f.name.startswith("ecode-"): sl.to_text(f)
     whole = sorted(p for p in cache.glob("*/ordinance/*.txt") if "-att" not in p.name)
-    for f in sorted(p for p in cache.rglob("*") if p.is_file() and p.name not in ("INDEX.md", "ECODE.md") and p.parent.name != "ordinance"):
+    for f in sorted(p for p in cache.rglob("*") if p.is_file() and p.name not in ("INDEX.md", "ECODE.md") and p.parent.name not in ("ordinance", "openmeetings")):
         s = by_id.get(f.stem) or by_name.get(f.name)
         if not s: strays.append(f.relative_to(cache)); continue
         dest = sl.home(cache, s) / f"{s['id']}{f.suffix}"

@@ -14,7 +14,8 @@ import { SeasonAccents } from "./Season";
 import { seasonOf, type Season } from "@/lib/timelines";
 import { DocChecklist } from "./DocChecklist";
 import { DemoTag } from "./Demo";
-import { CONTACTS } from "@/lib/data/contacts";
+import { CONTACTS, shortName } from "@/lib/data/contacts";
+import { meetsLine, primaryBody } from "@/lib/data/bodies";
 import { condOK } from "@/lib/engine";
 import { KindChip } from "./KindChip";
 import { PinButton } from "./PinButton";
@@ -319,13 +320,16 @@ export function ScheduleView() {
         Route: <b>{routeText(tree).name}</b>. Statutory clocks run to their maximums, and the other durations are estimates.{" "}
         {cal ? (
           <>
-            {cal.town === "Cumberland" ? "Planning Board and Technical Review Committee" : "City Plan Commission"} dates come from {cal.town}'s published {cal.year} schedule
+            {cal.rows.some((r) => r.trc) ? `${shortName(CONTACTS.pb?.name ?? "Planning Board")} and ${shortName(CONTACTS.trc?.name ?? "Technical Review Committee")}` : shortName(CONTACTS.pb?.name ?? "Planning Board")} dates come from {cal.town}'s published {cal.year} schedule
             (<a href={SOURCES[cal.src].url} target="_blank" rel="noreferrer">meeting schedule and deadlines</a>, read {cal.read}).
             Dates after it are projected from the board's usual pattern ({cal.pattern.note}) and marked <b>est.</b>{" "}
             {cal.town === "Providence" && " In 2026 several meetings were held on other days than the schedule gave, so confirm each date against the agenda."}
           </>
         ) : (
-          <>Hearing dates for {inputs.town} are estimates: its board's meeting calendar has not been read yet.</>
+          <>
+            Hearing dates for {inputs.town} are estimates: its board&apos;s published schedule and filing deadlines have not been read.
+            {(() => { const b = primaryBody(inputs.town, "planning"); return b ? <> The state Open Meetings site shows the {b.name}: {meetsLine(b)}</> : null; })()}
+          </>
         )}{" "}
         Confirm every date with the Planning Department before relying on it.
         {anyEst && " Some hearings in this plan fall beyond the published calendar."}

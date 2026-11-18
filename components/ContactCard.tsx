@@ -18,8 +18,9 @@ export function ContactCard({ id, role }: { id: string; role?: string }) {
         ))}
       </dl>
       {c.verify && <span className="verify">Verify: {c.verify}</span>}
-      {c.src.length > 0 && (
+      {(c.src.length > 0 || c.links?.length) && (
         <span className="contact-src">
+          {c.links?.map((l) => <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>)}
           {c.src.map((s) => (
             <a key={s} href={SOURCES[s].url} target="_blank" rel="noopener noreferrer">
               {SOURCES[s].label.split(" (")[0]} ↗

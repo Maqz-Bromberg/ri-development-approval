@@ -157,7 +157,7 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
     marks: {
       zoning: { read: "2026-11-18", partly: true, note: "Chapter 260: the use tables for housing, mixed use and the short list of other uses, with the aquifer zones' columns; inclusionary zoning (§ 260-50.2); multifamily in HDR-6 and HDR-15 (§ 260-63) and on Appendix G's parcels; the Airport Area and Aquifer and Wellhead overlays' review. Not read: the dimensional schedule, the other overlays' rules and the Watch Hill standards." },
     },
-    gaps: "Westerly's overlays are not in the Zoning Atlas, so they are ticked by hand: the Town's zoning map with its overlays was not found as a map service.",
+    gaps: "Westerly's overlays are not in the Zoning Atlas, so they are ticked by hand: the Town's zoning map with its overlays was not found as a map service. A Route One Corridor Overlay District with five sub-corridors was heard by the Planning Board in November 2025 and recommended to the Town Council, which heard an update on December 15, 2025; no adoption appears in the council's agendas and minutes on the state site to November 2026, and the ordinance copy read (amended to June 2026) does not have it. Whether it is pending is not read.",
     commercial: {
       marks: { zoning: { read: "2026-11-18", partly: true, note: "The use tables' rows for the short list of uses, with the aquifer zones' columns and the 2,000 sq ft line for shops. Not read: the dimensions, parking and the town's own review lines." } },
       gaps: "Its steps and hearings have not been read.",

@@ -10,10 +10,25 @@ usage: organize_sources.py [CACHE_DIR]        (default: .sources)
 - Anything else is left where it is and listed as unrecognised.
 - INDEX.md lists every source by town and kind: in hand, scanned, or missing, and whether a script can fetch it.
 """
-import pathlib, sys
+import re, pathlib, sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 import sourcelib as sl
+
+
+def norm_url(u):
+    """An address without its scheme, www, trailing slash or query, for matching a saved page to its source."""
+    return re.sub(r"^https?://(www\.)?", "", (u or "").split("#")[0].split("?")[0]).rstrip("/").lower()
+
+
+def saved_url(f):
+    """The address a browser wrote into a page it saved: the canonical link, og:url, or Chrome's "saved from" comment."""
+    head = f.read_bytes()[:400_000].decode("utf-8", "replace")
+    for rx in (r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)', r'<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']canonical',
+               r'<meta[^>]+property=["\']og:url["\'][^>]+content=["\']([^"\']+)', r'<!-- saved from url=\(\d+\)(\S+) -->'):
+        m = re.search(rx, head, re.I)
+        if m: return norm_url(m.group(1))
+    return None
 
 
 def main(cache):
@@ -25,8 +40,10 @@ def main(cache):
     for f in sorted(cache.glob("*/ordinance/*")):
         if f.suffix.lower() in (".pdf", ".html", ".htm") and not f.with_suffix(".txt").exists() and not f.name.startswith("ecode-"): sl.to_text(f)
     whole = sorted(p for p in cache.glob("*/ordinance/*.txt") if "-att" not in p.name)
-    for f in sorted(p for p in cache.rglob("*") if p.is_file() and p.name not in ("INDEX.md", "ECODE.md") and p.parent.name not in ("ordinance", "openmeetings")):
-        s = by_id.get(f.stem) or by_name.get(f.name)
+    by_url = {norm_url(s["url"]): s for s in srcs}
+    for f in sorted(p for p in cache.rglob("*") if p.is_file() and p.name not in ("INDEX.md", "ECODE.md", "engine-snapshot.json")
+                    and p.parent.name not in ("ordinance", "openmeetings") and not any(x.name.endswith("_files") for x in p.parents)):
+        s = by_id.get(f.stem) or by_name.get(f.name) or (by_url.get(saved_url(f)) if f.suffix.lower() in (".html", ".htm") else None)
         if not s: strays.append(f.relative_to(cache)); continue
         dest = sl.home(cache, s) / f"{s['id']}{f.suffix}"
         if f != dest:

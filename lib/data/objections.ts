@@ -1,5 +1,6 @@
 import type { Objection } from "../types";
 import { PROVIDENCE_HEARD, PROVIDENCE_OBJECTIONS } from "./towns/providence/hearings";
+import { RURAL_HEARD, RURAL_OBJECTIONS } from "./towns/rural-hearings";
 
 /*
  * Common questions and objections at Planning Board hearings on multifamily projects.
@@ -214,7 +215,7 @@ const BASE: Objection[] = [
 ];
 
 /** The common concerns, each with the instances documented in every town read so far. A town's own file adds its instances by concern id. */
-export const OBJECTIONS: Objection[] = [...BASE, ...PROVIDENCE_OBJECTIONS].map((o) => ({ ...o, heard: [...o.heard, ...(PROVIDENCE_HEARD[o.id] ?? [])] }));
+export const OBJECTIONS: Objection[] = [...BASE, ...PROVIDENCE_OBJECTIONS, ...RURAL_OBJECTIONS].map((o) => ({ ...o, heard: [...o.heard, ...(PROVIDENCE_HEARD[o.id] ?? []), ...(RURAL_HEARD[o.id] ?? [])] }));
 
 export const WEIGHT_LABEL = {
   material: "Board can weigh this",

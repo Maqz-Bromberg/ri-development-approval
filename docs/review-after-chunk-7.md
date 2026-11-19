@@ -1,0 +1,27 @@
+# Review after chunk 7: open issues
+
+Started 2026-11-19. Issues found while building chunks 6 and 7 that were left for a person, or for a later pass, so the build could move on. Each says where it is, what is open, and what would close it. When chunk 7 is as complete as it can be, this is the list to go through with Maqz. Items that a later change closes are struck through, not deleted, with the date.
+
+## A. Small towns (chunk 6, D63 to D66)
+
+1. **West Greenwich's regulations disagree with the statute twice** (D65): a master plan stage for a major comprehensive permit, and the applicant's appeal to the State Housing Appeals Board, which § 45-53-5.1 replaced from January 1, 2024. Both readings are shown. *Closes with:* the town's answer, or an amendment to § 450-22.
+2. **West Greenwich's major preliminary and final plans follow subdivision regulations not read** (D65). The steps use state law's 90 days. *Closes with:* reading Chapter 450's master, preliminary and final plan articles.
+3. **West Greenwich's hearing records hold names, not words.** Its minutes list every speaker and street but seldom what was said; its stenographer's transcripts are not posted. Its concerns on the hearing guide are read from the Board's discussion and conditions. *Closes with:* the transcripts, on request from the Planning Board.
+4. **Exeter: `§ 4.6` and Table 2.4 disagree on mixed-use commercial development in B, a cell reads "SY", and footnote 16 is unexplained** (D63). The stricter reading is shown. *Closes with:* the Planning Board's or Town Council's answer.
+5. **Foster's districts in the Atlas are out of date** (debt 34): the ordinance has had four districts since October 2023, the Atlas six. Only AR is answered. *Closes with:* Foster's official zoning map (§ 38-501), and an update of the Atlas.
+6. **Foster's § 38-281 still names districts that no longer exist and asks a special use permit the 2023 table does not.** Its Planning Board worked on § 38-281 through 2023 and 2024; whether that was adopted is not read. *Closes with:* the Town Council's records for 2024 and 2025.
+7. **Hopkinton's inclusionary zoning (§ 5.3) is repealed but its affordable housing fund (§ 5.4) still cites it.** *Closes with:* the Planning Department's answer.
+8. **Comprehensive permit affordable counts that are not stated**: Solicity Project (155 homes, "at least a quarter"), Brushy Brook (35 is a quarter of 140, worked out), Ten Rod Road (90 is the applicant's estimate). *Closes with:* the decisions or the eligibility letters.
+9. **Whether Bella View Estates' denial was appealed** (D64) is not in the records read. *Closes with:* the Superior Court's docket for Kent County, spring 2026.
+10. **Glocester's and others' scanned agendas and minutes** were not searched (Glocester: 42 of the Planning Board's files, 36 of the Zoning Board's). "None found" there covers only the files with text. *Closes with:* text recognition in the fetch step (`ocrmypdf`), named already in `scripts/towns/README.md`.
+11. **Richmond's Switch Road site has no district at its parcel's centre in the Atlas.** *Closes with:* the town's zoning map.
+12. **Richmond Place's preliminary decision is in scanned minutes** (read by eye, marked `scan`). Same remedy as 10.
+
+## B. Chunk 7
+
+(Added as chunk 7 is built.)
+
+## C. Across the site
+
+1. **Levels count marks read in part** (D65). The keys now say how many; whether a level should require full marks, or show a separate shade for partial ones, is a design question for Maqz.
+2. **Searched towns' "found" items that are not comprehensive permits** (residential compounds, Forest Hill Estates, Old Vine Estates, Gardiner Apartments, 1146 Main Street, Shannock Mill) are listed as gaps on the Records cards, not read into projects.

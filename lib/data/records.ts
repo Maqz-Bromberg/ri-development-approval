@@ -70,10 +70,49 @@ export const LOCALITIES: Locality[] = [
   PROVIDENCE_LOCALITY,
   {
     id: "exeter", name: "Exeter",
-    intro: "Exeter also uses ClerkBase, with the same page naming as Cumberland.",
+    intro: "Exeter's Planning Board files its agendas and minutes on the state Open Meetings site, and its older records are on ClerkBase. Its minutes are long and close to verbatim; its comprehensive permits since 2023 were read from them (ARD D64).",
     links: [
-      { label: "Exeter Planning Board: Nov 14, 2023", url: "https://clerkshq.com/Content/Exeter-ri/planning/2023/nov14_23pb.htm", note: "Includes amendments to bring local rules in line with the 2023 state housing laws" },
+      { label: "Exeter Planning Board on the state Open Meetings site", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1175", note: "Agendas and minutes since 2023; the comprehensive permit cases on this site were read from these minutes" },
+      { label: "Exeter Planning Board: Nov 14, 2023", url: "https://clerkshq.com/Content/Exeter-ri/planning/2023/nov14_23pb.htm", note: "Includes amendments to bring local rules in line with the 2023 state laws" },
     ],
+    tips: [
+      "The Planning Board hears comprehensive permits; the owner of one site has also brought appeals about it to the Zoning Board, whose minutes are filed separately.",
+    ],
+    indexed: true,
+  },
+  {
+    id: "west-greenwich", name: "West Greenwich",
+    intro: "West Greenwich's Planning Board files agendas and minutes on the state Open Meetings site. Its minutes name everyone who speaks at a hearing, with their street, but record little of what each said; the hearings are taken down by a stenographer and the transcripts are not posted.",
+    links: [
+      { label: "West Greenwich Planning Board on the state Open Meetings site", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3860", note: "Agendas and minutes since 2023; the comprehensive permit cases on this site were read from these minutes" },
+    ],
+    tips: [
+      "The minutes' conditions of approval are the best record of what neighbours raised.",
+      "Large hearings are held at the Exeter-West Greenwich High School auditorium.",
+    ],
+    indexed: true,
+  },
+  {
+    id: "hopkinton", name: "Hopkinton",
+    intro: "Hopkinton's Planning Board files agendas and minutes on the state Open Meetings site. Its minutes summarise each speaker at length, which makes them the fullest record of concerns among the small towns read.",
+    links: [
+      { label: "Hopkinton Planning Board on the state Open Meetings site", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=1476", note: "Agendas and minutes since 2023; the comprehensive permit cases on this site were read from these minutes" },
+    ],
+    tips: [
+      "Motions and votes are written in capitals (MOTION WAS MADE ... MOTION CARRIES), which makes them easy to find.",
+    ],
+    indexed: true,
+  },
+  {
+    id: "richmond", name: "Richmond",
+    intro: "Richmond's Planning Board files agendas and minutes on the state Open Meetings site; a few minutes are scans. Its minutes record who moved what and each speaker's point in brief.",
+    links: [
+      { label: "Richmond Planning Board on the state Open Meetings site", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=3127", note: "Agendas and minutes since 2023; the comprehensive permit cases on this site were read from these minutes" },
+    ],
+    tips: [
+      "Comprehensive permits come under Chapter 18.39 of the zoning ordinance; the decision is drafted by the applicant's attorney and amended by the Board.",
+    ],
+    indexed: true,
   },
   {
     id: "middletown", name: "Middletown",

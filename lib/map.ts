@@ -164,7 +164,7 @@ export function districtShapes(town: string): Promise<DistrictShape[]> {
     });
     p = getJSON<{ features: { attributes: { abbrvname: string; name: string; type: string; family4_treatment: string | null }; geometry?: { rings: number[][][] } }[] }>(
       `${RIZA_LAYER_URL}/query?${params}`,
-    ).then((r) => r.features.filter((f) => f.geometry).map((f) => ({ abbr: f.attributes.abbrvname, name: f.attributes.name, type: townRules(town).kinds?.[f.attributes.abbrvname] ?? f.attributes.type, overlay: f.attributes.family4_treatment === "Overlay", rings: toRings(f.geometry!.rings) })));
+    ).then((r) => r.features.filter((f) => f.geometry).map((f) => ({ abbr: f.attributes.abbrvname, name: f.attributes.name, type: townRules(town).kinds?.[f.attributes.abbrvname] ?? f.attributes.type, overlay: f.attributes.family4_treatment === "Overlay" || townRules(town).kinds?.[f.attributes.abbrvname] === "Overlay", rings: toRings(f.geometry!.rings) })));
     p.catch(() => districtCache.delete(town));
     districtCache.set(town, p);
   }

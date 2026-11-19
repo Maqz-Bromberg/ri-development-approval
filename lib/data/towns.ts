@@ -1,4 +1,5 @@
 import { bodiesOf, bodiesRead, primaryBody } from "./bodies";
+import { searchedOf } from "./searched";
 
 /*
  * The 39 Rhode Island municipalities and how much of this site is read for each (ARD D53, chunk 1: four marks).
@@ -104,6 +105,17 @@ export function levelOf(m: Marks): Level {
  * It gives the boards, their meeting dates and where minutes are filed, but not the planning office's address or
  * hours, nor the town's own record pages and recordings, so the mark is "partly" unless the town was read by hand.
  */
+/*
+ * Hearings and precedent from a search of the boards' records for housing (ARD D63): partly read, since what was found
+ * is listed but not read into recorded projects, and "none found" is said as a result.
+ */
+function hearingsFromSearch(name: string): MarkRead | undefined {
+  const s = searchedOf(name);
+  if (!s) return undefined;
+  const n = s.found.length;
+  return { read: s.read, partly: true, note: `The planning and zoning boards' agendas since 2023 were searched for housing: ${n ? `${n} item${n === 1 ? "" : "s"} found and listed on the Records card, not yet read into example projects` : "none found"}. Recordings and the towns' own record pages were not read.` };
+}
+
 function officesFromState(name: string): MarkRead | undefined {
   const read = bodiesRead(name);
   if (!read || !primaryBody(name, "planning")) return undefined;
@@ -146,6 +158,29 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
       },
       gaps: "No commercial hearings or projects have been read.",
     },
+  },
+  // Chunk 6, small rural towns (ARD D63): the housing rows of each use table, and what they force.
+  Foster: {
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "Chapter 38: the use table's housing rows for AR and the multi-family standards (§ 38-281). Not read: the other districts' dimensions, senior citizen group housing, the residential compound." } },
+    gaps: "Foster renamed its districts on October 26, 2023 (AR, GB, M, HC2); the Zoning Atlas still shows the earlier ones, so outside AR the district at a site needs the Town's own zoning map. The 2023 use table permits multi-family buildings as land development projects, while § 38-281 still asks a special use permit in districts that no longer exist. The table has no two-family row.",
+  },
+  Exeter: {
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "Appendix A: the use table's housing rows, mixed-use commercial development with its affordable share (§ 4.6). Not read: dimensions, conservation development, the planned village development, adaptive reuse beyond its density." } },
+    gaps: "Apartments are allowed only in a mixed-use commercial development, where § 4.6 and the use table disagree on the business district; a cell reads \"SY\"; footnote 16 points to a section repealed in December 2023. The Planned Village Overlay District is not in the Zoning Atlas.",
+  },
+  Hopkinton: {
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "The district use table's housing rows and the lot area for two-family and multi-family homes. Not read: the aquifer overlay's permits, cluster development, the special districts (RS, CS, MS)." } },
+    gaps: "Inclusionary zoning (§ 5.3) is reserved, but the affordable housing fund (§ 5.4) still takes fees under it.",
+  },
+  Richmond: {
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "Chapter 18.16's housing rows, which split multi-family housing by size (to 4, 12 and 60 homes). Not read: the multi-family standards (§ 18.36.100, Chapters 18.41 and 18.42), dimensions, the aquifer overlay." } },
+  },
+  Glocester: {
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "The Table of Use Regulations' housing rows, the village overlay (Article XIII) as the column that applies, and the two-family lot. Not read: the village's design standards and the Planned District." } },
+    gaps: "The Zoning Atlas draws the Village Overlay District and its Center District as districts; here they are read as the overlays the ordinance makes them.",
+  },
+  "West Greenwich": {
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "Chapter 400: the use table's housing rows, the two-family lot conditions and inclusionary zoning (Article XXV, 2025). Not read: dimensions, the Senior Village District, conservation design development." } },
   },
   "North Providence": {
     marks: {
@@ -214,6 +249,7 @@ function build(name: string, county: Town["county"]): Town {
   const r = READ[name];
   const marks: Marks = { ...r?.marks };
   if (!marks.offices) { const o = officesFromState(name); if (o) marks.offices = o; }
+  if (!marks.hearings) { const h = hearingsFromSearch(name); if (h) marks.hearings = h; }
   const parts = r?.parts?.map((p) => ({ ...p, level: levelOf({ ...marks, ...p.marks }) }));
   const commercial = r?.commercial ? { ...r.commercial, marks: { offices: marks.offices, ...r.commercial.marks }, level: levelOf({ offices: marks.offices, ...r.commercial.marks }) } : undefined;
   return { name, county, ...r, marks, level: levelOf(marks), parts, commercial, code: CODE[name] };

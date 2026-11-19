@@ -28,6 +28,10 @@ const ZONES: Record<string, string[]> = {
   Charlestown: ["R-20", "C-1"],
   Westerly: ["other", "HDR-6", "DC1"],
   "North Providence": ["RG", "IS"],
+  Foster: ["AR"],
+  Exeter: ["LB/R", "RE-2"],
+  Glocester: ["R-2"],
+  "West Greenwich": ["HB"],
 };
 const SHAPES: Case[] = [
   { name: "3 homes", p: homes(3) },
@@ -35,6 +39,7 @@ const SHAPES: Case[] = [
   { name: "12 homes", p: homes(12) },
   { name: "30 homes, 25% affordable", p: homes(30, 8) },
   { name: "8 homes, no sewer", p: homes(8, 0, { sewer: false }) },
+  { name: "8 homes, no water or sewer", p: homes(8, 0, { sewer: false, water: false }) },
   { name: "8 homes over 3,000 sq ft of shops", p: { kind: "mixed", units: 8, aff: 0, commercial: 3000, gfa: 3000 } },
   { name: "retail, 8,000 sq ft", p: { kind: "commercial", use: "retail", gfa: 8000, units: 0 } },
   { name: "office, 15,000 sq ft", p: { kind: "commercial", use: "office", gfa: 15000, units: 0 } },

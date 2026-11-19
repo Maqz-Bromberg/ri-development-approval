@@ -151,6 +151,17 @@ export const SOURCES: Record<string, Source> = {
   npcc260818: { label: "North Providence Town Council minutes, Aug 18, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4352%5C2026%5C565286.pdf" },
   npcc261006: { label: "North Providence Town Council minutes, Oct 6, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4352%5C2026%5C570649.pdf" },
   npag261104: { label: "North Providence Town Council agenda, Nov 4, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CNotices%5C4352%5C2026%5C570181.pdf" },
+  /* Chunk 6: small rural towns, read 2026-11-18 (ARD D63). Municode copies were saved as Word files: the url is the town's code, and `file` their kind. */
+  fozo: { label: "Foster Zoning Ordinance, Chapter 38 (Municode, saved as a Word file on Nov 18, 2026)", url: "https://library.municode.com/ri/foster/codes/code_of_ordinances", file: ".docx" },
+  exzo: { label: "Exeter Zoning Ordinance, Appendix A (Municode, saved as a Word file on Nov 18, 2026)", url: "https://library.municode.com/ri/exeter/codes/code_of_ordinances", file: ".docx" },
+  hozo: { label: "Hopkinton Zoning Ordinance (Municode, saved as a Word file on Nov 18, 2026)", url: "https://library.municode.com/ri/hopkinton/codes/code_of_ordinances", file: ".docx" },
+  rizo16: { label: "Richmond Zoning Ordinance, Chapter 18.16 Use Regulations (ClerksHQ)", url: "https://clerkshq.com/Content/Richmond-ri/code/RichmondRI-z1816.htm" },
+  glzo: { label: "Glocester Zoning Ordinance, Chapter 350 (eCode360, print view)", url: "https://ecode360.com/print/GL2062?guid=9717353&children=true" },
+  glzt: { label: "Glocester Zoning Ordinance, Attachment 1: Table of Use Regulations (eCode360)", url: "https://ecode360.com/attachment/308511/GL2062-350a%20Table%20of%20Use%20Regulations.pdf" },
+  glzd: { label: "Glocester Zoning Ordinance, Attachment 2: Table of Dimensional Regulations (eCode360)", url: "https://ecode360.com/attachment/308511/GL2062-350b%20Table%20of%20Dimensional%20Regs.pdf" },
+  wgzo: { label: "West Greenwich Zoning Ordinance, Chapter 400 (eCode360, print view)", url: "https://ecode360.com/print/WE3645?guid=31440174&children=true" },
+  wgzt: { label: "West Greenwich Zoning Ordinance, Attachment 1: Zoning Use Categories (eCode360)", url: "https://ecode360.com/attachment/329112/WE3645-400a%20Zoning%20Use%20Categories.pdf" },
+  cfr1412: { label: "40 C.F.R. § 141.2, definition of a public water system (federal drinking water rules)", url: "https://www.law.cornell.edu/cfr/text/40/141.2" },
   /* Providence meeting recordings. Captions are fetched as machine transcripts by scripts/towns/fetch_captions.py. */
   pvid241015: { label: "Providence City Plan Commission recording, Oct 15, 2024 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=Vpq5VcAnqEk" },
   pvid250121: { label: "Providence City Plan Commission recording, Jan 21, 2025 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=f5mTI-4fRG4" },

@@ -7,6 +7,7 @@ import { SOURCES } from "@/lib/data/sources";
 import { TOWNS } from "@/lib/data/towns";
 import { bodiesOf, bodiesRead, meetsLine, minutesLine, ROLE_LABEL, type Body } from "@/lib/data/bodies";
 import { agendaOf, kindOf, KIND_WORD, readInto } from "@/lib/data/agenda";
+import { searchedLine, searchedOf } from "@/lib/data/searched";
 import { sourcePlace, sourceType, SOURCE_TYPES } from "@/lib/sourceKind";
 import type { Locality } from "@/lib/types";
 import { Icon } from "./Icon";
@@ -27,6 +28,36 @@ function itemsOf(l: Locality): Item[] {
 }
 
 const has = (words: string[], text: string) => words.every((w) => text.toLowerCase().includes(w));
+
+/**
+ * What was searched for housing in a town's board records, and what was found (D63, chunk 6). "Read, and none found"
+ * is a result, said with the boards and dates searched; it replaces the gap only for what was searched.
+ */
+function SearchedRecords({ town }: { town: string }) {
+  const s = searchedOf(town);
+  if (!s) return null;
+  return (
+    <section className="rdx-searched" aria-label={`${town}: records searched for housing`}>
+      <p>
+        {s.found.length ? <span className="pill">Read</span> : <span className="pill live">Read, and none found</span>}{" "}
+        Searched for housing on {s.read}: the agendas of the {searchedLine(s)}, on the state Open Meetings site, with the minutes where an agenda mentioned homes.{" "}
+        {s.found.length ? `${s.found.length} housing item${s.found.length === 1 ? "" : "s"} found, listed below; none is read into a recorded project yet.` : "No proposal with homes was found."}
+      </p>
+      {s.note && <p className="small muted">{s.note}</p>}
+      {s.found.length > 0 && (
+        <ul className="rdx-items">
+          {s.found.map((f) => (
+            <li key={`${f.date}-${f.meeting}`}>
+              <span className="media-kind m-page">{f.date}</span>
+              <span>{f.what}{f.homes ? ` (${f.homes} homes)` : ""} <span className="muted small">{f.board} · <a href={`https://opengov.sos.ri.gov/OpenMeetingsPublic/ViewMeetingDetailByID?MeetingID=${f.meeting}`} target="_blank" rel="noopener noreferrer">meeting ↗</a></span> <span className="gap-tag">Gap</span></span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="small muted">The search reads only what the boards filed on the state site, and only from 2023; a scan has no words to search, and the site lists a board&apos;s latest hundred meetings.</p>
+    </section>
+  );
+}
 
 /**
  * Every case on the planning body's agendas since a date (D53, chunk 0): which became recorded projects here, and which
@@ -180,12 +211,13 @@ export function RecordsIndex() {
               {l.tips && !words.length && (
                 <details className="rdx-tips"><summary>Reading tips for {current}</summary><ul>{l.tips.map((t) => <li key={t}>{t}</li>)}</ul></details>
               )}
+              {!words.length && <SearchedRecords town={current} />}
               {!words.length && <AgendaCases town={current} />}
               {!words.length && <Boards town={current} bodies={bodiesOf(current)} />}
             </>
           ) : (
             <div className="rdx-gap">
-              <p><span className="gap-tag">Gap</span> No minutes or recordings from {current} have been read into concerns or example projects yet. Where its boards meet and file minutes is below; its own record pages and recordings have not been read.</p>
+              {searchedOf(current) ? <SearchedRecords town={current} /> : <p><span className="gap-tag">Gap</span> No minutes or recordings from {current} have been read into concerns or example projects yet. Where its boards meet and file minutes is below; its own record pages and recordings have not been read.</p>}
               <p className="small">{town?.code ? <>Its zoning is in its <a href={town.code.url} target="_blank" rel="noopener noreferrer">code of ordinances ↗</a>. </> : null}Every public body files its notices and agendas on the state&apos;s <a href={OPEN_MEETINGS} target="_blank" rel="noopener noreferrer">Open Meetings portal ↗</a>.</p>
               <Boards town={current} bodies={bodiesOf(current)} />
             </div>

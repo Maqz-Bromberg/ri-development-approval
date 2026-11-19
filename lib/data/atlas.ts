@@ -110,7 +110,11 @@ export async function fetchAtlasDistricts(jurisdiction: string, signal?: AbortSi
   if (json.error) throw new Error(json.error.message);
   // A town whose ordinance was read can correct the Atlas's kind of district (ARD D38).
   const kinds = townRules(jurisdiction).kinds ?? {};
-  return (json.features ?? []).map((f) => (kinds[f.attributes.abbrvname] ? { ...f.attributes, type: kinds[f.attributes.abbrvname] } : f.attributes));
+  // "Overlay" marks a district the Atlas draws as a base district as an overlay (ARD D63), so the picker offers it as a tick.
+  return (json.features ?? []).map((f) => {
+    const k = kinds[f.attributes.abbrvname];
+    return !k ? f.attributes : k === "Overlay" ? { ...f.attributes, family4_treatment: "Overlay" } : { ...f.attributes, type: k };
+  });
 }
 
 /** Fields whose live value differs from the snapshot, per district. */

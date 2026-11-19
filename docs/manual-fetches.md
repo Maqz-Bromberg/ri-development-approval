@@ -125,6 +125,8 @@ The GIS is a viewer behind a disclaimer, not a service the lookup can ask, so th
 
 **Arrived later the same evening:** Cranston (Municode PDF) and Warren's zoning publication (Word), and the two Providence staff reports still wanted (327 Elmwood and the 108–110 Waterman preliminary plan, both now read).
 
+**New Shoreham, for chunk 5:** Appendix E, the zoning ordinance, as a PDF (186 pages, from eCode360's layout), saved 2026-11-18 into `.sources/new-shoreham/ordinance/`. The Town's own website links to its eCode360 copy (<https://ecode360.com/36749402>), though the Secretary of State lists its code as on ClerksHQ, where there is none: which copy is official is chunk 5's question, and the town's own link is evidence for eCode360.
+
 **Not in hand:** Scituate: its Municode copy would not download for Maqz (2026-11-18). Its eCode360 copy, which is not the official one, is in `.sources/scituate/ordinance/`. New Shoreham's official copy is not in hand either.
 
 **No screenshots for Municode or American Legal**: both refuse automated access, so I did not open them. The steps are the same for every Municode town.

@@ -1,4 +1,5 @@
 import { RIZA_LAYER_URL } from "./data/atlas";
+import { townRules } from "./data/towns/overlay";
 import { TOWN_LAYERS } from "./data/townLayers";
 
 /*
@@ -147,8 +148,10 @@ export async function siteFacts(lon: number, lat: number, signal?: AbortSignal, 
   if (zone.status === "fulfilled") {
     const all = zone.value.rows.features.map((f) => f.attributes);
     // An overlay sits on top of a base district, so a point inside one finds both: that is not a boundary.
-    const rows = all.filter((a) => a.family4_treatment !== "Overlay");
-    facts.overlays = all.filter((a) => a.family4_treatment === "Overlay").map((a) => ({ zone: a.abbrvname, name: a.name }));
+    // A town can mark a district the Atlas draws as a base district as the overlay its ordinance makes it (ARD D63).
+    const isOverlay = (a: (typeof all)[number]) => a.family4_treatment === "Overlay" || townRules(a.Jurisdiction).kinds?.[a.abbrvname] === "Overlay";
+    const rows = all.filter((a) => !isOverlay(a));
+    facts.overlays = all.filter(isOverlay).map((a) => ({ zone: a.abbrvname, name: a.name }));
     facts.zoneOptions = rows.map((a) => ({ zone: a.abbrvname, name: a.name }));
     facts.town = all[0]?.Jurisdiction ?? null;
     // On a district boundary the search finds more than one district, and guessing would be wrong.

@@ -5,6 +5,12 @@ import { cumberlandCommercialFindings, cumberlandCommercialUse } from "./cumberl
 import { TREES as CUMBERLAND_TREES } from "./cumberland/trees";
 import { WESTERLY_UNMAPPED, airportStep, aquiferStep, westerlyCommercialUse, westerlyFindings, westerlyInclusionary, westerlyOverlay, westerlyOverlayFlags, westerlyUse } from "./westerly/rules";
 import { northProvidenceFindings, northProvidenceUse } from "./north-providence/rules";
+import { FOSTER_RETIRED, fosterFindings, fosterUse } from "./foster/rules";
+import { EXETER_KINDS, EXETER_UNMAPPED, exeterAffordableLines, exeterFindings, exeterUse } from "./exeter/rules";
+import { hopkintonFindings, hopkintonUse } from "./hopkinton/rules";
+import { richmondUse } from "./richmond/rules";
+import { GLOCESTER_KINDS, glocesterFindings, glocesterUse } from "./glocester/rules";
+import { westGreenwichAffordableLines, westGreenwichFindings, westGreenwichUse } from "./west-greenwich/rules";
 import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
 /*
@@ -33,6 +39,15 @@ const RULES: Record<string, TownRules> = {
   // Read for its ordinance under amendment: rules with dates, a pending amendment, vesting on certification (ARD D62, chunk 4).
   "North Providence": {
     use: northProvidenceUse, moreFindings: northProvidenceFindings,
+  },
+  // Chunk 6, small rural towns (ARD D63): each town's housing rows, read in place of the Atlas.
+  Foster: { use: fosterUse, moreFindings: (i) => fosterFindings(i), retired: FOSTER_RETIRED },
+  Exeter: { use: exeterUse, moreFindings: (i) => exeterFindings(i), unmappedOverlays: EXETER_UNMAPPED, kinds: EXETER_KINDS, affordableLines: exeterAffordableLines },
+  Hopkinton: { use: hopkintonUse, moreFindings: (i) => hopkintonFindings(i) },
+  Richmond: { use: richmondUse },
+  Glocester: { use: glocesterUse, moreFindings: (i) => glocesterFindings(i), kinds: GLOCESTER_KINDS },
+  "West Greenwich": {
+    use: westGreenwichUse, moreFindings: (i) => westGreenwichFindings(i), inclusionaryRead: true, affordableLines: westGreenwichAffordableLines,
   },
   // Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3).
   Westerly: {

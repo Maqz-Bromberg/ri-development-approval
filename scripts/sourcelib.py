@@ -71,7 +71,9 @@ def to_text(path):
     elif path.suffix in (".html", ".htm"):  # the words of the page: scripts, styles and Word's hidden metadata left out
         page = re.sub(r"(?is)<(script|style|xml|head)\b.*?</\1>|<!--.*?-->", " ", path.read_bytes().decode("utf-8", "replace"))
         out.write_text(html.unescape(re.sub(r"<[^>]+>", " ", page)))
-    elif path.suffix == ".docx":  # a Word file: its paragraphs, one per line
+    elif path.suffix == ".docx":  # a Word file: its paragraphs one per line, and each table row on one line, cells apart
         xml = subprocess.run(["unzip", "-p", str(path), "word/document.xml"], capture_output=True, check=True).stdout.decode("utf-8", "replace")
-        out.write_text(html.unescape(re.sub(r"<[^>]+>", "", re.sub(r"</w:p>", "\n", xml))))
+        cell = lambda c: re.sub(r"</w:p>", " ", c) + " " if re.sub(r"<[^>]+>|\s", "", c) else "- "  # an empty cell keeps its place
+        xml = re.sub(r"(?s)<w:tc>.*?</w:tc>", lambda m: cell(m.group(0)), xml)
+        out.write_text(html.unescape(re.sub(r"<[^>]+>", "", re.sub(r"</w:p>|</w:tr>", "\n", xml))))
     return out.stat().st_size if out.exists() else 0

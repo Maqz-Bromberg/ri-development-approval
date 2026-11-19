@@ -397,6 +397,7 @@ function analyzeAll(i: ProjectInputs, tree: TreeId): Finding[] {
   }
   const base = [...analyzeBase(i, tree), ...(i.overlays ?? []).flatMap((o) => overlayFinding(i, o))];
   if (!i.sewer) base.push(...septicFindings(i));
+  if (!i.water) base.push(...wellFindings(i));
   if (i.wet && i.wetAgency === "CRMC") {
     base.push({ st: "info", t: "Wetlands here are the Coastal Resources Management Council's, not RIDEM's", p: "RIDEM's map of wetland permitting jurisdiction puts this site in CRMC's area. The wetlands permit is CRMC's (an Assent), decided by an appointed state council, and the coastal program's rules apply.", src: "ridemWetJur", pin: "Wetland Jurisdiction layer, AGENCY" });
   }
@@ -426,6 +427,30 @@ function septicFindings(i: ProjectInputs): Finding[] {
       gap: "The critical resource area maps in RIDEM's septic rules (§§ 6.86 and 6.87, Figures 28 and 29)",
     });
   }
+  return out;
+}
+
+/**
+ * Without public water: the homes draw on a well (ARD D63, chunk 6). Where wells are used, RIDEM caps septic flow by lot
+ * area unless the system reduces nitrogen, which is a density limit in its own right; and a well serving enough people
+ * becomes a public water system under the federal drinking water rules.
+ */
+function wellFindings(i: ProjectInputs): Finding[] {
+  if (i.kind === "commercial" || i.units < 2) return [];
+  const out: Finding[] = [];
+  const bedrooms = i.units * 2, allowed = Math.floor((i.lot / 20000) * 3);
+  if (!i.sewer) out.push({
+    id: "well-nitrogen", st: bedrooms <= allowed ? "pass" : "flag",
+    t: `No public water: a septic cap of about ${allowed} bedroom${allowed === 1 ? "" : "s"} on ${i.lot.toLocaleString("en-US")} sq ft, ${bedrooms} for ${i.units} two-bedroom homes`,
+    p: `Where the lot or a neighbour draws on a well, a new septic system may take 345 gallons a day per 20,000 sq ft of lot, about a sixth of an acre per bedroom at 115 gallons a bedroom. A system with nitrogen-reducing technology may take more.${bedrooms > allowed ? ` This project would need about ${Math.ceil((bedrooms / 3) * 20000).toLocaleString("en-US")} sq ft without it.` : ""} Bedrooms per home are assumed at two.`,
+    src: "owts", pin: "250-RICR-150-10-6, § 6.45(A)", q: "the design flow for an OWTS shall not exceed three hundred forty-five (345) gallons per day per twenty thousand (20,000) square feet of applicant’s lot area where the property utilizing the OWTS or any adjacent lot is served by an onsite drinking water well",
+  });
+  if (i.units >= 7) out.push({
+    id: "well-public-system", st: "flag", t: "A shared well for this many homes is probably a public water system",
+    p: `A water system with 15 or more connections, or serving 25 or more people daily, is a public water system under the federal drinking water rules, and has to meet them. At two people a bedroom, the septic rules' figure, ${i.units} two-bedroom homes house about ${i.units * 4}.`,
+    src: "cfr1412", pin: "40 C.F.R. § 141.2, Public water system", q: "if such system has at least fifteen service connections or regularly serves an average of at least twenty-five individuals daily at least 60 days out of the year",
+    gap: "How the state's drinking water program reviews a new public water system for housing, which is not read",
+  });
   return out;
 }
 

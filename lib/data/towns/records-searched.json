@@ -1,0 +1,176 @@
+{
+ "Exeter": {
+  "read": "2026-11-18",
+  "bodies": [
+   {
+    "id": 1175,
+    "name": "Exeter Planning Board",
+    "role": "planning",
+    "from": "2023-04-25",
+    "to": "2026-11-10",
+    "meetings": 100,
+    "agendas": 100,
+    "scans": 7,
+    "noFiles": 0,
+    "hits": 17
+   },
+   {
+    "id": 1186,
+    "name": "Exeter Zoning Board of Review",
+    "role": "zoning",
+    "from": "2023-01-01",
+    "to": "2026-11-12",
+    "meetings": 43,
+    "agendas": 43,
+    "scans": 3,
+    "noFiles": 0,
+    "hits": 0
+   }
+  ]
+ },
+ "Foster": {
+  "read": "2026-11-18",
+  "bodies": [
+   {
+    "id": 1252,
+    "name": "Foster Planning Board",
+    "role": "planning",
+    "from": "2023-01-18",
+    "to": "2026-11-04",
+    "meetings": 62,
+    "agendas": 62,
+    "scans": 6,
+    "noFiles": 0,
+    "hits": 35
+   },
+   {
+    "id": 1260,
+    "name": "Foster Zoning Board of Review",
+    "role": "zoning",
+    "from": "2023-04-12",
+    "to": "2026-07-29",
+    "meetings": 11,
+    "agendas": 11,
+    "scans": 0,
+    "noFiles": 0,
+    "hits": 1
+   }
+  ]
+ },
+ "Glocester": {
+  "read": "2026-11-18",
+  "bodies": [
+   {
+    "id": 1308,
+    "name": "Glocester Planning Board",
+    "role": "planning",
+    "from": "2023-01-09",
+    "to": "2026-11-03",
+    "meetings": 89,
+    "agendas": 89,
+    "scans": 42,
+    "noFiles": 0,
+    "hits": 7
+   },
+   {
+    "id": 1317,
+    "name": "Glocester Zoning Board",
+    "role": "zoning",
+    "from": "2023-01-26",
+    "to": "2026-10-22",
+    "meetings": 51,
+    "agendas": 51,
+    "scans": 36,
+    "noFiles": 0,
+    "hits": 3
+   }
+  ]
+ },
+ "Hopkinton": {
+  "read": "2026-11-18",
+  "bodies": [
+   {
+    "id": 1476,
+    "name": "Hopkinton Planning Board",
+    "role": "planning",
+    "from": "2023-01-04",
+    "to": "2026-11-04",
+    "meetings": 69,
+    "agendas": 69,
+    "scans": 3,
+    "noFiles": 0,
+    "hits": 35
+   },
+   {
+    "id": 1480,
+    "name": "Hopkinton Zoning Board of Review",
+    "role": "zoning",
+    "from": "2023-01-19",
+    "to": "2026-09-17",
+    "meetings": 24,
+    "agendas": 24,
+    "scans": 0,
+    "noFiles": 0,
+    "hits": 0
+   }
+  ]
+ },
+ "Richmond": {
+  "read": "2026-11-18",
+  "bodies": [
+   {
+    "id": 3127,
+    "name": "Richmond Planning Board",
+    "role": "planning",
+    "from": "2023-01-10",
+    "to": "2026-11-10",
+    "meetings": 96,
+    "agendas": 96,
+    "scans": 5,
+    "noFiles": 0,
+    "hits": 27
+   },
+   {
+    "id": 3140,
+    "name": "Richmond Zoning Board of Review",
+    "role": "zoning",
+    "from": "2023-05-01",
+    "to": "2026-09-28",
+    "meetings": 25,
+    "agendas": 25,
+    "scans": 3,
+    "noFiles": 0,
+    "hits": 2
+   }
+  ]
+ },
+ "West Greenwich": {
+  "read": "2026-11-18",
+  "bodies": [
+   {
+    "id": 3860,
+    "name": "West Greenwich Planning Board",
+    "role": "planning",
+    "from": "2023-01-01",
+    "to": "2026-11-16",
+    "meetings": 46,
+    "agendas": 46,
+    "scans": 4,
+    "noFiles": 0,
+    "hits": 18
+   },
+   {
+    "id": 3865,
+    "name": "West Greenwich Zoning Board of Review",
+    "role": "zoning",
+    "from": "2023-01-01",
+    "to": "2026-10-20",
+    "meetings": 27,
+    "agendas": 27,
+    "scans": 0,
+    "noFiles": 0,
+    "hits": 0
+   }
+  ]
+ }
+}

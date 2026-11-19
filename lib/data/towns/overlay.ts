@@ -19,6 +19,7 @@ import { woonsocketUse } from "./woonsocket/rules";
 import { warwickUse } from "./warwick/rules";
 import { NEWPORT_UNMAPPED, newportCoaStep, newportOverlay, newportOverlayFlags, newportUse } from "./newport/rules";
 import { centralFallsFindings, centralFallsUse } from "./central-falls/rules";
+import { cityRoute } from "./cityRoutes";
 import { smithfieldAffordableLines, smithfieldFindings, smithfieldUse } from "./smithfield/rules";
 import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
@@ -35,6 +36,8 @@ const STEPS: Record<string, Partial<Record<TreeId, Step[]>>> = {
   // The comprehensive permit route from the town's own text (ARD D65).
   ...Object.fromEntries(Object.entries(COMP_STEPS).map(([town, s]) => [town, { comp: s }])),
 };
+/** A city whose route is state law, with its practice read from its board's minutes (ARD D69). */
+const CITY_STATUS = { minor: "State law; the city's practice read from its minutes, 2026-11-19", major: "State law; the city's practice read from its minutes, 2026-11-19", dpr: "State law; the city's practice read from its minutes, 2026-11-19" };
 const RULES: Record<string, TownRules> = {
   Providence: PROVIDENCE_RULES,
   // Cumberland's steps are in cumberland/trees.ts; its housing findings are still in engine.ts (debt 1).
@@ -63,16 +66,16 @@ const RULES: Record<string, TownRules> = {
     routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: westGreenwichUse, moreFindings: (i) => westGreenwichFindings(i), inclusionaryRead: true, affordableLines: westGreenwichAffordableLines,
   },
   // Chunk 7, the busy cities (ARD D67): each city's housing rows, read in place of the Atlas.
-  Pawtucket: { use: pawtucketUse, inclusionaryNone: { src: "pazo" } },
-  Cranston: { use: cranstonUse, inclusionaryNone: { src: "crzo" } },
-  "East Providence": { use: eastProvidenceUse, moreFindings: (i) => eastProvidenceFindings(i), affordableLines: eastProvidenceAffordableLines },
-  Woonsocket: { use: woonsocketUse, inclusionaryNone: { src: "wozo" } },
-  Warwick: { use: warwickUse, inclusionaryNone: { src: "wazo", note: "A Planned District Residential project may have up to 15% more homes if at least a quarter are sold or rented below market (subsection 308), an incentive, not a requirement." } },
+  Pawtucket: { routeStatus: CITY_STATUS, use: pawtucketUse, inclusionaryNone: { src: "pazo" }, moreFindings: (i, t) => cityRoute("Pawtucket", t) },
+  Cranston: { routeStatus: CITY_STATUS, use: cranstonUse, inclusionaryNone: { src: "crzo" }, moreFindings: (i, t) => cityRoute("Cranston", t) },
+  "East Providence": { routeStatus: CITY_STATUS, use: eastProvidenceUse, moreFindings: (i, t) => [...eastProvidenceFindings(i), ...cityRoute("East Providence", t)], affordableLines: eastProvidenceAffordableLines },
+  Woonsocket: { routeStatus: CITY_STATUS, use: woonsocketUse, inclusionaryNone: { src: "wozo" }, moreFindings: (i, t) => cityRoute("Woonsocket", t) },
+  Warwick: { routeStatus: CITY_STATUS, use: warwickUse, moreFindings: (i, t) => cityRoute("Warwick", t), inclusionaryNone: { src: "wazo", note: "A Planned District Residential project may have up to 15% more homes if at least a quarter are sold or rented below market (subsection 308), an incentive, not a requirement." } },
   Newport: {
-    use: newportUse, inclusionaryNone: { src: "nezo" }, overlayRules: newportOverlay, unmappedOverlays: NEWPORT_UNMAPPED, overlayFlags: newportOverlayFlags,
+    routeStatus: CITY_STATUS, use: newportUse, inclusionaryNone: { src: "nezo" }, moreFindings: (i, t) => cityRoute("Newport", t), overlayRules: newportOverlay, unmappedOverlays: NEWPORT_UNMAPPED, overlayFlags: newportOverlayFlags,
     extraSteps: [{ step: newportCoaStep, before: ["record", "building"] }],
   },
-  "Central Falls": { use: centralFallsUse, moreFindings: (i) => centralFallsFindings(i), inclusionaryNone: { src: "cfzo", note: "Parking is reduced by a quarter for each affordable home where at least 15% are deed-restricted, an incentive, not a requirement." } },
+  "Central Falls": { routeStatus: CITY_STATUS, use: centralFallsUse, moreFindings: (i, t) => [...centralFallsFindings(i), ...cityRoute("Central Falls", t)], inclusionaryNone: { src: "cfzo", note: "Parking is reduced by a quarter for each affordable home where at least 15% are deed-restricted, an incentive, not a requirement." } },
   // Not a city, but its zoning was saved by hand with them (the plan's chunk 7).
   Smithfield: { use: smithfieldUse, moreFindings: (i) => smithfieldFindings(i), affordableLines: smithfieldAffordableLines, inclusionaryRead: true },
   // Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3).

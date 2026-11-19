@@ -163,3 +163,15 @@ These are not published, or not in a form the site can read. They stay named gap
 - **Westerly's inclusionary count.** The ordinance takes 15% of "the basic number dwelling units per acre permitted in the underlying zone"; the site takes 15% of the units entered. The planning office would say which.
 - **Westerly's Route One Corridor Overlay.** Recommended to the Town Council in November 2025; not adopted as far as the council's filed agendas and minutes show. The Town Planner would know whether it is pending.
 - **Whether 7 to 9 homes over shops are minor or major** in any town without its own line (state law § 45-23-32(19)(i)(C)). A reading the town makes.
+
+## The cities' land development regulations (for their review routes, ARD D69)
+
+Asked for 2026-11-19. The routes on the site are state law with each city's practice from its minutes; these would replace that with the city's own steps, clocks and checklists. eCode360 now refuses scripts too, so each is saved by hand, as a PDF or Word file, into `.sources/<city>/regulations/`:
+
+- **Pawtucket**: Subdivision and Development Review Regulations (eCode360, PA1467, or the Planning Department's page), and the map or text that defines the Riverfront District (§ 410-14.2).
+- **Cranston**: Subdivision and Land Development Regulations (the City Plan Commission's, on the Planning Department's page; eCode360 CR6930 has only the code's Subdivisions chapter).
+- **Warwick**: Land Development and Subdivision Review Regulations (the Planning Department's page).
+- **East Providence**: Land Development and Subdivision Regulations, and Article IX's waterfront procedure (Municode, Chapter 19, and the Waterfront Commission's rules).
+- **Woonsocket**: the current Land Development and Subdivision Regulations, if newer than Appendix B on ClerksHQ (2017).
+- **Newport**: Land Development and Subdivision Regulations, and the Historic District Commission's rules and meeting schedule.
+- **Central Falls**: Land Development and Subdivision Regulations, and its boards' minutes since May 2025 from the city's own site.

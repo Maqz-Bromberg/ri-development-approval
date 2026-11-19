@@ -17,9 +17,23 @@ Started 2026-11-19. Issues found while building chunks 6 and 7 that were left fo
 11. **Richmond's Switch Road site has no district at its parcel's centre in the Atlas.** *Closes with:* the town's zoning map.
 12. **Richmond Place's preliminary decision is in scanned minutes** (read by eye, marked `scan`). Same remedy as 10.
 
-## B. Chunk 7
+## B. Chunk 7 (D67)
 
-(Added as chunk 7 is built.)
+Each city's housing rows are read in place of the Zoning Atlas, with Smithfield, whose zoning was saved by hand with them. Where the table and the Atlas disagree, the table is shown and the finding says so; where the table can be read two ways, the stricter is shown with "ask the Planning Department".
+
+1. **Where the cities' tables and the Atlas disagree.** Pawtucket: no two-family homes in CD or CT (the Atlas allows them). Cranston: no two-family homes in any A district (the Atlas shows them in four). East Providence: two-family homes by special use permit in R-4 to R-6, multi-family not allowed in C-3 to C-5 (the Atlas allows, or shows a hearing). Woonsocket: homes only on upper stories in C-1, only as accessory uses in MU-2. Smithfield: two-family only in PD, multi-family only in R-20M and PD (the Atlas shows a hearing in most residential districts). *Closes with:* each planning office confirming, and a correction to the Atlas.
+2. **Mixed use and homes, read two ways.** Pawtucket's table has a row for mixed residential and commercial use that is stricter than its housing rows in CL, CG and RM. East Providence's schedule permits "mixed-use" in C-1 to C-5 without saying whether it may include homes. The stricter is shown in both. *Closes with:* the Planning Departments' answers.
+3. **Warwick: ten homes fall in two rows** (102.1, five to ten; 103, ten or more), which answer differently in the Village District. The stricter (not allowed) is shown. *Closes with:* the Planning Department's answer.
+4. **Warwick's text in force.** Its zoning was read from Municode; the city also posts amendments as separate PDFs on its own site. Whether Municode's text has the latest was not checked. The site's code link now points to Municode. *Closes with:* comparing the city's posted amendments since 2024 with Municode's history notes.
+5. **Overlays and planned districts the Atlas draws as districts, not read**: Pawtucket's Mill Building Reuse District (on MB and MO), Warwick's PDR, SFC, IE and IH, Smithfield's Economic Growth Overlay, Cranston's Mixed Use Planned District. The Atlas answers there. Marking them as overlays (as Glocester's village was) needs their articles and a check of how the Atlas draws them. *Closes with:* reading each article.
+6. **Districts in the tables but not in the Atlas**: Pawtucket's Riverfront Tidewater (RTW, 2021), Cranston's G, East Providence's Metacomet waterfront subdistrict and BT, and the Atlas's Central Falls CT, which has no column in Table 1. *Closes with:* the cities' zoning maps.
+7. **East Providence's waterfront columns** were matched to the Atlas's subdistricts from the printed header, where two pairs share a column (Dexter Road with Pawtucket Avenue, Crook Point with Taunton Avenue). *Closes with:* the Waterfront Commission's map or staff.
+8. **East Providence's Waterfront Commission review is a note, not a step.** Development plan review there gives the Commission "significant involvement"; its procedure, clock and conditional use process were not read. *Closes with:* reading Article IX's procedure, then a step like Newport's certificate.
+9. **Newport's historic districts are not map data.** The Historic District Zoning Map is filed with the City Clerk; it was not found as a layer, so the district is a tick on the form. The Commission's own rules (filing deadlines, meeting day, fees) were not read, so the step has the ordinance's 45 days and no calendar. *Closes with:* the city's GIS or the Clerk's map, and the Commission's rules.
+10. **Smithfield's R-20MA** (multi-family affordable) sends its uses to § 9.3, which is the Putnam Pike/Esmond Street Planned Development District. *Closes with:* the Planning Department's answer, or the ordinance's next amendment.
+11. **Inclusionary zoning: none found in six ordinances.** Pawtucket, Cranston, Woonsocket, Warwick, Newport and Central Falls have no inclusionary zoning in their zoning text (a word search; East Providence has it only in the Waterfront District). The site still shows its generic "check the ordinance" note there, since a word search is not a reading. *Closes with:* deciding whether "none found" may replace the note, as it does for records.
+12. **Each city's route is state law.** Pawtucket's development plan review thresholds (10 and 20 homes) and each city's land development regulations were not read. *Closes with:* a later pass, city by city.
+13. **The records search for the cities starts in 2024**, a window chosen for their many meetings, and the Records card says so. *Closes with:* nothing needed, unless an earlier window is wanted.
 
 ## C. Across the site
 

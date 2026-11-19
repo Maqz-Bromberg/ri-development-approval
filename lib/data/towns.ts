@@ -120,7 +120,7 @@ function hearingsFromSearch(name: string): MarkRead | undefined {
   const s = searchedOf(name);
   if (!s) return undefined;
   const n = s.found.length, r = s.found.filter((f) => readAs(name, f)).length;
-  return { read: s.read, partly: true, note: `The planning and zoning boards' agendas since 2023 were searched for housing: ${n ? `${n} item${n === 1 ? "" : "s"} found and listed on the Records card, ${r ? `${r} read into example projects from the minutes` : "not yet read into example projects"}` : "none found"}. Recordings and the towns' own record pages were not read.` };
+  return { read: s.read, partly: true, note: `The planning and zoning boards' agendas since ${s.since.slice(0, 4)} were searched for housing: ${n ? `${n} item${n === 1 ? "" : "s"} found and listed on the Records card, ${r ? `${r} read into example projects from the minutes` : "not yet read into example projects"}` : "none found"}. Recordings and the towns' own record pages were not read.` };
 }
 
 function officesFromState(name: string): MarkRead | undefined {
@@ -199,6 +199,39 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
       gaps: "Only the housing rows of the use table were read.",
     },
   },
+  // Chunk 7, the busy cities (ARD D67): each city's housing rows in place of the Atlas, and what each forces.
+  Pawtucket: {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "Chapter 410: the Table of Use Regulations' housing rows (amended through December 2023), with its mixed residential and commercial row. Not read: dimensions, the development plan review thresholds as a route, the Mill Building Reuse overlay, the riverfront districts' design rules." } },
+    gaps: "The table does not allow two-family homes in Commercial Downtown or Conant Thread, where the Zoning Atlas does. Riverfront Tidewater (RTW, 2021) is in the table but not in the Atlas.",
+  },
+  Cranston: {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "Title 17 (eCode360): the Table of Principal Use's housing rows, with homes above a ground-floor business. Not read: the B-2 density formula, dimensions, the Mixed Use Planned District." } },
+    gaps: "The table, amended in January 2026, allows two-family homes in no A district; the Zoning Atlas shows them in four. Cranston's code is on eCode360, not Municode, where the state's list of codes still points.",
+  },
+  "East Providence": {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "Chapter 19: the schedule of use regulations (§ 19-98), the Waterfront District's schedule (§ 19-481) and its inclusionary zoning (§ 19-485). Not read: the multi-family standards (§ 19-216 et seq.), dimensions, the waterfront performance standards." } },
+    gaps: "The schedule permits \"mixed-use\" in the commercial districts without saying whether it may include homes; multi-family homes are not allowed in C-3 to C-5, where the Atlas shows a hearing. The stricter reading is shown. The Metacomet waterfront subdistrict is not in the Atlas.",
+  },
+  Woonsocket: {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "Appendix C: § 4.4's housing rows, with the table's marks for upper-story and accessory uses. Not read: dimensions, the Downtown Overlay's article." } },
+    gaps: "In Urban Commercial (C-1) homes are allowed only above the ground floor, and in MU-2 only as accessory uses; the Zoning Atlas reads both otherwise.",
+  },
+  Warwick: {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "Appendix A (Municode): the Table of Use Regulations' housing rows by size of development, with footnotes 1, 3 and 23. Not read: the Planned District Residential overlay (subsection 308), City Centre Warwick's design standards, dimensions." } },
+    gaps: "No residential district allows more than two homes on a lot without a zone change to the Planned District Residential overlay. Ten homes fall in two rows of the table, which answer differently in the Village District. Warwick also posts amendments on its own site; whether Municode's text has the latest is not checked.",
+  },
+  Newport: {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "Title 17: the Table of Permitted Uses' housing and conversion rows, the special use permit categories, the Urban Village's mixed-use homes (§ 17.65.020), and historic district zoning (Chapter 17.80) as a step of its own. Not read: the districts' density chapters, the Historic District Commission's own rules, CRMC's harbour rules." } },
+    gaps: "Newport's historic districts are not in the Zoning Atlas; the Historic District Zoning Map is filed with the City Clerk, and was not found as map data. Whether a site is in one is a tick on the form.",
+  },
+  "Central Falls": {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "Appendix A: Table 1's housing rows and adaptive reuse (§ 304(7)). Not read: dimensions, parking." } },
+    gaps: "The Zoning Atlas's CT district has no column in Table 1.",
+  },
+  Smithfield: {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "The Town's PDF, amended to January 6, 2026: the Table of Uses' housing rows (§ 4.3). Not read: the Economic Growth Overlay, R-20MA's uses, the Planned Development district's article, dimensions." } },
+    gaps: "The Table of Uses allows two-family homes only in Planned Development and multi-family homes only in R-20M and Planned Development; the Zoning Atlas shows a hearing for them in most residential districts. The table sends R-20MA's uses to § 9.3, which is another district's section.",
+  },
   Westerly: {
     marks: {
       zoning: { read: "2026-11-18", partly: true, note: "Chapter 260: the use tables for housing, mixed use and the short list of other uses, with the aquifer zones' columns; inclusionary zoning (§ 260-50.2); multifamily in HDR-6 and HDR-15 (§ 260-63) and on Appendix G's parcels; the Airport Area and Aquifer and Wellhead overlays' review. Not read: the dimensional schedule, the other overlays' rules and the Watch Hill standards." },
@@ -239,7 +272,7 @@ const ECODE = (c: string) => ({ url: `https://ecode360.com/${c}`, host: "eCode36
 const CHQ = (t: string) => ({ url: `https://clerkshq.com/${t}-ri`, host: "ClerksHQ", script: true });
 const CODE: Record<string, Town["code"]> = {
   Barrington: ECODE("BA1328"), Bristol: MUNI("bristol"), Burrillville: MUNI("burrillville"), "Central Falls": MUNI("central_falls"),
-  Charlestown: ECODE("CH1115"), Coventry: ECODE("CO1733"), Cranston: MUNI("cranston"), Cumberland: ECODE("CU3602"),
+  Charlestown: ECODE("CH1115"), Coventry: ECODE("CO1733"), Cranston: ECODE("CR6930"), Cumberland: ECODE("CU3602"),
   "East Greenwich": ECODE("EA2109"), "East Providence": MUNI("east_providence"), Exeter: MUNI("exeter"), Foster: MUNI("foster"),
   Glocester: ECODE("GL2062"), Hopkinton: MUNI("hopkinton"), Jamestown: MUNI("jamestown"), Johnston: ECODE("JO1987"),
   Lincoln: ECODE("LI1805"), "Little Compton": ECODE("LI4093-DIV-02"),
@@ -248,7 +281,7 @@ const CODE: Record<string, Town["code"]> = {
   "North Providence": CHQ("northprovidence"), "North Smithfield": { url: "https://www.nsmithfieldri.org/town-charter-ordinances", host: "the town's website", script: true },
   Pawtucket: ECODE("PA1467"), Portsmouth: ECODE("PO2650"), Providence: MUNI("providence"), Richmond: CHQ("richmond"),
   Scituate: MUNI("scituate"), Smithfield: { url: "https://www.smithfieldri.gov/home/showpublisheddocument/5628/639283461558730000", host: "the town's website", script: false }, "South Kingstown": MUNI("south_kingstown"), Tiverton: MUNI("tiverton"),
-  Warren: { url: "https://library.municode.com/ri/warren/codes/zoning_ordinance", host: "Municode", script: false }, Warwick: { url: "https://www.warwickri.gov/city-council-legislative-department/pages/code-ordinances", host: "the city's website", script: true },
+  Warren: { url: "https://library.municode.com/ri/warren/codes/zoning_ordinance", host: "Municode", script: false }, Warwick: MUNI("warwick"),
   "West Greenwich": ECODE("WE3645"), "West Warwick": MUNI("west_warwick"), Westerly: ECODE("WE1997"), Woonsocket: CHQ("woonsocket"),
 };
 

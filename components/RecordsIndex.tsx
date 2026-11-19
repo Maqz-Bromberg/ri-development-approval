@@ -54,7 +54,7 @@ function SearchedRecords({ town }: { town: string }) {
           ))}
         </ul>
       )}
-      <p className="small muted">The search reads only what the boards filed on the state site, and only from 2023; a scan has no words to search, and the site lists a board&apos;s latest hundred meetings.</p>
+      <p className="small muted">The search reads only what the boards filed on the state site, and only from {s.since.slice(0, 4)}{s.since > "2023-01-01" ? ", a window chosen for a busy city's many meetings" : ""}; a scan has no words to search, and the site lists a board&apos;s latest hundred meetings.</p>
     </section>
   );
 }

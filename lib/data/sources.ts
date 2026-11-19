@@ -161,6 +161,16 @@ export const SOURCES: Record<string, Source> = {
   glzd: { label: "Glocester Zoning Ordinance, Attachment 2: Table of Dimensional Regulations (eCode360)", url: "https://ecode360.com/attachment/308511/GL2062-350b%20Table%20of%20Dimensional%20Regs.pdf" },
   wgzo: { label: "West Greenwich Zoning Ordinance, Chapter 400 (eCode360, print view)", url: "https://ecode360.com/print/WE3645?guid=31440174&children=true" },
   wgzt: { label: "West Greenwich Zoning Ordinance, Attachment 1: Zoning Use Categories (eCode360)", url: "https://ecode360.com/attachment/329112/WE3645-400a%20Zoning%20Use%20Categories.pdf" },
+  /* Chunk 7: the busy cities' ordinances, read 2026-11-19 (ARD D67). Municode copies saved as PDF or Word files: the url is the city's code, and `file` their kind. */
+  pazo: { label: "Pawtucket Zoning Ordinance, Chapter 410 (eCode360)", url: "https://ecode360.com/8132886" },
+  pazt: { label: "Pawtucket Zoning Ordinance, Attachment 1: Table of Use Regulations, amended through Dec 20, 2023 (eCode360)", url: "https://ecode360.com/attachment/339270/PA1467-410a%20Table%20of%20Use%20Regulations.pdf" },
+  crzo: { label: "Cranston Zoning, Title 17 (eCode360, downloaded Nov 18, 2026)", url: "https://ecode360.com/46510951" },
+  epzo: { label: "East Providence Zoning, Chapter 19 (Municode, saved as a PDF on Nov 18, 2026)", url: "https://library.municode.com/ri/east_providence/codes/code_of_ordinances", file: ".pdf" },
+  wozo: { label: "Woonsocket Zoning Ordinance, Appendix C (ClerksHQ)", url: "https://clerkshq.com/Content/Woonsocket-ri/books/code/woonappc.htm" },
+  wazo: { label: "Warwick Zoning Ordinance, Appendix A (Municode, saved as a Word file on Nov 18, 2026)", url: "https://library.municode.com/ri/warwick/codes/code_of_ordinances", file: ".docx" },
+  nezo: { label: "Newport Zoning, Title 17 (Municode, saved as a Word file on Nov 18, 2026)", url: "https://library.municode.com/ri/newport/codes/code_of_ordinances", file: ".docx" },
+  cfzo: { label: "Central Falls Zoning Ordinance, Appendix A (Municode, saved as a Word file on Nov 18, 2026)", url: "https://library.municode.com/ri/central_falls/codes/code_of_ordinances", file: ".docx" },
+  smzo: { label: "Smithfield Zoning Ordinance, adopted 1998, amended to January 6, 2026 (the Town's PDF)", url: "https://www.smithfieldri.gov/home/showpublisheddocument/5628/639283461558730000" },
   /* Comprehensive permit cases read into example projects, 2026-11-19 (ARD D64): the boards' minutes on the state site. */
   wgpb241216: { label: "West Greenwich Planning Board minutes, Dec 16, 2024", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4290%5C2025%5C515364.pdf" },
   wgpb250519: { label: "West Greenwich Planning Board minutes, May 19, 2025", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4290%5C2025%5C528902.pdf" },

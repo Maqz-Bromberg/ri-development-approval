@@ -13,7 +13,7 @@ import type { Precedent } from "../types";
 export interface SearchedBody { id: number; name: string; role: string; from: string | null; to: string | null; meetings: number; agendas: number; scans: number; noFiles: number; hits: number }
 /** A housing item a person found among the hits: a proposal with homes, not yet read into a recorded project. */
 export interface FoundItem { date: string; board: string; what: string; homes?: number; meeting: number }
-export interface Searched { town: string; read: string; bodies: SearchedBody[]; found: FoundItem[]; note?: string }
+export interface Searched { town: string; read: string; /** The first date searched: 2023 for the small towns, 2024 for the busy cities (D53 answer 5) */ since: string; bodies: SearchedBody[]; found: FoundItem[]; note?: string }
 
 /** What was found in each town's hits, read by hand on the date given in the town's entry. Empty means none found. */
 const FOUND: Record<string, { found: FoundItem[]; note?: string }> = {
@@ -76,11 +76,11 @@ const FOUND: Record<string, { found: FoundItem[]; note?: string }> = {
   },
 };
 
-type Raw = Record<string, { read: string; bodies: SearchedBody[] }>;
+type Raw = Record<string, { read: string; since?: string; bodies: SearchedBody[] }>;
 export function searchedOf(town: string): Searched | undefined {
   const r = (RAW as Raw)[town];
   const f = FOUND[town];
-  return r && f ? { town, read: r.read, bodies: r.bodies, found: f.found, note: f.note } : undefined;
+  return r && f ? { town, read: r.read, since: r.since ?? "2023-01-01", bodies: r.bodies, found: f.found, note: f.note } : undefined;
 }
 
 const fmt = (iso: string | null) => (iso ? new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" }) : "");

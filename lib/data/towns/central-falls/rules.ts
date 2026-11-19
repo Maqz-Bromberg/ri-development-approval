@@ -1,0 +1,39 @@
+import type { Finding, ProjectInputs } from "../../../types";
+import { cellsOf, plain, useFinding, type Value } from "../useTable";
+
+/*
+ * Central Falls, read 2026-11-19 from its Zoning Ordinance, Appendix A (Municode, `cfzo`, saved November 18, 2026).
+ * Chunk 7 (ARD D67). What it adds:
+ *   - Table 1's housing rows in place of the Atlas's: two-family homes by special use permit in R-1, multi-family
+ *     (three homes or more) by special use permit in R-1 and R-2, and permitted in R-3, C-1, C-2 and C-D;
+ *   - adaptive reuse (§ 304(7)): converting a commercial building, school, religious or medical building or mall to
+ *     homes is permitted in any district if at least half its floor area becomes homes, at no less than 15 homes an acre
+ *     when it keeps its footprint and a fifth of the homes are low- and moderate-income.
+ * The Atlas's CT has no column in Table 1; the Atlas answers there. Not read: the dimensional tables, parking.
+ */
+
+const COLS = ["R-1", "R-2", "R-3", "C-1", "C-2", "C-D", "M-1", "M-2", "P", "CM"] as const;
+type Col = (typeof COLS)[number];
+const ROWS = {
+  one: { what: "One-household home", src: "cfzo", q: "11 One-household detached dwelling Y Y Y Y N N N N N N" },
+  two: { what: "Two-household home", src: "cfzo", q: "12 Two-household dwelling S Y Y Y Y Y N N N N" },
+  multi: { what: "Multi-household building (three homes or more)", src: "cfzo", q: "14 Multi-household dwelling, three or more units S S Y Y Y Y N N N N" },
+};
+
+export function centralFallsUse(i: ProjectInputs): { value: Value; finding: Finding } | null {
+  if (!(COLS as readonly string[]).includes(i.zone)) return null;
+  const r = i.units >= 3 ? ROWS.multi : i.units === 2 ? ROWS.two : ROWS.one;
+  const value = plain(cellsOf(COLS, r.q)[i.zone as Col]) ?? "prohibited";
+  const why = value !== "allowed" && i.type === "reuse" ? ["If the building being reused is commercial, a school, a religious or medical building or a mall, adaptive reuse permits homes in any district (§ 304(7)); see the finding on it."] : [];
+  return useFinding({ id: "cf-use", town: "Central Falls", what: r.what, zone: i.zone, value, why, src: "cfzo", pin: "§ 305, Table 1, 1.0 Residential", q: r.q });
+}
+
+export function centralFallsFindings(i: ProjectInputs): Finding[] {
+  if (i.type !== "reuse" || i.kind === "commercial") return [];
+  const share = Math.ceil(i.units * 0.2);
+  return [{
+    id: "cf-adaptive-reuse", st: "info", t: "Adaptive reuse: homes permitted in any district, if the building was commercial or institutional",
+    p: `Converting a commercial building, including offices, schools, religious facilities, medical buildings and malls, to homes or mixed use is permitted wherever it is, if at least half its existing floor area becomes homes and no recorded environmental restriction bars it. Kept within its footprint and with at least 20% low- and moderate-income homes (${share} of ${i.units}), it may have no fewer than 15 homes an acre; otherwise as many as the housing and health codes allow. Its existing setbacks and height stay as they are.`,
+    src: "cfzo", pin: "§ 304(7)", q: "adaptive reuse for the conversion of any commercial building including offices, schools, religious facilities, medical buildings, and malls into residential units or mixed-use developments is a permitted use",
+  }];
+}

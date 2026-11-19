@@ -12,6 +12,14 @@ import { richmondUse } from "./richmond/rules";
 import { GLOCESTER_KINDS, glocesterFindings, glocesterUse } from "./glocester/rules";
 import { westGreenwichAffordableLines, westGreenwichFindings, westGreenwichUse } from "./west-greenwich/rules";
 import { COMP_STEPS } from "./comp-steps";
+import { pawtucketUse } from "./pawtucket/rules";
+import { cranstonUse } from "./cranston/rules";
+import { eastProvidenceAffordableLines, eastProvidenceFindings, eastProvidenceUse } from "./east-providence/rules";
+import { woonsocketUse } from "./woonsocket/rules";
+import { warwickUse } from "./warwick/rules";
+import { NEWPORT_UNMAPPED, newportCoaStep, newportOverlay, newportOverlayFlags, newportUse } from "./newport/rules";
+import { centralFallsFindings, centralFallsUse } from "./central-falls/rules";
+import { smithfieldUse } from "./smithfield/rules";
 import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
 /*
@@ -54,6 +62,19 @@ const RULES: Record<string, TownRules> = {
   "West Greenwich": {
     routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: westGreenwichUse, moreFindings: (i) => westGreenwichFindings(i), inclusionaryRead: true, affordableLines: westGreenwichAffordableLines,
   },
+  // Chunk 7, the busy cities (ARD D67): each city's housing rows, read in place of the Atlas.
+  Pawtucket: { use: pawtucketUse },
+  Cranston: { use: cranstonUse },
+  "East Providence": { use: eastProvidenceUse, moreFindings: (i) => eastProvidenceFindings(i), affordableLines: eastProvidenceAffordableLines },
+  Woonsocket: { use: woonsocketUse },
+  Warwick: { use: warwickUse },
+  Newport: {
+    use: newportUse, overlayRules: newportOverlay, unmappedOverlays: NEWPORT_UNMAPPED, overlayFlags: newportOverlayFlags,
+    extraSteps: [{ step: newportCoaStep, before: ["record", "building"] }],
+  },
+  "Central Falls": { use: centralFallsUse, moreFindings: (i) => centralFallsFindings(i) },
+  // Not a city, but its zoning was saved by hand with them (the plan's chunk 7).
+  Smithfield: { use: smithfieldUse },
   // Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3).
   Westerly: {
     use: westerlyUse, useCommercial: westerlyCommercialUse, overlayRules: westerlyOverlay, unmappedOverlays: WESTERLY_UNMAPPED,

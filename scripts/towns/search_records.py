@@ -2,6 +2,7 @@
 claimed with what was searched (ARD D63, chunk 6).
 
     python3 scripts/towns/search_records.py Foster Exeter ...      writes lib/data/towns/records-searched.json (merged)
+    python3 scripts/towns/search_records.py --since 2024-01-01 Pawtucket ...   a busier town: a recent window, stated (D53 answer 5)
 
 For each town's planning and zoning boards: every past meeting listed since 2023 (the site lists a body's latest hundred),
 its latest agenda, and its minutes where the agenda mentions housing or has no text. A hit is a line naming homes:
@@ -64,15 +65,18 @@ def body(town, b, folder):
 
 
 def main():
+    global SINCE
+    args = sys.argv[1:]
+    if args[:1] == ["--since"]: SINCE = args[1].replace("-", ""); args = args[2:]
     bodies = json.loads((sl.ROOT / "lib/data/bodies.json").read_text())["towns"]
-    for town in sys.argv[1:]:
+    for town in args:
         folder = sl.CACHE / sl.slug(town) / "openmeetings"; folder.mkdir(parents=True, exist_ok=True)
         bs = [b for b in bodies[town]["bodies"] if b["role"] in ("planning", "zoning")]
         found = [body(town, b, folder) for b in bs]
         (folder / "housing-hits.json").write_text(json.dumps({b["name"]: b["hits"] for b in found}, indent=1, ensure_ascii=False) + "\n")
         # Read again before writing: runs for different towns may share the file.
         data = json.loads(OUT.read_text()) if OUT.exists() else {}
-        data[town] = {"read": datetime.date.today().isoformat(), "bodies": [{**{k: v for k, v in b.items() if k != "hits"}, "hits": len(b["hits"])} for b in found]}
+        data[town] = {"read": datetime.date.today().isoformat(), "since": f"{SINCE[:4]}-{SINCE[4:6]}-{SINCE[6:]}", "bodies": [{**{k: v for k, v in b.items() if k != "hits"}, "hits": len(b["hits"])} for b in found]}
         OUT.write_text(json.dumps(dict(sorted(data.items())), indent=1, ensure_ascii=False) + "\n")
     print("written", OUT.relative_to(sl.ROOT))
 

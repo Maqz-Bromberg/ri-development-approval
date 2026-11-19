@@ -4,6 +4,7 @@ import { PROVIDENCE_RULES, PROVIDENCE_STEPS } from "./providence/steps";
 import { cumberlandCommercialFindings, cumberlandCommercialUse } from "./cumberland/commercial";
 import { TREES as CUMBERLAND_TREES } from "./cumberland/trees";
 import { WESTERLY_UNMAPPED, airportStep, aquiferStep, westerlyCommercialUse, westerlyFindings, westerlyInclusionary, westerlyOverlay, westerlyOverlayFlags, westerlyUse } from "./westerly/rules";
+import { northProvidenceFindings, northProvidenceUse } from "./north-providence/rules";
 import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
 /*
@@ -28,6 +29,10 @@ const RULES: Record<string, TownRules> = {
     use: charlestownUse, useCommercial: charlestownCommercialUse, overlayRules: charlestownOverlay, unmappedOverlays: CHARLESTOWN_UNMAPPED, kinds: CHARLESTOWN_KINDS,
     // The Mixed-Use Zoning Overlay's own share (§ 218-47 B(2)), on the affordable key (ARD D53 decision 2; D38's open item).
     affordableLines: (i) => ((i.overlays ?? []).includes("MUZ") && i.units > 1 ? [{ short: "59%: Charlestown Mixed-Use Zoning Overlay", what: "More than one home on a lot in the overlay needs 59% of the homes, rounded down, to be low or moderate income.", src: "chzo", need: Math.floor(i.units * 0.59) }] : []),
+  },
+  // Read for its ordinance under amendment: rules with dates, a pending amendment, vesting on certification (ARD D62, chunk 4).
+  "North Providence": {
+    use: northProvidenceUse, moreFindings: northProvidenceFindings,
   },
   // Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3).
   Westerly: {

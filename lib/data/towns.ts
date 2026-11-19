@@ -147,6 +147,16 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
       gaps: "No commercial hearings or projects have been read.",
     },
   },
+  "North Providence": {
+    marks: {
+      zoning: { read: "2026-11-18", partly: true, note: "Chapter 35, with dates: the use table's housing rows as they stood before 2024 and since, the RL and RG lot areas, adaptive reuse (§ 35-39 Q) and vesting on certification (§ 35-255). Not read: other districts' dimensions, parking, the land development regulations (Chapter 31A), the historic overlay and the flood hazard section." },
+    },
+    gaps: "North Providence's ordinance is under amendment. The Town's own website posts a compilation of 2014; its code on ClerksHQ (saved by the Town in May 2026) credits the use table's present form to two ordinances five months apart, and does not include the cannabis retail use the Town Council adopted on February 3, 2026 (Ord. 25-022Z), so the official code lags the Council. A Mixed-Use Commercial Corridor Overlay District is before the Town Council (introduced August 18, 2026), with no text or map in its records. The Council replaced the flood hazard section on August 18, 2026 (Ord. 26-014Z), which is not read. The use table permits two-family homes in RL and RG by right while the dimensional table's footnote still asks a special use permit.",
+    commercial: {
+      marks: {},
+      gaps: "Only the housing rows of the use table were read.",
+    },
+  },
   Westerly: {
     marks: {
       zoning: { read: "2026-11-18", partly: true, note: "Chapter 260: the use tables for housing, mixed use and the short list of other uses, with the aquifer zones' columns; inclusionary zoning (§ 260-50.2); multifamily in HDR-6 and HDR-15 (§ 260-63) and on Appendix G's parcels; the Airport Area and Aquifer and Wellhead overlays' review. Not read: the dimensional schedule, the other overlays' rules and the Watch Hill standards." },

@@ -145,6 +145,12 @@ export const SOURCES: Record<string, Source> = {
   phdcsched: { label: "Providence Historic District Commission 2026 meeting schedule and filing deadlines (listed on the Commission's page)", url: "https://www.providenceri.gov/planning/providence-historic-district-commission-phdc/", file: ".pdf" },
   pzbrrules: { label: "Providence Zoning Board of Review Policies and Procedures (adopted Feb 8, 2017)", url: "https://www.providenceri.gov/wp-content/uploads/2017/09/Zoning-Rules-Regulations-2-8-2017.pdf" },
   pzbrsched: { label: "Providence Zoning Board of Review 2026 meeting schedule and filing deadlines", url: "https://www.providenceri.gov/wp-content/uploads/2016/05/2026-scheduled-meetings-ZBR-with-filing-dealines.pdf" },
+  /* North Providence (chunk 4: an ordinance under amendment, read 2026-11-18). */
+  npzo: { label: "North Providence Zoning Ordinance, Chapter 35 of the Town Code (ClerksHQ, as saved by the Town on May 11, 2026)", url: "https://clerkshq.com/Content/NorthProvidence-ri/books/code/chapter35.htm" },
+  npzo14: { label: "North Providence Zoning Ordinance as amended to December 2014 (the Town's unofficial compilation)", url: "https://northprovidenceri.gov/pdf/plan/North_Providence_Zoning_Ordinance_amended.pdf" },
+  npcc260818: { label: "North Providence Town Council minutes, Aug 18, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4352%5C2026%5C565286.pdf" },
+  npcc261006: { label: "North Providence Town Council minutes, Oct 6, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4352%5C2026%5C570649.pdf" },
+  npag261104: { label: "North Providence Town Council agenda, Nov 4, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CNotices%5C4352%5C2026%5C570181.pdf" },
   /* Providence meeting recordings. Captions are fetched as machine transcripts by scripts/towns/fetch_captions.py. */
   pvid241015: { label: "Providence City Plan Commission recording, Oct 15, 2024 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=Vpq5VcAnqEk" },
   pvid250121: { label: "Providence City Plan Commission recording, Jan 21, 2025 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=f5mTI-4fRG4" },

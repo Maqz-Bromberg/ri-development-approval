@@ -27,6 +27,7 @@ const ZONES: Record<string, string[]> = {
   Providence: ["R-3", "C-2", "D-1"],
   Charlestown: ["R-20", "C-1"],
   Westerly: ["other", "HDR-6", "DC1"],
+  "North Providence": ["RG", "IS"],
 };
 const SHAPES: Case[] = [
   { name: "3 homes", p: homes(3) },

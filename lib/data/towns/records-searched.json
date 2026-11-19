@@ -1,4 +1,94 @@
 {
+ "Central Falls": {
+  "read": "2026-11-19",
+  "since": "2024-01-01",
+  "bodies": [
+   {
+    "id": 424,
+    "name": "Central Falls Planning Board",
+    "role": "planning",
+    "from": "2024-01-11",
+    "to": "2025-05-28",
+    "meetings": 14,
+    "agendas": 14,
+    "scans": 0,
+    "noFiles": 0,
+    "hits": 11
+   },
+   {
+    "id": 438,
+    "name": "Central Falls Zoning Board of Review",
+    "role": "zoning",
+    "from": "2024-01-10",
+    "to": "2025-05-14",
+    "meetings": 4,
+    "agendas": 4,
+    "scans": 0,
+    "noFiles": 0,
+    "hits": 0
+   }
+  ]
+ },
+ "Cranston": {
+  "read": "2026-11-19",
+  "since": "2024-01-01",
+  "bodies": [
+   {
+    "id": 732,
+    "name": "Cranston Planning Commission",
+    "role": "planning",
+    "from": "2024-01-02",
+    "to": "2026-11-10",
+    "meetings": 47,
+    "agendas": 47,
+    "scans": 1,
+    "noFiles": 0,
+    "hits": 28
+   },
+   {
+    "id": 748,
+    "name": "Cranston Zoning Board of Review",
+    "role": "zoning",
+    "from": "2024-02-14",
+    "to": "2026-11-12",
+    "meetings": 32,
+    "agendas": 32,
+    "scans": 0,
+    "noFiles": 0,
+    "hits": 22
+   }
+  ]
+ },
+ "East Providence": {
+  "read": "2026-11-19",
+  "since": "2024-01-01",
+  "bodies": [
+   {
+    "id": 980,
+    "name": "East Providence Planning Board",
+    "role": "planning",
+    "from": "2024-01-01",
+    "to": "2026-11-09",
+    "meetings": 37,
+    "agendas": 37,
+    "scans": 5,
+    "noFiles": 0,
+    "hits": 11
+   },
+   {
+    "id": 996,
+    "name": "East Providence Zoning Board of Review",
+    "role": "zoning",
+    "from": "2024-01-03",
+    "to": "2026-11-04",
+    "meetings": 33,
+    "agendas": 33,
+    "scans": 0,
+    "noFiles": 0,
+    "hits": 1
+   }
+  ]
+ },
  "Exeter": {
   "read": "2026-11-18",
   "bodies": [
@@ -115,6 +205,66 @@
    }
   ]
  },
+ "Newport": {
+  "read": "2026-11-19",
+  "since": "2024-01-01",
+  "bodies": [
+   {
+    "id": 2204,
+    "name": "Newport Planning Board",
+    "role": "planning",
+    "from": "2024-01-06",
+    "to": "2026-11-02",
+    "meetings": 38,
+    "agendas": 38,
+    "scans": 1,
+    "noFiles": 0,
+    "hits": 22
+   },
+   {
+    "id": 2240,
+    "name": "Newport Zoning Board of Review",
+    "role": "zoning",
+    "from": "2024-01-22",
+    "to": "2026-10-26",
+    "meetings": 41,
+    "agendas": 41,
+    "scans": 1,
+    "noFiles": 0,
+    "hits": 32
+   }
+  ]
+ },
+ "Pawtucket": {
+  "read": "2026-11-19",
+  "since": "2024-01-01",
+  "bodies": [
+   {
+    "id": 2506,
+    "name": "Pawtucket Board of Appeals",
+    "role": "zoning",
+    "from": "2024-01-29",
+    "to": "2026-10-26",
+    "meetings": 45,
+    "agendas": 45,
+    "scans": 11,
+    "noFiles": 0,
+    "hits": 37
+   },
+   {
+    "id": 2516,
+    "name": "Pawtucket City Planning Commission",
+    "role": "planning",
+    "from": "2024-01-16",
+    "to": "2026-11-17",
+    "meetings": 39,
+    "agendas": 39,
+    "scans": 3,
+    "noFiles": 0,
+    "hits": 28
+   }
+  ]
+ },
  "Richmond": {
   "read": "2026-11-18",
   "bodies": [
@@ -144,6 +294,36 @@
    }
   ]
  },
+ "Warwick": {
+  "read": "2026-11-19",
+  "since": "2024-01-01",
+  "bodies": [
+   {
+    "id": 3765,
+    "name": "Warwick Planning Board",
+    "role": "planning",
+    "from": "2024-01-01",
+    "to": "2026-11-04",
+    "meetings": 36,
+    "agendas": 36,
+    "scans": 3,
+    "noFiles": 0,
+    "hits": 23
+   },
+   {
+    "id": 3802,
+    "name": "Warwick Zoning Board of Review",
+    "role": "zoning",
+    "from": "2024-01-01",
+    "to": "2026-11-10",
+    "meetings": 40,
+    "agendas": 40,
+    "scans": 2,
+    "noFiles": 0,
+    "hits": 13
+   }
+  ]
+ },
  "West Greenwich": {
   "read": "2026-11-18",
   "bodies": [
@@ -170,6 +350,36 @@
     "scans": 0,
     "noFiles": 0,
     "hits": 0
+   }
+  ]
+ },
+ "Woonsocket": {
+  "read": "2026-11-19",
+  "since": "2024-01-01",
+  "bodies": [
+   {
+    "id": 4036,
+    "name": "Woonsocket Planning Board",
+    "role": "planning",
+    "from": "2024-01-02",
+    "to": "2026-11-17",
+    "meetings": 38,
+    "agendas": 38,
+    "scans": 2,
+    "noFiles": 0,
+    "hits": 18
+   },
+   {
+    "id": 4050,
+    "name": "Woonsocket Zoning Board",
+    "role": "zoning",
+    "from": "2024-01-09",
+    "to": "2026-11-05",
+    "meetings": 22,
+    "agendas": 22,
+    "scans": 1,
+    "noFiles": 0,
+    "hits": 14
    }
   ]
  }

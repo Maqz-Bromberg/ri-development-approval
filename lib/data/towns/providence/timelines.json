@@ -44,5 +44,122 @@
    { "date": "2024-09", "stage": "prelim", "what": "Preliminary plan, narrative and traffic study posted for staff review", "kind": "filed", "src": ["padmin"], "unverified": "The month comes from the upload path of the posted documents, not from a dated record." }
   ],
   "checked": "2026-11-13"
+ },
+ "116 Waterman Street": {
+  "events": [
+   { "date": "2023-01-24", "stage": "prelim", "what": "Preliminary plan heard and continued, for a community meeting and a better landscaping plan", "kind": "continued", "src": ["pmin230124", "psr116w2301"], "quote": "the CPC voted to continue the item to the February 21, 2023 CPC meeting", "scan": true },
+   { "date": "2023-02-21", "stage": "prelim", "what": "Height adjustment and design waiver granted 3 to 1; preliminary plan approved 3 to 1, with conditions", "kind": "decided", "src": ["pmin230221", "psr116w2302"], "quote": "the CPC voted to approve the preliminary plan finding it to be in conformance with the zoning ordinance and comprehensive plan" },
+   { "date": "2025-08-19", "stage": "other", "what": "Major change approved 3 to 2: a 26th apartment in ground-floor common space", "kind": "decided", "src": ["pmin250819", "psr116w2508"], "quote": "the CPC voted to approved the change" }
+  ],
+  "parties": [ { "role": "applicant", "name": "Brook Holding LLC", "src": "pmin230221" } ],
+  "checked": "2026-11-18"
+ },
+ "541 Hartford Avenue": {
+  "events": [
+   { "date": "2023-01-24", "stage": "prelim", "what": "Master and preliminary plans combined and approved 4 to 0, with a 13-space parking adjustment and two design waivers", "kind": "decided", "src": ["pmin230124", "psr541h2301"], "quote": "the CPC voted to approve the master and preliminary plans subject to the following conditions", "scan": true }
+  ],
+  "parties": [ { "role": "applicant", "name": "E2000 LLC", "src": "pmin230124" } ],
+  "checked": "2026-11-18"
+ },
+ "108–110 Waterman Street": {
+  "events": [
+   { "date": "2023-07-18", "stage": "master", "what": "Public informational meeting. Continued for staff to study the building's historic significance and the roof deck", "kind": "continued", "src": ["pmin230718", "psr108w2307"], "quote": "the CPC voted to continue the item to the September 19 CPC meeting" },
+   { "date": "2023-09-19", "stage": "master", "what": "Height adjustment granted and master plan approved 6 to 0, with five conditions", "kind": "decided", "src": ["pmin230919", "psr108w2309"], "quote": "the CPC voted to approve the master plan, finding it to be in conformance with the zoning ordinance and comprehensive plan", "scan": true },
+   { "date": "2024-07-16", "stage": "prelim", "what": "Preliminary plan approved 4 to 0, at 35 homes, with state approvals deferred to the final plan", "kind": "decided", "src": ["pmin240716", "psr108w2407"], "quote": "the CPC voted to approve the preliminary plan, finding it to be in conformance with the zoning ordinance and comprehensive plan based on their findings", "scan": true }
+  ],
+  "checked": "2026-11-18"
+ },
+ "106 Reservoir Avenue": {
+  "events": [
+   { "date": "2024-02-20", "stage": "prelim", "what": "Parking adjustment granted and preliminary plan approved 4 to 0", "kind": "decided", "src": ["pmin240220", "psr106r2402"], "quote": "the CPC voted to adopt the above findings and to approve the preliminary plan subject to the following conditions", "scan": true }
+  ],
+  "parties": [ { "role": "applicant", "name": "KC Holdings LLC", "src": "pmin240220" } ],
+  "checked": "2026-11-18"
+ },
+ "279 Thayer Street": {
+  "events": [
+   { "date": "2024-09-17", "stage": "prelim", "what": "Height adjustment granted and major change approved 5 to 0, with design conditions", "kind": "decided", "src": ["pmin240917", "psr279t2409"], "quote": "the CPC voted to approve the major change/preliminary plan based on their noted findings" }
+  ],
+  "parties": [ { "role": "applicant", "name": "Two Cousins LLC", "src": "pmin240917" } ],
+  "checked": "2026-11-18"
+ },
+ "400 Elmwood Avenue": {
+  "events": [
+   { "date": "2024-09-17", "stage": "prelim", "what": "Continued at the applicant's request, for community outreach", "kind": "continued", "src": ["pmin240917", "psr400e2409"], "quote": "the CPC voted to continue the item to the October 15 meeting" },
+   { "date": "2024-10-15", "stage": "prelim", "what": "Vehicle repair permit withdrawn; side-yard variance, height adjustment and combined master and preliminary approval granted 4 to 0", "kind": "decided", "src": ["pmin241015"], "quote": "the CPC voted to grant master and preliminary plan approval finding that the project was in conformance with the zoning ordinance and comprehensive plan" }
+  ],
+  "parties": [ { "role": "applicant", "name": "Ayoub Realty LLC", "src": "pmin241015" } ],
+  "checked": "2026-11-18"
+ },
+ "11 W Friendship Street": {
+  "events": [
+   { "date": "2024-09-17", "stage": "prelim", "what": "Parking adjustment granted and preliminary plan approved 5 to 0", "kind": "decided", "src": ["pmin240917", "psr11wf2409"], "quote": "the CPC voted to grant the dimensional adjustment for parking based on their findings" }
+  ],
+  "checked": "2026-11-18"
+ },
+ "551 Chalkstone Avenue": {
+  "events": [
+   { "date": "2024-11-19", "stage": "prelim", "what": "Height adjustment granted and preliminary plan approved 6 to 0", "kind": "decided", "src": ["pmin241119", "psr551c2411"], "quote": "the CPC voted to approve the preliminary plan subject to the following conditions", "scan": true }
+  ],
+  "checked": "2026-11-18"
+ },
+ "663 Admiral Street": {
+  "events": [
+   { "date": "2024-11-19", "stage": "prelim", "what": "Height and parking adjustments granted and preliminary plan approved 6 to 0; short-term rentals prohibited", "kind": "decided", "src": ["pmin241119", "psr663a2411"], "quote": "the CPC voted to approve the preliminary plan finding it to be in conformance with the zoning ordinance and comprehensive plan", "scan": true }
+  ],
+  "parties": [ { "role": "applicant", "name": "Citadel Properties LLC", "src": "pmin241119" } ],
+  "checked": "2026-11-18"
+ },
+ "217 Angell Street": {
+  "events": [
+   { "date": "2025-03-18", "stage": "prelim", "what": "Four dimensional adjustments granted and preliminary plan approved 6 to 0, with the applicant's limits on student rentals as conditions", "kind": "decided", "src": ["pmin250318", "psr217a2503"], "quote": "the CPC voted to approve the preliminary plan finding it to be in conformance with the zoning ordinance and comprehensive plan as described above" }
+  ],
+  "parties": [ { "role": "applicant", "name": "Signature Properties LLC", "src": "pmin250318" } ],
+  "checked": "2026-11-18"
+ },
+ "327 Elmwood Avenue": {
+  "events": [
+   { "date": "2025-04-15", "stage": "prelim", "what": "Height adjustment and design waiver granted and preliminary plan approved 4 to 0", "kind": "decided", "src": ["pmin250415", "psr327e2504"], "quote": "the CPC voted to approve the preliminary plan subject to the following conditions", "scan": true }
+  ],
+  "parties": [ { "role": "applicant", "name": "Women's Development Corp", "src": "pmin250415" }, { "role": "owner", "name": "Providence Redevelopment Agency", "src": "pmin250415" } ],
+  "checked": "2026-11-18"
+ },
+ "1107 Westminster Street": {
+  "events": [
+   { "date": "2025-05-20", "stage": "prelim", "what": "Design waiver granted; height adjustment granted on condition the ordinance is amended or a court clarifies it; preliminary plan approved 4 to 0", "kind": "decided", "src": ["pmin250520", "psr1107w2505"], "quote": "the CPC voted to approve the preliminary plan subject to the following conditions", "scan": true },
+   { "date": "2026-05-07", "stage": "other", "what": "One-year extension of the preliminary plan granted 4 to 0", "kind": "decided", "src": ["pmin260507"], "quote": "the CPC voted to grant a one year extension to the validity of the preliminary plan", "scan": true }
+  ],
+  "parties": [ { "role": "applicant", "name": "1107 Westminster LLC", "src": "pmin250520" } ],
+  "checked": "2026-11-18"
+ },
+ "290 and 298 Public Street": {
+  "events": [
+   { "date": "2025-08-19", "stage": "prelim", "what": "Continued for want of a quorum after two members recused", "kind": "continued", "src": ["pmin250819", "psr290p2508"], "quote": "the CPC voted to continue the item to the September 16 meeting" },
+   { "date": "2025-09-16", "stage": "prelim", "what": "Variances and adjustments granted and preliminary plan approved 4 to 0", "kind": "decided", "src": ["pmin250916", "psr290p2509"], "quote": "the CPC voted to approve the preliminary plan subject to the following conditions", "scan": true }
+  ],
+  "parties": [ { "role": "applicant", "name": "SWAP Inc", "src": "pmin250819" } ],
+  "checked": "2026-11-18"
+ },
+ "885 Westminster Street": {
+  "events": [
+   { "date": "2025-09-16", "stage": "prelim", "what": "Height and parking adjustments granted and preliminary plan approved 5 to 0", "kind": "decided", "src": ["pmin250916", "psr885w2509"], "quote": "the CPC voted to approve the preliminary plan subject to the following conditions", "scan": true },
+   { "date": "2026-09-15", "stage": "other", "what": "One-year extension of the preliminary plan granted 5 to 0", "kind": "decided", "src": ["pmin260915"], "quote": "the CPC voted to extend the validity of the preliminary plan approval by one year" }
+  ],
+  "parties": [ { "role": "applicant", "name": "WW Holdings LLC", "src": "pmin250916" } ],
+  "checked": "2026-11-18"
+ },
+ "31 Dike Street": {
+  "events": [
+   { "date": "2026-09-15", "stage": "master", "what": "Design waiver and height adjustment granted and master plan approved 5 to 0", "kind": "decided", "src": ["pmin260915", "psr31d2609"], "quote": "the CPC voted to approve the master plan, based on their findings and subject to the following conditions" }
+  ],
+  "parties": [ { "role": "owner", "name": "Postal Kitchen LLC", "src": "pmin260915" } ],
+  "checked": "2026-11-18"
+ },
+ "203 Douglas Avenue": {
+  "events": [
+   { "date": "2026-08-18", "stage": "prelim", "what": "Continued to October 20 at the applicant's request", "kind": "continued", "src": ["pmin260818"], "quote": "the CPC voted to continue the item to the October 20 meeting", "scan": true }
+  ],
+  "parties": [ { "role": "owner", "name": "PMP Group LLC", "src": "pmin260818" } ],
+  "checked": "2026-11-18"
  }
 }

@@ -9,14 +9,14 @@ lib/data/sources.ts, and every script finds a file by its id wherever it sits un
 A source belongs to the town named in its label. Where the label names no town, or the wrong one,
 the entry carries `town: "<Name>"` (or "State").
 """
-import pathlib, re, subprocess, urllib.parse
+import html, pathlib, re, subprocess, urllib.parse
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CACHE = ROOT / ".sources"
 KINDS = ["rules", "meetings", "recordings", "projects", "press", "pages"]
 # Hosts that answer 403 to a script. Their files are saved by hand.
 REFUSES = {"www.providenceri.gov", "providenceri.gov"}
-ENTRY = re.compile(r'^\s*(\w+): \{ label: "((?:[^"\\]|\\.)*)", url: "([^"]+)"(?:, town: "([^"]+)")? \}', re.M)
+ENTRY = re.compile(r'^\s*(\w+): \{ label: "((?:[^"\\]|\\.)*)", url: "([^"]+)"(?:, town: "([^"]+)")?(?:, file: "([^"]+)")? \}', re.M)
 
 
 def towns():
@@ -43,13 +43,14 @@ def kind_of(label, url):
 def sources():
     """Every source: id, label, url, town folder, kind, file extension, and whether its host refuses scripts."""
     names, out = towns(), []
-    for sid, label, url, town in ENTRY.findall((ROOT / "lib/data/sources.ts").read_text()):
+    for sid, label, url, town, file in ENTRY.findall((ROOT / "lib/data/sources.ts").read_text()):
         place = town or next((n for n in names if re.search(rf"\b{re.escape(n)}\b", label)), "State")
         host = urllib.parse.urlparse(url).netloc
         video = "youtube.com" in url or "youtu.be" in url
         out.append({"id": sid, "label": label, "url": url, "town": slug(place), "kind": kind_of(label, url),
-                    "ext": ".txt" if video else ".pdf" if ".pdf" in url.lower() else ".html", "by_hand": host in REFUSES, "video": video,
-                    "basename": urllib.parse.unquote(urllib.parse.urlparse(url).path.rsplit("/", 1)[-1])})
+                    # `file`: the kind of file, where the url is the page that lists it because the file's own address was not found.
+                    "ext": file or (".txt" if video else ".pdf" if ".pdf" in url.lower() else ".html"), "by_hand": host in REFUSES, "video": video,
+                    "basename": "" if file else urllib.parse.unquote(urllib.parse.urlparse(url).path.rsplit("/", 1)[-1])})
     return out
 
 
@@ -67,5 +68,10 @@ def to_text(path):
     """Write <name>.txt beside a PDF or HTML file. Returns the size of the text, which is near zero for a scan."""
     path = pathlib.Path(path); out = path.with_suffix(".txt")
     if path.suffix == ".pdf": subprocess.run(["pdftotext", "-layout", str(path), str(out)], check=True)
-    elif path.suffix in (".html", ".htm"): out.write_text(re.sub(r"<[^>]+>", " ", path.read_bytes().decode("utf-8", "replace")))
+    elif path.suffix in (".html", ".htm"):  # the words of the page: scripts, styles and Word's hidden metadata left out
+        page = re.sub(r"(?is)<(script|style|xml|head)\b.*?</\1>|<!--.*?-->", " ", path.read_bytes().decode("utf-8", "replace"))
+        out.write_text(html.unescape(re.sub(r"<[^>]+>", " ", page)))
+    elif path.suffix == ".docx":  # a Word file: its paragraphs, one per line
+        xml = subprocess.run(["unzip", "-p", str(path), "word/document.xml"], capture_output=True, check=True).stdout.decode("utf-8", "replace")
+        out.write_text(html.unescape(re.sub(r"<[^>]+>", "", re.sub(r"</w:p>", "\n", xml))))
     return out.stat().st_size if out.exists() else 0

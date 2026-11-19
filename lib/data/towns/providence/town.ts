@@ -47,10 +47,14 @@ export const PROVIDENCE_CONTACTS: Record<string, Contact> = {
   },
   zbr: {
     name: "Zoning Board of Review (Board of Appeal)", kind: "appointed",
-    lines: [["Contact", "Through Inspection and Standards, Boards of Review, 401-680-5375"]],
-    note: "Sits as the Board of Appeal for the administrative officer's administrative decisions and completeness determinations. Variances tied to a land development project go to the City Plan Commission instead.",
-    verify: "The board's own page could not be reached. Its members and meeting pattern were not read.",
-    src: ["pregs", "pis"],
+    lines: [
+      ["Contact", "Through Inspection and Standards, Boards of Review, 401-680-5375"],
+      ["Meets", "Second Wednesday of the month, 5:30 p.m., Joseph A. Doorley, Jr. Municipal Building, 444 Westminster Street, 1st floor conference room"],
+      ["Filing", "About four weeks before the meeting (the 2026 schedule lists each date), first come, first served; send the board's secretary and the zoning assistant a description and plans before applying online"],
+    ],
+    note: "Sits as the Board of Appeal for the administrative officer's administrative decisions and completeness determinations, and hears appeals from the Historic District Commission. Variances tied to a land development project go to the City Plan Commission instead. Agendas are published two weeks before each meeting.",
+    verify: "Read from its 2026 schedule and its policies and procedures (adopted 2017) on 2026-11-18. Its members were not read.",
+    src: ["pregs", "pis", "pzbrsched", "pzbrrules"],
   },
   clerk: {
     name: "City Clerk and Recorder of Deeds", kind: "staff",
@@ -83,11 +87,14 @@ export const PROVIDENCE_CONTACTS: Record<string, Contact> = {
     name: "Providence Historic District Commission", kind: "appointed",
     lines: [
       ["Covers", "The local historic districts on the City's zoning map (Historic Overlay District), and listed landmark and industrial buildings"],
+      ["Meets", "Fourth Monday of the month, 4:45 p.m., Joseph A. Doorley, Jr. Municipal Building, 444 Westminster Street, 1st floor conference room (December 14 in 2026)"],
+      ["Filing", "14 days before the meeting; 30 days for demolition or an economic hardship claim"],
+      ["Staff", "Department of Planning and Development, preservation planner, 401-680-8517; meet staff before applying"],
       ["Records", "Agendas and minutes on the state Open Meetings site"],
     ],
-    note: "Decides certificates of appropriateness for construction, alteration and demolition in the local historic districts. Its decisions are appealed to the Zoning Board of Review.",
-    verify: "Its meeting pattern, staff and filing deadlines were not read. Read from the Zoning Ordinance, §§ 1707 and 1911, on 2026-11-18.",
-    src: ["pzo"], links: [{ label: "Meetings, agendas and minutes", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2829" }],
+    note: "Decides certificates of appropriateness for construction, alteration and demolition in the local historic districts: new construction and demolition at a hearing, smaller work through staff. Its decisions are appealed to the Zoning Board of Review.",
+    verify: "Read from the Zoning Ordinance (§§ 1707, 1911), the Commission's rules, its 2024 amendment to the standards, its application package and its 2026 schedule, on 2026-11-18. Its members and its design standards for each district were not read.",
+    src: ["pzo", "phdcsched", "phdcrules", "phdcsg", "phdcapp"], links: [{ label: "Meetings, agendas and minutes", url: "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID=2829" }],
   },
   i195: {
     name: "I-195 Redevelopment District Commission", kind: "state",

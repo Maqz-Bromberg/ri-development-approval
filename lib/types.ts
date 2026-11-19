@@ -12,6 +12,8 @@ export interface Source {
   url: string;
   /** The municipality the document belongs to, or "State". Only where the label does not name it. Used to file the local copy. */
   town?: string;
+  /** The kind of file (".pdf"), where `url` is the page that lists the document because its own address was not found. */
+  file?: string;
 }
 
 export interface Contact {

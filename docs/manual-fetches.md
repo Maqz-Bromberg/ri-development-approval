@@ -12,12 +12,21 @@ Kept with `docs/plans/statewide-coverage.md` (ARD D53). Checked on 2026-11-18. E
 
 A saved web page is now recognised by the address the browser writes inside it, so its file name no longer matters. That was why the Providence pages below could not be filed before, even if they had been saved.
 
+A whole ordinance can be saved straight into `.sources/` too: a PDF, Word file or web page whose file name names the town and says zoning, ordinance or code ("Bristol, RI Code of Ordinances.pdf", "FOSTER_ZONING.docx") is moved to `<town>/ordinance/` and turned to text. A file the organizer cannot place stays where it is and is listed under **In hand, not yet cited** in `.sources/INDEX.md`; a file that is not a cited source yet is filed by hand under its town and listed there too.
+
 ## What happened with the first Providence fetch
 
 `.sources/INDEX.md` after running the organizer on 2026-11-18:
 
 - **Arrived:** every PDF the sources list asked for. Four more PDFs arrived that are not yet sources, and are kept for reading: the February 2023 preliminary plan staff report for 116 Waterman Street (case 22-033MA, which is on the list below), a November 2023 memo to the Commission on regulation changes, and the staff reports for referrals 3562 (748 Atwell Avenue) and 3564 (355 Thurbers Avenue).
 - **Missing:** the six City web pages in section 1a. Each still says `missing`.
+
+## What happened with the second fetch (2026-11-18, evening)
+
+- **Providence staff reports: read.** Every report saved was found at its address on providenceri.gov by web search and registered (`psr…`); three whose address was not found are registered against the year's meeting materials page, with `file: ".pdf"`. With the minutes from the state site (14 more, 9 of them scans read by eye), all 20 Commission cases since 2023 that give a number of homes (19 projects; 203 Douglas Avenue is still pending) are now read into the precedent. Providence's hearings mark is now citywide (partly: commercial cases and the other boards are not read).
+- **Historic District Commission and Zoning Board: read.** The certificate of appropriateness step has its clock (45 days from acceptance, or deemed approved), filing deadlines, conceptual approval and expiry; both boards' contact cards have their meetings and filing.
+- **Ordinances:** 22 towns' copies arrived (listed in section 3). They are filed for reading, not yet read.
+- **Not used yet, filed and listed in `.sources/INDEX.md`:** the Building Board of Review schedule and instructions, the notice of appeal form, the local historic district map package, the state preservation office's annual report, the November 2023 memo on the regulations, four City Council referrals (748 Atwells, 355 Thurbers, 21 and 25 Douglas, the student housing amendment), the design waiver at 1101 Elmwood; for Westerly, the zoning map, the map amendment application, Planning Board minutes of February 21, 2023, the Westerly Crossings expansion package (2017, a scan) and the wastewater plan excerpts; New Shoreham's plan review form.
 
 ## 1. Providence
 
@@ -67,9 +76,18 @@ These are the City Plan Commission cases since 2023 that give a number of homes 
 
 Already read, nothing to fetch: 269 Wickenden Street, 27 East River Street, 128 Wayland Avenue, 150 Pitman Street, 135 Gano Street. The minutes for every case come from the state Open Meetings site by script; 3 of the 55 agendas since 2023 are scans.
 
-If time is short, take the larger ones first: 885 Westminster (74), 663 Admiral (48), 327 Elmwood (44), 290 Public (39), 217 Angell (32), 541 Hartford (30).
+**Done 2026-11-18:** all read. The last two, below, arrived later the same evening; their addresses were found by web search:
+
+| Wanted | Address | Why |
+| --- | --- | --- |
+| 327 Elmwood Avenue, staff report (25-013MI) | <https://www.providenceri.gov/wp-content/uploads/2025/04/25-013MI-327-Elmwood-Ave-preliminary-plan-staff-report.pdf> | The project is read from the minutes alone |
+| 108–110 Waterman Street, preliminary plan staff report | <https://providenceri.gov/wp-content/uploads/2024/07/22-030MA-108-110-Waterman-Street-preliminary-plan-staff-report.pdf> | The master plan is read; the preliminary plan's outcome is not (that month's agenda is a scan) |
+
+203 Douglas Avenue (26-047MIL) has no staff report posted yet: it was continued to October 20, 2026.
 
 ### 1c. Pages for the review areas
+
+**Done 2026-11-18** for the Historic District Commission's rules, 2024 amendment to its standards, application package and 2026 schedule, and the Zoning Board's policies and 2026 schedule. Still not read: the Commission's design standards for each district.
 
 Search providenceri.gov for each, and save the page and any linked PDF of standards or schedules.
 
@@ -101,6 +119,14 @@ The GIS is a viewer behind a disclaimer, not a service the lookup can ask, so th
 
 ## 3. Ordinances for chunks 5 to 7 and later
 
+**Arrived by 2026-11-18, evening**, filed in `.sources/<town>/ordinance/`: Bristol, Burrillville, Central Falls, East Providence (Municode PDFs); Exeter, Foster, Hopkinton, Jamestown, Narragansett, Newport, North Kingstown, South Kingstown, Tiverton, Warwick, West Warwick (Municode Word files); Middletown (American Legal); Smithfield (its own zoning ordinance, a 200-page PDF amended to 2026, from the town's site); North Smithfield (the eCode360 chapter and the whole eCode360 code, still not the official copy); North Providence (the 2026 redline and the amended ordinance); New Shoreham (four articles and the districts page from Zoneomics, a third party's copy; nine zoning appendix attachments of 1994 onward; Ordinance 2024-14 on short-term rentals); Warwick also as the whole Municode code (its Appendix A is the zoning).
+
+**Two Word files are only links:** Providence's Municode chapter 27 points to the City's own ordinance (in hand as `pzo`), and Warren's chapter 32 says its zoning ordinance is a separate Municode publication: <https://library.municode.com/ri/warren/codes/zoning_ordinance>. Save that one instead. Warren's code link on the site now points there.
+
+**Arrived later the same evening:** Cranston (Municode PDF) and Warren's zoning publication (Word), and the two Providence staff reports still wanted (327 Elmwood and the 108–110 Waterman preliminary plan, both now read).
+
+**Not in hand:** Scituate: its Municode copy would not download for Maqz (2026-11-18). Its eCode360 copy, which is not the official one, is in `.sources/scituate/ordinance/`. New Shoreham's official copy is not in hand either.
+
 **No screenshots for Municode or American Legal**: both refuse automated access, so I did not open them. The steps are the same for every Municode town.
 
 **On Municode** (Foster, Exeter, Hopkinton, Cranston, East Providence, Newport, Central Falls, then Bristol, Burrillville, Jamestown, Narragansett, North Kingstown, Scituate, South Kingstown, Tiverton, Warren, West Warwick):
@@ -115,7 +141,7 @@ The GIS is a viewer behind a disclaimer, not a service the lookup can ask, so th
 **Town websites:**
 - **Warwick**: <https://www.warwickri.gov/city-council-legislative-department/pages/code-ordinances>. The city posts its zoning ordinance (Appendix A) and its amendments as separate PDFs; save the base and every amendment, with their dates. The text in force is the base plus each amendment in order.
 - **North Smithfield**: its *Town Charter & Ordinances* page (<https://www.nsmithfieldri.org/284/Town-Charter-Ordinances>) lists document folders and no zoning chapter that I could see; the eCode360 copy in hand is not the official one. Ask the Town Clerk where the official zoning ordinance is published, or save it if you find it.
-- **Smithfield**: its zoning chapter is not in its eCode360 code. Look on the town's site, or ask the Town Clerk.
+- **Smithfield**: done 2026-11-18. Its zoning ordinance (adopted 1998, amended to 2026) is a PDF on the town's site, <https://www.smithfieldri.gov/home/showpublisheddocument/5628/639283461558730000>, which refuses a script; the site's code link now points there.
 - **New Shoreham**: the Secretary of State lists its code on ClerksHQ, but its ClerksHQ page holds board records and no town code. Look on <https://www.newshorehamri.gov/>, or ask the Town Clerk.
 
 ## Fetched by script on 2026-11-18: nothing to do

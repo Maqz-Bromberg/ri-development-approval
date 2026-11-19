@@ -41,7 +41,7 @@ The boards fetch asks the site's public-body search, which matches a phrase and 
 
 ## Saving a file by hand
 
-providenceri.gov refuses scripted requests, and `fetch_sources.py` lists those files with their URLs. Save each from a browser anywhere inside `.sources/`, under whatever name the browser gives it, and run `organize_sources.py`. It recognises the file by the name in its URL, renames it to its source id, files it and converts it to text. A file it cannot place is left alone and listed.
+providenceri.gov refuses scripted requests, and `fetch_sources.py` lists those files with their URLs. Save each from a browser anywhere inside `.sources/`, under whatever name the browser gives it, and run `organize_sources.py`. It recognises the file by the name in its URL, renames it to its source id, files it and converts it to text. A file it cannot place is left alone and listed. A whole ordinance whose file name names its town ("Bristol, RI Code of Ordinances.pdf", "FOSTER_ZONING.docx") goes to `<town>/ordinance/` for reading. Where a document's own address cannot be found (the host refuses scripts and a web search for its file name finds nothing), its entry gives the page that lists it as `url` and its kind as `file: ".pdf"`; rename the saved copy to its id and the organizer files it.
 
 ## What cannot be automated yet
 

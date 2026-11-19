@@ -12,7 +12,9 @@ import type { Finding, Flags, ProjectInputs, Step } from "../../../types";
  * Development the Committee or the I-195 Commission reviews is not a land development project (§ 1904.C.2.b), so the
  * route there is development plan review, whatever the number of units. D-1 review does not apply in a historic
  * district (§ 1907.C.3), so a site in both gets the Historic District Commission and the ordinary thresholds.
- * Not read: the Committee's and the Commission's own procedures and clocks, and the Transit-Oriented Development Overlay.
+ * The Historic District Commission's procedure, schedule and clock are read from its rules, its 2024 amendment to the standards,
+ * its application package and its 2026 schedule (2026-11-18). Not read: its design standards for each district, the
+ * Committee's own procedure and clocks, and the Transit-Oriented Development Overlay.
  */
 export const PROVIDENCE_AREAS = [
   { abbr: "HD", name: "Historic Overlay District (a local historic district)" },
@@ -42,7 +44,7 @@ export function providenceOverlayRules(i: ProjectInputs, abbr: string): Finding[
       id: "pvd-area-hd", st: "flag", t: "Historic district: a certificate of appropriateness from the Historic District Commission",
       p: "Any construction, alteration or demolition in a local historic district needs the Commission's certificate first, with or without a building permit. Staff may approve some applications, but only the Commission can deny one. Downtown design review does not apply in a historic district, so the ordinary review thresholds apply alongside it.",
       src: "pzo", pin: "§ 1911.A", q: "A certificate of appropriateness is required whether or not a building permit is required.",
-      gap: "The Historic District Commission's standards and guidelines for the district, and its meeting and filing schedule",
+      gap: "The Commission's design standards and guidelines for each district (its review procedure and schedule are read)",
     }];
     case "DD": return committee ? [{
       id: "pvd-area-dd", st: "info", t: "Downcity Overlay: the Downtown Design Review Committee reviews the plan, not the City Plan Commission",
@@ -73,26 +75,50 @@ export function providenceOverlayRules(i: ProjectInputs, abbr: string): Finding[
 
 /** A certificate of appropriateness, added to every route in a historic district (cond "historic"). */
 export const coaStep: Step = {
-  id: "coa", title: "Certificate of appropriateness", cond: "historic", app: "Certificate of appropriateness application, with plans and elevations",
-  clock: { text: "Not read: the Commission's schedule and its standards" },
-  what: "In a local historic district, the Historic District Commission approves the design of new construction, alterations and demolition before any work starts. Staff can approve some applications under the Commission's standards; any refusal goes to the Commission at a public hearing. Its decision is appealed to the Zoning Board of Review.",
+  id: "coa", title: "Certificate of appropriateness", cond: "historic", app: "Certificate of appropriateness application: conceptual, then final for new construction ($400 for new construction or demolition)",
+  clock: { days: 45, text: "Filed 14 days before the monthly meeting (30 for demolition) · 45 days from acceptance to decide, or up to 90 with a finding; no decision in time counts as approval" },
+  what: "In a local historic district, the Historic District Commission approves the design of new construction, alterations and demolition before any work starts. New construction, demolition and major alterations of contributing buildings go to the Commission at a public hearing, first for conceptual approval and then for the final details; staff may approve only smaller work that meets the Commission's standards, and send the rest to the Commission. It meets on the fourth Monday of the month. Its decision is appealed to the Zoning Board of Review.",
   auth: [
-    { c: "hdc", role: "Decides the certificate, at a public hearing or through staff for what its standards allow" },
+    { c: "hdc", role: "Decides the certificate at a public hearing for new construction and demolition; staff approve only what its standards allow" },
     { c: "zbr", role: "Hears appeals of the Commission's decisions" },
   ],
   objections: ["design"],
   docs: [
     {
       title: "Which work needs a certificate", src: "pzo", pin: "§ 1911.D", q: "All construction, alteration, repair, removal, or demolition of any existing structure or its appurtenances",
-      checklist: ["Find the district on the City's zoning map (Historic Overlay District)", "Ask staff whether the work can be approved without a hearing", "Read the Commission's standards and guidelines for the district"],
+      checklist: ["Find the district on the City's zoning map (Historic Overlay District)", "Meet the Commission's staff before applying: they say whether the building is singular, contributing or non-contributing", "Read the Commission's standards and guidelines for the district"],
+    },
+    {
+      title: "New construction goes to the Commission", src: "phdcsg", pin: "Review of contributing buildings", q: "The PHDC will review demolitions and Major Alterations of contributing buildings. The PHDC also will review new construction projects.",
+      checklist: ["Expect a public hearing, not a staff approval, for a new building or a demolition"],
+    },
+    {
+      title: "Conceptual approval first", src: "phdcrules", pin: "§ 5.1.B", q: "shall first file a preliminary application for Conceptual Approval from the HDC",
+      checklist: ["Apply for conceptual approval of the massing and design", "Then apply again for the final details: drawings, materials and, for new construction, a model"],
+    },
+    {
+      title: "Filing deadlines and the meeting", src: "phdcsched", pin: "2026 schedule", q: "Complete applications must be filed by the above-referenced dates to be considered by the PHDC at the regular monthly",
+      checklist: ["File 14 days before the meeting for new construction or alterations", "File 30 days before for demolition or an economic hardship claim", "The rules of 1991 to 2014 say 12 days, and 30 to 45 days for demolition (§ 5.2); the 2026 schedule is the later document"],
+    },
+    {
+      title: "45 days, or it counts as approved", src: "phdcrules", pin: "§ 6.5.A", q: "shall be deemed to constitute approval unless an extension is agreed upon mutually by the applicant and the HDC",
+      checklist: ["The clock starts when the Commission accepts the application as complete, which it votes on at the start of the hearing (§ 5.3)", "With a written finding it may take up to 90 days (§ 6.5.B)"],
+    },
+    {
+      title: "Zoning relief: before or after?", src: "phdcapp", pin: "Instructions", q: "Zoning review usually occurs after PHDC review.",
+      checklist: ["The Commission's rules say the opposite: variances first, unless the Commission waives it or the application is for conceptual approval (§ 5.4)", "Ask staff which order applies, and bring back any change zoning review makes"],
     },
     {
       title: "Staff may approve, not deny", src: "pzo", pin: "§ 1911.C.1", q: "The staff may not deny a certificate of appropriateness, but shall refer such action to the Historic District",
       checklist: ["If staff will not approve, expect a hearing before the Commission"],
     },
     {
-      title: "Appeal to the Zoning Board of Review", src: "pzo", pin: "§ 1703.C", q: "To make final decisions on appeals from the Historic District Commission",
-      checklist: ["Note the date of the Commission's decision"],
+      title: "A certificate lasts a year", src: "phdcrules", pin: "§ 6.8", q: "shall expire one (1) year after the date of the approval",
+      checklist: ["Get a building permit and start within the year, or ask for a six-month renewal before it ends", "A conditional approval waiting on other agencies lapses after 180 days (§ 6.4.C)"],
+    },
+    {
+      title: "Appeal to the Zoning Board of Review", src: "phdcapp", pin: "Appeal process", q: "Must file appeal with Zoning Board of Review within 20",
+      checklist: ["The written decision is sent about two weeks after the meeting", "Appeal within 20 days of notification"],
     },
   ],
 };

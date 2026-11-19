@@ -135,6 +135,7 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
       zoning: { read: "2026-11-14", partly: true, note: "The Zoning Ordinance of July 2026 is read for its use table, heights, parking and review thresholds. Setbacks, coverage and design standards are not read." },
       offices: { read: "2026-11-13" },
       steps: { read: "2026-11-13", note: "From the Land Development and Subdivision Review Regulations and the City Plan Commission's forms." },
+      hearings: { read: "2026-11-18", partly: true, note: "City Plan Commission: every case on its agendas since 2023 that gives a number of homes (19 projects), with 150 Pitman Street and 135 Gano Street, read from the staff reports and the minutes; decisions in scanned minutes were read by eye. Not read: commercial cases, and the records of the Zoning Board, the Historic District Commission and the Downtown Design Review Committee." },
     },
     gaps: "No one at the city has confirmed any of it.",
     commercial: {
@@ -145,13 +146,6 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
       },
       gaps: "No commercial hearings or projects have been read.",
     },
-    parts: [{
-      name: "Fox Point and Wayland",
-      marks: { hearings: { read: "2026-11-13", note: "City Plan Commission records from 2023 to 2026 were read for five projects here." } },
-      box: [41.8125, -71.4045, 41.8305, -71.376],
-      reason: "Drawn around the five projects whose records were read.",
-      note: "The box is an approximation drawn around them, not the city's neighbourhood boundary.",
-    }],
   },
   Westerly: {
     marks: {
@@ -201,8 +195,8 @@ const CODE: Record<string, Town["code"]> = {
   Narragansett: MUNI("narragansett"), Newport: MUNI("newport"), "New Shoreham": CHQ("newshoreham"), "North Kingstown": MUNI("north_kingstown"),
   "North Providence": CHQ("northprovidence"), "North Smithfield": { url: "https://www.nsmithfieldri.org/town-charter-ordinances", host: "the town's website", script: true },
   Pawtucket: ECODE("PA1467"), Portsmouth: ECODE("PO2650"), Providence: MUNI("providence"), Richmond: CHQ("richmond"),
-  Scituate: MUNI("scituate"), Smithfield: ECODE("SM2013"), "South Kingstown": MUNI("south_kingstown"), Tiverton: MUNI("tiverton"),
-  Warren: MUNI("warren"), Warwick: { url: "https://www.warwickri.gov/city-council-legislative-department/pages/code-ordinances", host: "the city's website", script: true },
+  Scituate: MUNI("scituate"), Smithfield: { url: "https://www.smithfieldri.gov/home/showpublisheddocument/5628/639283461558730000", host: "the town's website", script: false }, "South Kingstown": MUNI("south_kingstown"), Tiverton: MUNI("tiverton"),
+  Warren: { url: "https://library.municode.com/ri/warren/codes/zoning_ordinance", host: "Municode", script: false }, Warwick: { url: "https://www.warwickri.gov/city-council-legislative-department/pages/code-ordinances", host: "the city's website", script: true },
   "West Greenwich": ECODE("WE3645"), "West Warwick": MUNI("west_warwick"), Westerly: ECODE("WE1997"), Woonsocket: CHQ("woonsocket"),
 };
 

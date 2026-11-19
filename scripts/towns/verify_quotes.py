@@ -6,7 +6,7 @@ A quote is any `q: "..."` in a TypeScript data file. Its source is the `src: "id
 The source text is <id>.txt anywhere under the local source folder (see scripts/sourcelib.py).
 
 usage: verify_quotes.py [CACHE_DIR] [FILE ...] [--allow-missing]      (CACHE_DIR defaults to .sources)
-  With no FILE, checks lib/data/towns/*/*.ts. Pass lib/data/state/trees.ts or lib/engine.ts to check those too.
+  With no FILE, checks lib/data/towns/*.ts and lib/data/towns/*/*.ts. Pass lib/data/state/trees.ts or lib/engine.ts to check those too.
 exit 1: a quote was not found in its source, or has no source on its line.
 exit 2: every quote that could be checked passed, but some sources are not in the cache (0 with --allow-missing).
 """
@@ -40,7 +40,7 @@ def main(argv):
     allow = "--allow-missing" in argv
     args = [a for a in argv if not a.startswith("--")]
     cache = pathlib.Path(args.pop(0)) if args and pathlib.Path(args[0]).is_dir() else sl.CACHE
-    files = [pathlib.Path(a) for a in args] or sorted((ROOT / "lib/data/towns").glob("*/*.ts"))
+    files = [pathlib.Path(a) for a in args] or sorted([*(ROOT / "lib/data/towns").glob("*.ts"), *(ROOT / "lib/data/towns").glob("*/*.ts")])
     known = set(re.findall(r"^\s*(\w+): \{ label:", (ROOT / "lib/data/sources.ts").read_text(), re.M))
     texts, bad, missing, ok, live = {}, [], {}, 0, 0
     for f in files:

@@ -12,7 +12,7 @@ import {
   RADIUS, ROUTE_COLOR, STRUCTURE, STRUCTURE_ORDER, ZONE_KIND, ZONE_KIND_ORDER, districtShapes, esc, inRings, metresBetween, parcelsNear, ringCenter, townShapes, zoneKind,
   type DistrictShape, type LatLon, type Parcel, type StructureClass, type TownShape, type ZoneKind,
 } from "@/lib/map";
-import { LEVELS, marksLine, townInfo } from "@/lib/data/towns";
+import { LEVELS, TOWNS, levelInPart, marksLine, townInfo } from "@/lib/data/towns";
 import type { PrecedentStatus, TreeId } from "@/lib/types";
 import { useAtlas } from "./useAtlas";
 import { useProject } from "./ProjectProvider";
@@ -425,9 +425,10 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
             <div className="zm-ovbody" id={`${placement}-zm-key`}>
               {statewide ? (
                 <ul className="zm-legend" aria-label="How much of each town is read">
-                  {([4, 3, 1] as const).map((l) => (
-                    <li key={l}><span className="zm-swatch" style={{ background: `rgba(46, 109, 180, ${LEVEL_FILL[l]})`, border: "1px solid #9aa39c" }} aria-hidden="true" />Level {l}: {LEVELS[l].name}</li>
-                  ))}
+                  {([4, 3, 2, 1] as const).filter((l) => TOWNS.some((t) => t.level === l)).map((l) => {
+                    const n = TOWNS.filter((t) => t.level === l), part = n.filter(levelInPart).length;
+                    return <li key={l}><span className="zm-swatch" style={{ background: `rgba(46, 109, 180, ${LEVEL_FILL[l]})`, border: "1px solid #9aa39c" }} aria-hidden="true" />Level {l}: {LEVELS[l].name} <span className="muted">· {n.length}{l > 1 && part ? `, ${part === n.length ? "all" : part} in part` : ""}</span></li>;
+                  })}
                   <li><span className="zm-swatch site" aria-hidden="true" />{town}, the project&apos;s town</li>
                 </ul>
               ) : <>{zoneKey}<div className="zm-keycol">{parcelHead}{parcelLegend}</div></>}

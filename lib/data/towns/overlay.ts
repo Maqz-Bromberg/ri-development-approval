@@ -11,6 +11,7 @@ import { hopkintonFindings, hopkintonUse } from "./hopkinton/rules";
 import { richmondUse } from "./richmond/rules";
 import { GLOCESTER_KINDS, glocesterFindings, glocesterUse } from "./glocester/rules";
 import { westGreenwichAffordableLines, westGreenwichFindings, westGreenwichUse } from "./west-greenwich/rules";
+import { COMP_STEPS } from "./comp-steps";
 import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
 /*
@@ -21,7 +22,11 @@ import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, char
 export type TownFindings = (i: ProjectInputs, tree: TreeId, generic: Finding[], d: AtlasDistrict | undefined) => Finding[];
 
 const steps = <T extends { steps: Step[] }>(trees: Record<TreeId, T>) => Object.fromEntries(Object.entries(trees).map(([k, t]) => [k, t.steps])) as Record<TreeId, Step[]>;
-const STEPS: Record<string, Partial<Record<TreeId, Step[]>>> = { Providence: PROVIDENCE_STEPS, Cumberland: steps(CUMBERLAND_TREES) };
+const STEPS: Record<string, Partial<Record<TreeId, Step[]>>> = {
+  Providence: PROVIDENCE_STEPS, Cumberland: steps(CUMBERLAND_TREES),
+  // The comprehensive permit route from the town's own text (ARD D65).
+  ...Object.fromEntries(Object.entries(COMP_STEPS).map(([town, s]) => [town, { comp: s }])),
+};
 const RULES: Record<string, TownRules> = {
   Providence: PROVIDENCE_RULES,
   // Cumberland's steps are in cumberland/trees.ts; its housing findings are still in engine.ts (debt 1).
@@ -42,12 +47,12 @@ const RULES: Record<string, TownRules> = {
   },
   // Chunk 6, small rural towns (ARD D63): each town's housing rows, read in place of the Atlas.
   Foster: { use: fosterUse, moreFindings: (i) => fosterFindings(i), retired: FOSTER_RETIRED },
-  Exeter: { use: exeterUse, moreFindings: (i) => exeterFindings(i), unmappedOverlays: EXETER_UNMAPPED, kinds: EXETER_KINDS, affordableLines: exeterAffordableLines },
-  Hopkinton: { use: hopkintonUse, moreFindings: (i) => hopkintonFindings(i) },
-  Richmond: { use: richmondUse },
+  Exeter: { routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: exeterUse, moreFindings: (i) => exeterFindings(i), unmappedOverlays: EXETER_UNMAPPED, kinds: EXETER_KINDS, affordableLines: exeterAffordableLines },
+  Hopkinton: { routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: hopkintonUse, moreFindings: (i) => hopkintonFindings(i) },
+  Richmond: { routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: richmondUse },
   Glocester: { use: glocesterUse, moreFindings: (i) => glocesterFindings(i), kinds: GLOCESTER_KINDS },
   "West Greenwich": {
-    use: westGreenwichUse, moreFindings: (i) => westGreenwichFindings(i), inclusionaryRead: true, affordableLines: westGreenwichAffordableLines,
+    routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: westGreenwichUse, moreFindings: (i) => westGreenwichFindings(i), inclusionaryRead: true, affordableLines: westGreenwichAffordableLines,
   },
   // Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3).
   Westerly: {

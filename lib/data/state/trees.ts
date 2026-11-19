@@ -820,7 +820,7 @@ const comp: Tree = {
       branch: true,
       app: "Complaint to the Superior Court, filed within 20 days",
       clock: { days: 20, text: "20 days from recording and posting" },
-      what: "You or an aggrieved neighbour can appeal a Planning Board or Administrative Officer decision. For you, 20 days is the deadline. For neighbours, it is a risk window, and lenders often wait for it to close.",
+      what: "You or an aggrieved neighbour can appeal the local review board's decision to the Superior Court (§ 45-53-5.1, since January 1, 2024). For you, 20 days is the deadline. For neighbours, it is a risk window, and lenders often wait for it to close.",
       auth: [
         { c: "court", role: "Hears the appeal on the record, without a jury" },
         { c: "zbr", role: "Board of Appeals for certain administrative actions" },
@@ -828,7 +828,7 @@ const comp: Tree = {
       docs: [
         {
           title: "Complaint stating the reasons for appeal",
-          src: "s3971", pin: "§ 45-23-71(a)", q: "within twenty (20) days after the decision has been recorded and posted in the office of the city or town clerk",
+          src: "s5351", pin: "§ 45-53-5.1(a)", q: "The appeal shall be taken within twenty (20) days after the date of the recording and posting of the decision by the local review board",
           checklist: [
             "Note the date the decision was recorded and posted, which starts the clock",
             "Get the transcript or minutes and every exhibit in the record",

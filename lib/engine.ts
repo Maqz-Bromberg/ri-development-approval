@@ -187,6 +187,8 @@ export function deriveFlags(i: ProjectInputs, tree: TreeId): Flags {
     always: true,
     // Where RIDEM's jurisdiction map gives CRMC, the wetlands permit is CRMC's (debt 19).
     coastal: i.wet && i.wetAgency === "CRMC",
+    // More homes than the state's minor line (nine): a town's procedure can differ for a major project (ARD D65).
+    major: i.units > 9,
     historic: false, ddrc: false, i195: false, aquifer: false, airport: false,
     ...townRules(i.town).overlayFlags?.(i),
   };

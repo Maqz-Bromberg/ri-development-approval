@@ -93,6 +93,13 @@ export const LEVELS: Record<Level, { name: string; has: string; lacks: string }>
 
 export const markState = (m?: MarkRead): MarkState => (!m ? "none" : m.partly ? "partly" : "read");
 
+/**
+ * Whether a town reaches its level on a mark read only in part (ARD D65): its boards from the state site only, its steps
+ * for one route only, its hearings for some cases only. The level counts a mark read in part; the keys say how many.
+ */
+export const levelInPart = (t: { level: Level; marks: Marks }): boolean =>
+  (["offices", "steps", "hearings"] as Mark[]).slice(0, t.level - 1).some((m) => markState(t.marks[m]) === "partly");
+
 /** The level a set of marks amounts to. Each level needs the ones below it. */
 export function levelOf(m: Marks): Level {
   if (!m.offices) return 1;
@@ -165,22 +172,22 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
     gaps: "Foster renamed its districts on October 26, 2023 (AR, GB, M, HC2); the Zoning Atlas still shows the earlier ones, so outside AR the district at a site needs the Town's own zoning map. The 2023 use table permits multi-family buildings as land development projects, while § 38-281 still asks a special use permit in districts that no longer exist. The table has no two-family row.",
   },
   Exeter: {
-    marks: { zoning: { read: "2026-11-18", partly: true, note: "Appendix A: the use table's housing rows, mixed-use commercial development with its affordable share (§ 4.6). Not read: dimensions, conservation development, the planned village development, adaptive reuse beyond its density." } },
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "Appendix A: the use table's housing rows, mixed-use commercial development with its affordable share (§ 4.6). Not read: dimensions, conservation development, the planned village development, adaptive reuse beyond its density." }, steps: { read: "2026-11-19", partly: true, note: "The comprehensive permit route, from the town's own procedure (ARD D65). The other routes are state law." }  },
     gaps: "Apartments are allowed only in a mixed-use commercial development, where § 4.6 and the use table disagree on the business district; a cell reads \"SY\"; footnote 16 points to a section repealed in December 2023. The Planned Village Overlay District is not in the Zoning Atlas.",
   },
   Hopkinton: {
-    marks: { zoning: { read: "2026-11-18", partly: true, note: "The district use table's housing rows and the lot area for two-family and multi-family homes. Not read: the aquifer overlay's permits, cluster development, the special districts (RS, CS, MS)." } },
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "The district use table's housing rows and the lot area for two-family and multi-family homes. Not read: the aquifer overlay's permits, cluster development, the special districts (RS, CS, MS)." }, steps: { read: "2026-11-19", partly: true, note: "The comprehensive permit route, from the town's own procedure (ARD D65). The other routes are state law." }  },
     gaps: "Inclusionary zoning (§ 5.3) is reserved, but the affordable housing fund (§ 5.4) still takes fees under it.",
   },
   Richmond: {
-    marks: { zoning: { read: "2026-11-18", partly: true, note: "Chapter 18.16's housing rows, which split multi-family housing by size (to 4, 12 and 60 homes). Not read: the multi-family standards (§ 18.36.100, Chapters 18.41 and 18.42), dimensions, the aquifer overlay." } },
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "Chapter 18.16's housing rows, which split multi-family housing by size (to 4, 12 and 60 homes). Not read: the multi-family standards (§ 18.36.100, Chapters 18.41 and 18.42), dimensions, the aquifer overlay." }, steps: { read: "2026-11-19", partly: true, note: "The comprehensive permit route, from the town's own procedure (ARD D65). The other routes are state law." }  },
   },
   Glocester: {
     marks: { zoning: { read: "2026-11-18", partly: true, note: "The Table of Use Regulations' housing rows, the village overlay (Article XIII) as the column that applies, and the two-family lot. Not read: the village's design standards and the Planned District." } },
     gaps: "The Zoning Atlas draws the Village Overlay District and its Center District as districts; here they are read as the overlays the ordinance makes them.",
   },
   "West Greenwich": {
-    marks: { zoning: { read: "2026-11-18", partly: true, note: "Chapter 400: the use table's housing rows, the two-family lot conditions and inclusionary zoning (Article XXV, 2025). Not read: dimensions, the Senior Village District, conservation design development." } },
+    marks: { zoning: { read: "2026-11-18", partly: true, note: "Chapter 400: the use table's housing rows, the two-family lot conditions and inclusionary zoning (Article XXV, 2025). Not read: dimensions, the Senior Village District, conservation design development." }, steps: { read: "2026-11-19", partly: true, note: "The comprehensive permit route, from the town's own procedure (ARD D65). The other routes are state law." }  },
   },
   "North Providence": {
     marks: {

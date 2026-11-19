@@ -2,7 +2,7 @@ export type Kind = "elected" | "appointed" | "staff" | "state" | "utility";
 
 /** Site conditions a document, authority or step can depend on. "a|b" means either. */
 /** coastal: wetlands entered where CRMC regulates them (debt 19). historic, ddrc, i195, aquifer, airport: set by a town from the project's overlays (TownRules.overlayFlags), false elsewhere */
-export type FlagKey = "wet" | "dot" | "acre" | "transit" | "rezone" | "relief" | "septic" | "pubwater" | "pubsewer" | "always" | "historic" | "ddrc" | "i195" | "aquifer" | "airport" | "coastal";
+export type FlagKey = "wet" | "dot" | "acre" | "transit" | "rezone" | "relief" | "septic" | "pubwater" | "pubsewer" | "always" | "historic" | "ddrc" | "i195" | "aquifer" | "airport" | "coastal" | "major";
 export type Flags = Record<FlagKey, boolean>;
 
 export type TreeId = "major" | "minor" | "comp" | "dpr" | "byright";

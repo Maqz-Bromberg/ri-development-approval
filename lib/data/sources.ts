@@ -199,6 +199,9 @@ export const SOURCES: Record<string, Source> = {
   ripb260210: { label: "Richmond Planning Board minutes, Feb 10, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C3922%5C2026%5C551163.pdf" },
   ripb260310: { label: "Richmond Planning Board minutes, Mar 10, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C3922%5C2026%5C552592.pdf" },
   ripb251209: { label: "Richmond Planning Board minutes, Dec 9, 2025", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C3922%5C2026%5C546021.pdf" },
+  s5351: { label: "R.I. Gen. Laws § 45-53-5.1 (comprehensive permit appeals, from January 1, 2024)", url: "https://webserver.rilegislature.gov/Statutes/TITLE45/45-53/45-53-5.1.htm" },
+  wgsr: { label: "West Greenwich Land Development and Subdivision Regulations, Chapter 450 (eCode360, print view)", url: "https://ecode360.com/print/WE3645?guid=31441563&children=true" },
+  rizo39: { label: "Richmond Zoning Ordinance, Chapter 18.39 Comprehensive Permits (ClerksHQ)", url: "https://clerkshq.com/Content/Richmond-ri/code/RichmondRI-z1839.htm" },
   cfr1412: { label: "40 C.F.R. § 141.2, definition of a public water system (federal drinking water rules)", url: "https://www.law.cornell.edu/cfr/text/40/141.2" },
   /* Providence meeting recordings. Captions are fetched as machine transcripts by scripts/towns/fetch_captions.py. */
   pvid241015: { label: "Providence City Plan Commission recording, Oct 15, 2024 (YouTube, machine captions)", url: "https://www.youtube.com/watch?v=Vpq5VcAnqEk" },

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { LEVELS, MARKS, MARK_ORDER, TOWNS, markState, marksLine, type Level, type Mark, type MarkState } from "@/lib/data/towns";
+import { LEVELS, MARKS, MARK_ORDER, TOWNS, levelInPart, markState, marksLine, type Level, type Mark, type MarkState } from "@/lib/data/towns";
 import { MarkChips } from "./Coverage";
 import { Icon } from "./Icon";
 import { useProject } from "./ProjectProvider";
@@ -31,6 +31,7 @@ export function TownIndex() {
   const town = (name: string) => TOWNS.find((t) => t.name === name);
   const fillOf = (name: string) => shade === "level" ? LEVEL_COLOR[town(name)?.level ?? 1] : MARK_COLOR[markState(town(name)?.marks[shade])];
   const count = (l: Level) => TOWNS.filter((t) => t.level === l).length;
+  const inPart = (l: Level) => TOWNS.filter((t) => t.level === l && levelInPart(t)).length;
   const parts = (l: Level) => TOWNS.filter((t) => t.parts?.some((p) => p.level === l)).length;
   const markCount = (m: Mark, s: MarkState) => TOWNS.filter((t) => markState(t.marks[m]) === s).length;
 
@@ -79,10 +80,11 @@ export function TownIndex() {
               <li key={l}>
                 <button type="button" className={`lk-btn${levels.has(l) ? " on" : ""}`} aria-pressed={levels.has(l)} onClick={() => flip(l)}>
                   <span className="lk-sw" style={{ background: LEVEL_COLOR[l] }} aria-hidden="true" />
-                  <span><b>Level {l}: {LEVELS[l].name}</b> <span className="muted">· {count(l)} town{count(l) === 1 ? "" : "s"}{parts(l) ? `, and part of ${parts(l)} more` : ""}</span><br /><small className="muted">{LEVELS[l].has}</small></span>
+                  <span><b>Level {l}: {LEVELS[l].name}</b> <span className="muted">· {count(l)} town{count(l) === 1 ? "" : "s"}{l > 1 && inPart(l) ? `, ${inPart(l) === count(l) ? (count(l) === 1 ? "on" : "all on") : `${inPart(l)} on`} marks read in part` : ""}{parts(l) ? `, and part of ${parts(l)} more` : ""}</span><br /><small className="muted">{LEVELS[l].has}</small></span>
                 </button>
               </li>
             ))}
+            <li className="small muted">A level counts a mark read in part, such as boards from the state site only, steps for one route only, or hearings for some cases only. Shade by a mark to see which.</li>
           </ul>
           <p className="small muted">
             {shown.length === TOWNS.length ? "All 39 towns." : `${shown.length} of 39 towns.`}{" "}

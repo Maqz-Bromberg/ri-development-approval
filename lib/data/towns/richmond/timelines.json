@@ -1,0 +1,24 @@
+{
+ "Richmond Place": {
+  "events": [
+   { "date": "2024-03-26", "stage": "prelim", "what": "A checklist item deferred to the final plan", "kind": "decided", "src": ["ripb240326"], "quote": "motioned to grant the waiver request to defer the preliminary plan submission checklist item H11 until final plan approval" },
+   { "date": "2024-10-22", "stage": "prelim", "what": "Preliminary plan public hearing", "kind": "heard", "src": ["ripb241022"], "quote": "Richmond Place" },
+   { "date": "2024-12-10", "stage": "prelim", "what": "Preliminary plan approved, all in favor, with six conditions", "kind": "decided", "src": ["ripb241210"], "quote": "P. Burton motioned to approve the Preliminary Plan for Richmond Place Comprehensive Permit Application", "scan": true }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Switch Road": {
+  "events": [
+   { "date": "2025-08-20", "stage": "preapp", "what": "Pre-application for a comprehensive permit", "kind": "heard", "src": ["ripb250820"], "quote": "Switch Road" },
+   { "date": "2026-01-13", "stage": "prelim", "what": "Preliminary plan hearing opened; peer reviews of traffic, stormwater and the effect on Sandy Pond required", "kind": "heard", "src": ["ripb260113"], "quote": "motioned for a Peer Review of the traffic study, stormwater analysis" },
+   { "date": "2026-03-10", "stage": "prelim", "what": "Preliminary plan approved, all in favor, with five years of water testing at Sandy Pond among the conditions", "kind": "decided", "src": ["ripb260310"], "quote": "motioned to approve and accept the decision as amended in Option C" }
+  ],
+  "checked": "2026-11-19"
+ },
+ "West Shannock Road": {
+  "events": [
+   { "date": "2025-12-09", "stage": "preapp", "what": "Pre-application for a comprehensive permit for 13 single-family homes", "kind": "heard", "src": ["ripb251209"], "quote": "Shannock" }
+  ],
+  "checked": "2026-11-19"
+ }
+}

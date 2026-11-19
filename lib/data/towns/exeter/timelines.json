@@ -1,0 +1,25 @@
+{
+ "Solicity Project": {
+  "events": [
+   { "date": "2023-04-13", "stage": "other", "what": "The owner's zoning appeals about the property denied by the Zoning Board", "kind": "decided", "src": ["exzb230413"], "quote": "The appeal was unanimously denied." },
+   { "date": "2023-11-28", "stage": "preapp", "what": "First pre-application conference for a comprehensive permit", "kind": "heard", "src": ["expb231128"], "quote": "pre-application conference for a Comprehensive Permit Major Subdivision" },
+   { "date": "2025-10-28", "stage": "preapp", "what": "Second pre-application conference", "kind": "heard", "src": ["expb251028"], "quote": "Second Pre-Application Conference; Comprehensive Permit-Major" },
+   { "date": "2026-01-27", "stage": "preapp", "what": "Third pre-application conference, at 155 to 164 homes", "kind": "heard", "src": ["expb260127"], "quote": "Third Pre-Application Conference; Comprehensive Permit-Major Land Development" }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Ten Rod Road Neighborhood": {
+  "events": [
+   { "date": "2026-06-08", "stage": "preapp", "what": "Pre-application conference for a comprehensive permit", "kind": "heard", "src": ["expb260608"], "quote": "Pre-Application Conference for Comprehensive Permit Under the Rhode Island Low" }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Gardner Ridge": {
+  "events": [
+   { "date": "2026-01-27", "stage": "preapp", "what": "Pre-application; the Board voted 5 to 0 to write to Rhode Island Housing in support of 20 condominiums", "kind": "decided", "src": ["expb260127"], "quote": "in support of the initial concept of 20, one-bedroom, one-level condominium units" },
+   { "date": "2026-04-14", "stage": "preapp", "what": "Second pre-application, weighing a comprehensive permit against adaptive reuse", "kind": "heard", "src": ["expb260414"], "quote": "design options for a Comprehensive Permit or Adaptive Reuse Major Land" },
+   { "date": "2026-06-23", "stage": "prelim", "what": "Preliminary plan and comprehensive permit approved 5 to 0, with fifty conditions", "kind": "decided", "src": ["expb260623"], "quote": "that we approve the Preliminary Plan and Comprehensive Permit Application for Gardner Ridge" }
+  ],
+  "checked": "2026-11-19"
+ }
+}

@@ -15,7 +15,7 @@ export interface Pin {
   key: string;
   at: LatLon;
   color: string;
-  shape: "dot" | "ring" | "square";
+  shape: "dot" | "ring" | "square" | "cross";
   tip: string;
 }
 
@@ -75,6 +75,7 @@ const pinIcon = (p: Pin) => {
   const shape =
     p.shape === "square" ? `<rect x="3.5" y="3.5" width="13" height="13" rx="2" fill="${p.color}" stroke="#fff" stroke-width="2"/>`
     : p.shape === "ring" ? `<circle cx="10" cy="10" r="6.5" fill="#fff" stroke="${p.color}" stroke-width="4"/>`
+    : p.shape === "cross" ? `<path d="M4 4L16 16M16 4L4 16" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M4 4L16 16M16 4L4 16" stroke="${p.color}" stroke-width="3.5" stroke-linecap="round"/>`
     : `<circle cx="10" cy="10" r="7.5" fill="${p.color}" stroke="#fff" stroke-width="2"/>`;
   return L.divIcon({ className: "zm-pin", html: `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">${shape}</svg>`, iconSize: [20, 20], iconAnchor: [10, 10], tooltipAnchor: [10, 0] });
 };

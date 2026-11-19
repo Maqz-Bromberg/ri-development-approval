@@ -145,7 +145,7 @@ export interface Finding {
   q?: string;
 }
 
-export type PrecedentStatus = "approved" | "pending" | "administrative" | "unknown";
+export type PrecedentStatus = "approved" | "pending" | "administrative" | "denied" | "unknown";
 
 export interface Precedent {
   /** Municipality whose records the project comes from */

@@ -1,4 +1,6 @@
 import RAW from "./towns/records-searched.json";
+import { historyFor } from "./history";
+import type { Precedent } from "../types";
 
 /*
  * "Read, and none found" (ARD D63, chunk 6). For a town whose records were searched for housing, what was searched
@@ -85,3 +87,7 @@ const fmt = (iso: string | null) => (iso ? new Date(`${iso}T12:00:00Z`).toLocale
 /** "the Planning Board's (Jan 2023 to Nov 2026, 48 meetings) and the Zoning Board's (…)" */
 export const searchedLine = (s: Searched) =>
   s.bodies.map((b) => `${b.name} (${b.meetings} meetings, ${fmt(b.from)} to ${fmt(b.to)}${b.scans ? `; ${b.scans} files scans, not read` : ""}${b.noFiles ? `; ${b.noFiles} with nothing filed` : ""})`).join(" and ");
+
+/** The recorded project a found item became, matched by the project's name in the item's description (ARD D64). */
+export const readAs = (town: string, f: FoundItem): Precedent | undefined =>
+  historyFor(town).find((h) => f.what.toLowerCase().includes(h.name.toLowerCase()));

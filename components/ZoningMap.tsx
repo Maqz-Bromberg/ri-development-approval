@@ -26,8 +26,8 @@ const ZoningMapView = dynamic(() => import("./ZoningMapView"), {
 
 type Mode = "structure" | "route";
 const PLATLOT = /^[A-Z]{2} \d{3}-\d{4}-\d{3}$/;
-const SHAPE: Record<PrecedentStatus, Pin["shape"]> = { approved: "dot", pending: "ring", unknown: "ring", administrative: "square" };
-const SHAPE_LABEL = { dot: "Approved", ring: "Pending or not stated", square: "Approved by staff" } as const;
+const SHAPE: Record<PrecedentStatus, Pin["shape"]> = { approved: "dot", pending: "ring", unknown: "ring", administrative: "square", denied: "cross" };
+const SHAPE_LABEL = { dot: "Approved", ring: "Pending or not stated", square: "Approved by staff", cross: "Denied" } as const;
 
 /** Four corners of the circle the parcels are drawn in, to fit the view to. */
 function circleBox([lat, lon]: LatLon, m: number): LatLon[] {
@@ -326,7 +326,7 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
             {routes.map((r) => (
               <li key={r}><span className="zm-swatch" style={{ background: ROUTE_COLOR[r] }} aria-hidden="true" />{TREES[r].name}</li>
             ))}
-            {(["dot", "ring", "square"] as const).map((s) => (
+            {(["dot", "ring", "square", "cross"] as const).map((s) => (
               <li key={s}><span className={`zm-shape ${s}`} aria-hidden="true" />{SHAPE_LABEL[s]}</li>
             ))}
           </ul>

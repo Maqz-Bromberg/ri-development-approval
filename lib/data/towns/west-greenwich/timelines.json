@@ -1,0 +1,34 @@
+{
+ "The VUE": {
+  "events": [
+   { "date": "2024-12-16", "stage": "preapp", "what": "Pre-application conference for a comprehensive permit, then shown as condominiums", "kind": "heard", "src": ["wgpb241216"], "quote": "the current plans call for two types of condominiums on AP 1, Lot 4-5 in the Centre of New England" },
+   { "date": "2025-05-19", "stage": "prelim", "what": "Preliminary plan approved 4 to 0, with a height adjustment to 70 ft and multi-family use allowed in the SMD district; final plan by staff", "kind": "decided", "src": ["wgpb250519"], "quote": "Secretary Berry made Motion to Approve the Preliminary Plan, with the following Conditions/Provisions" },
+   { "date": "2026-01-28", "stage": "final", "what": "Final plan approved administratively, reported to the Board", "kind": "reported", "src": ["wgpb260128"], "quote": "Vue/Gemini Apartments; 687 Centre of New England Blvd; Administrative Final." }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Lace Mill": {
+  "events": [
+   { "date": "2025-04-21", "stage": "preapp", "what": "Pre-application: six apartments in three two-story buildings, three affordable", "kind": "heard", "src": ["wgpb250421"], "quote": "He owns a vacant lot at 152 Mishnock Road, and plans to construct six apartments" },
+   { "date": "2025-10-20", "stage": "prelim", "what": "Comprehensive permit approved 3 to 0 at its preliminary plan hearing, with eleven conditions", "kind": "decided", "src": ["wgpb251020"], "quote": "made Motion to Approve the Affordable Housing Comprehensive Permit Application for a 6-Unit Apartment Complex with the following Conditions" }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Raccoon Hill Townhomes": {
+  "events": [
+   { "date": "2025-07-21", "stage": "other", "what": "A Community Development Block Grant for more land found consistent with the town's affordable housing and comprehensive plans", "kind": "decided", "src": ["wgpb250721"], "quote": "the CDBG is in conformance with both the West Greenwich Affordable Housing Plan, as well as the Town’s Comprehensive Plan" },
+   { "date": "2025-09-15", "stage": "preapp", "what": "Pre-application for 44 affordable apartments", "kind": "heard", "src": ["wgpb250915"], "quote": "Their intention is to come before the Board again to request Master Plan Approval for both Phases" },
+   { "date": "2025-11-17", "stage": "master", "what": "Master plan approved 4 to 0 with two adjustments (multi-family use in RFR-2, laundry waste with sanitary effluent) and ten conditions", "kind": "decided", "src": ["wgpb251117"], "quote": "made Motion to Approve the Master Plan with the requested Adjustments as noted, along with the following Conditions" },
+   { "date": "2026-07-20", "stage": "other", "what": "Work session on the well testing the master plan approval requires", "kind": "heard", "src": ["wgpb260720"], "quote": "WORK SESSION to Review, Discuss and Coordinate Well Testing Program required by Master Plan Approval" }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Bella View Estates": {
+  "events": [
+   { "date": "2026-03-23", "stage": "master", "what": "Master plan public hearing", "kind": "heard", "src": ["wgpb260323"], "quote": "Bella View Estates – An Affordable Housing Comprehensive Permit – Multi-Family Major Land Development of 292 Condominiums" },
+   { "date": "2026-03-31", "stage": "master", "what": "All requested adjustments rejected and the master plan denied, each 5 to 0", "kind": "decided", "src": ["wgpb260331"], "quote": "Member Wallace made Motion to deny the Master Plan Application." },
+   { "date": "2026-04-20", "stage": "master", "what": "Written decision of denial adopted; the applicant's attorney argued it came too late", "kind": "decided", "src": ["wgpb260420"], "quote": "Member Wallace made Motion to Approve the written Decision." }
+  ],
+  "checked": "2026-11-19"
+ }
+}

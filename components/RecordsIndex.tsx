@@ -7,7 +7,7 @@ import { SOURCES } from "@/lib/data/sources";
 import { TOWNS } from "@/lib/data/towns";
 import { bodiesOf, bodiesRead, meetsLine, minutesLine, ROLE_LABEL, type Body } from "@/lib/data/bodies";
 import { agendaOf, kindOf, KIND_WORD, readInto } from "@/lib/data/agenda";
-import { searchedLine, searchedOf } from "@/lib/data/searched";
+import { readAs, searchedLine, searchedOf } from "@/lib/data/searched";
 import { sourcePlace, sourceType, SOURCE_TYPES } from "@/lib/sourceKind";
 import type { Locality } from "@/lib/types";
 import { Icon } from "./Icon";
@@ -41,7 +41,7 @@ function SearchedRecords({ town }: { town: string }) {
       <p>
         {s.found.length ? <span className="pill">Read</span> : <span className="pill live">Read, and none found</span>}{" "}
         Searched for housing on {s.read}: the agendas of the {searchedLine(s)}, on the state Open Meetings site, with the minutes where an agenda mentioned homes.{" "}
-        {s.found.length ? `${s.found.length} housing item${s.found.length === 1 ? "" : "s"} found, listed below; none is read into a recorded project yet.` : "No proposal with homes was found."}
+        {s.found.length ? `${s.found.length} housing item${s.found.length === 1 ? "" : "s"} found, listed below; ${s.found.filter((f) => readAs(town, f)).length || "none"} read into recorded projects.` : "No proposal with homes was found."}
       </p>
       {s.note && <p className="small muted">{s.note}</p>}
       {s.found.length > 0 && (
@@ -49,7 +49,7 @@ function SearchedRecords({ town }: { town: string }) {
           {s.found.map((f) => (
             <li key={`${f.date}-${f.meeting}`}>
               <span className="media-kind m-page">{f.date}</span>
-              <span>{f.what}{f.homes ? ` (${f.homes} homes)` : ""} <span className="muted small">{f.board} · <a href={`https://opengov.sos.ri.gov/OpenMeetingsPublic/ViewMeetingDetailByID?MeetingID=${f.meeting}`} target="_blank" rel="noopener noreferrer">meeting ↗</a></span> <span className="gap-tag">Gap</span></span>
+              <span>{f.what}{f.homes ? ` (${f.homes} homes)` : ""} <span className="muted small">{f.board} · <a href={`https://opengov.sos.ri.gov/OpenMeetingsPublic/ViewMeetingDetailByID?MeetingID=${f.meeting}`} target="_blank" rel="noopener noreferrer">meeting ↗</a></span> {readAs(town, f) ? <span className="small">✓ read</span> : <span className="gap-tag">Gap</span>}</span>
             </li>
           ))}
         </ul>

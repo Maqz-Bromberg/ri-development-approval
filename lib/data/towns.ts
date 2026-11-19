@@ -1,5 +1,5 @@
 import { bodiesOf, bodiesRead, primaryBody } from "./bodies";
-import { searchedOf } from "./searched";
+import { readAs, searchedOf } from "./searched";
 
 /*
  * The 39 Rhode Island municipalities and how much of this site is read for each (ARD D53, chunk 1: four marks).
@@ -112,8 +112,8 @@ export function levelOf(m: Marks): Level {
 function hearingsFromSearch(name: string): MarkRead | undefined {
   const s = searchedOf(name);
   if (!s) return undefined;
-  const n = s.found.length;
-  return { read: s.read, partly: true, note: `The planning and zoning boards' agendas since 2023 were searched for housing: ${n ? `${n} item${n === 1 ? "" : "s"} found and listed on the Records card, not yet read into example projects` : "none found"}. Recordings and the towns' own record pages were not read.` };
+  const n = s.found.length, r = s.found.filter((f) => readAs(name, f)).length;
+  return { read: s.read, partly: true, note: `The planning and zoning boards' agendas since 2023 were searched for housing: ${n ? `${n} item${n === 1 ? "" : "s"} found and listed on the Records card, ${r ? `${r} read into example projects from the minutes` : "not yet read into example projects"}` : "none found"}. Recordings and the towns' own record pages were not read.` };
 }
 
 function officesFromState(name: string): MarkRead | undefined {

@@ -1,0 +1,21 @@
+{
+ "Brushy Brook": {
+  "events": [
+   { "date": "2023-01-04", "stage": "prelim", "what": "Preliminary plan public hearing opened", "kind": "heard", "src": ["hopb230104"], "quote": "Brushy Brook – 140 Unit- Comprehensive Permit" },
+   { "date": "2023-08-24", "stage": "prelim", "what": "Preliminary plan approved 3 to 2, with written findings", "kind": "decided", "src": ["hopb230824"], "quote": "ON THE PRELIMINARY PLAN APPROVAL FOR BRUSHY BROOK - MAJOR SUBDIVISION" },
+   { "date": "2023-09-20", "stage": "other", "what": "Two appeals of the decision filed by residents", "kind": "reported", "src": ["hopb230920"], "quote": "recent Brushy Brook decision" },
+   { "date": "2025-09-03", "stage": "prelim", "what": "One-year extension of the preliminary approval granted", "kind": "decided", "src": ["hopb250903"], "quote": "TO APPROVE THE ONE YEAR EXTENSION REQUEST OF THE PRELIMINARY PLAN DECISION APPROVAL FOR BRUSHY BROOK" },
+   { "date": "2025-12-03", "stage": "final", "what": "Final plan approved 5 to 0, with the written decision", "kind": "decided", "src": ["hopb251203"], "quote": "TO ADOPT THE WRITTEN DECISION DRAFTED BY THE PLANNER AS PRESENTED AND MODIFIED AS DISCUSSED THIS EVENING, AND TO APPROVE THE PROJECT AT FINAL" }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Clarks Falls": {
+  "events": [
+   { "date": "2024-02-07", "stage": "preapp", "what": "Pre-application for a comprehensive permit", "kind": "heard", "src": ["hopb240207"], "quote": "Clarks Falls Pre-Application – Proposed Comprehensive Permit" },
+   { "date": "2026-03-24", "stage": "prelim", "what": "Preliminary plan hearing: 80 two-bedroom townhouses, 20 of them low- and moderate-income, in place of the 54 three-bedroom ones of the master plan", "kind": "heard", "src": ["hopb260324"], "quote": "applicant was previously awarded Master Plan approval for 54-unit townhouse development, with three bedrooms each" },
+   { "date": "2026-07-01", "stage": "prelim", "what": "Hearing continued to September, with the decision deadline extended", "kind": "continued", "src": ["hopb260701"], "quote": "TO CONTINUE CLARKS FALLS PUBLIC HEARING UNTIL THE SEPTEMBER 2, 2026" },
+   { "date": "2026-09-02", "stage": "master", "what": "Master plan approval reinstated and extended to October 2027; the hearing continued to October 7", "kind": "decided", "src": ["hopb260902"], "quote": "MOTION TO APPROVE THE REINSTATEMENT OF THE APPROVED MASTER PLAN" }
+  ],
+  "checked": "2026-11-19"
+ }
+}

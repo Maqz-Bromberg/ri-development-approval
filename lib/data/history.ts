@@ -2,6 +2,14 @@ import type { Precedent, Timeline } from "../types";
 import TIMELINES from "./timelines.json";
 import { PROVIDENCE_HISTORY } from "./towns/providence/history";
 import PROVIDENCE_TIMELINES from "./towns/providence/timelines.json";
+import { WEST_GREENWICH_HISTORY } from "./towns/west-greenwich/history";
+import WEST_GREENWICH_TIMELINES from "./towns/west-greenwich/timelines.json";
+import { EXETER_HISTORY } from "./towns/exeter/history";
+import EXETER_TIMELINES from "./towns/exeter/timelines.json";
+import { HOPKINTON_HISTORY } from "./towns/hopkinton/history";
+import HOPKINTON_TIMELINES from "./towns/hopkinton/timelines.json";
+import { RICHMOND_HISTORY } from "./towns/richmond/history";
+import RICHMOND_TIMELINES from "./towns/richmond/timelines.json";
 
 /**
  * Cumberland multifamily items from Planning Board agendas, minutes and staff memos. Outcomes only where a source states them.
@@ -86,7 +94,12 @@ function join(town: string, base: Omit<Precedent, "events" | "checked" | "town">
 }
 
 /** Every recorded project, from every town read so far. Each carries its town. */
-export const HISTORY: Precedent[] = [...join("Cumberland", BASE, TIMELINES), ...join("Providence", PROVIDENCE_HISTORY, PROVIDENCE_TIMELINES)];
+export const HISTORY: Precedent[] = [
+  ...join("Cumberland", BASE, TIMELINES), ...join("Providence", PROVIDENCE_HISTORY, PROVIDENCE_TIMELINES),
+  // Comprehensive permit cases in the small towns of chunk 6 (ARD D64).
+  ...join("West Greenwich", WEST_GREENWICH_HISTORY, WEST_GREENWICH_TIMELINES), ...join("Exeter", EXETER_HISTORY, EXETER_TIMELINES),
+  ...join("Hopkinton", HOPKINTON_HISTORY, HOPKINTON_TIMELINES), ...join("Richmond", RICHMOND_HISTORY, RICHMOND_TIMELINES),
+];
 
 /** The recorded projects of one town. */
 export const historyFor = (town: string): Precedent[] => HISTORY.filter((h) => h.town === town);

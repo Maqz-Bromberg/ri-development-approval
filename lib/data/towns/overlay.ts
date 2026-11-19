@@ -19,7 +19,7 @@ import { woonsocketUse } from "./woonsocket/rules";
 import { warwickUse } from "./warwick/rules";
 import { NEWPORT_UNMAPPED, newportCoaStep, newportOverlay, newportOverlayFlags, newportUse } from "./newport/rules";
 import { centralFallsFindings, centralFallsUse } from "./central-falls/rules";
-import { smithfieldUse } from "./smithfield/rules";
+import { smithfieldAffordableLines, smithfieldFindings, smithfieldUse } from "./smithfield/rules";
 import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
 /*
@@ -51,10 +51,10 @@ const RULES: Record<string, TownRules> = {
   },
   // Read for its ordinance under amendment: rules with dates, a pending amendment, vesting on certification (ARD D62, chunk 4).
   "North Providence": {
-    use: northProvidenceUse, moreFindings: northProvidenceFindings,
+    use: northProvidenceUse, moreFindings: northProvidenceFindings, inclusionaryNone: { src: "npzo" },
   },
   // Chunk 6, small rural towns (ARD D63): each town's housing rows, read in place of the Atlas.
-  Foster: { use: fosterUse, moreFindings: (i) => fosterFindings(i), retired: FOSTER_RETIRED },
+  Foster: { inclusionaryNone: { src: "fozo" }, use: fosterUse, moreFindings: (i) => fosterFindings(i), retired: FOSTER_RETIRED },
   Exeter: { routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: exeterUse, moreFindings: (i) => exeterFindings(i), unmappedOverlays: EXETER_UNMAPPED, kinds: EXETER_KINDS, affordableLines: exeterAffordableLines },
   Hopkinton: { routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: hopkintonUse, moreFindings: (i) => hopkintonFindings(i) },
   Richmond: { routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: richmondUse },
@@ -63,18 +63,18 @@ const RULES: Record<string, TownRules> = {
     routeStatus: { comp: "From the town's own procedure, read 2026-11-19" }, use: westGreenwichUse, moreFindings: (i) => westGreenwichFindings(i), inclusionaryRead: true, affordableLines: westGreenwichAffordableLines,
   },
   // Chunk 7, the busy cities (ARD D67): each city's housing rows, read in place of the Atlas.
-  Pawtucket: { use: pawtucketUse },
-  Cranston: { use: cranstonUse },
+  Pawtucket: { use: pawtucketUse, inclusionaryNone: { src: "pazo" } },
+  Cranston: { use: cranstonUse, inclusionaryNone: { src: "crzo" } },
   "East Providence": { use: eastProvidenceUse, moreFindings: (i) => eastProvidenceFindings(i), affordableLines: eastProvidenceAffordableLines },
-  Woonsocket: { use: woonsocketUse },
-  Warwick: { use: warwickUse },
+  Woonsocket: { use: woonsocketUse, inclusionaryNone: { src: "wozo" } },
+  Warwick: { use: warwickUse, inclusionaryNone: { src: "wazo", note: "A Planned District Residential project may have up to 15% more homes if at least a quarter are sold or rented below market (subsection 308), an incentive, not a requirement." } },
   Newport: {
-    use: newportUse, overlayRules: newportOverlay, unmappedOverlays: NEWPORT_UNMAPPED, overlayFlags: newportOverlayFlags,
+    use: newportUse, inclusionaryNone: { src: "nezo" }, overlayRules: newportOverlay, unmappedOverlays: NEWPORT_UNMAPPED, overlayFlags: newportOverlayFlags,
     extraSteps: [{ step: newportCoaStep, before: ["record", "building"] }],
   },
-  "Central Falls": { use: centralFallsUse, moreFindings: (i) => centralFallsFindings(i) },
+  "Central Falls": { use: centralFallsUse, moreFindings: (i) => centralFallsFindings(i), inclusionaryNone: { src: "cfzo", note: "Parking is reduced by a quarter for each affordable home where at least 15% are deed-restricted, an incentive, not a requirement." } },
   // Not a city, but its zoning was saved by hand with them (the plan's chunk 7).
-  Smithfield: { use: smithfieldUse },
+  Smithfield: { use: smithfieldUse, moreFindings: (i) => smithfieldFindings(i), affordableLines: smithfieldAffordableLines, inclusionaryRead: true },
   // Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3).
   Westerly: {
     use: westerlyUse, useCommercial: westerlyCommercialUse, overlayRules: westerlyOverlay, unmappedOverlays: WESTERLY_UNMAPPED,

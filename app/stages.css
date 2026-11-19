@@ -221,6 +221,11 @@
 .lv-chip.l2, .level-chip.level-2 { background: #C3D5EC; }
 .lv-chip.l3, .level-chip.level-3 { background: #8FB2DD; }
 .lv-chip.l4, .level-chip.level-4 { background: #3E74B8; color: #fff; }
+/* A level reached on marks read only in part: its own paler shade, with a dashed edge (ARD D68). */
+.lv-chip.part { border-style: dashed; }
+.lv-chip.l2.part { background: #D4E0EF; }
+.lv-chip.l3.part { background: #AAC4E5; }
+.lv-chip.l4.part { background: #6A93C9; color: #fff; }
 @media (max-width: 760px) { .towns-top { grid-template-columns: 1fr; } }
 .ix-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
 .ix-bar .ix-search { flex: 1 1 320px; }

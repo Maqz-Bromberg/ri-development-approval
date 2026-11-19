@@ -1,0 +1,52 @@
+{
+ "525 Broadway": {
+  "events": [
+   {
+    "date": "2025-08-04",
+    "stage": "prelim",
+    "what": "Redrawn at 38 homes in Newport after Middletown denied a use variance; hearing continued",
+    "kind": "continued",
+    "src": [
+     "nepb250804"
+    ],
+    "quote": "denied a use variance for the portion of the lot that is located in Middletown"
+   },
+   {
+    "date": "2025-09-08",
+    "stage": "prelim",
+    "what": "Variances and special use permit granted under unified development review",
+    "kind": "decided",
+    "src": [
+     "nepb250908"
+    ],
+    "quote": "applicant addressed each of the applicable standards and to grant approval for the requested variance, contingent upon the approval of the final development plan"
+   },
+   {
+    "date": "2026-04-15",
+    "stage": "final",
+    "what": "Final plan approval recorded",
+    "kind": "decided",
+    "src": [
+     "nepb260511"
+    ],
+    "quote": "Final plan approval recorded on April 15, 2026."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "102–108 Girard Avenue": {
+  "events": [
+   {
+    "date": "2025-12-01",
+    "stage": "prelim",
+    "what": "Variances and category 1 special use permit approved for a four-home addition",
+    "kind": "decided",
+    "src": [
+     "nepb251201"
+    ],
+    "quote": "The motion was moved by Board Member Pimentel and Seconded by Board Member Antonelli, and approved unanimously."
+   }
+  ],
+  "checked": "2026-11-19"
+ }
+}

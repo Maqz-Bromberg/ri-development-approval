@@ -10,6 +10,20 @@ import { HOPKINTON_HISTORY } from "./towns/hopkinton/history";
 import HOPKINTON_TIMELINES from "./towns/hopkinton/timelines.json";
 import { RICHMOND_HISTORY } from "./towns/richmond/history";
 import RICHMOND_TIMELINES from "./towns/richmond/timelines.json";
+import { PAWTUCKET_HISTORY } from "./towns/pawtucket/history";
+import PAWTUCKET_TIMELINES from "./towns/pawtucket/timelines.json";
+import { CRANSTON_HISTORY } from "./towns/cranston/history";
+import CRANSTON_TIMELINES from "./towns/cranston/timelines.json";
+import { WARWICK_HISTORY } from "./towns/warwick/history";
+import WARWICK_TIMELINES from "./towns/warwick/timelines.json";
+import { WOONSOCKET_HISTORY } from "./towns/woonsocket/history";
+import WOONSOCKET_TIMELINES from "./towns/woonsocket/timelines.json";
+import { EAST_PROVIDENCE_HISTORY } from "./towns/east-providence/history";
+import EAST_PROVIDENCE_TIMELINES from "./towns/east-providence/timelines.json";
+import { NEWPORT_HISTORY } from "./towns/newport/history";
+import NEWPORT_TIMELINES from "./towns/newport/timelines.json";
+import { CENTRAL_FALLS_HISTORY } from "./towns/central-falls/history";
+import CENTRAL_FALLS_TIMELINES from "./towns/central-falls/timelines.json";
 
 /**
  * Cumberland multifamily items from Planning Board agendas, minutes and staff memos. Outcomes only where a source states them.
@@ -99,6 +113,7 @@ export const HISTORY: Precedent[] = [
   // Comprehensive permit cases in the small towns of chunk 6 (ARD D64).
   ...join("West Greenwich", WEST_GREENWICH_HISTORY, WEST_GREENWICH_TIMELINES), ...join("Exeter", EXETER_HISTORY, EXETER_TIMELINES),
   ...join("Hopkinton", HOPKINTON_HISTORY, HOPKINTON_TIMELINES), ...join("Richmond", RICHMOND_HISTORY, RICHMOND_TIMELINES),
+  ...join("Pawtucket", PAWTUCKET_HISTORY, PAWTUCKET_TIMELINES), ...join("Cranston", CRANSTON_HISTORY, CRANSTON_TIMELINES), ...join("Warwick", WARWICK_HISTORY, WARWICK_TIMELINES), ...join("Woonsocket", WOONSOCKET_HISTORY, WOONSOCKET_TIMELINES), ...join("East Providence", EAST_PROVIDENCE_HISTORY, EAST_PROVIDENCE_TIMELINES), ...join("Newport", NEWPORT_HISTORY, NEWPORT_TIMELINES), ...join("Central Falls", CENTRAL_FALLS_HISTORY, CENTRAL_FALLS_TIMELINES),
 ];
 
 /** The recorded projects of one town. */

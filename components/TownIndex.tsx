@@ -13,6 +13,9 @@ const COUNTIES = ["Bristol", "Kent", "Newport", "Providence", "Washington"] as c
 
 /** One colour per level, light to dark: the same scale the statewide map shades towns by. */
 export const LEVEL_COLOR: Record<Level, string> = { 1: "#E3EAF3", 2: "#C3D5EC", 3: "#8FB2DD", 4: "#3E74B8" };
+/** A level reached on marks read only in part has a shade of its own, halfway to the level below (Maqz, 2026-11-19; ARD D68). */
+export const LEVEL_PART_COLOR: Record<Level, string> = { 1: "#E3EAF3", 2: "#D4E0EF", 3: "#AAC4E5", 4: "#6A93C9" };
+export const levelColor = (t: { level: Level; marks: Parameters<typeof levelInPart>[0]["marks"] }) => (levelInPart(t) ? LEVEL_PART_COLOR : LEVEL_COLOR)[t.level];
 /** One mark at a time, on the same scale: not read, partly read, read. */
 export const MARK_COLOR: Record<MarkState, string> = { none: "#E3EAF3", partly: "#8FB2DD", read: "#3E74B8" };
 
@@ -29,8 +32,8 @@ export function TownIndex() {
   const [shade, setShade] = useState<"level" | Mark>("level");
 
   const town = (name: string) => TOWNS.find((t) => t.name === name);
-  const fillOf = (name: string) => shade === "level" ? LEVEL_COLOR[town(name)?.level ?? 1] : MARK_COLOR[markState(town(name)?.marks[shade])];
-  const count = (l: Level) => TOWNS.filter((t) => t.level === l).length;
+  const fillOf = (name: string) => shade === "level" ? (town(name) ? levelColor(town(name)!) : LEVEL_COLOR[1]) : MARK_COLOR[markState(town(name)?.marks[shade])];
+  const count = (l: Level) => TOWNS.filter((t) => t.level === l && !levelInPart(t)).length;
   const inPart = (l: Level) => TOWNS.filter((t) => t.level === l && levelInPart(t)).length;
   const parts = (l: Level) => TOWNS.filter((t) => t.parts?.some((p) => p.level === l)).length;
   const markCount = (m: Mark, s: MarkState) => TOWNS.filter((t) => markState(t.marks[m]) === s).length;
@@ -76,15 +79,23 @@ export function TownIndex() {
             </ul>
           )}
           <ul className="level-key" aria-label="Levels: select to filter" hidden={shade !== "level"}>
-            {([1, 2, 3, 4] as Level[]).map((l) => (
+            {([1, 2, 3, 4] as Level[]).flatMap((l) => [
               <li key={l}>
                 <button type="button" className={`lk-btn${levels.has(l) ? " on" : ""}`} aria-pressed={levels.has(l)} onClick={() => flip(l)}>
                   <span className="lk-sw" style={{ background: LEVEL_COLOR[l] }} aria-hidden="true" />
-                  <span><b>Level {l}: {LEVELS[l].name}</b> <span className="muted">· {count(l)} town{count(l) === 1 ? "" : "s"}{l > 1 && inPart(l) ? `, ${inPart(l) === count(l) ? (count(l) === 1 ? "on" : "all on") : `${inPart(l)} on`} marks read in part` : ""}{parts(l) ? `, and part of ${parts(l)} more` : ""}</span><br /><small className="muted">{LEVELS[l].has}</small></span>
+                  <span><b>Level {l}: {LEVELS[l].name}</b> <span className="muted">· {count(l)} town{count(l) === 1 ? "" : "s"}{parts(l) ? `, and part of ${parts(l)} more` : ""}</span><br /><small className="muted">{LEVELS[l].has}</small></span>
                 </button>
-              </li>
-            ))}
-            <li className="small muted">A level counts a mark read in part, such as boards from the state site only, steps for one route only, or hearings for some cases only. Shade by a mark to see which.</li>
+              </li>,
+              ...(l > 1 && inPart(l) ? [
+                <li key={`${l}p`} className="lk-part">
+                  <span className="lk-btn static">
+                    <span className="lk-sw" style={{ background: LEVEL_PART_COLOR[l] }} aria-hidden="true" />
+                    <span><b>Level {l}, in part</b> <span className="muted">· {inPart(l)} town{inPart(l) === 1 ? "" : "s"}</span><br /><small className="muted">Level {l} reached with a mark read only in part</small></span>
+                  </span>
+                </li>,
+              ] : []),
+            ])}
+            <li className="small muted">A paler shade is a level reached with a mark read only in part, such as boards from the state site only, steps for one route only, or hearings for some cases only. Shade by a mark to see which.</li>
           </ul>
           <p className="small muted">
             {shown.length === TOWNS.length ? "All 39 towns." : `${shown.length} of 39 towns.`}{" "}
@@ -110,7 +121,7 @@ export function TownIndex() {
                     </a>
                   )}
                   <span className="tc-tags">
-                    <span className={`lv-chip l${t.level}`}>Level {t.level}</span>
+                    <span className={`lv-chip l${t.level}${levelInPart(t) ? " part" : ""}`} title={levelInPart(t) ? "Reached with a mark read only in part" : undefined}>Level {t.level}{levelInPart(t) ? ", in part" : ""}</span>
                     {t.parts?.map((p) => <span key={p.name} className="lv-chip-part">{p.name} <span className={`lv-chip l${p.level}`}>Level {p.level}</span></span>)}
                     {t.trial && <span className="tc-tag">trial</span>}
                     {t.commercial && <span className="tc-tag">commercial: level {t.commercial.level}</span>}

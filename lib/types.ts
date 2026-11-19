@@ -254,6 +254,8 @@ export interface TownRules {
   affordableLines?: (i: ProjectInputs) => { short: string; what: string; src: string; need: number }[];
   /** True when the town's inclusionary zoning was read, so its own findings answer it in place of the generic note */
   inclusionaryRead?: boolean;
+  /** The town's whole zoning text was searched and has no inclusionary zoning (ARD D68): "none found" replaces the generic note. `note` names any affordable incentive found instead. */
+  inclusionaryNone?: { src: string; note?: string };
 }
 
 export type ObjectionWeight = "material" | "partly" | "not";

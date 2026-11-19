@@ -31,3 +31,33 @@ export function smithfieldUse(i: ProjectInputs): { value: Value; finding: Findin
   if (r !== ROWS.one && value === "prohibited" && col.startsWith("R") && col !== "R20") why.push("The Zoning Atlas shows a hearing here; the ordinance amended to January 2026 does not allow it.");
   return useFinding({ id: "sm-use", town: "Smithfield", what: r.what, zone: i.zone, value, why, src: "smzo", pin: "§ 4.3, Table of Uses, B. Residential uses", q: r.q });
 }
+
+/*
+ * Inclusionary zoning (§ 5.10, applications after May 5, 2009), read 2026-11-19: 20% of the unit yield the zoning allows,
+ * rounded up, low- or moderate-income for 99 years, in a subdivision of ten or more single-family lots or a project of
+ * six or more multi-family homes; one market-rate bonus home for each affordable one. The yield is the zoning's
+ * (§ 6.8), which is not computed here, so the homes entered stand in for it.
+ */
+export const smithfieldInclusionary = (i: ProjectInputs) => (i.kind !== "commercial" && i.units >= 6 ? Math.ceil(i.units * 0.2) : 0);
+
+export function smithfieldFindings(i: ProjectInputs): Finding[] {
+  const need = smithfieldInclusionary(i);
+  if (!need) return [];
+  return [
+    {
+      id: "sm-inclusionary", st: i.aff >= need ? "pass" : "fail", t: `Inclusionary zoning: ${need} of ${i.units} homes must be affordable, ${i.aff} entered`,
+      p: "Six or more multi-family homes, or ten or more single-family lots, need 20% of the unit yield the zoning allows as low- or moderate-income homes, rounded up, affordable for 99 years and built on site unless the Planning Board finds that infeasible. The share is of the zoning's yield (§ 6.8); the homes entered stand in for it here. An inclusionary housing agreement must be approved with the preliminary plan, and the affordable homes may not be the last built.",
+      src: "smzo", pin: "§ 5.10 D, E, J", q: "is required to include at least twenty percent (20%) of the unit yield based on zoning as low or moderate income housing units",
+    },
+    {
+      id: "sm-inclusionary-bonus", st: "info", t: `Density bonus: ${need} more market-rate home${need === 1 ? "" : "s"}`,
+      p: "One market-rate home is added for each affordable one, with reasonable dimensional relief to fit them, and the Town waives its share of the building permit fees for the affordable homes.",
+      src: "smzo", pin: "§ 5.10 F", q: "an increase in the number of market rate units equal to the number of low and moderate income units",
+    },
+  ];
+}
+
+export const smithfieldAffordableLines = (i: ProjectInputs) => {
+  const need = smithfieldInclusionary(i);
+  return need ? [{ short: "20%: Smithfield inclusionary zoning", what: "Six or more multi-family homes, or ten or more single-family lots, need 20% of the zoning's unit yield affordable, rounded up, with one bonus market-rate home for each.", src: "smzo", need }] : [];
+};

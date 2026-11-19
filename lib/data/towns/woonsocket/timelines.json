@@ -1,0 +1,117 @@
+{
+ "1067 Mendon Road": {
+  "events": [
+   {
+    "date": "2024-07-16",
+    "stage": "master",
+    "what": "Master plan hearing opened for 35 homes, continued",
+    "kind": "continued",
+    "src": [
+     "wopb240716"
+    ],
+    "quote": "Motion to continue the public hearing to the August 20, 2024 Planning Board meeting"
+   },
+   {
+    "date": "2024-12-17",
+    "stage": "master",
+    "what": "Master plan approved at 24 homes, with variances for density and frontage",
+    "kind": "decided",
+    "src": [
+     "wopb241217"
+    ],
+    "quote": "Motion to approve the Master Plan submittal according to the testimonies and Staff Report"
+   },
+   {
+    "date": "2025-03-18",
+    "stage": "prelim",
+    "what": "Preliminary plan approved with the staff report's conditions",
+    "kind": "decided",
+    "src": [
+     "wopb250318"
+    ],
+    "quote": "Motion to approve the Conditions of Approval of the Preliminary Plan Stage of Review"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "60 Mendon Road": {
+  "events": [
+   {
+    "date": "2022-09-13",
+    "stage": "prelim",
+    "what": "Combined master and preliminary plan approved for a 21-unit condominium",
+    "kind": "decided",
+    "src": [
+     "wopb240716"
+    ],
+    "quote": "granted by the Planning Board on September 13, 2022"
+   },
+   {
+    "date": "2024-07-16",
+    "stage": "prelim",
+    "what": "Approval extended a year",
+    "kind": "decided",
+    "src": [
+     "wopb240716"
+    ],
+    "quote": "Motion to grant a one (1) year extension of the combined Master/Preliminary Plan approval"
+   },
+   {
+    "date": "2025-12-09",
+    "stage": "prelim",
+    "what": "Adaptive reuse into 26 apartments: combined master and preliminary plan approved, on condition of a signed traffic plan",
+    "kind": "decided",
+    "src": [
+     "wopb251209"
+    ],
+    "quote": "Motion to approve the Combined Master & Preliminary Plan, contingent on the applicant"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Bernon Mills": {
+  "events": [
+   {
+    "date": "2025-12-09",
+    "stage": "master",
+    "what": "Master plan and zoning relief approved at 72 homes",
+    "kind": "decided",
+    "src": [
+     "wopb251209"
+    ],
+    "quote": "Motion to grant the requested zoning relief and approve the Master Plan Stage of Review:"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Ballou Townhomes": {
+  "events": [
+   {
+    "date": "2026-03-19",
+    "stage": "master",
+    "what": "Master plan approved with conditions, at 16 homes",
+    "kind": "decided",
+    "src": [
+     "wopb260319"
+    ],
+    "quote": "Motion to grant approval of the Master Plan Stage of Review with the conditions stated"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "4th Ave Condominiums": {
+  "events": [
+   {
+    "date": "2026-06-16",
+    "stage": "master",
+    "what": "Master plan and zoning relief approved",
+    "kind": "decided",
+    "src": [
+     "wopb260616"
+    ],
+    "quote": "Motion to grant the requested zoning relief and approve the Master Plan Stage of Review"
+   }
+  ],
+  "checked": "2026-11-19"
+ }
+}

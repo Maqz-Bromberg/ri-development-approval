@@ -1,0 +1,137 @@
+{
+ "One Metro Center Boulevard": {
+  "events": [
+   {
+    "date": "2024-07-10",
+    "stage": "prelim",
+    "what": "Preliminary plan approved at 78 homes",
+    "kind": "decided",
+    "src": [
+     "wapb240710"
+    ],
+    "quote": "approve Preliminary Plan, the motion was seconded by Ms. Polselli and approved unanimously."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "1187 Post Road": {
+  "events": [
+   {
+    "date": "2024-07-10",
+    "stage": "master",
+    "what": "Master plan approved, with a recommendation to the City Council for the zone change",
+    "kind": "decided",
+    "src": [
+     "wapb240710"
+    ],
+    "quote": "approve, the motion was seconded by Mr. North and approved unanimously."
+   },
+   {
+    "date": "2026-01-14",
+    "stage": "prelim",
+    "what": "Preliminary plan approved",
+    "kind": "decided",
+    "src": [
+     "wapb260114"
+    ],
+    "quote": "Motion to approve the plan was put forth by Kevin Flynn and seconded by Linda Polselli."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "1515 Centerville Road": {
+  "events": [
+   {
+    "date": "2024-07-10",
+    "stage": "master",
+    "what": "Master plan approved, with a recommendation to the City Council for the zone change",
+    "kind": "decided",
+    "src": [
+     "wapb240710"
+    ],
+    "quote": "approve, the motion was seconded by Mr. Flynn and approved unanimously."
+   },
+   {
+    "date": "2026-01-14",
+    "stage": "prelim",
+    "what": "Preliminary plan approved, on condition of working out the stormwater outfalls with Public Works",
+    "kind": "decided",
+    "src": [
+     "wapb260114"
+    ],
+    "quote": "Motion to approve with stipulations and conditions to coordinate with DPW on water outfalls"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "1880 Post Road": {
+  "events": [
+   {
+    "date": "2025-04-09",
+    "stage": "prelim",
+    "what": "Preliminary plan approved as submitted",
+    "kind": "decided",
+    "src": [
+     "wapb250409"
+    ],
+    "quote": "was made by Kevin Flynn to approve the application as submitted."
+   },
+   {
+    "date": "2026-04-08",
+    "stage": "prelim",
+    "what": "Preliminary plan approved again; final left to the administrator",
+    "kind": "decided",
+    "src": [
+     "wapb260408"
+    ],
+    "quote": "The board approved the Preliminary Plan and agreed to leave Final up to the administrator"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Allen property, Centerville Road": {
+  "events": [
+   {
+    "date": "2025-11-12",
+    "stage": "master",
+    "what": "Master plan approved with conditions",
+    "kind": "decided",
+    "src": [
+     "wapb251112"
+    ],
+    "quote": "Board approved Master Plan application with conditions."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "9 Post Road": {
+  "events": [
+   {
+    "date": "2025-05-14",
+    "stage": "master",
+    "what": "Master plan approved",
+    "kind": "decided",
+    "src": [
+     "wapb250514"
+    ],
+    "quote": "A motion to approve was made by Ashley Cullion and seconded by Tammy Bouchard Baker. The vote was unanimous."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "211 Commonwealth Avenue": {
+  "events": [
+   {
+    "date": "2025-10-08",
+    "stage": "prelim",
+    "what": "Preliminary plan approved, with fewer homes, landscaping and the stone walls kept",
+    "kind": "decided",
+    "src": [
+     "wapb251008"
+    ],
+    "quote": "a motion was put forth by Ashley Cullion and seconded by Kevin Flynn"
+   }
+  ],
+  "checked": "2026-11-19"
+ }
+}

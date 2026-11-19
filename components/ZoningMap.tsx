@@ -53,6 +53,8 @@ export type MapPlacement = "wide" | "beside" | "address" | "site";
 
 /** Shade of a town in the statewide view: darker for more of it read. */
 const LEVEL_FILL: Record<number, number> = { 1: 0.08, 2: 0.2, 3: 0.34, 4: 0.55 };
+/** A level reached on marks read only in part: halfway to the level below (ARD D68). */
+const LEVEL_PART_FILL: Record<number, number> = { 1: 0.08, 2: 0.14, 3: 0.27, 4: 0.44 };
 
 /**
  * Where the project sits: its district among the town's, the parcels around it by structure type, and recent
@@ -410,7 +412,7 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
             structOnly={structOnly} structHover={structHover} satellite={satellite} onApi={(a) => { zoomApi.current = a; }} kindOnly={kindOnly} kindHover={kindHover} hideZoning={hideZoning} hideParcels={hideParcels}
             pins={pins} onPin={pick} fit={fit} onMapClick={statewide ? undefined : onPick}
             towns={statewide ? towns ?? [] : null} town={town} townTip={townTip}
-            townFill={(n) => LEVEL_FILL[townInfo(n).level] ?? 0.05}
+            townFill={(n) => { const t = townInfo(n); return (levelInPart(t) ? LEVEL_PART_FILL : LEVEL_FILL)[t.level] ?? 0.05; }}
             onTown={(n) => { onTown?.(n); setStatewide(false); }}
           />
         ) : <div className="zm-canvas zm-wait">The map loads when you scroll to it.</div>}
@@ -425,9 +427,10 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
             <div className="zm-ovbody" id={`${placement}-zm-key`}>
               {statewide ? (
                 <ul className="zm-legend" aria-label="How much of each town is read">
-                  {([4, 3, 2, 1] as const).filter((l) => TOWNS.some((t) => t.level === l)).map((l) => {
-                    const n = TOWNS.filter((t) => t.level === l), part = n.filter(levelInPart).length;
-                    return <li key={l}><span className="zm-swatch" style={{ background: `rgba(46, 109, 180, ${LEVEL_FILL[l]})`, border: "1px solid #9aa39c" }} aria-hidden="true" />Level {l}: {LEVELS[l].name} <span className="muted">· {n.length}{l > 1 && part ? `, ${part === n.length ? "all" : part} in part` : ""}</span></li>;
+                  {([4, 3, 2, 1] as const).flatMap((l) => {
+                    const n = TOWNS.filter((t) => t.level === l), part = n.filter(levelInPart).length, full = n.length - part;
+                    const row = (k: string, fill: number, label: string, count: number) => <li key={k}><span className="zm-swatch" style={{ background: `rgba(46, 109, 180, ${fill})`, border: "1px solid #9aa39c" }} aria-hidden="true" />{label} <span className="muted">· {count}</span></li>;
+                    return [...(full ? [row(`${l}`, LEVEL_FILL[l], `Level ${l}: ${LEVELS[l].name}`, full)] : []), ...(part ? [row(`${l}p`, LEVEL_PART_FILL[l], `Level ${l}, in part`, part)] : [])];
                   })}
                   <li><span className="zm-swatch site" aria-hidden="true" />{town}, the project&apos;s town</li>
                 </ul>

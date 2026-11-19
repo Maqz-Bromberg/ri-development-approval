@@ -229,7 +229,7 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
     gaps: "The Zoning Atlas's CT district has no column in Table 1.",
   },
   Smithfield: {
-    marks: { zoning: { read: "2026-11-19", partly: true, note: "The Town's PDF, amended to January 6, 2026: the Table of Uses' housing rows (§ 4.3). Not read: the Economic Growth Overlay, R-20MA's uses, the Planned Development district's article, dimensions." } },
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "The Town's PDF, amended to January 6, 2026: the Table of Uses' housing rows (§ 4.3) and inclusionary zoning (§ 5.10). Not read: the Economic Growth Overlay, R-20MA's uses, the Planned Development district's article, dimensions." } },
     gaps: "The Table of Uses allows two-family homes only in Planned Development and multi-family homes only in R-20M and Planned Development; the Zoning Atlas shows a hearing for them in most residential districts. The table sends R-20MA's uses to § 9.3, which is another district's section.",
   },
   Westerly: {

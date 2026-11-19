@@ -1,0 +1,237 @@
+{
+ "258 Pine Street": {
+  "events": [
+   {
+    "date": "2024-02-20",
+    "stage": "prelim",
+    "what": "Preliminary plan withdrawn from the agenda and deferred",
+    "kind": "continued",
+    "src": [
+     "papc240220"
+    ],
+    "quote": "The application for the project at 258 Pine Street was withdrawn and deferred"
+   },
+   {
+    "date": "2024-11-19",
+    "stage": "prelim",
+    "what": "Preliminary plan approved with five conditions, at 177 homes",
+    "kind": "decided",
+    "src": [
+     "papc241119"
+    ],
+    "quote": "The motion was seconded by Commissioner Vitali and was approved by a vote of 7-0."
+   },
+   {
+    "date": "2025-07-15",
+    "stage": "final",
+    "what": "Final plan approved at 179 homes, two conditions struck",
+    "kind": "decided",
+    "src": [
+     "papc250715"
+    ],
+    "quote": "Motion passed with 5 (yes) and 3 (abstained)."
+   },
+   {
+    "date": "2025-12-03",
+    "stage": "final",
+    "what": "Major amendment approved: 190 homes, the building split in two",
+    "kind": "decided",
+    "src": [
+     "papc251203"
+    ],
+    "quote": "increasing from 180 to 190 residential units"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "327 Pine Street": {
+  "events": [
+   {
+    "date": "2024-05-21",
+    "stage": "final",
+    "what": "Phase 2 (136 homes) approved with the Technical Review Committee's conditions",
+    "kind": "decided",
+    "src": [
+     "papc240521"
+    ],
+    "quote": "The motion was seconded by Ms. Kolodziej, and was passed by a vote of 3-0."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "225 Conant Street": {
+  "events": [
+   {
+    "date": "2025-01-21",
+    "stage": "prelim",
+    "what": "Preliminary plan and stormwater waiver approved",
+    "kind": "decided",
+    "src": [
+     "papc250121"
+    ],
+    "quote": "passed by a vote of 5-1, with Commissioner Echeverry voting against"
+   },
+   {
+    "date": "2025-05-20",
+    "stage": "final",
+    "what": "Final plan approved",
+    "kind": "decided",
+    "src": [
+     "papc250520"
+    ],
+    "quote": "to approve the request for Final Plan Approval. The motion was seconded by Vice-Chairman Vitali and was passed by a vote of 7-0."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "125 Goff Avenue": {
+  "events": [
+   {
+    "date": "2025-03-18",
+    "stage": "prelim",
+    "what": "Variance from the sidewalk standard approved; coffee shop dropped",
+    "kind": "decided",
+    "src": [
+     "papc250318"
+    ],
+    "quote": "The applicant agreed to move forward without seeking approval for the coffee shop"
+   },
+   {
+    "date": "2025-05-20",
+    "stage": "prelim",
+    "what": "Preliminary plan approved; final plan left to staff",
+    "kind": "decided",
+    "src": [
+     "papc250520"
+    ],
+    "quote": "approve the applicant’s request to have Final Plan Approval be performed administratively by City Staff"
+   },
+   {
+    "date": "2025-07-15",
+    "stage": "prelim",
+    "what": "Preliminary plan heard again for a notice problem and approved again, over an abutter's request to continue",
+    "kind": "decided",
+    "src": [
+     "papc250715"
+    ],
+    "quote": "Motion passed with 7 (yes) and 1 (abstained)."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Pennrose at Tidewater Landing": {
+  "events": [
+   {
+    "date": "2025-08-19",
+    "stage": "preapp",
+    "what": "Pre-application conference: a 72-home affordable building",
+    "kind": "heard",
+    "src": [
+     "papc250819"
+    ],
+    "quote": "as this was a pre-application meeting and no vote would be taken"
+   },
+   {
+    "date": "2025-11-18",
+    "stage": "prelim",
+    "what": "Combined master and preliminary plan approved",
+    "kind": "decided",
+    "src": [
+     "papc251118"
+    ],
+    "quote": "Motion unanimously passed with a 5-0 vote."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "The Paddock": {
+  "events": [
+   {
+    "date": "2025-04-15",
+    "stage": "preapp",
+    "what": "Pre-application: two apartment buildings and 35 townhouses, 95 homes",
+    "kind": "heard",
+    "src": [
+     "papc250415"
+    ],
+    "quote": "apartment buildings and 35 townhomes, totaling 95 units with 196 parking spaces"
+   },
+   {
+    "date": "2025-07-15",
+    "stage": "prelim",
+    "what": "Comprehensive permit preliminary plan approved",
+    "kind": "decided",
+    "src": [
+     "papc250715"
+    ],
+    "quote": "Motion passed 8-0."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "71 Dexter Street": {
+  "events": [
+   {
+    "date": "2022-09-20",
+    "stage": "prelim",
+    "what": "Preliminary plan approved by the Joint Planning Commission",
+    "kind": "decided",
+    "src": [
+     "papc240220"
+    ],
+    "quote": "Preliminary Plan Approval, originally granted on September 20, 2022"
+   },
+   {
+    "date": "2024-02-20",
+    "stage": "prelim",
+    "what": "One-year extension of the preliminary approval",
+    "kind": "decided",
+    "src": [
+     "papc240220"
+    ],
+    "quote": "Mr. Vitali made a motion for approval of the extension which was seconded by Ms. Renaud. The motion passed 4-0."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Cameron Street duplexes": {
+  "events": [
+   {
+    "date": "2026-01-06",
+    "stage": "prelim",
+    "what": "Comprehensive permit preliminary plan approved",
+    "kind": "decided",
+    "src": [
+     "papc260106"
+    ],
+    "quote": "voted unanimously (6-0) to APPROVE the proposed preliminary plan for this comprehensive permit"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "180 Weeden Street": {
+  "events": [
+   {
+    "date": "2025-09-16",
+    "stage": "master",
+    "what": "Master plan approved, on condition of consultation with Amtrak",
+    "kind": "decided",
+    "src": [
+     "papc250916"
+    ],
+    "quote": "APPROVE the Master Plan Review of this proposed development with the following conditions:"
+   },
+   {
+    "date": "2025-12-03",
+    "stage": "prelim",
+    "what": "Preliminary plan approved with four conditions",
+    "kind": "decided",
+    "src": [
+     "papc251203"
+    ],
+    "quote": "passed with a unanimous (7-0) vote, per the following conditions:"
+   }
+  ],
+  "checked": "2026-11-19"
+ }
+}

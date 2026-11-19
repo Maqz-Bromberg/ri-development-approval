@@ -1,0 +1,57 @@
+{
+ "4 and 6 School Street": {
+  "events": [
+   {
+    "date": "2024-01-11",
+    "stage": "prelim",
+    "what": "Preliminary plan and variances approved",
+    "kind": "decided",
+    "src": [
+     "cfpb240111"
+    ],
+    "quote": "Approve or deny the Applicant’s request for Preliminary Plan approval of a Major Land Development to develop 58 residential units"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "79 School Street": {
+  "events": [
+   {
+    "date": "2024-04-24",
+    "stage": "prelim",
+    "what": "Revised plan accepted: six homes, 35 ft",
+    "kind": "decided",
+    "src": [
+     "cfpb240424"
+    ],
+    "quote": "reduction in height 40 ft. to 35 ft., units from 9 to 6"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "37 Ledge Street": {
+  "events": [
+   {
+    "date": "2024-05-22",
+    "stage": "master",
+    "what": "Combined master and preliminary plan heard",
+    "kind": "heard",
+    "src": [
+     "cfpb240522"
+    ],
+    "quote": "develop a 25-unit residential building on the lot and 3 commercial spaces"
+   },
+   {
+    "date": "2024-07-24",
+    "stage": "master",
+    "what": "Continued to September 25, 2024",
+    "kind": "continued",
+    "src": [
+     "cfpb240724"
+    ],
+    "quote": "continuing this matter to the September 25, 2024, meeting of the Planning Board."
+   }
+  ],
+  "checked": "2026-11-19"
+ }
+}

@@ -12,7 +12,7 @@ import { sourcePlace, sourceType, SOURCE_TYPES } from "@/lib/sourceKind";
 import type { Locality } from "@/lib/types";
 import { Icon } from "./Icon";
 import { useProject } from "./ProjectProvider";
-import { LEVEL_COLOR } from "./TownIndex";
+import { levelColor } from "./TownIndex";
 import { TownMap } from "./TownMap";
 
 const OPEN_MEETINGS = "https://opengov.sos.ri.gov/OpenMeetingsPublic/OpenMeetingDashboard";
@@ -170,7 +170,7 @@ export function RecordsIndex() {
             {tabs.map((t) => {
               const n = hits.get(t.name)?.length ?? 0;
               return (
-                <button key={t.name} type="button" role="tab" aria-selected={t.name === current} className={`rdx-tab${byTown.has(t.name) ? " read" : ""}${t.name === current ? " on" : ""}`} style={{ "--lv": LEVEL_COLOR[t.level] } as React.CSSProperties} onClick={() => setOpen(t.name)}>
+                <button key={t.name} type="button" role="tab" aria-selected={t.name === current} className={`rdx-tab${byTown.has(t.name) ? " read" : ""}${t.name === current ? " on" : ""}`} style={{ "--lv": levelColor(t) } as React.CSSProperties} onClick={() => setOpen(t.name)}>
                   {t.name}{byTown.has(t.name) && <small>{n}</small>}
                 </button>
               );

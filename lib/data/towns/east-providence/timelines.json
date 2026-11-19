@@ -1,0 +1,62 @@
+{
+ "100 Wampanoag Trail": {
+  "events": [
+   {
+    "date": "2024-10-15",
+    "stage": "master",
+    "what": "Use variance for 44 homes in R-3: the petitioner asked to continue",
+    "kind": "continued",
+    "src": [
+     "eppb241015"
+    ],
+    "quote": "The petitioner requested a continuation of the public hearing."
+   },
+   {
+    "date": "2024-11-20",
+    "stage": "master",
+    "what": "Adaptive reuse into 26 apartments: master plan approved with conditions",
+    "kind": "decided",
+    "src": [
+     "eppb241120"
+    ],
+    "quote": "On a motion by Mr. Crook, seconded by Ms. Lopes to grant conditional approval of the master plan"
+   },
+   {
+    "date": "2025-05-12",
+    "stage": "prelim",
+    "what": "Preliminary plan approved with twelve conditions",
+    "kind": "decided",
+    "src": [
+     "eppb250512"
+    ],
+    "quote": "Ms. Rockwell motioned to grant Conditional Approval of the preliminary plan submission"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Taunton Avenue affordable homes": {
+  "events": [
+   {
+    "date": "2024-12-09",
+    "stage": "prelim",
+    "what": "Preliminary approval extended",
+    "kind": "decided",
+    "src": [
+     "eppb241209"
+    ],
+    "quote": "the Board unanimously approved the applicant’s Preliminary Plan Approval extension."
+   },
+   {
+    "date": "2025-01-13",
+    "stage": "final",
+    "what": "Final plan approved",
+    "kind": "decided",
+    "src": [
+     "eppb250113"
+    ],
+    "quote": "the Board voted unanimously to approve the Final Plan."
+   }
+  ],
+  "checked": "2026-11-19"
+ }
+}

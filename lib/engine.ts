@@ -485,6 +485,13 @@ function analyzeBase(i: ProjectInputs, tree: TreeId): Finding[] {
   let base = local ? local(i, tree, analyzeGeneric(i, tree), district(i.zone)) : withTownUse(i, tree, analyzeGeneric(i, tree));
   // A town whose required affordable share was read answers the inclusionary question itself.
   if (rules.inclusionaryRead) base = base.filter((f) => !f.t.startsWith("Inclusionary zoning: check"));
+  // A town whose whole zoning text was searched and has none says so, as a result rather than a gap (ARD D68).
+  const none = rules.inclusionaryNone;
+  if (none) base = base.map((f) => (f.t.startsWith("Inclusionary zoning: check") ? {
+    st: "info" as const, t: `Inclusionary zoning: none found in ${i.town}'s zoning ordinance`,
+    p: `The whole text read was searched, and no share of affordable homes is required by zoning. ${none.note ? `${none.note} ` : ""}${f.p} An amendment since the text was saved would be missed.`,
+    src: none.src, pin: "Whole text searched for inclusionary zoning",
+  } : f));
   const more = rules.moreFindings?.(i, tree) ?? [];
   return i.kind === "mixed" ? [...base, ...mixedFindings(i, tree), ...more] : [...base, ...more];
 }

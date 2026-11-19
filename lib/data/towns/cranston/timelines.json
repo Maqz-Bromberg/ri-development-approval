@@ -1,0 +1,112 @@
+{
+ "Residences at Oaklawn Ave": {
+  "events": [
+   {
+    "date": "2024-03-05",
+    "stage": "prelim",
+    "what": "Preliminary plan approved with conditions",
+    "kind": "decided",
+    "src": [
+     "crpc240305"
+    ],
+    "quote": "voted (8-0) to accept staff recommendation with specified conditions."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Cranston Print Works": {
+  "events": [
+   {
+    "date": "2023-04",
+    "stage": "master",
+    "what": "Master plan approved, conditioned on a zone change",
+    "kind": "decided",
+    "src": [
+     "crpc250401"
+    ],
+    "quote": "the applicant received Master Plan Approval in April of 2023"
+   },
+   {
+    "date": "2025-03-04",
+    "stage": "master",
+    "what": "Master plan approval extended to April 4, 2026",
+    "kind": "decided",
+    "src": [
+     "crpc250304"
+    ],
+    "quote": "voted (9-0) to grant an extension of Master Plan Approval to April 4, 2026."
+   },
+   {
+    "date": "2025-04-01",
+    "stage": "prelim",
+    "what": "Preliminary plan approved at 100 homes, with conditions",
+    "kind": "decided",
+    "src": [
+     "crpc250401"
+    ],
+    "quote": "Commission voted (7-0) unanimously to grant Preliminary Plan Approval, subject to the following conditions:"
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Champlin Heights": {
+  "events": [
+   {
+    "date": "2024-06-06",
+    "stage": "prelim",
+    "what": "Preliminary approval extended a year",
+    "kind": "decided",
+    "src": [
+     "crpc240606"
+    ],
+    "quote": "voted unanimously (8-0) to approve the one-year extension of time request."
+   },
+   {
+    "date": "2025-06-03",
+    "stage": "prelim",
+    "what": "Preliminary approval extended to June 30, 2026",
+    "kind": "decided",
+    "src": [
+     "crpc250603"
+    ],
+    "quote": "voted unanimously (7-0) to grant the one-year extension to June 30, 2026."
+   },
+   {
+    "date": "2026-06-02",
+    "stage": "prelim",
+    "what": "Preliminary approval extended to June 30, 2027",
+    "kind": "decided",
+    "src": [
+     "crpc260602"
+    ],
+    "quote": "MOTION: Motion to approve the one-year extension, made by Commissioner Coupe."
+   }
+  ],
+  "checked": "2026-11-19"
+ },
+ "Legion Bowl": {
+  "events": [
+   {
+    "date": "2024-05-07",
+    "stage": "master",
+    "what": "Master plan approval extended two years, to July 13, 2026",
+    "kind": "decided",
+    "src": [
+     "crpc240507"
+    ],
+    "quote": "voted unanimously (7-0) to extend the Master Plan Approval for two (2) additional years, (to July 13, 2026)."
+   },
+   {
+    "date": "2026-06-02",
+    "stage": "master",
+    "what": "Master plan approval extended two more years",
+    "kind": "decided",
+    "src": [
+     "crpc260602"
+    ],
+    "quote": "MOTION: Motion to approve the two-year extension, made by Commissioner Coupe."
+   }
+  ],
+  "checked": "2026-11-19"
+ }
+}

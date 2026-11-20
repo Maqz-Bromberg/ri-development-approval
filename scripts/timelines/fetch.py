@@ -7,13 +7,15 @@ Fails loudly (exit 1) when a cited source cannot be fetched or is empty.
 """
 import datetime as dt, json, pathlib, re, subprocess, sys, urllib.request
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+import sourcelib as sl
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 UA = {"User-Agent": "ri-plan-approval-timelines/1.0 (public records)"}
 
 
 def sources():
-    text = (ROOT / "lib/data/sources.ts").read_text()
-    return dict(re.findall(r'^\s*(\w+): \{ label: "(?:[^"\\]|\\.)*", url: "([^"]+)"', text, re.M))
+    return {sid: s["url"] for sid, s in sl.data()["sources"].items()}
 
 
 def get(url):

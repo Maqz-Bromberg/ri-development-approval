@@ -41,7 +41,7 @@ def main(argv):
     args = [a for a in argv if not a.startswith("--")]
     cache = pathlib.Path(args.pop(0)) if args and pathlib.Path(args[0]).is_dir() else sl.CACHE
     files = [pathlib.Path(a) for a in args] or sorted([*(ROOT / "lib/data/towns").glob("*.ts"), *(ROOT / "lib/data/towns").glob("*/*.ts")])
-    known = set(re.findall(r"^\s*(\w+): \{ label:", (ROOT / "lib/data/sources.ts").read_text(), re.M))
+    known = sl.ids()
     texts, bad, missing, ok, live = {}, [], {}, 0, 0
     for f in files:
         lines = f.read_text().split("\n")

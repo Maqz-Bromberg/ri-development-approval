@@ -23,7 +23,7 @@ norm = lambda s: re.sub(r"\s+", " ", re.sub(r"\[\d+:\d\d:\d\d\]", " ", s).replac
 
 
 def main(cache, offline):
-    srcs = set(re.findall(r"^\s*(\w+): \{ label:", (ROOT / "lib/data/sources.ts").read_text(), re.M))
+    srcs = sl.ids()
     recordings = {x["id"] for x in sl.sources() if x["video"]}
     errors, scans = [], []
     files = [ROOT / "lib/data/timelines.json", *sorted((ROOT / "lib/data/towns").glob("*/timelines.json"))]

@@ -2,7 +2,7 @@ import type { Source } from "../types";
 
 /**
  * Every document a requirement is quoted from. Ids are referenced by trees, findings and contacts.
- * One entry per line, as `id: { label, url }`: the scripts in scripts/ read this file as text.
+ * The scripts in scripts/ read it through scripts/data.ts, so an entry may be formatted any way (ARD debt 11, cleared).
  * A local copy is filed by the town named in the label. Add `town` only where the label names none, or another.
  */
 export const SOURCES: Record<string, Source> = {

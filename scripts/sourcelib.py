@@ -6,24 +6,34 @@ Layout (docs/ARD.md, D9):   .sources/<town>/<kind>/<source id>.<ext>   plus <sou
 
 Nothing has to be filed by hand: a source's town and kind are worked out from its entry in
 lib/data/sources.ts, and every script finds a file by its id wherever it sits under the folder.
+The entries are read through Node (scripts/data.ts), never as text, so sources.ts can be formatted freely.
 A source belongs to the town named in its label. Where the label names no town, or the wrong one,
 the entry carries `town: "<Name>"` (or "State").
 """
-import html, pathlib, re, subprocess, urllib.parse
+import functools, html, json, pathlib, re, subprocess, urllib.parse
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CACHE = ROOT / ".sources"
 KINDS = ["rules", "meetings", "recordings", "projects", "press", "pages"]
 # Hosts that answer 403 to a script. Their files are saved by hand.
 REFUSES = {"www.providenceri.gov", "providenceri.gov", "ecode360.com"}  # eCode360 from 2026-11-19 (ARD debt 36)
-ENTRY = re.compile(r'^\s*(\w+): \{ label: "((?:[^"\\]|\\.)*)", url: "([^"]+)"(?:, town: "([^"]+)")?(?:, file: "([^"]+)")?(?:, copy: "(?:[^"\\]|\\.)*")? \}', re.M)
+
+
+@functools.cache
+def data():
+    """The sources and the municipalities, as the site itself reads them: scripts/data.ts, run with Node 24's type stripping."""
+    run = subprocess.run(["node", "--import", "./scripts/engine/register.mjs", "scripts/data.ts"], cwd=ROOT, capture_output=True, text=True)
+    if run.returncode: raise SystemExit(f"scripts/data.ts failed (Node 24 or later is needed):\n{run.stderr}")
+    return json.loads(run.stdout)
+
+
+def ids():
+    """Every source id in lib/data/sources.ts."""
+    return set(data()["sources"])
 
 
 def towns():
-    text = (ROOT / "lib/data/towns.ts").read_text()
-    names = set()
-    for group in re.findall(r'^  (?:Bristol|Kent|Newport|Providence|Washington): \[([^\]]+)\]', text, re.M): names.update(re.findall(r'"([^"]+)"', group))
-    return sorted(names, key=len, reverse=True)  # longest first, so "North Providence" wins over "Providence"
+    return sorted(data()["towns"], key=lambda n: (-len(n), n))  # longest first, so "North Providence" wins over "Providence"
 
 
 def slug(name):
@@ -43,7 +53,8 @@ def kind_of(label, url):
 def sources():
     """Every source: id, label, url, town folder, kind, file extension, and whether its host refuses scripts."""
     names, out = towns(), []
-    for sid, label, url, town, file in ENTRY.findall((ROOT / "lib/data/sources.ts").read_text()):
+    for sid, s in data()["sources"].items():
+        label, url, town, file = s["label"], s["url"], s.get("town", ""), s.get("file", "")
         place = town or next((n for n in names if re.search(rf"\b{re.escape(n)}\b", label)), "State")
         host = urllib.parse.urlparse(url).netloc
         video = "youtube.com" in url or "youtu.be" in url

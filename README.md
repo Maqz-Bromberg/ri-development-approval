@@ -68,7 +68,7 @@ How the data is shaped, and each decision behind it, is in **`docs/ARD.md`** (th
 - `lib/data/state/trees.ts`: the state-law routes (`byright`, `dpr`, `minor`, `major`, `comp`), each step with its application, clock, deciders and documents. Each requirement has `src`, `pin` and a verbatim `q`.
 - `lib/data/towns/<town>/`: what a town lays over state law, as far as it has been read: its use table and other rules, with everything the engine asks of the town exported as `RULES` from its `rules.ts`; its steps, its recorded projects (`history.ts` with `timelines.json`), and its contacts. Each town's `RULES` is listed by name in `lib/data/towns/overlay.ts`. Shared helpers: `useTable.ts` (a use table's row as a finding), `dated.ts` (rules with dates), `compPermit.ts` (a town's comprehensive permit route), `cityRoutes.ts` (the cities' practice from their minutes).
 - `lib/data/towns.ts`: every municipality's four marks, gaps, and link to its code of ordinances.
-- `lib/data/sources.ts`: every document quoted, one line each.
+- `lib/data/sources.ts`: every document quoted, by id. The scripts read it through `scripts/data.ts` (Node 24).
 - `lib/data/bodies.json`: every town's boards from the state Open Meetings site, with their meeting pattern and quiet months.
 - `lib/data/searched.ts` and `towns/records-searched.json`: what each town's board records were searched for, and the housing found.
 - `lib/data/history.ts`: all recorded projects, joined from the towns' folders.

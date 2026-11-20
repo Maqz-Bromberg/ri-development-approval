@@ -17,6 +17,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get install -y poppler-utils
+      # The scripts read the site's sources through Node, which runs the TypeScript directly (scripts/data.ts).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
       - name: Fetch cited sources and new agendas
         run: python3 scripts/timelines/fetch.py "$RUNNER_TEMP/cache"
       - name: Verify the quotes already in the data

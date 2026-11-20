@@ -1,6 +1,6 @@
 # Plan: the checks on every pull request
 
-Status: planned 2026-11-20, not built. Would clear ARD debt 7. Needs Maqz's answers in section 5 first, because the ARD's current priority says "no new moving parts for upkeep yet" (section 2).
+Status: built 2026-11-20 as `.github/workflows/checks.yml` (ARD D77), with Maqz's answers below. Run once in a fresh clone with `npm ci` before it was committed: every check passed, the quotes skipped by name, and the build prerendered all 38 pages.
 
 ## What it is for
 
@@ -31,6 +31,7 @@ Everything `npm run check` runs that does not need `.sources/`, which is not com
 name: Checks
 on:
   pull_request:
+    branches: ["main"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -57,10 +58,10 @@ No secrets, read-only permissions, nothing scheduled.
 - **A rule to keep:** a change that changes the engine's answers on purpose commits the snapshot's digest with it (`snapshot.ts --save`). Without the digest, the pull request is red. That is the point, but it is one more step.
 - **What it does not catch:** a quote that no longer matches its document, since that needs `.sources/`; anything on the pages themselves; a live service that changed (debt 14).
 
-## Questions for Maqz
+## Questions for Maqz, and the answers (2026-11-20)
 
-1. **Is a pull-request check within "no new moving parts" for now?** It is not scheduled and needs no service, but it is a workflow to keep. Recommended: yes, as it only reports.
-2. **Which pull requests?** All of them (recommended), or only those into `main`. The statewide work lands on `statewide-coverage` first.
-3. **Required or advisory?** Required means GitHub will not merge a red pull request without an override. Recommended: advisory at first, required once it has run clean for a few weeks.
-4. **The deploy's Node version.** `nextjs.yml` builds with Node 20 and the checks need 24. Move the deploy to 24 too, so both build the same way? Recommended: yes, in the same change.
-5. **Later, separately: a monthly check that the saved Atlas still matches the live layer** (D74). That would be a scheduled action, so it is a decision of its own. It would report a changed district, not re-save the copy.
+1. **Is a pull-request check within "no new moving parts" for now?** It is not scheduled and needs no service, but it is a workflow to keep. Recommended: yes, as it only reports. **Answer: yes, a pull-request check is not really a moving part.**
+2. **Which pull requests?** All of them (recommended), or only those into `main`. The statewide work lands on `statewide-coverage` first. **Answer: only into `main`.**
+3. **Required or advisory?** Required means GitHub will not merge a red pull request without an override. Recommended: advisory at first, required once it has run clean for a few weeks. **Answer: advisory.** Nothing is set for that: a check blocks a merge only if branch protection names it as required.
+4. **The deploy's Node version.** `nextjs.yml` builds with Node 20 and the checks need 24. Move the deploy to 24 too, so both build the same way? Recommended: yes, in the same change. **Answer: yes; done.**
+5. **Later, separately: a monthly check that the saved Atlas still matches the live layer** (D74). That would be a scheduled action, so it is a decision of its own. It would report a changed district, not re-save the copy. **Answer: later, as part of syncing and maintenance in general.**

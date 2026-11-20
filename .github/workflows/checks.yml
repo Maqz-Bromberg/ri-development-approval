@@ -1,0 +1,31 @@
+# The site's checks on every pull request into main (ARD D77, docs/plans/pr-checks.md). Advisory: it reports on the
+# pull request and never edits, commits or blocks (ARD principle 8); a red check can still be merged.
+# Everything `npm run check` runs except the quotes, which need the documents in .sources/ (not committed, ARD D9),
+# then the same build the deploy runs.
+name: Checks
+
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24" # the scripts run the TypeScript directly (ARD D73)
+          cache: npm
+      - run: npm ci
+      # The engine snapshot compares with the committed digest, since the full copy lives in .sources/ (ARD D75).
+      - run: npm run check
+      - run: npm run build

@@ -145,6 +145,22 @@ export interface Finding {
   src?: string;
   pin?: string;
   q?: string;
+  /** Which of the state-law findings this is, so a town can replace or amend it without matching its words. Not part of the id. */
+  key?: FindingKey;
+}
+
+/** The state-law findings a town may replace or amend (lib/engine.ts, `stateFindings`). */
+export type FindingKey = "route" | "use" | "water" | "density" | "density-atlas" | "parking" | "height" | "affordable" | "inclusionary" | "permits";
+
+/** The lot area a number of homes needs, and the rule it comes from. */
+export interface AreaNeed {
+  sqft: number;
+  /** "ordinance": the town's own lot-area rule (`TownRules.area`); "riza": the Zoning Atlas; "riza-prd": the Atlas's conservation figure */
+  basis: "ordinance" | "riza" | "riza-prd";
+  /** Atlas-implied figure when the ordinance formula is used, for cross-checking */
+  atlasSqft?: number;
+  /** Where an ordinance's rule is written, for its finding */
+  cite?: { src: string; pin: string; q: string };
 }
 
 export type PrecedentStatus = "approved" | "pending" | "administrative" | "denied" | "unknown";
@@ -237,6 +253,15 @@ export interface TownRules {
   omit?: Partial<Record<TreeId, string[]>>;
   /** The stage by which state permits must be in hand. Cumberland's regulations say preliminary. */
   permitsBefore?: "prelim" | "final";
+  /** The town's rule on when state permits are due, said on the State permits finding in place of "many towns require these" */
+  permitsRule?: { p: string; src: string; pin: string; q: string };
+  /**
+   * The lot area the homes need under the town's own ordinance. Undefined leaves it to the Zoning Atlas; null says no
+   * figure applies (the rule is elsewhere, or needs utilities the site lacks). Given the Atlas's figures, for a cross-check.
+   */
+  area?: (i: ProjectInputs, atlas: { upa: { base: number | null; prd: number | null }; minLot: { base: number | null; prd: number | null } }) => AreaNeed | null | undefined;
+  /** Land per home for a mixed-use project, where the town sets its own density for mixed use. Null outside the districts it covers. */
+  mixedArea?: (i: ProjectInputs) => number | null;
   /** True when the route depends on commercial floor area, so the intake form asks for it */
   asksCommercial?: boolean;
   /** Districts the Zoning Atlas lists that the town's current ordinance no longer has. The district picker marks them. */

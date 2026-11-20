@@ -2,8 +2,7 @@ import { TREES } from "./data/state/trees";
 import { district, districtsOf, housingTypeLabel, readByUtility, treatmentFor, type Treatment } from "./data/atlas";
 import { getActiveTown } from "./town";
 import { townFindings, townRules, townSteps } from "./data/towns/overlay";
-import { cumberlandMixedArea } from "./data/towns/cumberland/commercial";
-import type { CommercialUse, Doc, Finding, Flags, ProjectInputs, ProjectKind, Step, TreeId } from "./types";
+import type { AreaNeed, CommercialUse, Doc, Finding, Flags, ProjectInputs, ProjectKind, Step, TreeId } from "./types";
 
 export const DEFAULT_INPUTS: ProjectInputs = {
   kind: "homes",
@@ -96,33 +95,17 @@ export function useTreatment(i: ProjectInputs): Treatment {
   return treatmentFor(district(i.zone), i.units).value;
 }
 
-export interface AreaNeed {
-  sqft: number;
-  basis: "ordinance" | "riza" | "riza-prd";
-  /** Atlas-implied figure when the ordinance formula is used, for cross-checking */
-  atlasSqft?: number;
-}
-
-/** Lot area the unit count needs. Ordinance formula for standard R-3; RIZA figures otherwise. */
+/** Lot area the unit count needs: the town's own rule where it has one (`TownRules.area`), else the Zoning Atlas's figures. */
 export function requiredArea(i: ProjectInputs): AreaNeed | null {
-  // Cumberland's ordinance sets its own mixed-use density in C-1 and C-2 (§ 5-3); it is checked with the commercial space.
-  if (i.kind === "mixed" && i.town === "Cumberland" && (i.zone === "C-1" || i.zone === "C-2")) return null;
   const d = district(i.zone);
   const upa = readByUtility(d?.family4_maxunitsperacre ?? null, i.water, i.sewer);
   const minLot = readByUtility(d?.family4_minlotacres ?? null, i.water, i.sewer);
+  const own = townRules(i.town).area?.(i, { upa, minLot });
+  if (own !== undefined) return own;
 
   if (i.conservation && upa.prd) {
     const sqft = Math.max((i.units / upa.prd) * SQFT_PER_ACRE, (minLot.prd ?? 0) * SQFT_PER_ACRE);
     return { sqft, basis: "riza-prd" };
-  }
-  // The 10,000 + 5,000 sq ft formulas are Cumberland's ordinance. Other towns use the Atlas figures.
-  const cumberland = i.town === "Cumberland";
-  if (cumberland && i.zone === "R-2" && i.units <= 2) return i.water && i.sewer ? { sqft: 10000 + (i.units - 1) * 5000, basis: "ordinance" } : null;
-  if (cumberland && i.zone === "R-3") {
-    const atlasSqft = upa.base ? Math.max((i.units / upa.base) * SQFT_PER_ACRE, (minLot.base ?? 0) * SQFT_PER_ACRE) : undefined;
-    if (i.water && i.sewer) return { sqft: 10000 + (i.units - 1) * 5000, basis: "ordinance", atlasSqft };
-    if (i.water || i.sewer) return { sqft: 30000 + (i.units - 1) * 10000, basis: "ordinance", atlasSqft };
-    return null;
   }
   if (upa.base || minLot.base) {
     const sqft = Math.max(upa.base ? (i.units / upa.base) * SQFT_PER_ACRE : 0, (minLot.base ?? 0) * SQFT_PER_ACRE);
@@ -170,7 +153,7 @@ export function classify(i0: ProjectInputs): TreeId {
 export function deriveFlags(i: ProjectInputs, tree: TreeId): Flags {
   const t = useTreatment(i);
   const need = i.kind === "commercial" ? null : requiredArea(i);
-  const mixedPer = i.kind === "mixed" && i.town === "Cumberland" ? cumberlandMixedArea(i) : null;
+  const mixedPer = i.kind === "mixed" ? townRules(i.town).mixedArea?.(i) ?? null : null;
   const densityFail = (need !== null && i.lot < need.sqft) || (mixedPer !== null && i.lot < i.units * mixedPer);
   const useRelief = t === "prohibited" || t === "hearing";
   return {
@@ -237,14 +220,19 @@ export function visibleDocs(s: Step, f: Flags): Doc[] {
   return s.docs.filter((d) => condOK(d.cond, f));
 }
 
-function analyzeRaw(i: ProjectInputs, tree: TreeId): Finding[] {
+/**
+ * The findings state law and the Zoning Atlas give a housing project in any town. Each carries a `key`, so a town's own
+ * reading can replace or amend one without matching its words: Cumberland adds its ordinance and its precedent
+ * (towns/cumberland/rules.ts), Providence replaces most of them (towns/providence/rules.ts).
+ */
+function stateFindings(i: ProjectInputs, tree: TreeId): Finding[] {
   const out: Finding[] = [];
   const d = district(i.zone);
   const t = treatmentFor(d, i.units);
   const kind = housingTypeLabel(i.units);
 
   out.push({
-    st: i.units >= 10 ? "info" : "pass",
+    key: "route", st: i.units >= 10 ? "info" : "pass",
     t: i.units >= 10
       ? `Major land development: ${i.units} units is above the 9-unit minor cap`
       : i.units >= 3 ? "Minor land development: 9 units or fewer" : "No land development review for 1–2 units",
@@ -256,65 +244,51 @@ function analyzeRaw(i: ProjectInputs, tree: TreeId): Finding[] {
   // Permitted use, from the Zoning Atlas
   const pin = `${i.zone} · ${t.field}`;
   if (!d) {
-    out.push({ st: "flag", t: "District not found in the Zoning Atlas", p: "Pick the district from the zoning map, or check the use table with Planning staff.", src: "rizaApp", pin: "Rhode Island Zoning Atlas map" });
+    out.push({ key: "use", st: "flag", t: "District not found in the Zoning Atlas", p: "Pick the district from the zoning map, or check the use table with Planning staff.", src: "rizaApp", pin: "Rhode Island Zoning Atlas map" });
   } else if (t.value === "allowed") {
-    out.push({ st: "pass", t: `${kind} housing is allowed in ${i.zone}`, p: `The Zoning Atlas lists ${kind} housing in ${d.name} as allowed, possibly with conditions. No use relief is needed.`, src: "rizaLayer", pin, q: t.raw });
+    out.push({ key: "use", st: "pass", t: `${kind} housing is allowed in ${i.zone}`, p: `The Zoning Atlas lists ${kind} housing in ${d.name} as allowed, possibly with conditions. No use relief is needed.`, src: "rizaLayer", pin, q: t.raw });
   } else if (t.value === "hearing") {
-    out.push({ st: "flag", t: `${kind} housing in ${i.zone} needs a public hearing`, p: "The Zoning Atlas lists this use as needing a public hearing, usually a special use permit. Under unified development review, the Planning Board decides it with the plan.", src: "rizaLayer", pin, q: t.raw });
+    out.push({ key: "use", st: "flag", t: `${kind} housing in ${i.zone} needs a public hearing`, p: "The Zoning Atlas lists this use as needing a public hearing, usually a special use permit. Under unified development review, the Planning Board decides it with the plan.", src: "rizaLayer", pin, q: t.raw });
   } else if (t.value === "prohibited") {
     out.push({
-      st: tree === "comp" ? "flag" : "fail",
+      key: "use", st: tree === "comp" ? "flag" : "fail",
       t: `${kind} housing is prohibited in ${i.zone}`,
       p: tree === "comp"
-        ? "The comprehensive permit can grant the adjustment. Haley's Commons was approved this way in R-1 in September 2025."
+        ? "The comprehensive permit can grant the adjustment."
         : i.rezone
           ? "The route includes a zone change, which the Town Council decides."
           : "You need a use variance through unified development review, a zone change from the Town Council, or a comprehensive permit.",
       src: "rizaLayer", pin, q: t.raw,
     });
   } else {
-    out.push({ st: "flag", t: `Check the use table for ${i.zone}`, p: "The Zoning Atlas shows this district as an overlay or doesn't classify the use.", src: "rizaLayer", pin, q: t.raw || undefined });
-  }
-  if ((i.zone === "C-1" || i.zone === "C-2") && i.units >= 3) {
-    out.push({
-      st: "flag", t: "Atlas and recent practice differ in commercial districts",
-      p: "The Atlas lists multi-family as allowed in C-1, but Blackstone Residences (C-1, 2025) still needed an adjustment for residential use in a commercial zone. Staff also said its 35,580 sq ft lot allowed 7 units by right, more than the Atlas density implies: the ordinance's mixed-use density, one unit per 5,000 sq ft with water and sewer (§ 5-3), gives exactly that. Confirm the adjustment with staff.",
-      src: "min250925", pin: "Minutes, Item 6", q: "An additional adjustment would be needed solely for residential use in a commercial zone.",
-    });
-  }
-  if (i.zone === "BMMU") {
-    out.push({
-      st: "info", t: "Precedent: Berkeley Mill apartments were approved by staff",
-      p: "24 one-bedroom apartments inside the mill were reviewed by the Technical Review Committee and approved administratively on July 1, 2025, with 1 parking space per unit under the overlay.",
-      src: "min250731", pin: "Minutes, Director's Report", q: "the Planning Department approved the proposal administratively on July 1st, 2025",
-    });
+    out.push({ key: "use", st: "flag", t: `Check the use table for ${i.zone}`, p: "The Zoning Atlas shows this district as an overlay or doesn't classify the use.", src: "rizaLayer", pin, q: t.raw || undefined });
   }
   if (d?.family4_water_required === "Yes" && i.units >= 4 && !i.water) {
-    out.push({ st: "flag", t: "Public water is required for 4+ family housing here", p: `The Atlas marks public water as required for 4+ family housing in ${i.zone}.`, src: "rizaLayer", pin: `${i.zone} · family4_water_required`, q: "Yes" });
+    out.push({ key: "water", st: "flag", t: "Public water is required for 4+ family housing here", p: `The Atlas marks public water as required for 4+ family housing in ${i.zone}.`, src: "rizaLayer", pin: `${i.zone} · family4_water_required`, q: "Yes" });
   }
 
-  // Density
+  // Density: the town's own lot-area rule where it has one, else the Atlas's
   const need = requiredArea(i);
   if (need) {
     const ok = i.lot >= need.sqft;
+    const st = ok ? "pass" : tree === "comp" ? "flag" : "fail";
     if (need.basis === "riza-prd") {
       out.push({
-        st: ok ? "pass" : tree === "comp" ? "flag" : "fail",
+        key: "density", st,
         t: `Conservation density: ${fmt(need.sqft)} sq ft of developable land needed, ${fmt(i.lot)} entered`,
         p: ok ? "Enough developable (non-wetland) land for this unit count at the conservation development density. At least 25% of the upland must stay as open space." : `Short by ${fmt(need.sqft - i.lot)} sq ft of developable land.`,
-        src: "memoWP", pin: "Staff memo, Waterman Pond (R-3 conservation development)", q: "a minimum of 25% of the site’s upland area must be preserved as open space",
+        src: "rizaLayer", pin: `${i.zone} · family4_maxunitsperacre / minlotacres (PRD)`,
       });
     } else if (need.basis === "ordinance") {
       out.push({
-        st: ok ? "pass" : tree === "comp" ? "flag" : "fail",
+        key: "density", st,
         t: `Density: ${fmt(need.sqft)} sq ft required, ${fmt(i.lot)} sq ft provided`,
         p: ok ? `The lot supports ${i.units} units under the ordinance's lot-area-per-unit rule.` : `Short by ${fmt(need.sqft - i.lot)} sq ft. You need density relief, fewer units, a conservation development, or a comprehensive permit density bonus.`,
-        src: "cz3", pin: "Art. 3, lot area per unit",
-        q: i.water && i.sewer ? "10,000 square feet minimum lot size for the first unit plus 5,000 square feet for each additional unit" : "30,000 square feet per unit plus 10,000 square feet for each additional unit",
+        ...need.cite,
       });
       if (need.atlasSqft && Math.abs(need.atlasSqft - need.sqft) > 1000) {
         out.push({
-          st: i.lot >= need.atlasSqft ? "info" : "flag",
+          key: "density-atlas", st: i.lot >= need.atlasSqft ? "info" : "flag",
           t: `Atlas cross-check: ${fmt(need.atlasSqft)} sq ft at the Atlas density`,
           p: "The Zoning Atlas lists a different maximum density for this district. Ask staff which figure applies before you fix the unit count.",
           src: "rizaLayer", pin: `${i.zone} · family4_maxunitsperacre`, q: d?.family4_maxunitsperacre ?? undefined,
@@ -322,53 +296,38 @@ function analyzeRaw(i: ProjectInputs, tree: TreeId): Finding[] {
       }
     } else {
       out.push({
-        st: ok ? "pass" : tree === "comp" ? "flag" : "fail",
+        key: "density", st,
         t: `Density (Atlas): ${fmt(need.sqft)} sq ft required, ${fmt(i.lot)} sq ft provided`,
-        p: ok ? "The lot meets the Atlas minimum lot size and maximum units per acre." : `Short by ${fmt(need.sqft - i.lot)} sq ft. Blackstone Residences sought a density adjustment through a comprehensive permit for this reason.`,
+        p: ok ? "The lot meets the Atlas minimum lot size and maximum units per acre." : `Short by ${fmt(need.sqft - i.lot)} sq ft.`,
         src: "rizaLayer", pin: `${i.zone} · family4_maxunitsperacre / minlotacres`, q: `${d?.family4_maxunitsperacre} units/acre; ${d?.family4_minlotacres} acre minimum`,
       });
     }
-  } else if (i.town === "Cumberland" && i.zone === "R-3") {
-    out.push({ st: "flag", t: "Density without public water or sewer", p: "R-3 density is listed only for sites with one or both utilities. Expect a much larger lot requirement.", src: "cz3", pin: "Art. 3" });
   }
 
   // Parking and height
   if (i.units >= 3) {
     const perUnit = i.transit ? 1 : parseFloat(d?.family4_minparking_2br ?? "2") || 2;
-    // Cumberland's ordinance went to one space per unit on April 15, 2026; the Atlas and the 2024 memo predate it.
-    if (i.town === "Cumberland" && !i.transit) {
-      out.push({ st: "info", t: `Parking: ${i.units} spaces required (1 per unit)`, p: "Cumberland's ordinance was amended on April 15, 2026 to one space per dwelling unit. The Zoning Atlas (2024) and the 2024 staff memo for Waterman Pond, which counted 2 per unit, are from before it. Plan visitor spaces and snow storage on top: parking is one of the most common concerns at Cumberland hearings.", src: "cz14", pin: "§ 14-3(a), parking requirements by use", q: "Dwelling Unit 1 spaces per D.U." });
-    } else out.push(i.transit
-      ? { st: "info", t: `Parking: at most ${i.units} spaces can be required (1 per unit near transit)`, p: "2026 state law caps required parking near frequent transit.", src: "ridsp", pin: "S 3303 / H 8005 Sub A (2026)", q: "no more than one off-street parking space per dwelling unit in a multi-family structure or development can be required" }
-      : { st: "info", t: `Parking: ${i.units * perUnit} spaces required (${perUnit} per unit)`, p: "Plan visitor spaces and snow storage on top of the minimum. Parking is one of the most common concerns at Cumberland hearings.", src: i.zone === "R-3" ? "memoWP" : "rizaLayer", pin: i.zone === "R-3" ? "Staff memo, Waterman Pond" : `${i.zone} · family4_minparking`, q: i.zone === "R-3" ? "the zoning ordinance requires a total of 36 spaces for the 18 units" : undefined });
+    out.push(i.transit
+      ? { key: "parking", st: "info", t: `Parking: at most ${i.units} spaces can be required (1 per unit near transit)`, p: "2026 state law caps required parking near frequent transit.", src: "ridsp", pin: "S 3303 / H 8005 Sub A (2026)", q: "no more than one off-street parking space per dwelling unit in a multi-family structure or development can be required" }
+      : { key: "parking", st: "info", t: `Parking: ${i.units * perUnit} spaces required (${perUnit} per unit)`, p: "Plan visitor spaces and snow storage on top of the minimum.", src: "rizaLayer", pin: `${i.zone} · family4_minparking` });
   }
   if (d?.family4_maxheightft && i.units >= 4) {
-    out.push({ st: "info", t: `Height limit: ${d.family4_maxheightft} ft`, p: "Check the elevations against this limit. Haley's Commons dropped a height waiver to win over an abutter.", src: "rizaLayer", pin: `${i.zone} · family4_maxheightft`, q: d.family4_maxheightft });
+    out.push({ key: "height", st: "info", t: `Height limit: ${d.family4_maxheightft} ft`, p: "Check the elevations against this limit.", src: "rizaLayer", pin: `${i.zone} · family4_maxheightft`, q: d.family4_maxheightft });
   }
 
   // Affordability
   const minAff = Math.ceil(i.units * 0.25);
   out.push(
     i.aff >= minAff && i.units >= 3
-      ? { st: "pass", t: `Comprehensive permit eligible: ${i.aff} of ${i.units} units affordable`, p: "A single application to the Planning Board, with a minimum density bonus. Requires a RIHousing letter of eligibility.", src: "s5304", pin: "§ 45-53-4", q: "at least twenty-five percent (25%) of the housing" }
-      : { st: "info", t: "No affordable units required", p: `Cumberland's inclusionary zoning section is reserved. A comprehensive permit would need ${minAff} affordable units.`, src: "cz15", pin: "§ 15-12 Inclusionary zoning", q: "(Reserved)" },
+      ? { key: "affordable", st: "pass", t: `Comprehensive permit eligible: ${i.aff} of ${i.units} units affordable`, p: "A single application to the Planning Board, with a minimum density bonus. Requires a RIHousing letter of eligibility.", src: "s5304", pin: "§ 45-53-4", q: "at least twenty-five percent (25%) of the housing" }
+      : { key: "inclusionary", st: "info", t: `Inclusionary zoning: check ${i.town}'s ordinance`, p: `A comprehensive permit would need ${minAff} affordable units.` },
   );
 
-  // State permits
-  const trig: string[] = [];
-  if (i.wet) trig.push(wetPermit(i));
-  if (i.dist >= 1) trig.push(`RIPDES construction stormwater (${i.dist} acres)`);
-  if (!i.sewer) trig.push("RIDEM septic system (OWTS) approval");
-  if (i.dot) trig.push("RIDOT Physical Alteration Permit");
-  out.push(
-    trig.length
-      ? { st: "flag", t: `State permits triggered: ${trig.join(", ")}`, p: "Under Cumberland's regulations, these must be in hand before preliminary approval.", src: "cregs", pin: "§ 5-GH(2)(a)(3)", q: "including permits related to freshwater wetlands, floodplains, preliminary suitability for individual septic disposal systems, public water systems, and connections to state roads" }
-      : { st: "pass", t: "No state permit triggers entered", p: "Confirm against the wetlands and flood layers in the Zoning Atlas map." },
-  );
+  out.push(statePermitFinding(i));
   return out;
 }
 
-/** Findings for the site. Outside Cumberland, the ones that rest on Cumberland's ordinance, minutes or precedent are neutralised. */
+/** Findings for the site: state law and the Atlas, with the town's own reading laid over them, each with a stable id. */
 export function analyze(i: ProjectInputs, tree: TreeId): Finding[] {
   return withIds(analyzeAll(i, tree));
 }
@@ -482,13 +441,14 @@ function analyzeBase(i: ProjectInputs, tree: TreeId): Finding[] {
   if (i.kind === "commercial") return analyzeCommercial(i, tree);
   const local = townFindings(i.town);
   const rules = townRules(i.town);
-  let base = local ? local(i, tree, analyzeGeneric(i, tree), district(i.zone)) : withTownUse(i, tree, analyzeGeneric(i, tree));
+  const generic = stateFindings(i, tree);
+  let base = local ? local(i, tree, generic, district(i.zone), requiredArea(i)) : withTownUse(i, tree, generic);
   // A town whose required affordable share was read answers the inclusionary question itself.
-  if (rules.inclusionaryRead) base = base.filter((f) => !f.t.startsWith("Inclusionary zoning: check"));
+  if (rules.inclusionaryRead) base = base.filter((f) => f.key !== "inclusionary");
   // A town whose whole zoning text was searched and has none says so, as a result rather than a gap (ARD D68).
   const none = rules.inclusionaryNone;
-  if (none) base = base.map((f) => (f.t.startsWith("Inclusionary zoning: check") ? {
-    st: "info" as const, t: `Inclusionary zoning: none found in ${i.town}'s zoning ordinance`,
+  if (none) base = base.map((f) => (f.key === "inclusionary" ? {
+    key: "inclusionary" as const, st: "info" as const, t: `Inclusionary zoning: none found in ${i.town}'s zoning ordinance`,
     p: `The whole text read was searched, and no share of affordable homes is required by zoning. ${none.note ? `${none.note} ` : ""}${f.p} An amendment since the text was saved would be missed.`,
     src: none.src, pin: "Whole text searched for inclusionary zoning",
   } : f));
@@ -504,7 +464,7 @@ function analyzeBase(i: ProjectInputs, tree: TreeId): Finding[] {
 function withTownUse(i: ProjectInputs, tree: TreeId, generic: Finding[]): Finding[] {
   const own = townRules(i.town).use?.(i);
   if (!own) return generic;
-  const isUse = (f: Finding) => !!f.pin?.includes("_treatment") || f.t.startsWith("District not found") || f.t.startsWith("Check the use table");
+  const isUse = (f: Finding) => f.key === "use";
   const f = tree === "comp" && own.finding.st === "fail" ? { ...own.finding, st: "flag" as const, p: `${own.finding.p} The comprehensive permit can grant the adjustment.` } : own.finding;
   const at = generic.findIndex(isUse);
   const rest = generic.filter((g) => !isUse(g));
@@ -517,17 +477,25 @@ const Q_B = "An expansion of up to fifty percent (50%) of existing floor area or
 const Q_C = "Mixed-use development consisting of up to six (6) dwelling units and two thousand five hundred (2,500) gross square feet of commercial space or less";
 const Q_E = "Change in use at the property where no extensive construction of improvements is sought";
 
-/** The state permits the entered facts trigger. The same law for every kind of project. */
+/** The state permits the entered facts trigger: the full name for the findings, the short one for the verdict. */
+function stateTriggers(i: ProjectInputs): { long: string; short: string }[] {
+  const out: { long: string; short: string }[] = [];
+  if (i.wet) out.push({ long: wetPermit(i), short: i.wetAgency === "CRMC" ? "CRMC wetlands" : "RIDEM wetlands" });
+  if (i.dist >= 1) out.push({ long: `RIPDES construction stormwater (${i.dist} acres)`, short: "RIPDES stormwater" });
+  if (!i.sewer) out.push({ long: "RIDEM septic system (OWTS) approval", short: "RIDEM septic" });
+  if (i.dot) out.push({ long: "RIDOT Physical Alteration Permit", short: "RIDOT road access" });
+  return out;
+}
+
+/** The state permits finding, the same law for every kind of project; when they are due is the town's rule where it was read. */
 function statePermitFinding(i: ProjectInputs): Finding {
-  const trig: string[] = [];
-  if (i.wet) trig.push(wetPermit(i));
-  if (i.dist >= 1) trig.push(`RIPDES construction stormwater (${i.dist} acres)`);
-  if (!i.sewer) trig.push("RIDEM septic system (OWTS) approval");
-  if (i.dot) trig.push("RIDOT Physical Alteration Permit");
-  if (!trig.length) return { st: "pass", t: "No state permit triggers entered", p: "Confirm against the wetlands and flood layers in the Zoning Atlas map." };
-  return i.town === "Cumberland"
-    ? { st: "flag", t: `State permits triggered: ${trig.join(", ")}`, p: "Under Cumberland's regulations, these must be in hand before preliminary approval.", src: "cregs", pin: "§ 5-GH(2)(a)(3)", q: "including permits related to freshwater wetlands, floodplains, preliminary suitability for individual septic disposal systems, public water systems, and connections to state roads" }
-    : { st: "flag", t: `State permits triggered: ${trig.join(", ")}`, p: `Many towns require these before preliminary approval. Check ${i.town}'s regulations.` };
+  const trig = stateTriggers(i).map((x) => x.long);
+  if (!trig.length) return { key: "permits", st: "pass", t: "No state permit triggers entered", p: "Confirm against the wetlands and flood layers in the Zoning Atlas map." };
+  const rule = townRules(i.town).permitsRule;
+  const t = `State permits triggered: ${trig.join(", ")}`;
+  return rule
+    ? { key: "permits", st: "flag", t, ...rule }
+    : { key: "permits", st: "flag", t, p: `Many towns require these before preliminary approval. Check ${i.town}'s regulations.` };
 }
 
 /** The use permission for a non-residential use, from the town's own table, or a named gap where it has not been read. */
@@ -602,20 +570,6 @@ function analyzeCommercial(i: ProjectInputs, tree: TreeId): Finding[] {
   return out;
 }
 
-function analyzeGeneric(i: ProjectInputs, tree: TreeId): Finding[] {
-  const all = analyzeRaw(i, tree);
-  if (i.town === "Cumberland") return all;
-  const minAff = Math.ceil(i.units * 0.25);
-  const strip = (p: string) => p.replace(/ ?[^.]*(Haley's Commons|Blackstone|Cumberland hearings)[^.]*\./g, "").trim();
-  return all.flatMap((f): Finding[] => {
-    if (f.src === "min250925") return [];
-    if (f.src === "cz15") return [{ st: "info", t: `Inclusionary zoning: check ${i.town}'s ordinance`, p: `A comprehensive permit would need ${minAff} affordable units.` }];
-    if (f.src === "cregs") return [{ st: f.st, t: f.t, p: `Many towns require these before preliminary approval. Check ${i.town}'s regulations.` }];
-    const local = f.src === "memoWP" || f.src === "cz3";
-    return [{ ...f, p: strip(f.p), ...(local ? { src: "rizaLayer", pin: `${i.zone} · family4_minparking`, q: undefined } : {}) }];
-  });
-}
-
 /** The most units the lot supports under the density rule, with the use allowed. 0 when no rule is known. */
 export function maxUnits(i: ProjectInputs): number {
   let best = 0;
@@ -640,11 +594,7 @@ export interface Verdict {
 /** The headline for a project: what blocks it, what is open, and how long the town may take. */
 export function verdict(i: ProjectInputs, tree: TreeId, steps: NumberedStep[]): Verdict {
   const findings = analyze(i, tree);
-  const statePermits: string[] = [];
-  if (i.wet) statePermits.push(i.wetAgency === "CRMC" ? "CRMC wetlands" : "RIDEM wetlands");
-  if (i.dist >= 1) statePermits.push("RIPDES stormwater");
-  if (!i.sewer) statePermits.push("RIDEM septic");
-  if (i.dot) statePermits.push("RIDOT road access");
+  const statePermits = stateTriggers(i).map((x) => x.short);
   return {
     fails: findings.filter((f) => f.st === "fail"),
     flags: findings.filter((f) => f.st === "flag"),

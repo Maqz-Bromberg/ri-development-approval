@@ -1,7 +1,8 @@
-import type { AtlasDistrict, Finding, ProjectInputs, Step, StepPlan, TownRules, TreeId } from "../../types";
+import type { AreaNeed, AtlasDistrict, Finding, ProjectInputs, Step, StepPlan, TownRules, TreeId } from "../../types";
 import { providenceFindings, PROVIDENCE_SCHEDULE } from "./providence/rules";
 import { PROVIDENCE_RULES, PROVIDENCE_STEPS } from "./providence/steps";
-import { cumberlandCommercialFindings, cumberlandCommercialUse } from "./cumberland/commercial";
+import { cumberlandCommercialFindings, cumberlandCommercialUse, cumberlandMixedArea } from "./cumberland/commercial";
+import { CUMBERLAND_PERMITS, cumberlandArea, cumberlandFindings } from "./cumberland/rules";
 import { TREES as CUMBERLAND_TREES } from "./cumberland/trees";
 import { WESTERLY_UNMAPPED, airportStep, aquiferStep, westerlyCommercialUse, westerlyFindings, westerlyInclusionary, westerlyOverlay, westerlyOverlayFlags, westerlyUse } from "./westerly/rules";
 import { northProvidenceFindings, northProvidenceUse } from "./north-providence/rules";
@@ -26,10 +27,11 @@ import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, char
 
 /*
  * What each town lays over the state-law route (lib/data/state/trees.ts). Each town's reading sits in its own folder.
- * Cumberland's steps moved out of the state routes into lib/data/towns/cumberland/trees.ts on 2026-11-18 (ARD debt 1);
- * its housing findings are still in lib/engine.ts. A town absent from these tables gets state law only.
+ * Cumberland's steps moved out of the state routes into lib/data/towns/cumberland/trees.ts on 2026-11-18, and its
+ * housing findings out of lib/engine.ts on 2026-11-20 (ARD debt 1). A town absent from these tables gets state law only.
  */
-export type TownFindings = (i: ProjectInputs, tree: TreeId, generic: Finding[], d: AtlasDistrict | undefined) => Finding[];
+/** A town's own findings, given the state-law ones (each with its `key`), the district and the lot area worked out. */
+export type TownFindings = (i: ProjectInputs, tree: TreeId, generic: Finding[], d: AtlasDistrict | undefined, need: AreaNeed | null) => Finding[];
 
 const steps = <T extends { steps: Step[] }>(trees: Record<TreeId, T>) => Object.fromEntries(Object.entries(trees).map(([k, t]) => [k, t.steps])) as Record<TreeId, Step[]>;
 const STEPS: Record<string, Partial<Record<TreeId, Step[]>>> = {
@@ -41,8 +43,9 @@ const STEPS: Record<string, Partial<Record<TreeId, Step[]>>> = {
 const CITY_STATUS = { minor: "State law; the city's practice read from its minutes, 2026-11-19", major: "State law; the city's practice read from its minutes, 2026-11-19", dpr: "State law; the city's practice read from its minutes, 2026-11-19" };
 const RULES: Record<string, TownRules> = {
   Providence: PROVIDENCE_RULES,
-  // Cumberland's steps are in cumberland/trees.ts; its housing findings are still in engine.ts (debt 1).
+  // Cumberland's steps are in cumberland/trees.ts, its housing findings in cumberland/rules.ts.
   Cumberland: {
+    area: cumberlandArea, mixedArea: cumberlandMixedArea, permitsRule: CUMBERLAND_PERMITS,
     useCommercial: cumberlandCommercialUse, commercialFindings: cumberlandCommercialFindings,
     routeStatus: Object.fromEntries(Object.entries(CUMBERLAND_TREES).map(([k, t]) => [k, t.status])),
     routeText: Object.fromEntries(Object.entries(CUMBERLAND_TREES).map(([k, t]) => [k, { rule: t.rule, blurb: t.blurb, stateTerms: true }])),
@@ -92,7 +95,7 @@ const RULES: Record<string, TownRules> = {
     affordableLines: (i) => (i.kind !== "commercial" && i.units >= 6 ? [{ short: "15%: Westerly inclusionary zoning", what: "Six or more homes need 15% of the units low- or moderate-income, deed-restricted for 99 years, with one bonus market-rate unit for each.", src: "wezo", need: westerlyInclusionary(i.units) }] : []),
   },
 };
-const FINDINGS: Record<string, TownFindings> = { Providence: providenceFindings };
+const FINDINGS: Record<string, TownFindings> = { Providence: providenceFindings, Cumberland: cumberlandFindings };
 const SCHEDULES: Record<string, Record<string, StepPlan>> = { Providence: PROVIDENCE_SCHEDULE };
 
 export const townSteps = (town: string, tree: TreeId): Step[] | undefined => STEPS[town]?.[tree];

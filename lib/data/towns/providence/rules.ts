@@ -252,8 +252,8 @@ export function providenceFindings(i: ProjectInputs, tree: TreeId, generic: Find
   }
 
   const use = providenceUse(i);
-  generic.slice(1).forEach((g) => {
-    const isUse = !!g.pin?.includes("_treatment") || g.t.startsWith("District not found") || g.t.startsWith("Check the use table");
+  generic.filter((g) => g.key !== "route").forEach((g) => {
+    const isUse = g.key === "use";
     if (isUse && GONE.has(i.zone)) {
       out.push({
         st: "flag", t: `${i.zone} is not a district in the current ordinance`,
@@ -263,7 +263,7 @@ export function providenceFindings(i: ProjectInputs, tree: TreeId, generic: Find
       return;
     }
     if (isUse && use) { out.push(use.finding); return; }
-    if (g.t.startsWith("Parking:") && !i.transit) {
+    if (g.key === "parking" && !i.transit) {
       if (z === "D-1") {
         out.push({ st: "pass", t: "Parking: none required downtown", p: "Bicycle parking is not required either.", src: "pzo", pin: "§ 1410.B.1", q: "The D-1 District is exempt from all off-street vehicle and bicycle parking requirements." });
       } else if ((z === "R-4" || z === "C-2") && i.lot > 0 && i.lot <= 10000) {
@@ -285,15 +285,8 @@ export function providenceFindings(i: ProjectInputs, tree: TreeId, generic: Find
       }
       return;
     }
-    if (g.t.startsWith("Height limit")) return; // replaced below from the ordinance's own tables
-    if (g.t.startsWith("State permits triggered")) {
-      out.push({
-        st: "flag", t: g.t,
-        p: "Providence asks for state and federal permits before the final plan is approved, not before the preliminary plan, and the Commission writes this into its conditions.",
-        src: "pregs", pin: "§ 504.A.6", q: "Prior to approval of the final plan, an applicant must submit all permits required by",
-      });
-      return;
-    }
+    if (g.key === "height") return; // replaced below from the ordinance's own tables
+    // The state permits finding says Providence's rule itself (`permitsRule` in steps.ts).
     out.push(g);
   });
   void d;

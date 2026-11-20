@@ -663,6 +663,10 @@ export const PROVIDENCE_RULES: TownRules = {
   /** Administrative development plan review has one stage. */
   omit: { dpr: ["final"] },
   permitsBefore: "final",
+  permitsRule: {
+    p: "Providence asks for state and federal permits before the final plan is approved, not before the preliminary plan, and the Commission writes this into its conditions.",
+    src: "pregs", pin: "§ 504.A.6", q: "Prior to approval of the final plan, an applicant must submit all permits required by",
+  },
   asksCommercial: true,
   retired: { zones: PROVIDENCE_GONE, note: "Not in the Zoning Ordinance of July 2026. The 2024 Atlas still lists it. Find the parcel's present district on the City's zoning map." },
   routeText: {

@@ -299,7 +299,7 @@ function stateFindings(i: ProjectInputs, tree: TreeId): Finding[] {
         key: "density", st,
         t: `Density (Atlas): ${fmt(need.sqft)} sq ft required, ${fmt(i.lot)} sq ft provided`,
         p: ok ? "The lot meets the Atlas minimum lot size and maximum units per acre." : `Short by ${fmt(need.sqft - i.lot)} sq ft.`,
-        src: "rizaLayer", pin: `${i.zone} · family4_maxunitsperacre / minlotacres`, q: `${d?.family4_maxunitsperacre} units/acre; ${d?.family4_minlotacres} acre minimum`,
+        src: "rizaLayer", pin: `${i.zone} · family4_maxunitsperacre / minlotacres`, q: [d?.family4_maxunitsperacre && `${d.family4_maxunitsperacre} units/acre`, d?.family4_minlotacres && `${d.family4_minlotacres} acre minimum`].filter(Boolean).join("; "),
       });
     }
   }

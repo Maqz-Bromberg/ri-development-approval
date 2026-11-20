@@ -251,6 +251,7 @@ The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and
 35. **A town's table and the Atlas disagree in prose only** (D67). Where a city's use table differs from the Atlas, the finding and the coverage gaps say so in words; nothing lists the disagreements as data, so a correction to the Atlas, or a check that one has been made, means reading each town's file.
 36. **eCode360 refuses scripts since 2026-11-19** (D69): a 403 behind a Cloudflare check, for its pages and its print views. Eighteen towns' codes are there. What was fetched before is in `.sources`; anything new from eCode360, like the cities' land development regulations, is saved by hand (`docs/manual-fetches.md`), and the code links now say so (`script: false`).
 37. **The conservation density finding says, in every town, that 25% of the upland must stay open space.** The figure was read from Cumberland's Waterman Pond memo, and the finding no longer cites it outside Cumberland. Found while making the findings neutral (D71); left as it was, since a town's own conservation rule has not been read anywhere else.
+38. **An Atlas lot size written as a formula is read as its first number.** Some towns' minimum lots are "1.84/4 units + 0.46/add'l unit", "0.60/4units + 0.14/add'l unit" or "5 + 0.22/add'l br > 20"; `readByUtility` takes the 1.84, 0.60 or 5 as the whole figure, so the density finding there understates or misstates the land needed. Found when the stored comparison first ran on the Atlas (D74). The quote shows the Atlas's own words, so a reader can see the formula.
 
 ## 8. Open questions
 
@@ -299,6 +300,7 @@ Kept in full in `lib/data/openQuestions.ts` and shown on `/dev`. The ones that b
 - **2026-11-20, names.** The flowcharts moved from `lib/data/engine/` to `lib/data/flowcharts/`, beside `lib/engine.ts` they no longer share a name with. The four `KIND_LABEL`s became `PROJECT_KIND_LABEL`, `AUTHORITY_KIND_LABEL`, `NODE_KIND_LABEL` and the Calendar's own `TICK_KIND_LABEL`.
 - **2026-11-20, the scripts read the sources through Node (D73).** `scripts/data.ts` gives the sources and towns as JSON to `sourcelib.py`; the timelines and quote checks give the same results; the monthly action sets up Node 24. Debt 11 cleared.
 - **2026-11-20, the Atlas for the stored comparison (D74).** Every town's districts saved from the live layer (39 towns, 576 districts); the snapshot runs on them, and 122 cases gained the Atlas's density, height, parking and public water findings. Saved as the new copy.
+- **2026-11-20, a quote said "null".** The Atlas density finding's quote named "null units/acre" wherever the Atlas gives a minimum lot and no density; it now gives only the figures there are (74 cases). Debt 38 added from the same run.
 
 - **2026-11-16, agenda layout built (D42 to D44).** The five-stage shell, rail, tray, pins, save chip, disclaimer strip and footer, `/docs/sources`, the Gantt and month switch, the hearing band, the three landings and the gate, and alternatives as routes. Four trials declared. Old project panel, trail landing and workspaces deleted; debts 22 to 25 added; engine flowchart for findings notes the ids.
 

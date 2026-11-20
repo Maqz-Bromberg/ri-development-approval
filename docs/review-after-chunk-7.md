@@ -40,7 +40,7 @@ Each city's housing rows are read in place of the Zoning Atlas, with Smithfield,
 
 ## D. Chunk 5, New Shoreham (D70)
 
-1. **Which copy of New Shoreham's zoning is official.** The Town's website links to eCode360; the Secretary of State lists ClerksHQ, where there is none. Every citation says so. *Closes with:* the Town Clerk's answer.
+1. **Which copy of New Shoreham's zoning is official.** The Town's website links to eCode360 (amended to Ord. 2025-03); the Secretary of State lists ClerksHQ, whose Appendix E stops at Ord. 2024-11. Every citation says so. *Closes with:* the Town Clerk's answer.
 2. **New Shoreham's Historic District Zoning Ordinance** is incorporated in the zoning (§ 317) but not read, so the Historic Overlay is a finding, not a step with a clock, and its map is not data. *Closes with:* the ordinance and the Historic District Map.
 3. **§ 405 E expires on December 31, 2028**, or sooner when the Town's affordable inventory reaches 80 owned and 100 rented homes; the site says so but does not track the inventory. *Closes with:* the Town's count, or a dated rule (D62) once the date nears.
 4. **The quiet-season rule is coarse** (half the median month, in every full year listed): it finds 13 boards, some plausibly (councils in August), one oddly (Tiverton's Planning Board in April). The Calendar notes a hearing in a quiet month but does not move it. *Closes with:* a look at the 13 by someone who knows the boards.

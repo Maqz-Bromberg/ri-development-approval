@@ -3,8 +3,8 @@ import { useFinding, type Value } from "../useTable";
 
 /*
  * New Shoreham (Block Island), read 2026-11-19 from its Zoning Ordinance, Appendix E (`nszo`, eCode360's copy, which the
- * Town's website links to; the Secretary of State lists ClerksHQ, where there is none, so the source carries a "which
- * copy" mark, ARD D70). Chunk 5. New Shoreham has no use table: each zone's section lists its permitted uses, its
+ * Town's website links to; the ClerksHQ copy the Secretary of State lists is older, stopping at Ord. 2024-11, so the
+ * source carries a "which copy" mark, ARD D70). Chunk 5. New Shoreham has no use table: each zone's section lists its permitted uses, its
  * special uses and its land development uses. What it adds:
  *   - one house a lot in the residential and mixed-use zones, and a second dwelling on the lot only as a Secondary
  *     Dwelling Development, by special use permit with development plan review (§ 403);

@@ -231,7 +231,7 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
   // Chunk 5, an island (ARD D70).
   "New Shoreham": {
     marks: { zoning: { read: "2026-11-19", partly: true, note: "Appendix E, zone by zone (§§ 306 to 313): the housing uses, density as developable land a home, secondary dwellings (§ 403), multi-family development (§ 404), affordable housing (§ 405) and the Historic Overlay. Not read: Planned Development districts, Flexible Design Residential Development, the Historic District Zoning Ordinance, the Coastal zone." } },
-    gaps: "The copy read is eCode360's, which the Town's website links to; the Secretary of State lists ClerksHQ, where there is none, so every citation of it says which copy it is. New multi-family homes need municipal sewer and water. The Historic Overlay is not in the Zoning Atlas.",
+    gaps: "The copy read is eCode360's, which the Town's website links to and which has eleven amendments (to Ord. 2025-03) that the ClerksHQ copy the Secretary of State lists does not; every citation of it says which copy it is. New multi-family homes need municipal sewer and water. The Historic Overlay is not in the Zoning Atlas.",
   },
   Smithfield: {
     marks: { zoning: { read: "2026-11-19", partly: true, note: "The Town's PDF, amended to January 6, 2026: the Table of Uses' housing rows (§ 4.3) and inclusionary zoning (§ 5.10). Not read: the Economic Growth Overlay, R-20MA's uses, the Planned Development district's article, dimensions." } },

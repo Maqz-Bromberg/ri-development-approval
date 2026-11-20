@@ -12,7 +12,7 @@
  * live ones; Cumberland uses its bundled districts, as the site does.
  */
 import { createHash } from "node:crypto";
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { analyze, classify, deriveFlags, normalizeInputs, stepsFor, visibleDocs } from "@/lib/engine";
 import { atlasForTown, registerDistricts } from "@/lib/data/atlas";
 import { setActiveTown } from "@/lib/town";
@@ -126,9 +126,11 @@ const digestOf = (cases: Record<string, unknown>) => Object.fromEntries(Object.e
 const writeDigest = (d: Record<string, string>) =>
   writeFileSync(DIGEST, `{\n${Object.entries(d).map(([k, v]) => ` ${JSON.stringify(k)}: ${JSON.stringify(v)}`).join(",\n")}\n}\n`);
 const total = Object.keys(now).length;
+// A fresh clone has no .sources folder yet.
+const saveCopy = () => { mkdirSync(new URL(".", OUT), { recursive: true }); writeFileSync(OUT, JSON.stringify(now, null, 1) + "\n"); };
 
 if (process.argv.includes("--save")) {
-  writeFileSync(OUT, JSON.stringify(now, null, 1) + "\n");
+  saveCopy();
   writeDigest(digestOf(now));
   console.log(`Saved ${total} cases to .sources/engine-snapshot.json, and their digest to scripts/engine/snapshot-digest.json`);
 } else {
@@ -154,7 +156,7 @@ if (process.argv.includes("--save")) {
   } else {
     for (const k of changed) console.log(`differs from the committed digest: ${k}`);
     // A run that matches the commit's digest is the commit's engine, so it is safe to keep as the local copy.
-    if (!changed.length) writeFileSync(OUT, JSON.stringify(now, null, 1) + "\n");
+    if (!changed.length) saveCopy();
   }
   const bad = diffs || changed.length;
   console.log(bad

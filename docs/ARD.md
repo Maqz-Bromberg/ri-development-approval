@@ -221,7 +221,7 @@ The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and
 4. **The glossary and the `relief` flag assume the state's definitions.** Providence's "minor" and its dimensional adjustments do not fit either.
 5. **State-law steps carry town wording** ("Town Council", "Town Clerk") into cities. Eased 2026-11-18: the planning, zoning, council and review boards are now each town's own body from the state site (D55); the clerk, building office and utilities still are not.
 6. **One part per town, as a box.** D4 wants parts drawn for usefulness, possibly several, possibly by district or corridor.
-7. **Checks are not run automatically** on a pull request, and the monthly action knows only Cumberland's platform.
+7. **Checks are not run automatically** on a pull request, and the monthly action knows only Cumberland's platform. Since 2026-11-20 they run from one command (`npm run check`), and all but the quotes check run in a fresh clone; a pull-request workflow is planned in `docs/plans/pr-checks.md`, not built.
 8. **Hearing prep is built around objections.** Supporters' requests have no place.
 9. **Only approved projects are recorded.** Withdrawals and denials are in the agendas and not in the data. Eased 2026-11-19: a precedent can be denied (D64), and West Greenwich's Bella View Estates is; withdrawals are still not recorded.
 10. **One recording has no captions** (Sept 16, 2025, the meeting whose minutes are also scanned). Reading it needs local speech recognition, which is a larger tool than anything used so far.
@@ -306,6 +306,7 @@ Kept in full in `lib/data/openQuestions.ts` and shown on `/dev`. The ones that b
 - **2026-11-20, one command for the checks.** `npm run check` (`scripts/check.mjs`) runs the type check, the flowcharts, the stored comparison, the quotes and the timelines, and skips by name a check whose files in `.sources` are missing.
 - **2026-11-20, the snapshot's digest committed (D75).** 361 cases, one hash each. Tested with an engine change made on purpose: with the local copy it showed every changed line, without it named the 124 cases and kept no copy.
 - **2026-11-20, known answers (D76).** 22 tests in two files, run by `npm test` and `npm run check`; two broken on purpose (the 9-unit line, the link's packing) to see them fail.
+- **2026-11-20, a plan for checks on pull requests.** `docs/plans/pr-checks.md`: what would run on GitHub without `.sources`, the workflow as it would be written, and five questions for Maqz. Not built. Running `npm run check` in a fresh clone found that the snapshot could not create `.sources`; fixed.
 
 - **2026-11-16, agenda layout built (D42 to D44).** The five-stage shell, rail, tray, pins, save chip, disclaimer strip and footer, `/docs/sources`, the Gantt and month switch, the hearing band, the three landings and the gate, and alternatives as routes. Four trials declared. Old project panel, trail landing and workspaces deleted; debts 22 to 25 added; engine flowchart for findings notes the ids.
 

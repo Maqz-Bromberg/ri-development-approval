@@ -37,7 +37,7 @@ The data is checked against the documents it quotes, which are kept in `.sources
 python3 scripts/towns/verify_quotes.py      # every quote, word for word, against its document
 python3 scripts/timelines/verify.py .sources # every dated event in the precedent timelines
 python3 scripts/check_engine_flows.py        # the engine flowcharts' pointers into the code
-node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts   # the engine against a saved copy; --save after a change that was meant
+node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts   # the engine against its committed digest and the local copy; --save after a change that was meant, and commit the digest
 ```
 
 ## Pages

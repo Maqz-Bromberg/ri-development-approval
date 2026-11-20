@@ -11,7 +11,7 @@ const node = (script) => ["node", "--import", "./scripts/engine/register.mjs", s
 const CHECKS = [
   { name: "types", cmd: ["npx", "tsc", "--noEmit"], skip: fast && "--fast" },
   { name: "engine flowcharts", cmd: ["python3", "scripts/check_engine_flows.py"] },
-  { name: "engine snapshot", cmd: node("scripts/engine/snapshot.ts"), skip: !existsSync(".sources/engine-snapshot.json") && "no saved copy in .sources (save one with --save from a commit known to be right)" },
+  { name: "engine snapshot", cmd: node("scripts/engine/snapshot.ts"), skip: !existsSync("scripts/engine/snapshot-digest.json") && !existsSync(".sources/engine-snapshot.json") && "no digest and no saved copy" },
   { name: "quotes", cmd: ["python3", "scripts/towns/verify_quotes.py"], skip: !sources && "no .sources folder" },
   { name: "timelines", first: true, cmd: ["python3", "scripts/timelines/verify.py", sources ? ".sources" : "/nonexistent", ...(sources ? [] : ["--offline"])] },
 ];

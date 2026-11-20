@@ -4,13 +4,14 @@
  * for all five routes the steps (with who decides each) and the findings. Run by hand, like the other checks.
  *
  *   node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts          # compare with the saved copy
- *   node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts --save   # save this run as the copy (.sources/engine-snapshot.json)
+ *   node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts --save   # save this run as the copy (.sources/engine-snapshot.json) and the digest
  *
  * A difference is not an error: it is what the change did. Read it, and save when it is what was meant.
  * The Zoning Atlas is live in the browser. Here each town's districts come from a saved copy of the layer
  * (atlas-districts.json, saved by fetch_atlas.ts, with the date it was fetched), registered as the site registers the
  * live ones; Cumberland uses its bundled districts, as the site does.
  */
+import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { analyze, classify, deriveFlags, normalizeInputs, stepsFor, visibleDocs } from "@/lib/engine";
 import { atlasForTown, registerDistricts } from "@/lib/data/atlas";
@@ -20,9 +21,11 @@ import type { AtlasDistrict, ProjectInputs, TreeId } from "@/lib/types";
 const ATLAS = JSON.parse(readFileSync(new URL("./atlas-districts.json", import.meta.url), "utf8")) as { fetched: string; towns: Record<string, AtlasDistrict[]> };
 for (const [town, list] of Object.entries(ATLAS.towns)) if (town !== "Cumberland") registerDistricts(town, atlasForTown(town, list));
 
-// The saved copy is about 12 MB, so it is kept with the other local files in .sources/, not committed. A fresh clone
-// saves one from a commit known to be right, then compares each change against it.
+// The saved copy is about 12 MB, so it is kept with the other local files in .sources/, not committed. What is committed
+// is its digest, one hash per case, saved with it: a clone without the copy can still say which cases changed, and
+// keeps a run that matches the digest as its own copy.
 const OUT = new URL("../../.sources/engine-snapshot.json", import.meta.url);
+const DIGEST = new URL("./snapshot-digest.json", import.meta.url);
 const TREES: TreeId[] = ["byright", "dpr", "minor", "major", "comp"];
 
 type Case = { name: string; p: Partial<ProjectInputs> };
@@ -117,21 +120,45 @@ function run() {
 }
 
 const now = run();
-if (process.argv.includes("--save") || !existsSync(OUT)) {
+const hash = (v: unknown) => createHash("sha256").update(JSON.stringify(v)).digest("hex").slice(0, 16);
+const digestOf = (cases: Record<string, unknown>) => Object.fromEntries(Object.entries(cases).map(([k, v]) => [k, hash(v)]));
+// One case a line, so the commit that changes the engine shows which cases it changed.
+const writeDigest = (d: Record<string, string>) =>
+  writeFileSync(DIGEST, `{\n${Object.entries(d).map(([k, v]) => ` ${JSON.stringify(k)}: ${JSON.stringify(v)}`).join(",\n")}\n}\n`);
+const total = Object.keys(now).length;
+
+if (process.argv.includes("--save")) {
   writeFileSync(OUT, JSON.stringify(now, null, 1) + "\n");
-  console.log(`Saved ${Object.keys(now).length} cases to .sources/engine-snapshot.json`);
+  writeDigest(digestOf(now));
+  console.log(`Saved ${total} cases to .sources/engine-snapshot.json, and their digest to scripts/engine/snapshot-digest.json`);
 } else {
-  const saved = JSON.parse(readFileSync(OUT, "utf8")) as Record<string, unknown>;
+  // The digest is committed, so this part runs anywhere: which cases differ from the commit's engine, not how.
+  const digest = existsSync(DIGEST) ? (JSON.parse(readFileSync(DIGEST, "utf8")) as Record<string, string>) : {};
+  const mine = digestOf(now);
+  const changed = [...new Set([...Object.keys(digest), ...Object.keys(mine)])].filter((k) => digest[k] !== mine[k]);
   let diffs = 0;
-  for (const k of new Set([...Object.keys(saved), ...Object.keys(now)])) {
-    const a = JSON.stringify(saved[k] ?? null, null, 1).split("\n"), b = JSON.stringify(now[k] ?? null, null, 1).split("\n");
-    if (a.join() === b.join()) continue;
-    diffs++;
-    console.log(`\n== ${k}`);
-    const sa = new Set(a), sb = new Set(b);
-    for (const l of a) if (!sb.has(l)) console.log(`- ${l.trim()}`);
-    for (const l of b) if (!sa.has(l)) console.log(`+ ${l.trim()}`);
+  const hadCopy = existsSync(OUT);
+  if (hadCopy) {
+    // The full copy is local: it shows how each case differs.
+    const saved = JSON.parse(readFileSync(OUT, "utf8")) as Record<string, unknown>;
+    for (const k of new Set([...Object.keys(saved), ...Object.keys(now)])) {
+      const a = JSON.stringify(saved[k] ?? null, null, 1).split("\n"), b = JSON.stringify(now[k] ?? null, null, 1).split("\n");
+      if (a.join() === b.join()) continue;
+      diffs++;
+      console.log(`\n== ${k}`);
+      const sa = new Set(a), sb = new Set(b);
+      for (const l of a) if (!sb.has(l)) console.log(`- ${l.trim()}`);
+      for (const l of b) if (!sa.has(l)) console.log(`+ ${l.trim()}`);
+    }
+    if (!diffs && changed.length) console.log(`The local copy matches, but ${changed.length} cases differ from the committed digest: the copy was saved from another commit. Save it again from one known to be right.`);
+  } else {
+    for (const k of changed) console.log(`differs from the committed digest: ${k}`);
+    // A run that matches the commit's digest is the commit's engine, so it is safe to keep as the local copy.
+    if (!changed.length) writeFileSync(OUT, JSON.stringify(now, null, 1) + "\n");
   }
-  console.log(diffs ? `\n${diffs} of ${Object.keys(now).length} cases differ.` : `All ${Object.keys(now).length} cases match the saved copy.`);
-  process.exitCode = diffs ? 1 : 0;
+  const bad = diffs || changed.length;
+  console.log(bad
+    ? `\n${diffs ? `${diffs} of ${total} cases differ from the saved copy; ` : ""}${changed.length} differ from the committed digest.`
+    : `All ${total} cases match ${hadCopy ? "the saved copy and " : ""}the committed digest${hadCopy ? "" : ", and the run is kept as the local copy"}.`);
+  process.exitCode = bad ? 1 : 0;
 }

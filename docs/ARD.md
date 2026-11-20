@@ -301,6 +301,7 @@ Kept in full in `lib/data/openQuestions.ts` and shown on `/dev`. The ones that b
 - **2026-11-20, the scripts read the sources through Node (D73).** `scripts/data.ts` gives the sources and towns as JSON to `sourcelib.py`; the timelines and quote checks give the same results; the monthly action sets up Node 24. Debt 11 cleared.
 - **2026-11-20, the Atlas for the stored comparison (D74).** Every town's districts saved from the live layer (39 towns, 576 districts); the snapshot runs on them, and 122 cases gained the Atlas's density, height, parking and public water findings. Saved as the new copy.
 - **2026-11-20, a quote said "null".** The Atlas density finding's quote named "null units/acre" wherever the Atlas gives a minimum lot and no density; it now gives only the figures there are (74 cases). Debt 38 added from the same run.
+- **2026-11-20, one command for the checks.** `npm run check` (`scripts/check.mjs`) runs the type check, the flowcharts, the stored comparison, the quotes and the timelines, and skips by name a check whose files in `.sources` are missing.
 
 - **2026-11-16, agenda layout built (D42 to D44).** The five-stage shell, rail, tray, pins, save chip, disclaimer strip and footer, `/docs/sources`, the Gantt and month switch, the hearing band, the three landings and the gate, and alternatives as routes. Four trials declared. Old project panel, trail landing and workspaces deleted; debts 22 to 25 added; engine flowchart for findings notes the ids.
 

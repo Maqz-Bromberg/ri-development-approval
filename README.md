@@ -31,7 +31,7 @@ npm run typecheck
 
 ## Check it
 
-The data is checked against the documents it quotes, which are kept in `.sources/` (not committed). Run these after a change; `scripts/towns/README.md` says more.
+The data is checked against the documents it quotes, which are kept in `.sources/` (not committed). After a change, run them all with `npm run check` (`-- --fast` leaves out the type check); it says which passed and shows the output of any that failed, and skips, by name, a check whose local files are missing. One by one, with `scripts/towns/README.md` for more:
 
 ```bash
 python3 scripts/towns/verify_quotes.py      # every quote, word for word, against its document

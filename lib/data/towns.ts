@@ -228,6 +228,11 @@ const READ: Record<string, Omit<Town, "name" | "county" | "level" | "commercial"
     marks: { steps: { read: "2026-11-19", partly: true, note: "How the city runs its routes, from its board's minutes of 2024: who decides, which stages are combined, what is left to staff. Its own land development regulations were not read, and the steps are state law." }, zoning: { read: "2026-11-19", partly: true, note: "Appendix A: Table 1's housing rows and adaptive reuse (§ 304(7)). Not read: dimensions, parking." } },
     gaps: "The Zoning Atlas's CT district has no column in Table 1.",
   },
+  // Chunk 5, an island (ARD D70).
+  "New Shoreham": {
+    marks: { zoning: { read: "2026-11-19", partly: true, note: "Appendix E, zone by zone (§§ 306 to 313): the housing uses, density as developable land a home, secondary dwellings (§ 403), multi-family development (§ 404), affordable housing (§ 405) and the Historic Overlay. Not read: Planned Development districts, Flexible Design Residential Development, the Historic District Zoning Ordinance, the Coastal zone." } },
+    gaps: "The copy read is eCode360's, which the Town's website links to; the Secretary of State lists ClerksHQ, where there is none, so every citation of it says which copy it is. New multi-family homes need municipal sewer and water. The Historic Overlay is not in the Zoning Atlas.",
+  },
   Smithfield: {
     marks: { zoning: { read: "2026-11-19", partly: true, note: "The Town's PDF, amended to January 6, 2026: the Table of Uses' housing rows (§ 4.3) and inclusionary zoning (§ 5.10). Not read: the Economic Growth Overlay, R-20MA's uses, the Planned Development district's article, dimensions." } },
     gaps: "The Table of Uses allows two-family homes only in Planned Development and multi-family homes only in R-20M and Planned Development; the Zoning Atlas shows a hearing for them in most residential districts. The table sends R-20MA's uses to § 9.3, which is another district's section.",

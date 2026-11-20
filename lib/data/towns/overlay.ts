@@ -20,6 +20,7 @@ import { warwickUse } from "./warwick/rules";
 import { NEWPORT_UNMAPPED, newportCoaStep, newportOverlay, newportOverlayFlags, newportUse } from "./newport/rules";
 import { centralFallsFindings, centralFallsUse } from "./central-falls/rules";
 import { cityRoute } from "./cityRoutes";
+import { NEW_SHOREHAM_UNMAPPED, newShorehamFindings, newShorehamOverlay, newShorehamOverlayFlags, newShorehamUse } from "./new-shoreham/rules";
 import { smithfieldAffordableLines, smithfieldFindings, smithfieldUse } from "./smithfield/rules";
 import { CHARLESTOWN_KINDS, CHARLESTOWN_UNMAPPED, charlestownCommercialUse, charlestownOverlay, charlestownUse } from "./charlestown/rules";
 
@@ -76,6 +77,11 @@ const RULES: Record<string, TownRules> = {
     extraSteps: [{ step: newportCoaStep, before: ["record", "building"] }],
   },
   "Central Falls": { routeStatus: CITY_STATUS, use: centralFallsUse, moreFindings: (i, t) => [...centralFallsFindings(i), ...cityRoute("Central Falls", t)], inclusionaryNone: { src: "cfzo", note: "Parking is reduced by a quarter for each affordable home where at least 15% are deed-restricted, an incentive, not a requirement." } },
+  // Chunk 5, an island (ARD D70): no use table, a zone-by-zone reading; its ordinance copy carries a "which copy" mark.
+  "New Shoreham": {
+    use: newShorehamUse, moreFindings: (i) => newShorehamFindings(i), overlayRules: newShorehamOverlay, unmappedOverlays: NEW_SHOREHAM_UNMAPPED,
+    overlayFlags: newShorehamOverlayFlags, inclusionaryNone: { src: "nszo", note: "Affordable homes earn extra density by special use permit (§ 405), an incentive, not a requirement." },
+  },
   // Not a city, but its zoning was saved by hand with them (the plan's chunk 7).
   Smithfield: { use: smithfieldUse, moreFindings: (i) => smithfieldFindings(i), affordableLines: smithfieldAffordableLines, inclusionaryRead: true },
   // Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3).

@@ -129,6 +129,27 @@ WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", 
 NTH = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth"}
 
 
+MONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+
+def season(meetings):
+    """The months a board meets markedly less often (ARD D70, chunk 5): over at least two full years of listed meetings,
+    a month with half the meetings of the median month or fewer, in every full year listed. None when no month stands out."""
+    days = sorted({datetime.date.fromisoformat(iso(d)) for _, d, _ in meetings if d <= datetime.date.today().strftime("%Y%m%d")})
+    if len(days) < 24 or (days[-1] - days[0]).days < 730: return None
+    # Count each month only over the years the listing covers in full, so a partial first or last year does not skew it.
+    first, last = days[0], days[-1]
+    years = {m: sum(1 for y in range(first.year, last.year + 1) if datetime.date(y, m, 1) >= first.replace(day=1) and datetime.date(y, m, 28) <= last) for m in range(1, 13)}
+    per = {m: sum(1 for x in days if x.month == m) / years[m] for m in range(1, 13) if years[m]}
+    if len(per) < 12: return None
+    med = sorted(per.values())[6]
+    # Quiet in every full year listed, not just on average: one cancelled month is not a season.
+    def full(y, m): return datetime.date(y, m, 1) >= first.replace(day=1) and datetime.date(y, m, 28) <= last
+    low = [m for m, v in per.items() if v <= med / 2 and all(sum(1 for x in days if x.year == y and x.month == m) <= med / 2 for y in range(first.year, last.year + 1) if full(y, m))]
+    if not low or len(low) > 3: return None
+    return {"months": low, "text": "fewer meetings in " + " and ".join(MONTH[m - 1] for m in low) if len(low) < 3 else "fewer meetings in " + ", ".join(MONTH[m - 1] for m in low[:-1]) + " and " + MONTH[low[-1] - 1]}
+
+
 def pattern(meetings):
     """The usual day and time of a board's meetings since 2025, said only where most meetings follow it."""
     recent = [(datetime.date.fromisoformat(iso(d)), t) for _, d, t in meetings if d >= "20250101" and d <= datetime.date.today().strftime("%Y%m%d")]
@@ -191,7 +212,7 @@ def town_bodies(town):
         lags = sorted((datetime.date.fromisoformat(iso(f)) - datetime.date.fromisoformat(iso(m))).days for _, m, f in minutes if m >= "20230101")
         listed = rows(section(page, "Past Meetings"))
         b = {"id": eid, "name": name, "role": role, "kind": kind, "url": f"{BASE}/OpenMeetingsPublic/OpenMeetingDashboard?subtopmenuId=201&EntityID={eid}",
-             "pattern": pattern(listed), "recent": [iso(d) for _, d, _ in listed[:6]],
+             "pattern": pattern(listed), "season": season(listed), "recent": [iso(d) for _, d, _ in listed[:6]],
              "meetings": len(held), "since2023": len(since), "first": held[0] if held else None, "last": held[-1] if held else None,
              "upcoming": upcoming, "cancelled": [d for d in cancelled if d >= "2025-01-01"],
              "minutesFiled": len(minutes), "minutesLagDays": lags[len(lags) // 2] if lags else None}

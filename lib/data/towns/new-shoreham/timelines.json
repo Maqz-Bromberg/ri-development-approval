@@ -1,0 +1,27 @@
+{
+ "West Side Road affordable rentals": {
+  "events": [
+   {
+    "date": "2023-05-10",
+    "stage": "other",
+    "what": "Planning Board's favorable advisory to the Zoning Board",
+    "kind": "decided",
+    "src": [
+     "nspb230510"
+    ],
+    "quote": "Ms. M. Comings moved to send a favorable advisory to the Zoning Board of Review on an application"
+   },
+   {
+    "date": "2023-10-25",
+    "stage": "other",
+    "what": "Special use permit under § 405 granted, with stipulations",
+    "kind": "decided",
+    "src": [
+     "nszb231025"
+    ],
+    "quote": "Motion was seconded by Robert Closter, Jr. and passed with a vote of 4-0."
+   }
+  ],
+  "checked": "2026-11-19"
+ }
+}

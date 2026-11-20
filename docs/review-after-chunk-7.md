@@ -38,6 +38,13 @@ Each city's housing rows are read in place of the Zoning Atlas, with Smithfield,
 15. **Central Falls's boards have filed nothing on the state site since May 2025**, so its search ends there; later records would be on the city's own pages. Its Osram mixed-use special overlay district (Sec. 603, for the mill blocks between Division and Blackstone Streets) is not in the Atlas and not read. *Closes with:* the city's own records, and reading Sec. 603 as an unmapped overlay.
 16. ~~**The cities' found items are not read into example projects.** Sixty-five proposals with homes are listed on the Records cards, from the agendas' headings; none has been followed through its minutes to a decision, as the small towns' comprehensive permits were. The largest (Pawtucket's 45 Division Street, Warwick's 1880 Post Road, Cranston's Champlin Heights, East Providence's Taunton Avenue) are the first candidates. *Closes with:* reading their minutes, as D64 did.~~ *Closed 2026-11-19 (D68): 32 of the 65 followed to a decision through the minutes; the rest stay listed.*
 
+## D. Chunk 5, New Shoreham (D70)
+
+1. **Which copy of New Shoreham's zoning is official.** The Town's website links to eCode360; the Secretary of State lists ClerksHQ, where there is none. Every citation says so. *Closes with:* the Town Clerk's answer.
+2. **New Shoreham's Historic District Zoning Ordinance** is incorporated in the zoning (§ 317) but not read, so the Historic Overlay is a finding, not a step with a clock, and its map is not data. *Closes with:* the ordinance and the Historic District Map.
+3. **§ 405 E expires on December 31, 2028**, or sooner when the Town's affordable inventory reaches 80 owned and 100 rented homes; the site says so but does not track the inventory. *Closes with:* the Town's count, or a dated rule (D62) once the date nears.
+4. **The quiet-season rule is coarse** (half the median month, in every full year listed): it finds 13 boards, some plausibly (councils in August), one oddly (Tiverton's Planning Board in April). The Calendar notes a hearing in a quiet month but does not move it. *Closes with:* a look at the 13 by someone who knows the boards.
+
 ## C. Across the site
 
 1. ~~**Levels count marks read in part** (D65). The keys now say how many; whether a level should require full marks, or show a separate shade for partial ones, is a design question for Maqz.~~ *Closed 2026-11-19 (D68): a level reached on partly read marks has its own paler shade, for now.*

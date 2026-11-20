@@ -28,6 +28,8 @@ export interface Body {
   /** Whether the latest minutes have a text layer (can be quoted) or are a scan */
   minutesForm?: "text" | "scan" | "not a PDF";
   pattern?: { text: string; time: string | null; perYear: number; count: number } | null;
+  /** Months the board meets markedly less often, in every full year listed (ARD D70): half the median month or fewer */
+  season?: { months: number[]; text: string } | null;
   recent?: string[];
 }
 type File = { source?: string; towns: Record<string, { read: string; bodies: Body[] }> };
@@ -58,9 +60,10 @@ const day = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString("en
 export function meetsLine(b: Body): string {
   const p = b.pattern;
   const when = p ? `About ${p.perYear} a year, ${p.text}${p.time ? `, at ${p.time.replace(/^0/, "").replace(/(AM|PM)$/, " $1")}` : ""}.` : "";
+  const quiet = b.season ? ` It holds ${b.season.text}, year after year.` : "";
   const last = b.last ? ` Last met ${day(b.last)}.` : "";
   const next = b.upcoming.length ? ` Next posted: ${day(b.upcoming[0])}.` : "";
-  return `${when}${last}${next}`.trim() || "No recent meetings listed.";
+  return `${when}${quiet}${last}${next}`.trim() || "No recent meetings listed.";
 }
 
 /** How the board's minutes are filed, and whether they can be quoted. */

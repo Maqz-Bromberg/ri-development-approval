@@ -10,6 +10,7 @@ export function Cite({ src, pin, q }: { src?: string; pin?: string; q?: string }
       <a href={s.url} target="_blank" rel="noopener noreferrer" title={s.label}>
         {pin || s.label} ↗
       </a>
+      {s.copy && <> <span className="cite-copy" title={s.copy}>which copy?</span></>}
     </span>
   );
 }

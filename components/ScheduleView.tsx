@@ -286,6 +286,9 @@ export function ScheduleView() {
   if (!plan.length) return null;
 
   const anyEst = plan.some((p) => p.ticks.some((t) => t.est));
+  // A board that meets markedly less often in some months (ARD D70): say so when a hearing in the plan falls in one.
+  const board = cal ? null : primaryBody(inputs.town, "planning");
+  const quietHearing = board?.season ? plan.flatMap((p) => p.ticks).find((t) => t.kind === "hearing" && board.season!.months.includes(t.date.getUTCMonth() + 1)) : undefined;
   const find = (id: string) => plan.find((p) => p.step.id === id);
   const approvalEnd = (find("record") ?? find("final") ?? find("zcheck"))?.end;
   const permit = find("building")?.end;
@@ -333,6 +336,7 @@ export function ScheduleView() {
         )}{" "}
         Confirm every date with the Planning Department before relying on it.
         {anyEst && " Some hearings in this plan fall beyond the published calendar."}
+        {quietHearing && board && ` A hearing here falls in ${quietHearing.date.toLocaleDateString("en-US", { month: "long", timeZone: "UTC" })}, when the ${board.name} holds ${board.season!.text.replace(/^fewer meetings/, "fewer meetings than usual")}: expect it to slip.`}
       </p>
       <div className="zoom-row">
         <div className="seg" role="group" aria-label="View">

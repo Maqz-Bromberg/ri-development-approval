@@ -205,6 +205,36 @@
    }
   ]
  },
+ "New Shoreham": {
+  "read": "2026-11-19",
+  "since": "2023-01-01",
+  "bodies": [
+   {
+    "id": 2150,
+    "name": "New Shoreham Planning Board",
+    "role": "planning",
+    "from": "2023-01-01",
+    "to": "2026-11-10",
+    "meetings": 70,
+    "agendas": 70,
+    "scans": 2,
+    "noFiles": 0,
+    "hits": 34
+   },
+   {
+    "id": 2165,
+    "name": "New Shoreham Zoning Board",
+    "role": "zoning",
+    "from": "2023-01-01",
+    "to": "2026-10-28",
+    "meetings": 61,
+    "agendas": 61,
+    "scans": 6,
+    "noFiles": 0,
+    "hits": 28
+   }
+  ]
+ },
  "Newport": {
   "read": "2026-11-19",
   "since": "2024-01-01",

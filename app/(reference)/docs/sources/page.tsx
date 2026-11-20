@@ -24,7 +24,7 @@ function citedBy(): Record<string, string[]> {
 
 export default function SourcesPage() {
   const cites = citedBy();
-  const rows: SourceRow[] = Object.entries(SOURCES).map(([id, x]) => ({ id, label: x.label, url: x.url, type: sourceType(id), place: sourcePlace(id), cites: cites[id] ?? [] }));
+  const rows: SourceRow[] = Object.entries(SOURCES).map(([id, x]) => ({ id, label: x.label, url: x.url, copy: x.copy, type: sourceType(id), place: sourcePlace(id), cites: cites[id] ?? [] }));
   return (
     <section className="sec" aria-labelledby="src-h">
       <div className="sec-head">

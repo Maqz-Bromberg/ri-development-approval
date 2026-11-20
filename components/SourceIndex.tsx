@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { SOURCE_TYPES, type SourceType } from "@/lib/sourceKind";
 import { Icon } from "./Icon";
 
-export interface SourceRow { id: string; label: string; url: string; type: SourceType; place: string; cites: string[] }
+export interface SourceRow { id: string; label: string; url: string; copy?: string; type: SourceType; place: string; cites: string[] }
 
 /**
  * Every cited source, consolidated by type (statutes, ordinances, minutes and so on), with a search that filters as you type
@@ -68,6 +68,7 @@ export function SourceIndex({ rows }: { rows: SourceRow[] }) {
                 <li key={r.id} id={r.id}>
                   <span className={`src-place${r.place === "Statewide" || r.place === "Federal" ? " st" : ""}`}>{r.place}</span>
                   <a href={r.url} target="_blank" rel="noopener noreferrer">{r.label} ↗</a>
+                  {r.copy && <small className="src-copy"><b>Which copy:</b> {r.copy}</small>}
                   {r.cites.length > 0 && <details><summary>Cited by {r.cites.length}</summary><ul>{r.cites.slice(0, 12).map((c) => <li key={c}>{c}</li>)}{r.cites.length > 12 && <li>and {r.cites.length - 12} more</li>}</ul></details>}
                 </li>
               ))}

@@ -109,6 +109,8 @@ The 2026 redline and the amended ordinance are in `.sources/north-providence/ord
 - Septic almost everywhere (183 mentions), many overlays (65) and planned districts, coastal rules throughout.
 - A seasonal meeting pattern for the Calendar.
 
+**Built 2026-11-19 (ARD D70).** A source carries a "which copy" note, shown with every citation: New Shoreham's eCode360 copy is the one the Town links to, and the state's ClerksHQ listing has none, so the mark says which copy it is rather than "unofficial". No use table: the zones' own lists read, with § 405's affordable housing density (two homes a lot, half the land, and until 2028 small multi-family buildings with a nonprofit sponsor) and new multi-family homes only with sewer and water. The seasonal premise did not hold: New Shoreham's boards meet the year round, with a shallow summer dip; a quiet-season rule run statewide finds 13 boards that do have one, and the Calendar now says when a hearing falls in such a month. Records: one larger project since 2023, read to its decision.
+
 ### Chunk 6: thin records, small rural towns
 
 Foster, Exeter, West Greenwich, Glocester, Hopkinton, Richmond. Few or no multi-family projects, and possibly no staff planner. What forces:

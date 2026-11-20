@@ -24,6 +24,8 @@ import { NEWPORT_HISTORY } from "./towns/newport/history";
 import NEWPORT_TIMELINES from "./towns/newport/timelines.json";
 import { CENTRAL_FALLS_HISTORY } from "./towns/central-falls/history";
 import CENTRAL_FALLS_TIMELINES from "./towns/central-falls/timelines.json";
+import { NEW_SHOREHAM_HISTORY } from "./towns/new-shoreham/history";
+import NEW_SHOREHAM_TIMELINES from "./towns/new-shoreham/timelines.json";
 
 /**
  * Cumberland multifamily items from Planning Board agendas, minutes and staff memos. Outcomes only where a source states them.
@@ -113,7 +115,7 @@ export const HISTORY: Precedent[] = [
   // Comprehensive permit cases in the small towns of chunk 6 (ARD D64).
   ...join("West Greenwich", WEST_GREENWICH_HISTORY, WEST_GREENWICH_TIMELINES), ...join("Exeter", EXETER_HISTORY, EXETER_TIMELINES),
   ...join("Hopkinton", HOPKINTON_HISTORY, HOPKINTON_TIMELINES), ...join("Richmond", RICHMOND_HISTORY, RICHMOND_TIMELINES),
-  ...join("Pawtucket", PAWTUCKET_HISTORY, PAWTUCKET_TIMELINES), ...join("Cranston", CRANSTON_HISTORY, CRANSTON_TIMELINES), ...join("Warwick", WARWICK_HISTORY, WARWICK_TIMELINES), ...join("Woonsocket", WOONSOCKET_HISTORY, WOONSOCKET_TIMELINES), ...join("East Providence", EAST_PROVIDENCE_HISTORY, EAST_PROVIDENCE_TIMELINES), ...join("Newport", NEWPORT_HISTORY, NEWPORT_TIMELINES), ...join("Central Falls", CENTRAL_FALLS_HISTORY, CENTRAL_FALLS_TIMELINES),
+  ...join("Pawtucket", PAWTUCKET_HISTORY, PAWTUCKET_TIMELINES), ...join("Cranston", CRANSTON_HISTORY, CRANSTON_TIMELINES), ...join("Warwick", WARWICK_HISTORY, WARWICK_TIMELINES), ...join("Woonsocket", WOONSOCKET_HISTORY, WOONSOCKET_TIMELINES), ...join("East Providence", EAST_PROVIDENCE_HISTORY, EAST_PROVIDENCE_TIMELINES), ...join("Newport", NEWPORT_HISTORY, NEWPORT_TIMELINES), ...join("Central Falls", CENTRAL_FALLS_HISTORY, CENTRAL_FALLS_TIMELINES), ...join("New Shoreham", NEW_SHOREHAM_HISTORY, NEW_SHOREHAM_TIMELINES),
 ];
 
 /** The recorded projects of one town. */

@@ -171,6 +171,10 @@ export const SOURCES: Record<string, Source> = {
   nezo: { label: "Newport Zoning, Title 17 (Municode, saved as a Word file on Nov 18, 2026)", url: "https://library.municode.com/ri/newport/codes/code_of_ordinances", file: ".docx" },
   cfzo: { label: "Central Falls Zoning Ordinance, Appendix A (Municode, saved as a Word file on Nov 18, 2026)", url: "https://library.municode.com/ri/central_falls/codes/code_of_ordinances", file: ".docx" },
   smzo: { label: "Smithfield Zoning Ordinance, adopted 1998, amended to January 6, 2026 (the Town's PDF)", url: "https://www.smithfieldri.gov/home/showpublisheddocument/5628/639283461558730000" },
+  /* Chunk 5, New Shoreham, read 2026-11-19 (ARD D70). */
+  nszo: { label: "New Shoreham Zoning Ordinance, Appendix E (eCode360, downloaded Nov 18, 2026)", url: "https://ecode360.com/36749402", copy: "Read from eCode360, the copy the Town's own website links to. The Secretary of State lists New Shoreham's code on ClerksHQ, where no zoning ordinance was found. Which copy is official is not settled; the Town Clerk can say." },
+  nszb231025: { label: "New Shoreham Zoning Board of Review minutes, Oct 25, 2023", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4288%5C2024%5C480184.pdf" },
+  nspb230510: { label: "New Shoreham Planning Board minutes, May 10, 2023", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4284%5C2023%5C464938.pdf" },
   /* Chunk 7 projects followed to a decision, 2026-11-19 (ARD D68): the boards' minutes on the state site. */
   papc240220: { label: "Pawtucket City Planning Commission minutes, Feb 20, 2024", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4017%5C2024%5C485799.pdf" },
   papc240521: { label: "Pawtucket City Planning Commission minutes, May 21, 2024", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4017%5C2024%5C494704.pdf" },

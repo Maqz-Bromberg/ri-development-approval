@@ -143,6 +143,15 @@ const FOUND: Record<string, { found: FoundItem[]; note?: string }> = {
     ],
     note: "Few new buildings: Newport's housing items are mostly the Zoning Board's, for conversions (two-family to multi-family, a third home in a two-family house) and their parking, in historic neighbourhoods. The Planning Board also reviews demolitions of old houses (a two-family and a multi-family one among them) and certifies the city's housing grant applications.",
   },
+  // Chunk 5 (ARD D70), searched from 2023 like the small towns. Applicants named only as businesses or public bodies.
+  "New Shoreham": {
+    found: [
+      { date: "2023-03-22", board: "Zoning Board", what: "West Side Road affordable rentals, Plat 18, Lot 2-3: eight duplexes, sixteen rentals for year-round residents, by special use permit under § 405 (Block Island Housing Board); granted October 2023", homes: 16, meeting: 1040674 },
+      { date: "2023-04-26", board: "Zoning Board", what: "The Thomas Property, High Street (Plat 8, Lot 218): two accessory dwelling units for town employees in a new building, by the Town; a modification of the plan in September 2024", homes: 2, meeting: 1042094 },
+      { date: "2025-06-25", board: "Zoning Board", what: "149 Old Town Road (Plat 6, Lot 72-2): expansion of a home under a previously approved special use permit for a detached multi-family development, through 2025 (Muddy Paws, LLC)", meeting: 1075977 },
+    ],
+    note: "Housing on the island comes one or two homes at a time: most items are accessory dwelling units for year-round residents (§ 513), and the Planning Board's own work on the ordinance's accessory dwelling, adaptive reuse and comprehensive permit sections for state law. The one project with more than two homes is the Housing Board's, under § 405. The boards meet the year round; the summer dip is shallow.",
+  },
   Warwick: {
     found: [
       { date: "2024-06-12", board: "Planning Board", what: "1187 Post Road (1187 and 1191): 11 homes, master plan with a recommendation to the City Council for a Planned District Residential overlay (2024); preliminary plan in January 2026, demolishing a commercial building", homes: 11, meeting: 1059609 },

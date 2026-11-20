@@ -35,6 +35,8 @@ const ZONES: Record<string, string[]> = {
   // Chunk 7 (ARD D67): a district where the city's table differs from the Atlas, and one with a rule of its own.
   Pawtucket: ["CD"], Cranston: ["A-8", "C-3"], "East Providence": ["C-3", "BPH"], Woonsocket: ["C-1"], Smithfield: ["R80"],
   Warwick: ["A-7", "V"], Newport: ["R-10"], "Central Falls": ["R-1"],
+  // Chunk 5 (ARD D70).
+  "New Shoreham": ["RC", "NHC"],
 };
 const SHAPES: Case[] = [
   { name: "3 homes", p: homes(3) },

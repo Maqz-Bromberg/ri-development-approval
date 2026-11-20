@@ -15,8 +15,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 CACHE = ROOT / ".sources"
 KINDS = ["rules", "meetings", "recordings", "projects", "press", "pages"]
 # Hosts that answer 403 to a script. Their files are saved by hand.
-REFUSES = {"www.providenceri.gov", "providenceri.gov"}
-ENTRY = re.compile(r'^\s*(\w+): \{ label: "((?:[^"\\]|\\.)*)", url: "([^"]+)"(?:, town: "([^"]+)")?(?:, file: "([^"]+)")? \}', re.M)
+REFUSES = {"www.providenceri.gov", "providenceri.gov", "ecode360.com"}  # eCode360 from 2026-11-19 (ARD debt 36)
+ENTRY = re.compile(r'^\s*(\w+): \{ label: "((?:[^"\\]|\\.)*)", url: "([^"]+)"(?:, town: "([^"]+)")?(?:, file: "([^"]+)")?(?:, copy: "(?:[^"\\]|\\.)*")? \}', re.M)
 
 
 def towns():

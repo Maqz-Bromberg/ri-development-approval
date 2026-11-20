@@ -26,13 +26,13 @@ export function plain(cell: string): Value | null {
 }
 
 /** The finding for a use answered from a town's own table, in place of the Zoning Atlas. */
-export function useFinding(a: { id: string; town: string; what: string; zone: string; value: Value; why?: string[]; flag?: boolean; src: string; pin: string; q: string; gap?: string; /** In place of the usual words for the value, where the town names its review otherwise */ word?: string }): { value: Value; finding: Finding } {
+export function useFinding(a: { id: string; town: string; what: string; zone: string; value: Value; why?: string[]; flag?: boolean; src: string; pin: string; q: string; gap?: string; /** In place of the usual words for the value, where the town names its review otherwise */ word?: string; /** What was read, where the town has no use table ("zone sections") */ from?: string }): { value: Value; finding: Finding } {
   const why = (a.why ?? []).filter(Boolean);
   return {
     value: a.value,
     finding: {
       id: a.id, st: a.flag ? "flag" : ST[a.value], t: `${a.what}: ${a.word ?? WORD[a.value]} in ${a.zone}`,
-      p: `${why.join(" ")}${why.length ? " " : ""}From ${a.town}'s own use table, not the Zoning Atlas.`,
+      p: `${why.join(" ")}${why.length ? " " : ""}From ${a.town}'s own ${a.from ?? "use table"}, not the Zoning Atlas.`,
       src: a.src, pin: a.pin, q: a.q, ...(a.gap ? { gap: a.gap } : {}),
     },
   };

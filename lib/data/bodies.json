@@ -30,7 +30,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 56
+     "minutesLagDays": 56,
+     "season": null
     },
     {
      "id": 218,
@@ -66,7 +67,8 @@
      "place": "Annual 2026 Calendar, 283 County Road, Barrington, RI, 02806",
      "phone": "(120) 124-7190",
      "minutesForm": "scan",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 225,
@@ -95,7 +97,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 68
+     "minutesLagDays": 68,
+     "season": null
     },
     {
      "id": 227,
@@ -129,7 +132,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 230,
@@ -162,7 +166,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 47,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -196,7 +201,13 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 92,
-     "minutesLagDays": 44
+     "minutesLagDays": 44,
+     "season": {
+      "months": [
+       8
+      ],
+      "text": "fewer meetings in August"
+     }
     },
     {
      "id": 308,
@@ -225,7 +236,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 56
+     "minutesLagDays": 56,
+     "season": null
     },
     {
      "id": 313,
@@ -261,7 +273,8 @@
      "place": "10 Court Street, Bristol, RI, 02809",
      "phone": "(401) 253-7000",
      "minutesForm": "scan",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 320,
@@ -292,7 +305,8 @@
       "2025-10-23"
      ],
      "minutesFiled": 17,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 321,
@@ -326,7 +340,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 22,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 325,
@@ -358,7 +373,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -394,7 +410,8 @@
       "2026-12-15"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 50
+     "minutesLagDays": 50,
+     "season": null
     },
     {
      "id": 346,
@@ -416,7 +433,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 10,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 353,
@@ -449,7 +467,8 @@
      "place": "Burrillville Middle School, 2220 Bronco Highway, Harrisville, RI, 02830",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 364,
@@ -479,7 +498,14 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 15,
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       7,
+       8
+      ],
+      "text": "fewer meetings in July and August"
+     }
     },
     {
      "id": 366,
@@ -511,7 +537,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 2,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -549,7 +576,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 31,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 424,
@@ -585,7 +613,8 @@
      "place": "Council Chambers, 2nd Floor, City Hall, 580 Broad Street, Central Falls, RI, 02863",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 438,
@@ -613,7 +642,8 @@
      ],
      "minutesFiled": 72,
      "minutesLagDays": 104,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8751,
@@ -641,7 +671,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 4,
-     "minutesLagDays": 106
+     "minutesLagDays": 106,
+     "season": null
     }
    ]
   },
@@ -675,7 +706,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 85,
-     "minutesLagDays": 48
+     "minutesLagDays": 48,
+     "season": null
     },
     {
      "id": 486,
@@ -708,7 +740,14 @@
      "place": "4540 South County Trail, Town Council Chambers, Charlestown, RI, 02813",
      "phone": "401-364-1225",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       11,
+       12
+      ],
+      "text": "fewer meetings in November and December"
+     }
     },
     {
      "id": 497,
@@ -738,7 +777,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 30,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 499,
@@ -779,7 +819,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 16,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8612,
@@ -803,7 +844,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 4,
-     "minutesLagDays": 12
+     "minutesLagDays": 12,
+     "season": null
     }
    ]
   },
@@ -837,7 +879,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 54,
-     "minutesLagDays": 44
+     "minutesLagDays": 44,
+     "season": null
     },
     {
      "id": 669,
@@ -868,7 +911,8 @@
       "2025-06-05"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 61
+     "minutesLagDays": 61,
+     "season": null
     },
     {
      "id": 679,
@@ -904,7 +948,8 @@
      "place": "1670 Flat River Road, Coventry, RI, 02816",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 698,
@@ -937,7 +982,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 9,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 702,
@@ -970,7 +1016,8 @@
      ],
      "minutesFiled": 92,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 7101,
@@ -999,7 +1046,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 32,
-     "minutesLagDays": 65
+     "minutesLagDays": 65,
+     "season": null
     }
    ]
   },
@@ -1036,7 +1084,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 4,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 718,
@@ -1060,7 +1109,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 6,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 723,
@@ -1089,7 +1139,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 19,
-     "minutesLagDays": 81
+     "minutesLagDays": 81,
+     "season": null
     },
     {
      "id": 732,
@@ -1125,7 +1176,8 @@
      "place": "869 Park Avenue, Cranston , RI, 02910",
      "phone": "(401) 780-3222",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 748,
@@ -1155,7 +1207,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 8,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -1191,7 +1244,8 @@
       "2025-01-13"
      ],
      "minutesFiled": 85,
-     "minutesLagDays": 92
+     "minutesLagDays": 92,
+     "season": null
     },
     {
      "id": 790,
@@ -1222,7 +1276,8 @@
       "2026-06-09"
      ],
      "minutesFiled": 60,
-     "minutesLagDays": 92
+     "minutesLagDays": 92,
+     "season": null
     },
     {
      "id": 802,
@@ -1255,7 +1310,8 @@
      "place": "45 Broad Street, Cumberland, RI, 02864",
      "phone": "(401) 728-2400",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 810,
@@ -1284,7 +1340,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 21,
-     "minutesLagDays": 50
+     "minutesLagDays": 50,
+     "season": null
     },
     {
      "id": 811,
@@ -1317,7 +1374,13 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 50,
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       8
+      ],
+      "text": "fewer meetings in August"
+     }
     },
     {
      "id": 813,
@@ -1347,7 +1410,8 @@
      "cancelled": [],
      "minutesFiled": 57,
      "minutesLagDays": 6,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -1383,7 +1447,8 @@
       "2025-05-14"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 30
+     "minutesLagDays": 30,
+     "season": null
     },
     {
      "id": 937,
@@ -1419,7 +1484,8 @@
      "place": "125 Main Street, East Greenwich, RI, 02818",
      "phone": "(401) 886-8643",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 953,
@@ -1448,7 +1514,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 65,
-     "minutesLagDays": 28
+     "minutesLagDays": 28,
+     "season": null
     },
     {
      "id": 954,
@@ -1481,7 +1548,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 7,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 955,
@@ -1513,7 +1581,13 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       12
+      ],
+      "text": "fewer meetings in December"
+     }
     }
    ]
   },
@@ -1547,7 +1621,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 112
+     "minutesLagDays": 112,
+     "season": null
     },
     {
      "id": 970,
@@ -1576,7 +1651,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 61,
-     "minutesLagDays": 96
+     "minutesLagDays": 96,
+     "season": null
     },
     {
      "id": 980,
@@ -1620,7 +1696,8 @@
      "place": "145 Taunton Ave., East Providence, RI, 02914-4530",
      "phone": "(401) 435-7530",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 996,
@@ -1653,7 +1730,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 71,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 7267,
@@ -1688,7 +1766,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 27,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -1729,7 +1808,13 @@
      "place": "675 Ten Rod Road, Exeter, RI, 02822",
      "phone": "(401) 294-2592",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       12
+      ],
+      "text": "fewer meetings in December"
+     }
     },
     {
      "id": 1182,
@@ -1759,7 +1844,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 34,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1186,
@@ -1789,7 +1875,8 @@
      "cancelled": [],
      "minutesFiled": 88,
      "minutesLagDays": 60,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -1823,7 +1910,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 31
+     "minutesLagDays": 31,
+     "season": null
     },
     {
      "id": 1252,
@@ -1861,7 +1949,8 @@
      "place": "Benjamin Eddy Building, 6 South Killingly Road, Foster, RI, 02825",
      "phone": "(401) 392-9200",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1259,
@@ -1891,7 +1980,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 21,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1260,
@@ -1916,7 +2006,8 @@
      "cancelled": [],
      "minutesFiled": 70,
      "minutesLagDays": 27,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -1950,7 +2041,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 71,
-     "minutesLagDays": 39
+     "minutesLagDays": 39,
+     "season": null
     },
     {
      "id": 1301,
@@ -1979,7 +2071,13 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 45,
-     "minutesLagDays": 23
+     "minutesLagDays": 23,
+     "season": {
+      "months": [
+       12
+      ],
+      "text": "fewer meetings in December"
+     }
     },
     {
      "id": 1308,
@@ -2012,7 +2110,8 @@
      "place": "Glocester Town Hall, 1145 Putnam Pike, chepachet, RI, 02814",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1314,
@@ -2046,7 +2145,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 16,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1317,
@@ -2078,7 +2178,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 34,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8707,
@@ -2098,7 +2199,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 2,
-     "minutesLagDays": 14
+     "minutesLagDays": 14,
+     "season": null
     }
    ]
   },
@@ -2127,7 +2229,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 2,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 1472,
@@ -2156,7 +2259,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 71,
-     "minutesLagDays": 32
+     "minutesLagDays": 32,
+     "season": null
     },
     {
      "id": 1476,
@@ -2195,7 +2299,8 @@
      "place": "Town Council Chambers, 1 Town House Road, Hopkinton, RI, 02833",
      "phone": "(401) 377-7770",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1479,
@@ -2229,7 +2334,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 15,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1480,
@@ -2259,7 +2365,8 @@
      "cancelled": [],
      "minutesFiled": 68,
      "minutesLagDays": 43,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8632,
@@ -2280,7 +2387,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 3,
-     "minutesLagDays": 29
+     "minutesLagDays": 29,
+     "season": null
     }
    ]
   },
@@ -2316,7 +2424,8 @@
       "2025-06-10"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 41
+     "minutesLagDays": 41,
+     "season": null
     },
     {
      "id": 1642,
@@ -2351,7 +2460,8 @@
      "place": "93 Narragansett Avenue, Town Council Chambers, Jamestown, RI, 02835",
      "phone": "(401) 423-7210",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1652,
@@ -2382,7 +2492,8 @@
       "2025-07-08"
      ],
      "minutesFiled": 75,
-     "minutesLagDays": 42
+     "minutesLagDays": 42,
+     "season": null
     },
     {
      "id": 1658,
@@ -2412,7 +2523,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 26,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1666,
@@ -2444,7 +2556,8 @@
      ],
      "minutesFiled": 92,
      "minutesLagDays": 31,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -2484,7 +2597,8 @@
      "place": "1291 Hartford Ave, Johnston, RI, 02919",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1682,
@@ -2514,7 +2628,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 4,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1684,
@@ -2546,7 +2661,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 18,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -2582,7 +2698,8 @@
       "2026-07-01"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 44
+     "minutesLagDays": 44,
+     "season": null
     },
     {
      "id": 1794,
@@ -2615,7 +2732,8 @@
      "place": "100 OLD RIVER ROAD, LINCOLN, RI, 02865",
      "phone": "(401) 333-8433",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1799,
@@ -2644,7 +2762,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 93
+     "minutesLagDays": 93,
+     "season": null
     },
     {
      "id": 1807,
@@ -2674,7 +2793,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1809,
@@ -2704,7 +2824,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 38,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 7341,
@@ -2721,7 +2842,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 0,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     }
    ]
   },
@@ -2759,7 +2881,8 @@
       "2026-10-28"
      ],
      "minutesFiled": 93,
-     "minutesLagDays": 43
+     "minutesLagDays": 43,
+     "season": null
     },
     {
      "id": 1834,
@@ -2794,7 +2917,8 @@
      "place": "40 Commons, Council Chambers, Little Compton, RI, 02837",
      "phone": "(401) 635-2081",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1843,
@@ -2830,7 +2954,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 19,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1844,
@@ -2860,7 +2985,8 @@
      "cancelled": [],
      "minutesFiled": 56,
      "minutesLagDays": 57,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -2896,7 +3022,8 @@
       "2025-06-09"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 23
+     "minutesLagDays": 23,
+     "season": null
     },
     {
      "id": 1962,
@@ -2935,7 +3062,8 @@
      "place": "350 E Main Rd., Planning Department, Middletown, RI, 02842",
      "phone": "401-849-4027",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1980,
@@ -2969,7 +3097,8 @@
       "2026-02-25"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 15
+     "minutesLagDays": 15,
+     "season": null
     },
     {
      "id": 1982,
@@ -3005,7 +3134,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 31,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 1989,
@@ -3039,7 +3169,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -3068,7 +3199,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 1,
-     "minutesLagDays": 108
+     "minutesLagDays": 108,
+     "season": null
     },
     {
      "id": 2085,
@@ -3104,7 +3236,8 @@
       "2026-10-13"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 52
+     "minutesLagDays": 52,
+     "season": null
     },
     {
      "id": 2097,
@@ -3139,7 +3272,8 @@
      "place": "25 Fifth Avenue, Narragansett, RI, 02882",
      "phone": "(401) 782-0626",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2104,
@@ -3172,7 +3306,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 2,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2107,
@@ -3204,7 +3339,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 64,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -3240,7 +3376,8 @@
       "2025-10-28"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 146
+     "minutesLagDays": 146,
+     "season": null
     },
     {
      "id": 2143,
@@ -3272,7 +3409,8 @@
       "2026-09-03"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 162
+     "minutesLagDays": 162,
+     "season": null
     },
     {
      "id": 2150,
@@ -3305,7 +3443,8 @@
      "place": "16 Old Town rd, Block Island, RI, 02807",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2160,
@@ -3338,7 +3477,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 17,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2165,
@@ -3371,7 +3511,8 @@
      ],
      "minutesFiled": 83,
      "minutesLagDays": 64,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -3415,7 +3556,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 49,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2196,
@@ -3444,7 +3586,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 90
+     "minutesLagDays": 90,
+     "season": null
     },
     {
      "id": 2204,
@@ -3479,7 +3622,8 @@
      "place": "43 Broadway, Council Chambers, Newport, RI, 02840",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2240,
@@ -3512,7 +3656,8 @@
      ],
      "minutesFiled": 91,
      "minutesLagDays": 99,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -3546,7 +3691,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 87,
-     "minutesLagDays": 62
+     "minutesLagDays": 62,
+     "season": null
     },
     {
      "id": 2280,
@@ -3577,7 +3723,8 @@
       "2025-02-03"
      ],
      "minutesFiled": 93,
-     "minutesLagDays": 70
+     "minutesLagDays": 70,
+     "season": null
     },
     {
      "id": 2287,
@@ -3613,7 +3760,8 @@
      "place": "80 Boston Neck Road, North Kingstown, RI, 02852",
      "phone": "(401) 268-1571",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2295,
@@ -3644,7 +3792,8 @@
       "2025-08-13"
      ],
      "minutesFiled": 15,
-     "minutesLagDays": 57
+     "minutesLagDays": 57,
+     "season": null
     },
     {
      "id": 2296,
@@ -3677,7 +3826,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 38,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2303,
@@ -3707,7 +3857,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 73,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -3743,7 +3894,8 @@
       "2025-07-15"
      ],
      "minutesFiled": 53,
-     "minutesLagDays": 217
+     "minutesLagDays": 217,
+     "season": null
     },
     {
      "id": 2318,
@@ -3780,7 +3932,8 @@
      "place": "2000 Smith Street, Town Council Chambers, North Providence, RI, 02911",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2336,
@@ -3820,7 +3973,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 29,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2345,
@@ -3854,7 +4008,8 @@
      ],
      "minutesFiled": 37,
      "minutesLagDays": 120,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -3882,7 +4037,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 2,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 2358,
@@ -3911,7 +4067,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 12
+     "minutesLagDays": 12,
+     "season": null
     },
     {
      "id": 2362,
@@ -3947,7 +4104,8 @@
       "2026-11-16"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 58
+     "minutesLagDays": 58,
+     "season": null
     },
     {
      "id": 2367,
@@ -3984,7 +4142,8 @@
      "place": "83 Greene St, North Smithfield, RI, 02896",
      "phone": null,
      "minutesForm": "scan",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2387,
@@ -4018,7 +4177,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2390,
@@ -4050,7 +4210,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 29,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -4087,7 +4248,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 2,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2515,
@@ -4121,7 +4283,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 8,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2516,
@@ -4156,7 +4319,8 @@
      "place": "100 Freight Street, Pawtucket, RI, 02860",
      "phone": "(401) 728-0500",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2525,
@@ -4185,7 +4349,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 75,
-     "minutesLagDays": 15
+     "minutesLagDays": 15,
+     "season": null
     }
    ]
   },
@@ -4219,7 +4384,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 52,
-     "minutesLagDays": 60
+     "minutesLagDays": 60,
+     "season": null
     },
     {
      "id": 2641,
@@ -4250,7 +4416,8 @@
       "2026-01-05"
      ],
      "minutesFiled": 0,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 2669,
@@ -4288,7 +4455,8 @@
      "place": "2200 East Main, Portsmouth, RI, 02871",
      "phone": "(401) 643-0332",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2697,
@@ -4322,7 +4490,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 16,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2704,
@@ -4352,7 +4521,8 @@
      "cancelled": [],
      "minutesFiled": 72,
      "minutesLagDays": 57,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8474,
@@ -4381,7 +4551,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 6,
-     "minutesLagDays": 65
+     "minutesLagDays": 65,
+     "season": null
     }
    ]
   },
@@ -4415,7 +4586,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 37
+     "minutesLagDays": 37,
+     "season": null
     },
     {
      "id": 383,
@@ -4444,7 +4616,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 20,
-     "minutesLagDays": 37
+     "minutesLagDays": 37,
+     "season": null
     },
     {
      "id": 1531,
@@ -4473,7 +4646,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 35
+     "minutesLagDays": 35,
+     "season": null
     },
     {
      "id": 2766,
@@ -4503,7 +4677,13 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 18,
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       8
+      ],
+      "text": "fewer meetings in August"
+     }
     },
     {
      "id": 2767,
@@ -4536,7 +4716,8 @@
      "place": "Joseph Doorley Municipal Building, 444 Westminster Street, 1st floor meeting room, Providence, RI, 02903",
      "phone": "(401) 680-8525",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 2829,
@@ -4568,7 +4749,8 @@
       "2026-05-18"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 37
+     "minutesLagDays": 37,
+     "season": null
     },
     {
      "id": 2934,
@@ -4603,7 +4785,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 1,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8776,
@@ -4622,7 +4805,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 1,
-     "minutesLagDays": 14
+     "minutesLagDays": 14,
+     "season": null
     }
    ]
   },
@@ -4658,7 +4842,8 @@
       "2025-01-08"
      ],
      "minutesFiled": 9,
-     "minutesLagDays": 96
+     "minutesLagDays": 96,
+     "season": null
     },
     {
      "id": 3123,
@@ -4682,7 +4867,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 2,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 3127,
@@ -4720,7 +4906,8 @@
      "place": "5 Richmond Townhouse Rd, Wyoming, RI, 02898",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3136,
@@ -4753,7 +4940,8 @@
       "2025-11-18"
      ],
      "minutesFiled": 0,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 3138,
@@ -4786,7 +4974,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 23,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3140,
@@ -4818,7 +5007,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 42,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -4852,7 +5042,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": 65
+     "minutesLagDays": 65,
+     "season": null
     },
     {
      "id": 3209,
@@ -4888,7 +5079,8 @@
      "place": "1315 Chopmist Hill Road, Scituate, RI, 02857",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3222,
@@ -4922,7 +5114,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3228,
@@ -4954,7 +5147,8 @@
      ],
      "minutesFiled": 85,
      "minutesLagDays": 57,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -4991,7 +5185,8 @@
       "2026-01-01"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 36
+     "minutesLagDays": 36,
+     "season": null
     },
     {
      "id": 3294,
@@ -5024,7 +5219,8 @@
       "2025-02-19"
      ],
      "minutesFiled": 88,
-     "minutesLagDays": 36
+     "minutesLagDays": 36,
+     "season": null
     },
     {
      "id": 3301,
@@ -5061,7 +5257,8 @@
      "place": "Smithfield Town Hall, Town Council Chambers, 64 Farnum Pike, Smithfield, RI, 02917",
      "phone": "401-233-1010",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3313,
@@ -5095,7 +5292,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 23,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3318,
@@ -5127,7 +5325,8 @@
      ],
      "minutesFiled": 85,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8529,
@@ -5156,7 +5355,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 9,
-     "minutesLagDays": 43
+     "minutesLagDays": 43,
+     "season": null
     }
    ]
   },
@@ -5190,7 +5390,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 78,
-     "minutesLagDays": 55
+     "minutesLagDays": 55,
+     "season": null
     },
     {
      "id": 3337,
@@ -5222,7 +5423,8 @@
       "2026-10-22"
      ],
      "minutesFiled": 84,
-     "minutesLagDays": 84
+     "minutesLagDays": 84,
+     "season": null
     },
     {
      "id": 3343,
@@ -5259,7 +5461,8 @@
      "place": "Town Hall Conference Room, 2nd Floor, 180 High Street, Wakefield, RI, 02879",
      "phone": "(401) 789-9331",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3353,
@@ -5288,7 +5491,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 94,
-     "minutesLagDays": 56
+     "minutesLagDays": 56,
+     "season": null
     },
     {
      "id": 3354,
@@ -5322,7 +5526,13 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 27,
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       8
+      ],
+      "text": "fewer meetings in August"
+     }
     },
     {
      "id": 3356,
@@ -5355,7 +5565,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -5391,7 +5602,8 @@
       "2026-07-21"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 68
+     "minutesLagDays": 68,
+     "season": null
     },
     {
      "id": 3530,
@@ -5427,7 +5639,13 @@
      "place": "343 Highland Road, Tiverton, RI, 02878",
      "phone": "(401) 816-5631",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       4
+      ],
+      "text": "fewer meetings in April"
+     }
     },
     {
      "id": 3543,
@@ -5460,7 +5678,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 36,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3549,
@@ -5494,7 +5713,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 42,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8617,
@@ -5511,7 +5731,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 0,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 8692,
@@ -5540,7 +5761,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 3,
-     "minutesLagDays": 8
+     "minutesLagDays": 8,
+     "season": null
     }
    ]
   },
@@ -5574,7 +5796,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 100,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     },
     {
      "id": 3696,
@@ -5611,7 +5834,8 @@
      "place": "514 main street, warren, RI, 02885",
      "phone": null,
      "minutesForm": "scan",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3703,
@@ -5635,7 +5859,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 25,
-     "minutesLagDays": 103
+     "minutesLagDays": 103,
+     "season": null
     },
     {
      "id": 3705,
@@ -5667,7 +5892,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 29,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3711,
@@ -5699,7 +5925,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 37,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 7301,
@@ -5718,7 +5945,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 1,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     }
    ]
   },
@@ -5756,7 +5984,13 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 4,
-     "primary": true
+     "primary": true,
+     "season": {
+      "months": [
+       7
+      ],
+      "text": "fewer meetings in July"
+     }
     },
     {
      "id": 3754,
@@ -5787,7 +6021,8 @@
       "2025-05-21"
      ],
      "minutesFiled": 100,
-     "minutesLagDays": 50
+     "minutesLagDays": 50,
+     "season": null
     },
     {
      "id": 3765,
@@ -5820,7 +6055,8 @@
      "place": "65 Centerville Road, Meeting Room 2, Warwick, RI, 02886",
      "phone": "(401) 921-9681",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3802,
@@ -5852,7 +6088,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 22,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -5886,7 +6123,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 22,
-     "minutesLagDays": 34
+     "minutesLagDays": 34,
+     "season": null
     },
     {
      "id": 3860,
@@ -5925,7 +6163,8 @@
      "place": "280 Victory Highway, Council Chambers, West Greenwich, RI, 02817",
      "phone": "401-392-3800",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3862,
@@ -5949,7 +6188,13 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 0,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": {
+      "months": [
+       12
+      ],
+      "text": "fewer meetings in December"
+     }
     },
     {
      "id": 3863,
@@ -5979,7 +6224,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 13,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3865,
@@ -6023,7 +6269,8 @@
      ],
      "minutesFiled": 78,
      "minutesLagDays": 27,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   },
@@ -6061,7 +6308,8 @@
      "place": "1170 Main Street, W. Warwick, RI, 02893",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3899,
@@ -6094,7 +6342,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 24,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3902,
@@ -6124,7 +6373,8 @@
      "cancelled": [],
      "minutesFiled": 99,
      "minutesLagDays": 12,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 8643,
@@ -6153,7 +6403,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 1,
-     "minutesLagDays": 8
+     "minutesLagDays": 8,
+     "season": null
     }
    ]
   },
@@ -6192,7 +6443,8 @@
       "2026-01-08"
      ],
      "minutesFiled": 62,
-     "minutesLagDays": 214
+     "minutesLagDays": 214,
+     "season": null
     },
     {
      "id": 3933,
@@ -6223,7 +6475,13 @@
       "2026-09-08"
      ],
      "minutesFiled": 0,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": {
+      "months": [
+       8
+      ],
+      "text": "fewer meetings in August"
+     }
     },
     {
      "id": 3967,
@@ -6259,7 +6517,8 @@
      "place": "45 Broad Street, Town Council Chambers, Westerly, RI, 02891",
      "phone": "(401) 348-2536",
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3994,
@@ -6291,7 +6550,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 19,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 3999,
@@ -6325,7 +6585,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 132,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 7040,
@@ -6342,7 +6603,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 0,
-     "minutesLagDays": null
+     "minutesLagDays": null,
+     "season": null
     }
    ]
   },
@@ -6377,7 +6639,8 @@
      "cancelled": [],
      "minutesFiled": 100,
      "minutesLagDays": 16,
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 4028,
@@ -6406,7 +6669,8 @@
      "upcoming": [],
      "cancelled": [],
      "minutesFiled": 29,
-     "minutesLagDays": 57
+     "minutesLagDays": 57,
+     "season": null
     },
     {
      "id": 4036,
@@ -6442,7 +6706,8 @@
      "place": "169 Main Street, 2nd Floor Conference Room, Woonsocket, RI, 02895",
      "phone": null,
      "minutesForm": "text",
-     "primary": true
+     "primary": true,
+     "season": null
     },
     {
      "id": 4050,
@@ -6475,7 +6740,8 @@
      ],
      "minutesFiled": 100,
      "minutesLagDays": 112,
-     "primary": true
+     "primary": true,
+     "season": null
     }
    ]
   }

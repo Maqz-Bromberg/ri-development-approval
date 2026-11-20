@@ -14,6 +14,8 @@ export interface Source {
   town?: string;
   /** The kind of file (".pdf"), where `url` is the page that lists the document because its own address was not found. */
   file?: string;
+  /** Where the copy read may not be the official text: which copy it is, and what is known of the official one (ARD D70, chunk 5). Shown with every citation. */
+  copy?: string;
 }
 
 export interface Contact {

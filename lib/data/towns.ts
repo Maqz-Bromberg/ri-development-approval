@@ -310,9 +310,6 @@ export function townInfo(name: string): Town {
   return TOWNS.find((t) => t.name === name) ?? { name, county: "Providence", marks: {}, level: 1 };
 }
 
-/** True when the town's steps have been read into this site beyond state law. */
-export const hasLocalRules = (town: string) => !!townInfo(town).marks.steps;
-
 /** The marks that apply to a kind of project: commercial has its own; homes and mixed use take the town's. */
 export function marksFor(town: string, kind: "homes" | "mixed" | "commercial"): Marks {
   const t = townInfo(town);

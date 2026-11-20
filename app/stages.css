@@ -54,7 +54,6 @@
 .alt-routes td.differs { background: #FFF6DC; }
 .alt-routes tr.is-entry { background: #F4F8F3; }
 .alt-routes tr.is-trying { outline: 2px solid var(--act); outline-offset: -2px; }
-.route-changes { display: inline-block; margin-left: 6px; font-size: 11px; font-weight: 800; color: #fff; background: var(--act); border-radius: 4px; padding: 1px 6px; }
 .alts-fold { margin: 14px 0 0; border: 1px solid var(--rule); border-radius: 10px; background: #fff; padding: 8px 14px; }
 .alts-fold summary { cursor: pointer; font-weight: 700; }
 

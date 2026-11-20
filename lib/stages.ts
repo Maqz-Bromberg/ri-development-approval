@@ -35,5 +35,3 @@ export const stageById = (id: StageId): Stage => STAGES.find((s) => s.id === id)
 /** The stage after this one, for "Continue to" buttons. */
 export const nextStage = (id: StageId): Stage | undefined => STAGES[STAGES.findIndex((s) => s.id === id) + 1];
 
-/** Old addresses and where they go, with the part after # kept. */
-export const MOVED: Record<string, string> = { "/project": "/law", "/steps": "/route", "/schedule": "/calendar", "/objections": "/hearing" };

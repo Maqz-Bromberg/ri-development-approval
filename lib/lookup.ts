@@ -230,12 +230,6 @@ const WETLANDS = `${RIGIS}/BIO_NWI_Wetlands_2014_spf/FeatureServer/0`;
 const STOPS = `${RIGIS}/TRANS_RIPTA_Bus_Stops_2024/FeatureServer/0`;
 export const EIGHTH_MILE_M = 201;
 
-export const SUGGEST_SOURCES = {
-  roads: { label: "RIDOT road centrelines", url: "https://risegis.ri.gov/hosting/rest/services/RIDOT/Road_Centerlines/MapServer" },
-  wetlands: { label: "National Wetlands Inventory, 2014 (RIGIS)", url: "https://www.rigis.org/" },
-  stops: { label: "RIPTA bus stops, October 2026 (RIGIS)", url: "https://www.rigis.org/" },
-} as const;
-
 export interface SiteSuggestions {
   /** State roads at the site, by name and route number. Null when the lookup failed. */
   stateRoads: { name: string; route: string }[] | null;

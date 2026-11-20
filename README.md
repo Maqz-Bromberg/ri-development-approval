@@ -4,9 +4,21 @@
 
 **Live site: [maqz-bromberg.github.io/ri-development-approval](https://maqz-bromberg.github.io/ri-development-approval/)**
 
-A Next.js site that turns a Rhode Island building project into its approval route. It shows every step, who decides it, the documents and forms to file, a checklist for each document, the source law quoted for each requirement, contacts, past approvals like yours, and notes for answering common objections at the hearing.
+A Next.js site that turns a building project anywhere in Rhode Island into its approval route. It shows every step, who decides it, the documents to file with a checklist for each, the law quoted word for word for each requirement, the boards and their meetings, past projects like yours with their decisions, and notes for answering common objections at the hearing.
 
-Pilot municipality: **Cumberland, RI**. Rules were read in October 2026. Town staff verify final versions.
+No town has confirmed the reading yet. Everything the site says comes with its source, and what has not been read is shown as a gap, not hidden.
+
+## Coverage
+
+Every one of the 39 cities and towns gets the state-law route, its boards from the state Open Meetings site, and its zoning districts from the Rhode Island Zoning Atlas (HousingWorks RI). Beyond that, each town's coverage is four marks (zoning, boards and offices, local steps, hearings and precedent), each read, partly read or not read, and its level follows from them. The Towns page shows them all on a map.
+
+| | Towns |
+| --- | --- |
+| Own zoning read in place of the Atlas | 20: Cumberland and Providence; Charlestown, Westerly and North Providence; Foster, Exeter, Hopkinton, Richmond, Glocester and West Greenwich; Pawtucket, Cranston, East Providence, Woonsocket, Warwick, Newport, Central Falls and Smithfield; New Shoreham |
+| Own review steps | Cumberland and Providence in full; four small towns for the comprehensive permit; the seven cities' practice from their minutes |
+| Past projects from the boards' records | 74 projects followed to a decision from the minutes, in 14 towns: Providence's and Cumberland's cases read one by one, and 12 more towns' agendas searched for housing (two more were searched and found no multi-family proposals) |
+
+How the coverage was built, town by town, is in `docs/plans/statewide-coverage.md`. What is still open is in `docs/review-after-chunk-7.md`, and what is waiting to be saved by hand is in `docs/manual-fetches.md`.
 
 ## Run it
 
@@ -14,66 +26,70 @@ Pilot municipality: **Cumberland, RI**. Rules were read in October 2026. Town st
 npm install
 npm run dev        # http://localhost:3000
 npm run build && npm start
+npm run typecheck
+```
+
+## Check it
+
+The data is checked against the documents it quotes, which are kept in `.sources/` (not committed). Run these after a change; `scripts/towns/README.md` says more.
+
+```bash
+python3 scripts/towns/verify_quotes.py      # every quote, word for word, against its document
+python3 scripts/timelines/verify.py .sources # every dated event in the precedent timelines
+python3 scripts/check_engine_flows.py        # the engine flowcharts' pointers into the code
+node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts   # the engine against a saved copy; --save after a change that was meant
 ```
 
 ## Pages
 
 | Route | What it does |
 |---|---|
-| `/` | **Landing**, leading to choosing a site: a find box, open a project file, recent and saved sites, the example, and who you'll meet. Three designs on trial in development (`lib/trials.ts`). Every page after it is an app shell: a header with five stages (each with a live subtitle), a Reference menu and a save chip; a rail with the site card and an outline; a tray with pins, the hearing sheet and the route's contacts; and a disclaimer strip. |
-| `/site` | **Site**, where an applicant starts: where (address or the map), the district, the project and the land, your sites, then nearby alternatives listed as routes (a mark where the route changes) and the five routes. |
-| `/docs` | **Documentation**, meant to grow: how site facts are found, how records are checked, and **`/docs/sources`**, every cited source by town and kind, generated from the data. |
-| `/law` | **Zoning & law.** The verdict, every finding with its rule and quote (each can be pinned), and the statutory clocks. (`/project` redirects here.) |
-| `/route` | **Route & people.** One row per step: what you file, who decides it (coloured chips with the body's mode), the clock and progress. Rows open to documents, the step's moments on the calendar, questions to expect, notes and contacts. Precedent at the end. (`/steps` redirects here.) |
-| `/summary` | The whole project on one printable page, with notes and the considerations dealt with |
-| `/calendar` | **Calendar.** A Gantt chart from your start date with a panel under the chosen moment, and a month view. The rail has the start date, the key, the .ics file and print. (`/schedule` redirects here.) |
-| `/hearing` | **Hearing**, titled for the body that holds the hearings: its date, place and notice, a switch where a route has two hearings, and questions matched to the town's own hearings, in two columns, each pinnable. |
-| `/atlas` | Cumberland's 12 zoning districts from the **Rhode Island Zoning Atlas** (HousingWorks RI), with lot and density figures shown for your site's utilities |
-| `/records` | Where Town Council and Planning Board records are published (Cumberland plus sample towns), with reading tips and the precedent table |
-| `/glossary` | Plain-language definitions. Across the site these terms carry a dotted underline and show the definition on hover, focus or tap. |
+| `/` | **Landing**, leading to choosing a site: a find box, open a project file, recent and saved sites, the example. Every page after it is an app shell: a header with five stages, a Reference menu and a save chip; a rail with the site card and an outline; a tray with pins, the hearing sheet and the route's contacts. |
+| `/site` | **Site**: where (an address, a parcel or the map), the district and any overlays, the project and the land, then nearby alternatives and the five routes. |
+| `/law` | **Zoning & law.** The verdict and every finding, each with its rule and quote, including what the town's own ordinance says where it was read and the gaps where it was not. |
+| `/route` | **Route & people.** One row per step: what you file, who decides, the clock. Rows open to documents, questions to expect and contacts. Past projects at the end. |
+| `/calendar` | **Calendar.** A Gantt chart and a month view from your start date, with board meeting dates where a published calendar was read, and a note when a hearing falls in a month the board rarely meets. |
+| `/hearing` | **Hearing**: the hearing body, date and notice, and questions matched to what was actually raised at the town's own hearings. |
+| `/towns` | **Towns**: every municipality's coverage on a map, shaded by level or by mark, with its code of ordinances. |
+| `/records` | Where each town's boards publish their records, what was searched for housing and found, and the past projects. |
+| `/docs`, `/docs/sources` | How site facts are found, and every cited source by town and kind, with a note where the copy read may not be the official one. |
+| `/engine` | How the engine works, as flowcharts pointing into the code. |
+| `/verification`, `/after-approval` | How a record gets onto a timeline; what happened after approval. |
+| `/summary`, `/glossary`, `/atlas` | The whole project on one printable page; plain-language terms (underlined across the site); Cumberland's districts from the Atlas. |
 
-Project inputs, ticks and notes are saved in the browser (`localStorage`, key `ri-plan-approval:v1`) as a convenience. To keep a project, use a share link (the whole project is encoded in the link's `#p=` fragment, and nothing is sent to a server), a downloaded project file, or the printable summary.
+Project inputs, ticks and notes are saved in the browser (`localStorage`). To keep a project, use a share link (the project is encoded in the link's `#p=` fragment, and nothing is sent to a server), a downloaded project file, or the printable summary.
 
-### Trying design variants
-
-Under `npm run dev` a **Trial** button sits at the bottom right, on the pages that have a design on trial (none at the moment: the last ones were decided). Variants are declared in `lib/trials.ts` and every active one is listed, with links, under "Design trials in progress" on `/dev`. The published site always uses the first option of each.
+Under `npm run dev`, `/dev` lists the open questions, design trials and debts.
 
 ## Where the data lives
 
-Everything the backend will eventually serve sits in `lib/data/`, one file per concern:
+How the data is shaped, and each decision behind it, is in **`docs/ARD.md`** (the architectural review document). Read it before changing the shape of the data, the engine, the sources or the checks, and update it in the same change.
 
-- `glossary.ts`: plain-language terms and the spellings to recognise in text
-- `trees.ts`: one approval tree per development type (`major`, `minor`, `comp`, `dpr`, `byright`). Each step has an application, a clock, authorities, and documents. Each document has an optional `src` + `pin` + verbatim `q` quote, and a `checklist` of considerations. `cond` expressions (`wet`, `dot`, `acre`, `relief`, `rezone`, `transit`, joined with `|`) show or hide items for the site.
-- `sources.ts`: every statute, regulation, agenda and article that is quoted
-- `contacts.ts`: authorities and offices. `verify` marks details from older or secondary sources.
-- `history.ts`: precedent from Cumberland Planning Board agendas
-- `records.ts`: where each locality publishes its agendas, minutes, video and press. `indexed: true` marks localities whose records have been read into the common questions.
-- `atlas.ts`: the Zoning Atlas layer URL, Cumberland's district snapshot, and parsers for the atlas's utility-keyed lot and density strings
-- `schedule.ts`: per-step durations (statutory or estimated) and the dated ticks, each naming the documents it concerns
-- `objections.ts`: common questions. Each one's `heard` entries cite the minutes, memo or video they came from, and the `say` notes are drafting examples, not quotes.
+- `lib/data/state/trees.ts`: the state-law routes (`byright`, `dpr`, `minor`, `major`, `comp`), each step with its application, clock, deciders and documents. Each requirement has `src`, `pin` and a verbatim `q`.
+- `lib/data/towns/<town>/`: what a town lays over state law, as far as it has been read: its use table and other rules (`rules.ts`), its steps, its recorded projects (`history.ts` with `timelines.json`), and its contacts. All are registered in `lib/data/towns/overlay.ts`. Shared helpers: `useTable.ts` (a use table's row as a finding), `dated.ts` (rules with dates), `compPermit.ts` (a town's comprehensive permit route), `cityRoutes.ts` (the cities' practice from their minutes).
+- `lib/data/towns.ts`: every municipality's four marks, gaps, and link to its code of ordinances.
+- `lib/data/sources.ts`: every document quoted, one line each.
+- `lib/data/bodies.json`: every town's boards from the state Open Meetings site, with their meeting pattern and quiet months.
+- `lib/data/searched.ts` and `towns/records-searched.json`: what each town's board records were searched for, and the housing found.
+- `lib/data/history.ts`: all recorded projects, joined from the towns' folders.
+- `lib/data/objections.ts`, `towns/rural-hearings.ts`: the hearing questions, each with the concerns actually raised, cited to the minutes.
 
-`lib/engine.ts` holds the rules: classification (9-unit minor cap, 25% comprehensive-permit threshold), permitted use from the Zoning Atlas, density (the ordinance formula for R-3, atlas figures elsewhere, and the conservation-development density), parking, height, site flags, and the findings for the law check. It flags where the atlas and recent Cumberland decisions disagree. `lib/schedule.ts` lays the steps out on dates and writes the `.ics`. `lib/whatif.ts` builds the nearby alternatives, `lib/lookup.ts` turns an address into site facts, and `lib/share.ts` encodes a project into a link or file.
+`lib/engine.ts` holds the rules that apply everywhere: classification, use and density, parking, the site flags and the findings, with each town's own answers taking the Atlas's place where they were read. `lib/schedule.ts` lays the steps on dates, `lib/lookup.ts` turns an address into site facts from live state map services, and `lib/share.ts` encodes a project into a link or file.
 
-## Adding a municipality
+## Adding a town
 
-How the data is shaped, and each decision behind it, is in `docs/ARD.md`. Providence is the worked example.
-
-1. Add its sources to `sources.ts`, with a short prefix on each id.
-2. Give it a folder, `lib/data/towns/<town>/`, with its steps and route rule, findings and schedule, contacts and calendar, recorded projects with dated events, and hearing concerns. Register it in `lib/data/towns/overlay.ts`.
-3. Set its level in `towns.ts`, marked `trial` until its planning office has confirmed the reading. A part of a town can carry a higher level.
-4. Fetch what it cites into `.sources/` and run the checks in `scripts/towns/README.md`. Every quote must match its document.
-5. Districts come live from the Zoning Atlas. Nothing to add unless the ordinance differs from it.
-
-Cumberland predates this shape: its steps are still inside `trees.ts`.
+1. Save its zoning ordinance (most hosts refuse scripts; `docs/manual-fetches.md` says how) and add its sources to `lib/data/sources.ts`.
+2. Give it a folder, `lib/data/towns/<town>/`, with what was read, and register it in `lib/data/towns/overlay.ts`. A use table usually comes first: `useTable.ts` turns its rows into findings.
+3. Search its boards' records with `python3 scripts/towns/search_records.py "<Town>"`, read what was found into `lib/data/searched.ts`, and follow the projects to a decision in `history.ts` and `timelines.json`.
+4. Set its marks in `lib/data/towns.ts`, run the checks, and add a decision and a log line to `docs/ARD.md`.
 
 ## Not yet built
 
+- Each town's own clocks, fees and checklists beyond Cumberland and Providence. Five cities' regulations are in hand to read next.
+- Text recognition for scanned minutes and agendas, and transcription of meeting videos.
+- Flood zone lookup, and bus frequency for the transit flag.
+- Commercial use tables, parking and dimensions outside Providence, Cumberland, Charlestown and Westerly.
+- Business days: schedules count calendar days, as the statutes do, and meeting dates are estimated where no board calendar was read.
 - Plan-set extraction: uploaded files are only listed.
-- Flood zone lookup. A bus stop's frequency and mobility hubs are not checked.
-- Commercial use tables beyond Providence, parking and dimensional rules for commercial uses, and commercial hearings and precedent. The check names each of these as a gap.
-- Fees: Cumberland's current fee schedule was not available.
-- Precedent outcomes: read from minutes through May 2026. Later minutes are not yet read.
-- Video transcription: meeting videos are linked, not transcribed. The backend should transcribe them and tag objections the way the minutes were tagged by hand.
-- Business days: schedules count calendar days, as the statutes do. Meeting dates are estimated, not taken from the board calendar.
 
-The stand-ins are labelled on the site and listed in `components/Demo.tsx`. Plans for the larger gaps are in `docs/plans/`: real board calendars, real project timelines kept current by a GitHub Action, and extending to all 39 municipalities.
+Plans for the larger pieces are in `docs/plans/`.

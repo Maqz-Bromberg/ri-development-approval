@@ -7,8 +7,8 @@ ClerksHQ builds its table of contents in the browser, but each chapter is a plai
 address is known. The addresses below were found on 2026-11-18 by opening each town's code in a browser. Saved into
 .sources/<town>/ordinance/ as clerkshq-<file>.htm; organize_sources.py turns them into text.
 
-New Shoreham is on the Secretary of State's list as ClerksHQ, but its ClerksHQ page holds board records and no town
-code, so it is not here.
+New Shoreham is on the Secretary of State's list as ClerksHQ. Its zoning is there (books/code/NShoreAppE.htm) but stops at
+Ord. 2024-11, eleven amendments behind the eCode360 copy read (found 2026-11-20, ARD D70), so it is not fetched here.
 """
 import pathlib, sys, time, urllib.request
 

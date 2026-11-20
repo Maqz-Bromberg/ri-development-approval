@@ -27,6 +27,10 @@ python3 scripts/timelines/verify.py .sources         # dated events, including e
 python3 scripts/towns/fetch_bodies.py                          # every town's boards from the state Open Meetings site -> lib/data/bodies.json
 python3 scripts/towns/fetch_bodies.py Westerly                 # one town; saved pages are reused, --refresh fetches again
 python3 scripts/towns/list_agenda_items.py Providence 2767 2023-01-01   # every case on a board's agendas -> lib/data/towns/<town>/agenda.json
+python3 scripts/towns/search_records.py "New Shoreham"                # a town's planning and zoning agendas since 2023 searched for housing; hits kept in .sources
+python3 scripts/towns/search_records.py --since 2024-01-01 Pawtucket   # a busy city: a recent window, stated on the site
+python3 scripts/towns/fetch_clerkshq.py                        # the ClerksHQ chapters whose addresses it keeps
+python3 scripts/check_engine_flows.py                          # the engine flowcharts' pointers into the code
 node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts         # the engine's output against the saved copy
 node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts --save  # after a change that was meant
 ```
@@ -41,11 +45,11 @@ The boards fetch asks the site's public-body search, which matches a phrase and 
 
 ## Saving a file by hand
 
-providenceri.gov refuses scripted requests, and `fetch_sources.py` lists those files with their URLs. Save each from a browser anywhere inside `.sources/`, under whatever name the browser gives it, and run `organize_sources.py`. It recognises the file by the name in its URL, renames it to its source id, files it and converts it to text. A file it cannot place is left alone and listed. A whole ordinance whose file name names its town ("Bristol, RI Code of Ordinances.pdf", "FOSTER_ZONING.docx") goes to `<town>/ordinance/` for reading. Where a document's own address cannot be found (the host refuses scripts and a web search for its file name finds nothing), its entry gives the page that lists it as `url` and its kind as `file: ".pdf"`; rename the saved copy to its id and the organizer files it.
+providenceri.gov, Municode, American Legal and, since 2026-11-19, eCode360 refuse scripted requests (so `fetch_ecode.py` no longer works; ARD debt 36), and `fetch_sources.py` lists those files with their URLs. What is still wanted, with links, is in `docs/manual-fetches.md`. Save each from a browser anywhere inside `.sources/`, under whatever name the browser gives it, and run `organize_sources.py`. It recognises the file by the name in its URL, renames it to its source id, files it and converts it to text. A file it cannot place is left alone and listed. A whole ordinance whose file name names its town ("Bristol, RI Code of Ordinances.pdf", "FOSTER_ZONING.docx") goes to `<town>/ordinance/` for reading. Where a document's own address cannot be found (the host refuses scripts and a web search for its file name finds nothing), its entry gives the page that lists it as `url` and its kind as `file: ".pdf"`; rename the saved copy to its id and the organizer files it.
 
 ## What cannot be automated yet
 
-- **Scanned minutes.** Most of the City Plan Commission minutes since 2024 have no text layer (23 of 36). An event read from one carries `"scan": true` and a transcribed quote. `verify.py` counts and reports these and cannot match them. Text recognition (`ocrmypdf`) in the fetch step would close this.
+- **Scanned minutes.** Most of Providence's City Plan Commission minutes since 2024 have no text layer (23 of 36), and some small towns' agendas are scans; the records search counts them and cannot read them. An event read from one carries `"scan": true` and a transcribed quote. `verify.py` counts and reports these and cannot match them. Text recognition (`ocrmypdf`) in the fetch step would close this.
 - **A recording with no captions.** The Sept 16, 2025 meeting has none. It would need local speech recognition on the audio.
 - **The Open Meetings site limits request rate.** Keep the pause between requests.
 

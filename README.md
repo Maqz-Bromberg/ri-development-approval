@@ -38,6 +38,7 @@ python3 scripts/towns/verify_quotes.py      # every quote, word for word, agains
 python3 scripts/timelines/verify.py .sources # every dated event in the precedent timelines
 python3 scripts/check_engine_flows.py        # the engine flowcharts' pointers into the code
 node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts   # the engine against its committed digest and the local copy; --save after a change that was meant, and commit the digest
+npm test                                     # known answers: the engine's rules and the share link, each citing the law or decision it encodes
 ```
 
 ## Pages

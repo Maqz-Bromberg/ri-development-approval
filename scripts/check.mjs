@@ -11,6 +11,7 @@ const node = (script) => ["node", "--import", "./scripts/engine/register.mjs", s
 const CHECKS = [
   { name: "types", cmd: ["npx", "tsc", "--noEmit"], skip: fast && "--fast" },
   { name: "engine flowcharts", cmd: ["python3", "scripts/check_engine_flows.py"] },
+  { name: "known answers", cmd: ["node", "--import", "./scripts/engine/register.mjs", "--test", "tests/*.test.ts"], summary: (out) => { const m = /ℹ pass (\d+)[\s\S]*ℹ fail (\d+)/.exec(out); return m ? `${m[1]} passed, ${m[2]} failed` : ""; } },
   { name: "engine snapshot", cmd: node("scripts/engine/snapshot.ts"), skip: !existsSync("scripts/engine/snapshot-digest.json") && !existsSync(".sources/engine-snapshot.json") && "no digest and no saved copy" },
   { name: "quotes", cmd: ["python3", "scripts/towns/verify_quotes.py"], skip: !sources && "no .sources folder" },
   { name: "timelines", first: true, cmd: ["python3", "scripts/timelines/verify.py", sources ? ".sources" : "/nonexistent", ...(sources ? [] : ["--offline"])] },
@@ -23,7 +24,7 @@ for (const c of CHECKS) {
   const r = spawnSync(c.cmd[0], c.cmd.slice(1), { encoding: "utf8" });
   const out = `${r.stdout ?? ""}${r.stderr ?? ""}`.trim();
   const lines = out.split("\n").filter(Boolean);
-  const last = ((c.first ? lines[0] : lines.pop()) ?? "").slice(0, 140);
+  const last = (c.summary ? c.summary(out) : ((c.first ? lines[0] : lines.pop()) ?? "")).slice(0, 140);
   const secs = ((Date.now() - t) / 1000).toFixed(1);
   if (r.status === 0) console.log(`✓  ${c.name} (${secs} s)${last ? `: ${last}` : ""}`);
   else {

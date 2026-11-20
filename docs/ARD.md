@@ -1,6 +1,6 @@
 # Architectural Review Document
 
-RI Building Plan Approval. Started 2026-11-14. Last updated 2026-11-18 (statewide coverage, chunks 0 to 4 begun; Providence precedent read citywide; rules with dates).
+RI Building Plan Approval. Started 2026-11-14. Last updated 2026-11-20 (refactor review: see the log).
 
 This is the living record of how the site is put together, why, and what is still unsettled. It is updated in the same change as any decision that alters the shape of the data, the engine, the sources or the checks. Plans for single features stay in `docs/plans/`. Reviews of finished work stay as dated HTML files in `docs/`. This document is the thread between them.
 
@@ -209,7 +209,7 @@ The Providence Zoning Ordinance is source `pzo`. Saved by hand on 2026-11-14 and
 
 1. **The split is half done** (D56). The steps are split: state law in `lib/data/state/trees.ts`, Cumberland's in its folder. Cumberland's housing findings (parking since April 2026, R-3's area formula, its permit gate, its precedent sentences) are still conditions on the town's name inside `analyze`, and its contacts and calendar are still in `contacts.ts` and `calendars/`.
 2. **The active town is a module-level variable** (`lib/town.ts`), set by the provider before render. It works because one project is on screen at a time. It would not survive a page that compares two towns.
-3. ~~No stored tests.~~ Cleared 2026-11-18: `scripts/engine/snapshot.ts` runs 130 sample projects through the engine in five towns and their review areas and compares them with a saved copy (D56). It covers routes, steps, clocks, documents and findings, not the pages. The copy (about 3 MB) is kept in `.sources/engine-snapshot.json`, not committed: a fresh clone saves one from a commit known to be right.
+3. ~~No stored tests.~~ Cleared 2026-11-18: `scripts/engine/snapshot.ts` runs sample projects through the engine in every town with rules of its own and their review areas (361 cases on 2026-11-20) and compares them with a saved copy (D56). It covers routes, steps, clocks, documents and whole findings (text, source, pinpoint, quote and gap since D71), not the pages. The copy (about 12 MB) is kept in `.sources/engine-snapshot.json`, not committed: a fresh clone saves one from a commit known to be right.
 4. **The glossary and the `relief` flag assume the state's definitions.** Providence's "minor" and its dimensional adjustments do not fit either.
 5. **State-law steps carry town wording** ("Town Council", "Town Clerk") into cities. Eased 2026-11-18: the planning, zoning, council and review boards are now each town's own body from the state site (D55); the clerk, building office and utilities still are not.
 6. **One part per town, as a box.** D4 wants parts drawn for usefulness, possibly several, possibly by district or corridor.
@@ -285,6 +285,7 @@ Kept in full in `lib/data/openQuestions.ts` and shown on `/dev`. The ones that b
 - **2026-11-20, hand-fetch guide trimmed.** `docs/manual-fetches.md` now lists only what is still wanted, grouped by kind (the cities' regulations, maps, ordinances, questions for a person), with the steps for eCode360, Municode and town sites. Earlier fetches, all read, are in git.
 - **2026-11-20, hand-fetch links.** Each item in `docs/manual-fetches.md` now has its closest link, checked. Looking for them, five cities' regulations (Pawtucket, Cranston, Warwick, East Providence, Newport) and Richmond's Plat 8A zoning map turned out to answer a script and were fetched, into `.sources`, not yet read. New Shoreham's ClerksHQ copy turned out to exist but to stop at Ord. 2024-11, eleven amendments behind the eCode360 copy read; the "which copy" note and D70 now say so.
 - **2026-11-20, README.** Rewritten for the statewide site: coverage by town, the checks to run, the pages as they are, where the data lives now (state routes, town folders, boards, records search), and adding a town. `scripts/towns/README.md` gains the records search, ClerksHQ and the hosts that refuse scripts.
+- **2026-11-20, stored comparison widened.** `snapshot.ts` compares each finding's text, source, pinpoint, quote and gap, not only its state, id and title, and 13 cases cover paths the shapes missed: a town's own lot-area rule, conservation density, transit parking, Cumberland's R-2 and BMMU, a comprehensive permit where the use is prohibited, permits on a commercial site. The saved copy is about 12 MB.
 
 - **2026-11-16, agenda layout built (D42 to D44).** The five-stage shell, rail, tray, pins, save chip, disclaimer strip and footer, `/docs/sources`, the Gantt and month switch, the hearing band, the three landings and the gate, and alternatives as routes. Four trials declared. Old project panel, trail landing and workspaces deleted; debts 22 to 25 added; engine flowchart for findings notes the ids.
 

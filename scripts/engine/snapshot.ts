@@ -15,7 +15,7 @@ import { analyze, classify, deriveFlags, normalizeInputs, stepsFor, visibleDocs 
 import { setActiveTown } from "@/lib/town";
 import type { ProjectInputs, TreeId } from "@/lib/types";
 
-// The saved copy is about 3 MB, so it is kept with the other local files in .sources/, not committed. A fresh clone
+// The saved copy is about 12 MB, so it is kept with the other local files in .sources/, not committed. A fresh clone
 // saves one from a commit known to be right, then compares each change against it.
 const OUT = new URL("../../.sources/engine-snapshot.json", import.meta.url);
 const TREES: TreeId[] = ["byright", "dpr", "minor", "major", "comp"];
@@ -63,11 +63,29 @@ const AREAS: { town: string; zone: string; overlays: string[] }[] = [
   { town: "Westerly", zone: "GC", overlays: ["AAO"] },
 ];
 
+/** Paths the shapes above miss: a town's own lot-area rule, conservation density, transit parking, permits on a commercial site. */
+const MORE: { town: string; zone: string; c: Case }[] = [
+  { town: "Cumberland", zone: "R-3", c: { name: "12 homes, conservation", p: homes(12, 0, { conservation: true }) } },
+  { town: "Cumberland", zone: "R-3", c: { name: "8 homes near transit", p: homes(8, 0, { transit: true }) } },
+  { town: "Cumberland", zone: "R-3", c: { name: "8 homes, water only", p: homes(8, 0, { sewer: false }) } },
+  { town: "Cumberland", zone: "R-2", c: { name: "2 homes", p: homes(2) } },
+  { town: "Cumberland", zone: "R-1", c: { name: "8 homes", p: homes(8) } },
+  { town: "Cumberland", zone: "R-1", c: { name: "30 homes, 25% affordable", p: homes(30, 8) } },
+  { town: "Cumberland", zone: "BMMU", c: { name: "24 homes", p: homes(24) } },
+  { town: "Cumberland", zone: "C-1", c: { name: "12 homes on 5,000 sq ft", p: homes(12, 0, { lot: 5000 }) } },
+  { town: "Cumberland", zone: "C-1", c: { name: "8 homes over 3,000 sq ft of shops, no sewer", p: { kind: "mixed", units: 8, aff: 0, commercial: 3000, gfa: 3000, sewer: false } } },
+  { town: "Cumberland", zone: "C-1", c: { name: "retail, 8,000 sq ft, wetlands", p: { kind: "commercial", use: "retail", gfa: 8000, units: 0, wet: true } } },
+  { town: "Providence", zone: "C-2", c: { name: "retail, 8,000 sq ft, wetlands", p: { kind: "commercial", use: "retail", gfa: 8000, units: 0, wet: true } } },
+  { town: "Westerly", zone: "HDR-6", c: { name: "12 homes, conservation", p: homes(12, 0, { conservation: true }) } },
+  { town: "Exeter", zone: "RE-2", c: { name: "8 homes near transit", p: homes(8, 0, { transit: true }) } },
+];
+
 function run() {
   const out: Record<string, unknown> = {};
   const runs = [
     ...Object.entries(ZONES).flatMap(([town, zones]) => zones.flatMap((zone) => SHAPES.map((c) => ({ town, zone, overlays: [] as string[], c })))),
     ...AREAS.flatMap((a) => SHAPES.filter((c) => /^(8 homes|12 homes|retail)/.test(c.name)).map((c) => ({ ...a, c }))),
+    ...MORE.map((m) => ({ ...m, overlays: [] as string[] })),
   ];
   for (const { town, zone, overlays, c } of runs) {
     setActiveTown(town);
@@ -83,7 +101,8 @@ function run() {
             clock: s.clock.text, what: s.what,
             docs: visibleDocs(s, f).map((d) => `${d.title} (${d.src ?? "no source"} ${d.pin ?? ""})`.replace(" )", ")")),
           })),
-          findings: analyze(i, tree).map((x) => `${x.st} ${x.id ?? ""}: ${x.t}`),
+          // The whole finding, not only its title: a refactor that changed a quote or dropped a source must show here.
+          findings: analyze(i, tree).map((x) => ({ f: `${x.st} ${x.id ?? ""}: ${x.t}`, p: x.p, src: x.src, pin: x.pin, q: x.q, gap: x.gap })),
         };
       }
       out[`${town} ${zone}${overlays.length ? ` in ${overlays.join("+")}` : ""} ${c.name}`] = { route: auto, routes };

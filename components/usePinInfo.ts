@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { CONTACTS, KIND_LABEL, shortName } from "@/lib/data/contacts";
+import { CONTACTS, AUTHORITY_KIND_LABEL, shortName } from "@/lib/data/contacts";
 import { OBJECTIONS } from "@/lib/data/objections";
 import { visibleDocs } from "@/lib/engine";
 import { sortedFindings } from "@/lib/findings";
@@ -42,7 +42,7 @@ export function usePinInfo(): (id: string) => PinInfo {
     }
     if (kind === "c") {
       const c = CONTACTS[rest];
-      return c ? { label: shortName(c.name), detail: KIND_LABEL[c.kind], href: "/route", live: true } : { label: rest, detail: "Not on this route", href: "/route", live: false };
+      return c ? { label: shortName(c.name), detail: AUTHORITY_KIND_LABEL[c.kind], href: "/route", live: true } : { label: rest, detail: "Not on this route", href: "/route", live: false };
     }
     if (kind === "t") {
       const hit = plan.flatMap((p) => p.ticks.map((t) => ({ p, t }))).find(({ t }) => t.id === rest);

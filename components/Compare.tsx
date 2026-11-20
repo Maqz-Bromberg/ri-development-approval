@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { CONTACTS, KIND_LABEL, shortName } from "@/lib/data/contacts";
+import { CONTACTS, AUTHORITY_KIND_LABEL, shortName } from "@/lib/data/contacts";
 import { fmt, routeText } from "@/lib/engine";
 import { addDays, fmtDate, parseISO } from "@/lib/schedule";
 import { routeScenarios, type Scenario } from "@/lib/whatif";
@@ -33,10 +33,10 @@ export function Deciders({ ids, compact = false }: { ids: string[]; compact?: bo
         const c = CONTACTS[id];
         if (!c) return null;
         return (
-          <li key={id} className={`k-${c.kind}`} title={`${c.name}: ${KIND_LABEL[c.kind]}`}>
+          <li key={id} className={`k-${c.kind}`} title={`${c.name}: ${AUTHORITY_KIND_LABEL[c.kind]}`}>
             <KindIcon kind={c.kind} size={compact ? 15 : 16} />
             <span>{shortName(c.name)}</span>
-            {!compact && <span className="muted small"> · {KIND_LABEL[c.kind].toLowerCase()}</span>}
+            {!compact && <span className="muted small"> · {AUTHORITY_KIND_LABEL[c.kind].toLowerCase()}</span>}
           </li>
         );
       })}

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Flowchart } from "@/components/Flowchart";
-import { FLOWS, flowBySlug } from "@/lib/data/engine";
-import { KIND_LABEL } from "@/lib/data/engine/types";
+import { FLOWS, flowBySlug } from "@/lib/data/flowcharts";
+import { NODE_KIND_LABEL } from "@/lib/data/flowcharts/types";
 
 export const dynamicParams = false;
 
@@ -51,7 +51,7 @@ export default async function EnginePart({ params }: { params: Promise<{ slug: s
         <ol>
           {list.map((nd) => (
             <li key={nd.id}>
-              <b>{nd.label}</b> <span className="muted">({KIND_LABEL[nd.kind].name.toLowerCase()}{nd.town ? ", the town first" : ""})</span>
+              <b>{nd.label}</b> <span className="muted">({NODE_KIND_LABEL[nd.kind].name.toLowerCase()}{nd.town ? ", the town first" : ""})</span>
               <br />{nd.info}
               {nd.note && <><br /><span className="muted">{nd.note}</span></>}
               {nd.where && <><br />{nd.where.map((w, k) => <span key={w}>{k > 0 && " · "}<code>{w}</code></span>)}</>}

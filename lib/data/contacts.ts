@@ -1,5 +1,5 @@
 import { getActiveTown } from "../town";
-import type { Contact } from "../types";
+import type { Contact, Kind } from "../types";
 import { PROVIDENCE_CONTACTS } from "./towns/providence/town";
 import { contactFromBodies } from "./bodies";
 
@@ -157,7 +157,7 @@ export const CONTACTS: Record<string, Contact> = new Proxy(CUMBERLAND_CONTACTS, 
   },
 });
 
-export const KIND_LABEL: Record<string, string> = {
+export const AUTHORITY_KIND_LABEL: Record<Kind, string> = {
   elected: "Elected",
   appointed: "Appointed board",
   staff: "Town staff",

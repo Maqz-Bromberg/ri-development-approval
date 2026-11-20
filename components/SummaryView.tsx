@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { CONTACTS, KIND_LABEL, shortName } from "@/lib/data/contacts";
+import { CONTACTS, AUTHORITY_KIND_LABEL, shortName } from "@/lib/data/contacts";
 import { TREES } from "@/lib/data/state/trees";
 import { analyze, condOK, fmt, itemKey, visibleDocs } from "@/lib/engine";
 import { buildSchedule, fmtDate } from "@/lib/schedule";
@@ -60,7 +60,7 @@ export function SummaryView() {
                   {s.clock.text}{when ? ` · ${fmtDate(when.start)} to ${fmtDate(when.end)}` : ""}
                 </p>
                 <p><b>You file:</b> {s.app}</p>
-                <p><b>{s.authLabel ?? "Decided by"}:</b> {s.auth.filter((a) => condOK(a.cond, flags)).map((a) => `${shortName(CONTACTS[a.c].name)} (${KIND_LABEL[CONTACTS[a.c].kind].toLowerCase()})`).join("; ")}</p>
+                <p><b>{s.authLabel ?? "Decided by"}:</b> {s.auth.filter((a) => condOK(a.cond, flags)).map((a) => `${shortName(CONTACTS[a.c].name)} (${AUTHORITY_KIND_LABEL[CONTACTS[a.c].kind].toLowerCase()})`).join("; ")}</p>
                 <p><b>Documents:</b> {docs.map((d) => d.title).join("; ")}</p>
                 {done.length > 0 && (
                   <>

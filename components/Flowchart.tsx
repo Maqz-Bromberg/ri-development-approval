@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { KIND_LABEL, type Flow, type FlowEdge, type FlowNode, type NodeKind, type Side } from "@/lib/data/engine/types";
+import { NODE_KIND_LABEL, type Flow, type FlowEdge, type FlowNode, type NodeKind, type Side } from "@/lib/data/flowcharts/types";
 import { place } from "./Popover";
 
 /*
- * A flowchart drawn as SVG from a Flow (lib/data/engine/types.ts), with a card for each node on hover or focus.
+ * A flowchart drawn as SVG from a Flow (lib/data/flowcharts/types.ts), with a card for each node on hover or focus.
  * Node positions are grid units in the data; the sizes below turn them into pixels. A line leaves and enters a node
  * by the side facing the other node unless the data names the sides, and is drawn as a curve whose ends run
  * straight out of those sides.
@@ -213,7 +213,7 @@ export function Flowchart({ flow }: { flow: Flow }) {
                 transform={`translate(${b.l} ${b.t})`}
                 className={`fc-node fk-${nd.kind}${shown === nd.id ? " is-on" : near && !near.has(nd.id) ? " is-dim" : ""}`}
                 role={link ? "link" : "button"} tabIndex={0}
-                aria-label={`${nd.label}. ${KIND_LABEL[nd.kind].name}.${link ? ` Opens ${nd.to!.label}.` : ""}`}
+                aria-label={`${nd.label}. ${NODE_KIND_LABEL[nd.kind].name}.${link ? ` Opens ${nd.to!.label}.` : ""}`}
                 aria-describedby={shown === nd.id ? `${uid}c` : undefined}
                 onMouseEnter={() => enter(nd.id)}
                 onMouseLeave={leave}
@@ -239,7 +239,7 @@ export function Flowchart({ flow }: { flow: Flow }) {
           onMouseEnter={() => { if (hideTimer.current) clearTimeout(hideTimer.current); }}
           onMouseLeave={leave}
         >
-          <p className={`fc-kind fk-${card.kind}`}>{KIND_LABEL[card.kind].name}{card.town ? " · the town is asked first" : ""}</p>
+          <p className={`fc-kind fk-${card.kind}`}>{NODE_KIND_LABEL[card.kind].name}{card.town ? " · the town is asked first" : ""}</p>
           <b className="pop-title">{card.label}</b>
           <p>{card.info}</p>
           {card.note && <p className="fc-note">{card.note}</p>}
@@ -249,10 +249,10 @@ export function Flowchart({ flow }: { flow: Flow }) {
         document.body,
       )}
       <ul className="fc-key" aria-label="Key to the boxes">
-        {(Object.keys(KIND_LABEL) as NodeKind[]).map((k) => (
+        {(Object.keys(NODE_KIND_LABEL) as NodeKind[]).map((k) => (
           <li key={k}>
             <svg width="34" height="20" viewBox="0 0 34 20" aria-hidden="true" className={`fk-${k}`}><g className="fc-node"><Shape kind={k} w={34} h={20} /></g></svg>
-            <span><b>{KIND_LABEL[k].name}.</b> {KIND_LABEL[k].what}</span>
+            <span><b>{NODE_KIND_LABEL[k].name}.</b> {NODE_KIND_LABEL[k].what}</span>
           </li>
         ))}
         <li><svg width="34" height="20" viewBox="0 0 34 20" aria-hidden="true"><g className="fc-tag"><rect x="1" y="2" width="32" height="16" rx="8" /></g></svg><span><b>Town first.</b> The town&rsquo;s reading answers where it has one</span></li>

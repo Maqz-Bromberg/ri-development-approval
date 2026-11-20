@@ -42,7 +42,7 @@ export function normalizeInputs(p: Partial<ProjectInputs> | undefined): ProjectI
   return i;
 }
 
-export const KIND_LABEL: Record<ProjectKind, string> = {
+export const PROJECT_KIND_LABEL: Record<ProjectKind, string> = {
   homes: "Homes",
   mixed: "Homes with commercial space",
   commercial: "Commercial or institutional",

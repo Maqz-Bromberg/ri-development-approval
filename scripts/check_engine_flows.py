@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the engine flowcharts in lib/data/engine/ against the code they describe.
+"""Check the engine flowcharts in lib/data/flowcharts/ against the code they describe.
 
 - every `where: ["path#symbol"]` names a file that exists and, after the #, a word that appears in it;
 - every line (edge) joins two boxes that exist in the same flowchart, and no box id is used twice in one;
@@ -10,7 +10,7 @@ usage: check_engine_flows.py        exit 1 on any problem. Reports; it does not 
 import pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-DIR = ROOT / "lib" / "data" / "engine"
+DIR = ROOT / "lib" / "data" / "flowcharts"
 problems = []
 slugs = set()
 files = [f for f in sorted(DIR.glob("*.ts")) if f.name not in ("types.ts", "index.ts")]

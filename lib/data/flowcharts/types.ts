@@ -63,7 +63,7 @@ export interface Flow {
   shows?: { href: string; label: string }[];
 }
 
-export const KIND_LABEL: Record<NodeKind, { name: string; what: string }> = {
+export const NODE_KIND_LABEL: Record<NodeKind, { name: string; what: string }> = {
   data: { name: "Fact or value", what: "Something the engine holds or passes on" },
   step: { name: "Step", what: "Something the code does" },
   decision: { name: "Branch", what: "The code chooses here" },

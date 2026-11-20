@@ -6,7 +6,7 @@ import { townRules } from "@/lib/data/towns/overlay";
 import { AFF_TIERS, affMet, affTier } from "@/lib/data/affordability";
 import { SOURCES } from "@/lib/data/sources";
 import type { CommercialUse, CommercialWork, ProjectInputs, ProjectKind } from "@/lib/types";
-import { KIND_LABEL, USE_LABEL, fmt } from "@/lib/engine";
+import { PROJECT_KIND_LABEL, USE_LABEL, fmt } from "@/lib/engine";
 import { DemoTag } from "./Demo";
 import { FactMark } from "./FactCheck";
 import { Icon } from "./Icon";
@@ -248,10 +248,10 @@ export function IntakeForm() {
       <fieldset className="fgroup">
         <legend>What you plan to build</legend>
         <div className="kind-pick" role="radiogroup" aria-label="Kind of project">
-          {(Object.keys(KIND_LABEL) as ProjectKind[]).map((k) => (
+          {(Object.keys(PROJECT_KIND_LABEL) as ProjectKind[]).map((k) => (
             <label key={k} className={`kind-opt${inputs.kind === k ? " is-on" : ""}`}>
               <input type="radio" name="f-kind" id={k === "homes" ? "f-kind" : undefined} checked={inputs.kind === k} onChange={() => setInput("kind", k)} />
-              <span>{KIND_LABEL[k]}</span>
+              <span>{PROJECT_KIND_LABEL[k]}</span>
             </label>
           ))}
           <Info id="kind" />

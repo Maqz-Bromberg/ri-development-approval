@@ -1,6 +1,6 @@
 "use client";
 
-import { CONTACTS, KIND_LABEL, shortName } from "@/lib/data/contacts";
+import { CONTACTS, AUTHORITY_KIND_LABEL, shortName } from "@/lib/data/contacts";
 import type { Kind } from "@/lib/types";
 import { HoverCard } from "./Popover";
 
@@ -44,7 +44,7 @@ export function AuthBadge({ id, role }: { id: string; role: string }) {
       minSpaceBelow={240}
       card={
         <div className={`k-${c.kind}`}>
-          <span className="pop-kind"><KindIcon kind={c.kind} size={15} />{KIND_LABEL[c.kind]}</span>
+          <span className="pop-kind"><KindIcon kind={c.kind} size={15} />{AUTHORITY_KIND_LABEL[c.kind]}</span>
           <b className="pop-title">{c.name}</b>
           <p><b>On this step:</b> {role}</p>
           <p className="muted">{c.note}</p>
@@ -66,8 +66,8 @@ export function AuthBadge({ id, role }: { id: string; role: string }) {
 export function KindKey() {
   return (
     <ul className="kind-key" aria-label="Kinds of authority">
-      {(Object.keys(KIND_LABEL) as Kind[]).map((k) => (
-        <li key={k} className={`k-${k}`}><KindIcon kind={k} size={16} />{KIND_LABEL[k]}</li>
+      {(Object.keys(AUTHORITY_KIND_LABEL) as Kind[]).map((k) => (
+        <li key={k} className={`k-${k}`}><KindIcon kind={k} size={16} />{AUTHORITY_KIND_LABEL[k]}</li>
       ))}
     </ul>
   );

@@ -24,7 +24,7 @@ import { Icon } from "./Icon";
 import { useProject } from "./ProjectProvider";
 import { routeText } from "@/lib/engine";
 
-const KIND_LABEL = { file: "You file", deadline: "Deadline", hearing: "Meeting or hearing", milestone: "Milestone" } as const;
+const TICK_KIND_LABEL = { file: "You file", deadline: "Deadline", hearing: "Meeting or hearing", milestone: "Milestone" } as const;
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 function useTickState() {
@@ -43,7 +43,7 @@ function TickPanel({ p, t, docs, onClose, onPick }: { p: PlannedStep; t: Planned
   return (
     <div className="tick-panel" role="region" aria-label={`${t.label}, ${fmtDate(t.date)}`}>
       <div className="tp-head">
-        <span className={`tk-badge k-${t.kind}`}>{KIND_LABEL[t.kind]}</span>
+        <span className={`tk-badge k-${t.kind}`}>{TICK_KIND_LABEL[t.kind]}</span>
         <div>
           <b>{t.label}</b>
           <span className="muted small">
@@ -300,8 +300,8 @@ export function ScheduleView() {
   const early = plan.filter((p) => !later.includes(p));
   const key = (
     <ul className="tick-legend" aria-label="Key to the chart">
-      {(Object.keys(KIND_LABEL) as (keyof typeof KIND_LABEL)[]).map((k) => (
-        <li key={k}><span className={`tick-key k-${k}`} />{KIND_LABEL[k]}</li>
+      {(Object.keys(TICK_KIND_LABEL) as (keyof typeof TICK_KIND_LABEL)[]).map((k) => (
+        <li key={k}><span className={`tick-key k-${k}`} />{TICK_KIND_LABEL[k]}</li>
       ))}
       {view === "timeline" && <><li><span className="tl-bar-key statutory" />Statutory review clock</li><li><span className="tl-bar-key" />Estimate</li><li><span className="today-key" />Today</li></>}
       <li><DemoTag>Demo: durations other than board meetings are estimates</DemoTag></li>

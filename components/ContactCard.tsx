@@ -1,4 +1,4 @@
-import { CONTACTS, KIND_LABEL } from "@/lib/data/contacts";
+import { CONTACTS, AUTHORITY_KIND_LABEL } from "@/lib/data/contacts";
 import { SOURCES } from "@/lib/data/sources";
 
 export function ContactCard({ id, role }: { id: string; role?: string }) {
@@ -6,7 +6,7 @@ export function ContactCard({ id, role }: { id: string; role?: string }) {
   if (!c) return null;
   return (
     <div className={`contact k-${c.kind}`}>
-      <span className="kind">{KIND_LABEL[c.kind]}</span>
+      <span className="kind">{AUTHORITY_KIND_LABEL[c.kind]}</span>
       <b>{c.name}</b>
       <span className="role">{role ? `On this step: ${role}` : c.note}</span>
       <dl>

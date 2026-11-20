@@ -282,6 +282,7 @@ Kept in full in `lib/data/openQuestions.ts` and shown on `/dev`. The ones that b
 - **2026-11-19, review answers (D68).** "None found" inclusionary findings for eight towns and Smithfield's inclusionary zoning read; a paler shade for levels on partly read marks; 32 city projects followed to a decision from 46 sets of minutes, which makes 73 recorded projects in 13 files.
 - **2026-11-19, city routes (D69).** Seven cities' practice on their review routes read from their minutes, each with a quote; steps marked partly. eCode360 found refusing scripts (debt 36).
 - **2026-11-19, chunk 5 (D70).** New Shoreham read zone by zone with a "which copy" mark on its source; boards' quiet seasons computed statewide (13 found); New Shoreham's records searched and its one larger project read. 20 cases added to the stored comparison (348).
+- **2026-11-20, hand-fetch guide trimmed.** `docs/manual-fetches.md` now lists only what is still wanted, grouped by kind (the cities' regulations, maps, ordinances, questions for a person), with the steps for eCode360, Municode and town sites. Earlier fetches, all read, are in git.
 
 - **2026-11-16, agenda layout built (D42 to D44).** The five-stage shell, rail, tray, pins, save chip, disclaimer strip and footer, `/docs/sources`, the Gantt and month switch, the hearing band, the three landings and the gate, and alternatives as routes. Four trials declared. Old project panel, trail landing and workspaces deleted; debts 22 to 25 added; engine flowchart for findings notes the ids.
 

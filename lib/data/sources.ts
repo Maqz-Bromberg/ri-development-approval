@@ -102,7 +102,7 @@ export const SOURCES: Record<string, Source> = {
   psr128w2509: { label: "Providence DPD staff report: 128 Wayland Ave, preliminary plan (Sept 16, 2025)", url: "https://www.providenceri.gov/wp-content/uploads/2025/09/24-024MI-128-Wayland-Ave-preliminary-staff-report-9.16.25.pdf" },
   psr269w2502: { label: "Providence DPD staff report: 269 Wickenden Street, preliminary plan (Feb 2025)", url: "https://www.providenceri.gov/wp-content/uploads/2025/02/23-012MA-269-Wickenden-Street-preliminary-plan-report-Feb-2025.pdf" },
   psr150p2509: { label: "Providence DPD staff report: 150 Pitman Street, major change (Sept 16, 2025)", url: "https://www.providenceri.gov/wp-content/uploads/2025/09/23-055MI-150-Pitman-St-major-change-report-9.16.pdf" },
-  /* City Plan Commission housing cases since 2023, saved by hand (docs/manual-fetches.md 1b). Addresses found by web search; where none was found, the url is the page that lists the report and `file` gives its kind. */
+  /* City Plan Commission housing cases since 2023, saved by hand (listed in docs/manual-fetches.md until read, 2026-11-18). Addresses found by web search; where none was found, the url is the page that lists the report and `file` gives its kind. */
   psr116w2301: { label: "Providence DPD staff report: 116 Waterman Street, preliminary plan (Jan 24, 2023; the report is dated 2022)", url: "https://www.providenceri.gov/wp-content/uploads/2023/01/22-033MA-116-Waterman-Street-preliminary-plan-report.pdf" },
   psr116w2302: { label: "Providence DPD staff report: 116 Waterman Street, preliminary plan (Feb 21, 2023; listed on the City's 2023 meeting materials page)", url: "https://www.providenceri.gov/planning/2023-cpc-meeting-materials/", file: ".pdf" },
   psr116w2508: { label: "Providence DPD staff report: 116 Waterman Street, major change (Aug 19, 2025)", url: "https://www.providenceri.gov/wp-content/uploads/2025/08/22-033MA-116-Waterman-Street-Major-Change-staff-report-2025.pdf" },
@@ -138,7 +138,7 @@ export const SOURCES: Record<string, Source> = {
   pmin260728: { label: "Providence City Plan Commission minutes, July 28, 2026 (scanned)", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4752%5C2026%5C564249.pdf" },
   pmin260818: { label: "Providence City Plan Commission minutes, Aug 18, 2026 (scanned)", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4752%5C2026%5C566458.pdf" },
   pmin260915: { label: "Providence City Plan Commission minutes, Sept 15, 2026", url: "https://opengov.sos.ri.gov/Common/DownloadMeetingFiles?FilePath=%5CMinutes%5C4752%5C2026%5C569491.pdf" },
-  /* Providence's other review boards, saved by hand (docs/manual-fetches.md 1c). */
+  /* Providence's other review boards, saved by hand (listed in docs/manual-fetches.md until read, 2026-11-18). */
   phdcrules: { label: "Providence Historic District Commission Rules and Regulations (amended through June 23, 2014)", url: "https://www.providenceri.gov/wp-content/uploads/2017/05/Planning-PHDC-rules-regs.pdf" },
   phdcsg: { label: "Providence Historic District Commission Standards and Guidelines, amendment adopted Nov 2024", url: "https://www.providenceri.gov/wp-content/uploads/2026/02/HDC-SG-Amendment2024-Adopted24NOV.pdf" },
   phdcapp: { label: "Providence Historic District Commission application package (2025; listed on the Commission's page)", url: "https://www.providenceri.gov/planning/providence-historic-district-commission-phdc/", file: ".pdf" },

@@ -1,4 +1,4 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
 
 /*
@@ -65,3 +65,8 @@ export function glocesterFindings(i: ProjectInputs): Finding[] {
   }
   return out;
 }
+
+/** What the town lays over state law, registered in ../overlay.ts. Chunk 6, small rural towns (ARD D63): its housing rows, read in place of the Atlas. */
+export const RULES: TownRules = {
+  use: glocesterUse, moreFindings: (i) => glocesterFindings(i), kinds: GLOCESTER_KINDS,
+};

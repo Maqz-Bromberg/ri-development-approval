@@ -227,8 +227,20 @@ export interface Coverage {
 /** The part of a Precedent kept in timelines.json */
 export type Timeline = Pick<Precedent, "events" | "parties" | "coverage" | "checked">;
 
-/** What a town changes in the state-law route: its own steps, its own sorting of projects, and its own findings. */
+/** A town's own findings, given the state-law ones (each with its `key`), the district and the lot area worked out. */
+export type TownFindings = (i: ProjectInputs, tree: TreeId, generic: Finding[], d: AtlasDistrict | undefined, need: AreaNeed | null) => Finding[];
+
+/**
+ * What a town changes in the state-law route: its own steps, its own sorting of projects, and its own findings. Each
+ * town's is exported as `RULES` from its folder's rules.ts and registered by name in lib/data/towns/overlay.ts.
+ */
 export interface TownRules {
+  /** The town's whole steps for a route, in order, in place of the state-law ones they cover (ARD D1) */
+  steps?: Partial<Record<TreeId, Step[]>>;
+  /** The town's own findings, in place of the state-law list (Providence and Cumberland), before `moreFindings` are added */
+  findings?: TownFindings;
+  /** The town's own durations and key moments for a step, keyed "tree:step" like the shared schedule */
+  schedule?: Record<string, StepPlan>;
   /** Which route a project takes, where the town's thresholds differ from the state defaults */
   classify?: (i: ProjectInputs) => TreeId;
   /** Whether the housing type is allowed in the district, from the town's own use table. Used in place of the Zoning Atlas when it answers. */

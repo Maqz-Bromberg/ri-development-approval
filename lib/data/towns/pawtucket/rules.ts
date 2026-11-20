@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { RANK, WORD, cellsOf, plain, useFinding, type Value } from "../useTable";
+import { CITY_STATUS, cityRoute } from "../cityRoutes";
 
 /*
  * Pawtucket, read 2026-11-19 from its Zoning Ordinance, Chapter 410 (eCode360, `pazo`) and its Table of Use
@@ -38,3 +39,8 @@ export function pawtucketUse(i: ProjectInputs): { value: Value; finding: Finding
   if ((col === "CD" || col === "CT") && i.units === 2) why.push("The Zoning Atlas shows two-family homes as allowed here; the table amended through December 2023 does not.");
   return useFinding({ id: "pa-use", town: "Pawtucket", what: r.what, zone: i.zone, value, why, src: "pazt", pin: "Attachment 1, 1. Residential uses", q: r.q });
 }
+
+/** What the city lays over state law, registered in ../overlay.ts. Chunk 7, the busy cities (ARD D67): its housing rows in place of the Atlas, and its practice on its routes (D69). */
+export const RULES: TownRules = {
+  routeStatus: CITY_STATUS, use: pawtucketUse, inclusionaryNone: { src: "pazo" }, moreFindings: (i, t) => cityRoute("Pawtucket", t),
+};

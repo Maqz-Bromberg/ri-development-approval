@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
+import { CITY_STATUS, cityRoute } from "../cityRoutes";
 
 /*
  * Central Falls, read 2026-11-19 from its Zoning Ordinance, Appendix A (Municode, `cfzo`, saved November 18, 2026).
@@ -37,3 +38,9 @@ export function centralFallsFindings(i: ProjectInputs): Finding[] {
     src: "cfzo", pin: "§ 304(7)", q: "adaptive reuse for the conversion of any commercial building including offices, schools, religious facilities, medical buildings, and malls into residential units or mixed-use developments is a permitted use",
   }];
 }
+
+/** What the city lays over state law, registered in ../overlay.ts. Chunk 7, the busy cities (ARD D67): its housing rows in place of the Atlas, and its practice on its routes (D69). */
+export const RULES: TownRules = {
+  routeStatus: CITY_STATUS, use: centralFallsUse, moreFindings: (i, t) => [...centralFallsFindings(i), ...cityRoute("Central Falls", t)],
+  inclusionaryNone: { src: "cfzo", note: "Parking is reduced by a quarter for each affordable home where at least 15% are deed-restricted, an incentive, not a requirement." },
+};

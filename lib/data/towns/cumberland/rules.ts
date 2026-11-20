@@ -1,4 +1,6 @@
-import type { AreaNeed, AtlasDistrict, Finding, FindingKey, ProjectInputs, TownRules, TreeId } from "../../../types";
+import type { AreaNeed, AtlasDistrict, Finding, FindingKey, ProjectInputs, Step, TownRules, TreeId } from "../../../types";
+import { cumberlandCommercialFindings, cumberlandCommercialUse, cumberlandMixedArea } from "./commercial";
+import { TREES } from "./trees";
 
 /*
  * Cumberland's housing rules and precedent, laid over the state-law findings (lib/engine.ts, `stateFindings`). Until
@@ -96,3 +98,12 @@ export function cumberlandFindings(i: ProjectInputs, tree: TreeId, generic: Find
   }
   return out;
 }
+
+/** What the town lays over state law, registered in ../overlay.ts: its steps for all five routes (trees.ts), its housing findings (above) and its commercial rules (commercial.ts). */
+export const RULES: TownRules = {
+  steps: Object.fromEntries(Object.entries(TREES).map(([k, t]) => [k, t.steps])) as Record<TreeId, Step[]>,
+  findings: cumberlandFindings, area: cumberlandArea, mixedArea: cumberlandMixedArea, permitsRule: CUMBERLAND_PERMITS,
+  useCommercial: cumberlandCommercialUse, commercialFindings: cumberlandCommercialFindings,
+  routeStatus: Object.fromEntries(Object.entries(TREES).map(([k, t]) => [k, t.status])),
+  routeText: Object.fromEntries(Object.entries(TREES).map(([k, t]) => [k, { rule: t.rule, blurb: t.blurb, stateTerms: true }])),
+};

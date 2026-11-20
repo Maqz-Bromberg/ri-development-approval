@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, useFinding, type Value } from "../useTable";
+import { CITY_STATUS, cityRoute } from "../cityRoutes";
 
 /*
  * Woonsocket, read 2026-11-19 from its Zoning Ordinance, Appendix C (ClerksHQ, `wozo`). Chunk 7 (ARD D67). What it adds:
@@ -32,3 +33,8 @@ export function woonsocketUse(i: ProjectInputs): { value: Value; finding: Findin
   if (cell === "A") why.push("Homes are permitted here only as accessory to a permitted use (§ 4.1-4), not as the main use of the lot.");
   return useFinding({ id: "wo-use", town: "Woonsocket", what: r.what, zone: i.zone, value, why, src: "wozo", pin: "§ 4.4, Residential uses", q: r.q });
 }
+
+/** What the city lays over state law, registered in ../overlay.ts. Chunk 7, the busy cities (ARD D67): its housing rows in place of the Atlas, and its practice on its routes (D69). */
+export const RULES: TownRules = {
+  routeStatus: CITY_STATUS, use: woonsocketUse, inclusionaryNone: { src: "wozo" }, moreFindings: (i, t) => cityRoute("Woonsocket", t),
+};

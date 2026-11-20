@@ -1,4 +1,4 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, useFinding, type Value } from "../useTable";
 
 /*
@@ -61,3 +61,8 @@ export function fosterFindings(i: ProjectInputs): Finding[] {
     },
   ];
 }
+
+/** What the town lays over state law, registered in ../overlay.ts. Chunk 6, small rural towns (ARD D63): its housing rows, read in place of the Atlas. */
+export const RULES: TownRules = {
+  inclusionaryNone: { src: "fozo" }, use: fosterUse, moreFindings: (i) => fosterFindings(i), retired: FOSTER_RETIRED,
+};

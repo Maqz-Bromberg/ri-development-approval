@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
+import { CITY_STATUS, cityRoute } from "../cityRoutes";
 
 /*
  * East Providence, read 2026-11-19 from Chapter 19, Zoning (Municode, `epzo`, saved November 18, 2026). Chunk 7
@@ -85,4 +86,9 @@ export function eastProvidenceFindings(i: ProjectInputs): Finding[] {
 export const eastProvidenceAffordableLines = (i: ProjectInputs) => {
   const need = eastProvidenceInclusionary(i);
   return need ? [{ short: "25%: East Providence Waterfront District", what: "A net five or more new homes in the Waterfront District need 25% affordable, rounded up, with two bonus market-rate homes for each; a fee in lieu forgoes the bonus.", src: "epzo", need }] : [];
+};
+
+/** What the city lays over state law, registered in ../overlay.ts. Chunk 7, the busy cities (ARD D67): its housing rows in place of the Atlas, and its practice on its routes (D69). */
+export const RULES: TownRules = {
+  routeStatus: CITY_STATUS, use: eastProvidenceUse, moreFindings: (i, t) => [...eastProvidenceFindings(i), ...cityRoute("East Providence", t)], affordableLines: eastProvidenceAffordableLines,
 };

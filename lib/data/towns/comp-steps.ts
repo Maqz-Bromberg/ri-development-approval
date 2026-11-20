@@ -148,4 +148,7 @@ const WEST_GREENWICH: Step[] = compRoute({
 });
 
 /** The comprehensive permit steps, by town. */
+/** How well the comprehensive permit route is sourced in the towns above (ARD D65). */
+export const COMP_STATUS = { comp: "From the town's own procedure, read 2026-11-19" };
+
 export const COMP_STEPS: Record<string, Step[]> = { Exeter: EXETER, Hopkinton: HOPKINTON, Richmond: RICHMOND, "West Greenwich": WEST_GREENWICH };

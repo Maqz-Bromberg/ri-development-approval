@@ -1,4 +1,4 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { useFinding, type Value } from "../useTable";
 
 /*
@@ -89,3 +89,9 @@ export function newShorehamOverlay(_i: ProjectInputs, abbr: string): Finding[] |
     src: "nszo", pin: "§ 317 B", q: "This Zoning Ordinance incorporates by reference the Town of New Shoreham Historic District Zoning Ordinance",
   }];
 }
+
+/** What the town lays over state law, registered in ../overlay.ts. Chunk 5, an island (ARD D70): no use table, a zone-by-zone reading; its ordinance copy carries a "which copy" mark. */
+export const RULES: TownRules = {
+  use: newShorehamUse, moreFindings: (i) => newShorehamFindings(i), overlayRules: newShorehamOverlay, unmappedOverlays: NEW_SHOREHAM_UNMAPPED,
+  overlayFlags: newShorehamOverlayFlags, inclusionaryNone: { src: "nszo", note: "Affordable homes earn extra density by special use permit (§ 405), an incentive, not a requirement." },
+};

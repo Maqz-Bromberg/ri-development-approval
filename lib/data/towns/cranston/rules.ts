@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
+import { CITY_STATUS, cityRoute } from "../cityRoutes";
 
 /*
  * Cranston, read 2026-11-19 from Title 17, Zoning (eCode360, `crzo`, downloaded November 18, 2026; § 17.20.010 last
@@ -36,3 +37,8 @@ export function cranstonUse(i: ProjectInputs): { value: Value; finding: Finding 
   if (r === ROWS.two && col.startsWith("A-")) why.push("The Zoning Atlas shows two-family homes as possible in some A districts; the table as amended in 2026 does not.");
   return useFinding({ id: "cr-use", town: "Cranston", what: r.what, zone: i.zone, value, why, src: "crzo", pin: "§ 17.20.030, Table of Principal Use, Residential", q: r.q });
 }
+
+/** What the city lays over state law, registered in ../overlay.ts. Chunk 7, the busy cities (ARD D67): its housing rows in place of the Atlas, and its practice on its routes (D69). */
+export const RULES: TownRules = {
+  routeStatus: CITY_STATUS, use: cranstonUse, inclusionaryNone: { src: "crzo" }, moreFindings: (i, t) => cityRoute("Cranston", t),
+};

@@ -66,7 +66,7 @@ Under `npm run dev`, `/dev` lists the open questions, design trials and debts.
 How the data is shaped, and each decision behind it, is in **`docs/ARD.md`** (the architectural review document). Read it before changing the shape of the data, the engine, the sources or the checks, and update it in the same change.
 
 - `lib/data/state/trees.ts`: the state-law routes (`byright`, `dpr`, `minor`, `major`, `comp`), each step with its application, clock, deciders and documents. Each requirement has `src`, `pin` and a verbatim `q`.
-- `lib/data/towns/<town>/`: what a town lays over state law, as far as it has been read: its use table and other rules (`rules.ts`), its steps, its recorded projects (`history.ts` with `timelines.json`), and its contacts. All are registered in `lib/data/towns/overlay.ts`. Shared helpers: `useTable.ts` (a use table's row as a finding), `dated.ts` (rules with dates), `compPermit.ts` (a town's comprehensive permit route), `cityRoutes.ts` (the cities' practice from their minutes).
+- `lib/data/towns/<town>/`: what a town lays over state law, as far as it has been read: its use table and other rules, with everything the engine asks of the town exported as `RULES` from its `rules.ts`; its steps, its recorded projects (`history.ts` with `timelines.json`), and its contacts. Each town's `RULES` is listed by name in `lib/data/towns/overlay.ts`. Shared helpers: `useTable.ts` (a use table's row as a finding), `dated.ts` (rules with dates), `compPermit.ts` (a town's comprehensive permit route), `cityRoutes.ts` (the cities' practice from their minutes).
 - `lib/data/towns.ts`: every municipality's four marks, gaps, and link to its code of ordinances.
 - `lib/data/sources.ts`: every document quoted, one line each.
 - `lib/data/bodies.json`: every town's boards from the state Open Meetings site, with their meeting pattern and quiet months.
@@ -79,7 +79,7 @@ How the data is shaped, and each decision behind it, is in **`docs/ARD.md`** (th
 ## Adding a town
 
 1. Save its zoning ordinance (most hosts refuse scripts; `docs/manual-fetches.md` says how) and add its sources to `lib/data/sources.ts`.
-2. Give it a folder, `lib/data/towns/<town>/`, with what was read, and register it in `lib/data/towns/overlay.ts`. A use table usually comes first: `useTable.ts` turns its rows into findings.
+2. Give it a folder, `lib/data/towns/<town>/`, with what was read, export its `RULES` from the folder's `rules.ts`, and add that to the list in `lib/data/towns/overlay.ts`. A use table usually comes first: `useTable.ts` turns its rows into findings.
 3. Search its boards' records with `python3 scripts/towns/search_records.py "<Town>"`, read what was found into `lib/data/searched.ts`, and follow the projects to a decision in `history.ts` and `timelines.json`.
 4. Set its marks in `lib/data/towns.ts`, run the checks, and add a decision and a log line to `docs/ARD.md`.
 

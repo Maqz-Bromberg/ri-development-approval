@@ -1,4 +1,4 @@
-import type { Finding, ProjectInputs, TreeId } from "../../../types";
+import type { Finding, ProjectInputs, TownRules, TreeId } from "../../../types";
 import { applies, sinceText, stillOpen, type Pending, type Version } from "../dated";
 
 /*
@@ -135,3 +135,8 @@ export function northProvidenceFindings(i: ProjectInputs, _tree: TreeId): Findin
   });
   return out;
 }
+
+/** What the town lays over state law, registered in ../overlay.ts. Read for its ordinance under amendment: rules with dates, a pending amendment, vesting on certification (ARD D62, chunk 4). */
+export const RULES: TownRules = {
+  use: northProvidenceUse, moreFindings: northProvidenceFindings, inclusionaryNone: { src: "npzo" },
+};

@@ -1,4 +1,4 @@
-import type { CommercialUse, Finding, ProjectInputs } from "../../../types";
+import type { CommercialUse, Finding, ProjectInputs, TownRules } from "../../../types";
 
 /*
  * Charlestown, read 2026-11-14 from the Zoning Ordinance, Chapter 218 (eCode360, `chzo`), and its Land Use Table
@@ -120,3 +120,10 @@ export const CHARLESTOWN_UNMAPPED = [{ abbr: "GWP", name: "Groundwater Protectio
  * Village District nonresidential; its purpose (§ 218-33) is small-scale business and residential uses.
  */
 export const CHARLESTOWN_KINDS: Record<string, string> = { TVD: "Mixed with Residential" };
+
+/** What the town lays over state law, registered in ../overlay.ts. Read to scope the design changes a town with overlays forces (ARD D38). Its use table answers in place of the Atlas. */
+export const RULES: TownRules = {
+  use: charlestownUse, useCommercial: charlestownCommercialUse, overlayRules: charlestownOverlay, unmappedOverlays: CHARLESTOWN_UNMAPPED, kinds: CHARLESTOWN_KINDS,
+  // The Mixed-Use Zoning Overlay's own share (§ 218-47 B(2)), on the affordable key (ARD D53 decision 2; D38's open item).
+  affordableLines: (i) => ((i.overlays ?? []).includes("MUZ") && i.units > 1 ? [{ short: "59%: Charlestown Mixed-Use Zoning Overlay", what: "More than one home on a lot in the overlay needs 59% of the homes, rounded down, to be low or moderate income.", src: "chzo", need: Math.floor(i.units * 0.59) }] : []),
+};

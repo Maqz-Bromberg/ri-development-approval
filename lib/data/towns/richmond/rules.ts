@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
+import { COMP_STATUS, COMP_STEPS } from "../comp-steps";
 
 /*
  * Richmond, read 2026-11-18 from its Zoning Ordinance, Chapter 18.16 Use Regulations (ClerksHQ, `rizo16`, as amended
@@ -38,3 +39,8 @@ export function richmondUse(i: ProjectInputs): { value: Value; finding: Finding 
   if (r !== ROWS.one && r !== ROWS.two && value !== "prohibited") why.push(r === ROWS.m60 ? "Chapter 18.42 sets its own standards, not read here." : "Its standards (§ 18.36.100) are not read here.");
   return useFinding({ id: "ri-use", town: "Richmond", what: r.what, zone: i.zone, value, why, src: "rizo16", pin: "§ 18.16.010, Table of uses, Residential", q: r.q });
 }
+
+/** What the town lays over state law, registered in ../overlay.ts. Chunk 6, small rural towns (ARD D63): its housing rows in place of the Atlas, and its comprehensive permit route (D65). */
+export const RULES: TownRules = {
+  steps: { comp: COMP_STEPS.Richmond }, routeStatus: COMP_STATUS, use: richmondUse,
+};

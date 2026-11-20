@@ -1,6 +1,5 @@
-import type { Step, TownRules, TreeId } from "../../../types";
-import { PROVIDENCE_AREAS, coaStep, designReviewStep, providenceDesignReview, providenceOverlayFlags, providenceOverlayRules } from "./areas";
-import { PROVIDENCE_GONE, providenceClassifyCommercial, providenceCommercialFindings, providenceCommercialRoute, providenceCommercialUse, providenceUse } from "./rules";
+import type { Step, TreeId } from "../../../types";
+import { coaStep, designReviewStep } from "./areas";
 
 /*
  * Providence's own steps, laid over the state-law route. Trial reading, 2026-11-13, not confirmed by the city.
@@ -631,48 +630,4 @@ export const PROVIDENCE_STEPS: Partial<Record<TreeId, Step[]>> = {
   major: [zoning, rezone, preapp(true), master, majorState, majorPrelim, majorFinal, record("major"), appeal],
   // In the Downcity and East Side I-195 overlays, and on I-195 parcels, the downtown design review takes the place of staff review (areas.ts).
   dpr: [zoning, preapp(false), { ...adpr, cond: "!ddrc" }, designReviewStep, record("dpr"), appeal],
-};
-
-export const PROVIDENCE_RULES: TownRules = {
-  /*
-   * Regulations Art. 2 and Zoning Ordinance §§ 1904.C and 1905.C. The thresholds count new floor area:
-   *   new construction, 10 or more units   land development project. Minor up to 2,500 sq ft of commercial space, major above.
-   *   new construction, 4 to 9 units       administrative development plan review ("multi-family" is four or more units)
-   *   reuse of an existing building        no new floor area, so neither. Administrative review if the lot is 40,000 sq ft or more.
-   * Gross floor area, parking spaces and rowhouses also trigger review, and this site does not ask for them.
-   * The 25%-affordable comprehensive permit route is state law and is kept, though Providence's handling of it was not read.
-   */
-  classify: (i) => {
-    if (i.units >= 3 && i.aff / i.units >= 0.25) return "comp";
-    // Development the Downtown Design Review Committee or the I-195 Commission reviews is not land development (§ 1904.C.2.b).
-    if (providenceDesignReview(i) && i.units >= 1) return "dpr";
-    if (i.type === "reuse") return i.lot >= 40000 ? "dpr" : "byright";
-    if (i.units >= 10) return (i.commercial ?? 0) > 2500 ? "major" : "minor";
-    return i.units >= 4 ? "dpr" : "byright";
-  },
-  use: providenceUse,
-  classifyCommercial: (i) => (providenceDesignReview(i) ? "dpr" : providenceClassifyCommercial(i)),
-  overlayRules: providenceOverlayRules,
-  overlayFlags: providenceOverlayFlags,
-  unmappedOverlays: PROVIDENCE_AREAS,
-  extraSteps: [{ step: coaStep, before: ["record", "building"] }],
-  commercialLines: [10000, 20000],
-  commercialRoute: providenceCommercialRoute,
-  commercialFindings: providenceCommercialFindings,
-  useCommercial: providenceCommercialUse,
-  /** Administrative development plan review has one stage. */
-  omit: { dpr: ["final"] },
-  permitsBefore: "final",
-  permitsRule: {
-    p: "Providence asks for state and federal permits before the final plan is approved, not before the preliminary plan, and the Commission writes this into its conditions.",
-    src: "pregs", pin: "§ 504.A.6", q: "Prior to approval of the final plan, an applicant must submit all permits required by",
-  },
-  asksCommercial: true,
-  retired: { zones: PROVIDENCE_GONE, note: "Not in the Zoning Ordinance of July 2026. The 2024 Atlas still lists it. Find the parcel's present district on the City's zoning map." },
-  routeText: {
-    minor: { name: "Minor land development project", rule: "10 or more new units with up to 2,500 sq ft of commercial space, or 10,000 to 20,000 sq ft of new non-residential floor area", blurb: "Two stages, preliminary and final. Staff can decide a plan that needs no relief. The City Plan Commission decides when more height, less parking, a waiver or a variance is requested." },
-    major: { name: "Major land development project", rule: "10 or more new units with more than 2,500 sq ft of commercial space, or more than 20,000 sq ft of new non-residential floor area", blurb: "Master, preliminary and final plans before the City Plan Commission, with a public hearing at master plan. Stages are often combined." },
-    dpr: { name: "Administrative development plan review", rule: "4 to 9 new units, a change of use on a lot of 40,000 sq ft or more, or a new building over 2,500 sq ft in C-2, C-3, M-MU or W-2", blurb: "One stage, decided by planning staff with no hearing. A variance or special use permit moves it to the City Plan Commission." },
-    byright: { rule: "Up to 3 units, or reuse of an existing building on a smaller lot", blurb: "A building permit. New rowhouses, and new buildings over 2,500 sq ft in C-2, C-3, M-MU and W-2, still get administrative development plan review." },
-  },
 };

@@ -1,4 +1,4 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
 
 /*
@@ -60,4 +60,9 @@ export function smithfieldFindings(i: ProjectInputs): Finding[] {
 export const smithfieldAffordableLines = (i: ProjectInputs) => {
   const need = smithfieldInclusionary(i);
   return need ? [{ short: "20%: Smithfield inclusionary zoning", what: "Six or more multi-family homes, or ten or more single-family lots, need 20% of the zoning's unit yield affordable, rounded up, with one bonus market-rate home for each.", src: "smzo", need }] : [];
+};
+
+/** What the town lays over state law, registered in ../overlay.ts. Not a city, but its zoning was saved by hand with them (the plan's chunk 7). */
+export const RULES: TownRules = {
+  use: smithfieldUse, moreFindings: (i) => smithfieldFindings(i), affordableLines: smithfieldAffordableLines, inclusionaryRead: true,
 };

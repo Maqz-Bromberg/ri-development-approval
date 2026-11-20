@@ -49,6 +49,10 @@ const ROUTES: Record<string, Route> = {
 };
 
 /** The city's route as its minutes show it, on every route but a building permit alone. */
+const CITY_READ = "State law; the city's practice read from its minutes, 2026-11-19";
+/** How well a city's routes are sourced: state law, with its practice read from its board's minutes (ARD D69). */
+export const CITY_STATUS = { minor: CITY_READ, major: CITY_READ, dpr: CITY_READ };
+
 export const cityRoute = (town: string, tree: TreeId): Finding[] => {
   const r = ROUTES[town];
   return r && tree !== "byright" ? [{ ...r, st: "info" }] : [];

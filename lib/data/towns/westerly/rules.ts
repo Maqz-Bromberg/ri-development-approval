@@ -1,4 +1,4 @@
-import type { CommercialUse, Finding, Flags, ProjectInputs, Step } from "../../../types";
+import type { CommercialUse, Finding, Flags, ProjectInputs, Step, TownRules } from "../../../types";
 
 /*
  * Westerly, read 2026-11-18 from the Zoning Ordinance, Chapter 260 (eCode360, `wezo`), its Zoning District Use Tables
@@ -226,4 +226,12 @@ export const aquiferStep: Step = {
   docs: [
     { title: "When the permit is needed", src: "wezo", pin: "§ 260-52", q: "An aquifer protection permit shall be in addition to any other relief the applicant/owner is required to obtain.", checklist: ["Read the use table's APZ and WPZ columns for your use", "Prepare the best management practice plan the section asks for"] },
   ],
+};
+
+/** What the town lays over state law, registered in ../overlay.ts. Read for its overlay stack, inclusionary zoning and listed parcels (ARD D53, chunk 3). */
+export const RULES: TownRules = {
+  use: westerlyUse, useCommercial: westerlyCommercialUse, overlayRules: westerlyOverlay, unmappedOverlays: WESTERLY_UNMAPPED,
+  overlayFlags: westerlyOverlayFlags, moreFindings: (i) => westerlyFindings(i), inclusionaryRead: true,
+  extraSteps: [{ step: aquiferStep, before: ["building"] }, { step: airportStep, before: ["building"] }],
+  affordableLines: (i) => (i.kind !== "commercial" && i.units >= 6 ? [{ short: "15%: Westerly inclusionary zoning", what: "Six or more homes need 15% of the units low- or moderate-income, deed-restricted for 99 years, with one bonus market-rate unit for each.", src: "wezo", need: westerlyInclusionary(i.units) }] : []),
 };

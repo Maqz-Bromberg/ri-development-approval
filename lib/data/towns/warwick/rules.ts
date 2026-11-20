@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { RANK, cellsOf, plain, useFinding, type Value } from "../useTable";
+import { CITY_STATUS, cityRoute } from "../cityRoutes";
 
 /*
  * Warwick, read 2026-11-19 from its Zoning Ordinance, Appendix A (Municode, `wazo`, saved November 18, 2026). Chunk 7
@@ -47,3 +48,9 @@ export function warwickUse(i: ProjectInputs): { value: Value; finding: Finding }
   if (read2.length === 2 && read2[0].value !== read2[1].value) why.push("Ten homes fall in two rows of the table, 102.1 (five to ten) and 103 (ten or more), which answer differently here. The stricter is shown: ask the Planning Department.");
   return useFinding({ id: "wa-use", town: "Warwick", what: r.what, zone: i.zone, value, why, src: "wazo", pin: "Table of Use Regulations, 100. Residential uses", q: r.q });
 }
+
+/** What the city lays over state law, registered in ../overlay.ts. Chunk 7, the busy cities (ARD D67): its housing rows in place of the Atlas, and its practice on its routes (D69). */
+export const RULES: TownRules = {
+  routeStatus: CITY_STATUS, use: warwickUse, moreFindings: (i, t) => cityRoute("Warwick", t),
+  inclusionaryNone: { src: "wazo", note: "A Planned District Residential project may have up to 15% more homes if at least a quarter are sold or rented below market (subsection 308), an incentive, not a requirement." },
+};

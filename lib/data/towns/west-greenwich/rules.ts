@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
+import { COMP_STATUS, COMP_STEPS } from "../comp-steps";
 
 /*
  * West Greenwich, read 2026-11-18 from its Zoning Ordinance, Chapter 400 (eCode360, `wgzo`) and its Zoning Use
@@ -58,3 +59,8 @@ export function westGreenwichFindings(i: ProjectInputs): Finding[] {
 }
 
 export const westGreenwichAffordableLines = (i: ProjectInputs) => (i.kind !== "commercial" && i.units >= 5 ? [{ short: "15%: West Greenwich inclusionary zoning", what: "Five or more homes or lots need 15% affordable, rounded up, with one bonus market-rate home for each; no fee in lieu.", src: "wgzo", need: westGreenwichInclusionary(i.units) }] : []);
+
+/** What the town lays over state law, registered in ../overlay.ts. Chunk 6, small rural towns (ARD D63): its housing rows in place of the Atlas, and its comprehensive permit route (D65). */
+export const RULES: TownRules = {
+  steps: { comp: COMP_STEPS["West Greenwich"] }, routeStatus: COMP_STATUS, use: westGreenwichUse, moreFindings: (i) => westGreenwichFindings(i), inclusionaryRead: true, affordableLines: westGreenwichAffordableLines,
+};

@@ -1,5 +1,6 @@
-import type { Finding, Flags, ProjectInputs, Step } from "../../../types";
+import type { Finding, Flags, ProjectInputs, Step, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
+import { CITY_STATUS, cityRoute } from "../cityRoutes";
 
 /*
  * Newport, read 2026-11-19 from Title 17, Zoning (Municode, `nezo`, saved November 18, 2026). Chunk 7 (ARD D67).
@@ -95,4 +96,10 @@ export const newportCoaStep: Step = {
       checklist: ["The Board reverses only for prejudicial procedural error, clear error or a decision the record does not support", "So the case for the design is made at the Commission, on its record"],
     },
   ],
+};
+
+/** What the city lays over state law, registered in ../overlay.ts. Chunk 7, the busy cities (ARD D67): its housing rows in place of the Atlas, its historic district step, and its practice on its routes (D69). */
+export const RULES: TownRules = {
+  routeStatus: CITY_STATUS, use: newportUse, inclusionaryNone: { src: "nezo" }, moreFindings: (i, t) => cityRoute("Newport", t), overlayRules: newportOverlay, unmappedOverlays: NEWPORT_UNMAPPED, overlayFlags: newportOverlayFlags,
+  extraSteps: [{ step: newportCoaStep, before: ["record", "building"] }],
 };

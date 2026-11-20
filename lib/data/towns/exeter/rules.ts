@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
+import { COMP_STATUS, COMP_STEPS } from "../comp-steps";
 
 /*
  * Exeter, read 2026-11-18 from its Zoning Ordinance, Appendix A (Municode, saved as a Word file, `exzo`). Chunk 6
@@ -76,3 +77,8 @@ export function exeterFindings(i: ProjectInputs): Finding[] {
 }
 
 export const exeterAffordableLines = (i: ProjectInputs) => (mixedHere(i) ? [{ short: "20%: Exeter mixed-use commercial development", what: "Homes in a mixed-use commercial development need 20% of the units, at least one, deed-restricted for 30 years for low- and moderate-income households.", src: "exzo", need: exeterMixedShare(i.units) }] : []);
+
+/** What the town lays over state law, registered in ../overlay.ts. Chunk 6, small rural towns (ARD D63): its housing rows in place of the Atlas, and its comprehensive permit route (D65). */
+export const RULES: TownRules = {
+  steps: { comp: COMP_STEPS.Exeter }, routeStatus: COMP_STATUS, use: exeterUse, moreFindings: (i) => exeterFindings(i), unmappedOverlays: EXETER_UNMAPPED, kinds: EXETER_KINDS, affordableLines: exeterAffordableLines,
+};

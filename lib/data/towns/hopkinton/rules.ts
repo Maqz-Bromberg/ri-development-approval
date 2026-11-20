@@ -1,5 +1,6 @@
-import type { Finding, ProjectInputs } from "../../../types";
+import type { Finding, ProjectInputs, TownRules } from "../../../types";
 import { cellsOf, plain, useFinding, type Value } from "../useTable";
+import { COMP_STATUS, COMP_STEPS } from "../comp-steps";
 
 /*
  * Hopkinton, read 2026-11-18 from its Zoning Ordinance (Municode, saved as a Word file, `hozo`). Chunk 6 (ARD D63).
@@ -46,3 +47,8 @@ export function hopkintonFindings(i: ProjectInputs): Finding[] {
   }
   return out;
 }
+
+/** What the town lays over state law, registered in ../overlay.ts. Chunk 6, small rural towns (ARD D63): its housing rows in place of the Atlas, and its comprehensive permit route (D65). */
+export const RULES: TownRules = {
+  steps: { comp: COMP_STEPS.Hopkinton }, routeStatus: COMP_STATUS, use: hopkintonUse, moreFindings: (i) => hopkintonFindings(i),
+};

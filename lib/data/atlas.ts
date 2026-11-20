@@ -108,12 +108,19 @@ export async function fetchAtlasDistricts(jurisdiction: string, signal?: AbortSi
   if (!res.ok) throw new Error(`Atlas query failed (${res.status})`);
   const json = (await res.json()) as { features?: { attributes: AtlasDistrict }[]; error?: { message: string } };
   if (json.error) throw new Error(json.error.message);
-  // A town whose ordinance was read can correct the Atlas's kind of district (ARD D38).
+  return atlasForTown(jurisdiction, (json.features ?? []).map((f) => f.attributes));
+}
+
+/**
+ * The Atlas's districts as the site uses them. A town whose ordinance was read can correct the Atlas's kind of district
+ * (ARD D38); "Overlay" marks a district the Atlas draws as a base district as an overlay (ARD D63), so the picker offers
+ * it as a tick. Also applied to the saved copy the stored comparison runs on (scripts/engine/atlas-districts.json).
+ */
+export function atlasForTown(jurisdiction: string, raw: AtlasDistrict[]): AtlasDistrict[] {
   const kinds = townRules(jurisdiction).kinds ?? {};
-  // "Overlay" marks a district the Atlas draws as a base district as an overlay (ARD D63), so the picker offers it as a tick.
-  return (json.features ?? []).map((f) => {
-    const k = kinds[f.attributes.abbrvname];
-    return !k ? f.attributes : k === "Overlay" ? { ...f.attributes, family4_treatment: "Overlay" } : { ...f.attributes, type: k };
+  return raw.map((a) => {
+    const k = kinds[a.abbrvname];
+    return !k ? a : k === "Overlay" ? { ...a, family4_treatment: "Overlay" } : { ...a, type: k };
   });
 }
 

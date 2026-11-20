@@ -7,13 +7,18 @@
  *   node --import ./scripts/engine/register.mjs scripts/engine/snapshot.ts --save   # save this run as the copy (.sources/engine-snapshot.json)
  *
  * A difference is not an error: it is what the change did. Read it, and save when it is what was meant.
- * The Zoning Atlas is live in the browser and absent here, so findings that need a district's Atlas figures show as
- * they do when the Atlas does not answer. Cumberland's bundled districts are the exception.
+ * The Zoning Atlas is live in the browser. Here each town's districts come from a saved copy of the layer
+ * (atlas-districts.json, saved by fetch_atlas.ts, with the date it was fetched), registered as the site registers the
+ * live ones; Cumberland uses its bundled districts, as the site does.
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { analyze, classify, deriveFlags, normalizeInputs, stepsFor, visibleDocs } from "@/lib/engine";
+import { atlasForTown, registerDistricts } from "@/lib/data/atlas";
 import { setActiveTown } from "@/lib/town";
-import type { ProjectInputs, TreeId } from "@/lib/types";
+import type { AtlasDistrict, ProjectInputs, TreeId } from "@/lib/types";
+
+const ATLAS = JSON.parse(readFileSync(new URL("./atlas-districts.json", import.meta.url), "utf8")) as { fetched: string; towns: Record<string, AtlasDistrict[]> };
+for (const [town, list] of Object.entries(ATLAS.towns)) if (town !== "Cumberland") registerDistricts(town, atlasForTown(town, list));
 
 // The saved copy is about 12 MB, so it is kept with the other local files in .sources/, not committed. A fresh clone
 // saves one from a commit known to be right, then compares each change against it.

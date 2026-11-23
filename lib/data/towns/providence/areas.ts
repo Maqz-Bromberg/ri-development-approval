@@ -93,6 +93,10 @@ export const coaStep: Step = {
       checklist: ["Expect a public hearing, not a staff approval, for a new building or a demolition"],
     },
     {
+      title: "Design for the district, not a copy of it", src: "phdcsg94", pin: "New construction, p. 47", q: "It is not necessary to replicate historic architectural styles; designs should be contextual",
+      checklist: ["The standards of 1994 (amended 1997) cover the Armory, Broadway, College Hill, Northern and Southern Elmwood and Stimson Avenue districts; ask staff which apply in a district they do not name", "New construction is reviewed in four phases with at least two public meetings: a pre-application consultation, conceptual review, final review and any changes during construction", "Conceptual review may come before any zoning variance, but variances must be granted before final review", "A registered architect or other design professional is strongly recommended"],
+    },
+    {
       title: "Conceptual approval first", src: "phdcrules", pin: "§ 5.1.B", q: "shall first file a preliminary application for Conceptual Approval from the HDC",
       checklist: ["Apply for conceptual approval of the massing and design", "Then apply again for the final details: drawings, materials and, for new construction, a model"],
     },

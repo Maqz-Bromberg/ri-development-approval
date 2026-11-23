@@ -36,7 +36,7 @@ const ZONES: Record<string, string[]> = {
   Charlestown: ["R-20", "C-1"],
   Westerly: ["other", "HDR-6", "DC1"],
   "North Providence": ["RG", "IS"],
-  Foster: ["AR"],
+  Foster: ["AR", "GB", "HC2"],  // GB and HC2: districts of 2023 the Atlas lacks (ARD D78)
   Exeter: ["LB/R", "RE-2"],
   Glocester: ["R-2"],
   "West Greenwich": ["HB"],
@@ -69,6 +69,7 @@ const AREAS: { town: string; zone: string; overlays: string[] }[] = [
   { town: "Providence", zone: "R-3", overlays: ["I-3E"] },
   { town: "Westerly", zone: "HDR-6", overlays: ["APZ"] },
   { town: "Westerly", zone: "GC", overlays: ["AAO"] },
+  { town: "New Shoreham", zone: "OHC", overlays: ["H"] },
 ];
 
 /** Paths the shapes above miss: a town's own lot-area rule, conservation density, transit parking, permits on a commercial site. */
@@ -86,6 +87,8 @@ const MORE: { town: string; zone: string; c: Case }[] = [
   { town: "Providence", zone: "C-2", c: { name: "retail, 8,000 sq ft, wetlands", p: { kind: "commercial", use: "retail", gfa: 8000, units: 0, wet: true } } },
   { town: "Westerly", zone: "HDR-6", c: { name: "12 homes, conservation", p: homes(12, 0, { conservation: true }) } },
   { town: "Exeter", zone: "RE-2", c: { name: "8 homes near transit", p: homes(8, 0, { transit: true }) } },
+  { town: "Foster", zone: "GB", c: { name: "1 home", p: homes(1) } },
+  { town: "Foster", zone: "M", c: { name: "1 home", p: homes(1) } },
 ];
 
 function run() {

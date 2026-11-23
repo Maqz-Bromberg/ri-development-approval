@@ -1,4 +1,4 @@
-import type { Finding, ProjectInputs, TownRules } from "../../../types";
+import type { Finding, Flags, ProjectInputs, Step, TownRules } from "../../../types";
 import { useFinding, type Value } from "../useTable";
 
 /*
@@ -16,10 +16,12 @@ import { useFinding, type Value } from "../useTable";
  *     with one affordable, each affordable home's lot area halved, and, until December 31, 2028 and only with a
  *     nonprofit sponsor, small multi-family buildings (two homes in RA and RB, four in RC, RC/M and M);
  *   - the Historic Overlay, administered by the Historic District Commission under its own ordinance (§ 317), not in
- *     the Zoning Atlas, as a tick on the form.
+ *     the Zoning Atlas. Since 2026-11-20 the lookup finds it on the Town's GIS layer (`nshdgis`, ARD D78) and the map
+ *     draws it, and its certificate of appropriateness is a step of its own, read from Chapter 7 of the Town's Code
+ *     (`nsc7`): 45 days or deemed approved, up to 90 with a finding, exterior features only, appeal to the Zoning Board.
  * The Atlas's RCM is the ordinance's RC/M zone, and MU its Mixed Use (M) zone. Not read: the Planned Development zone's
  * affordable housing districts (§ 319), Flexible Design Residential Development (§ 402), the Coastal (C) and Waterfront
- * overlays, and the Historic District Zoning Ordinance itself.
+ * overlays, and the Historic District Commission's own published standards (§ 7-5(c)).
  */
 
 type Zone = "RA" | "RB" | "RC" | "RC/M" | "M" | "OHC" | "NHC" | "SC";
@@ -29,7 +31,7 @@ const MULTI: Zone[] = ["OHC", "NHC", "SC"];
 const SECONDARY: Zone[] = ["RA", "RB", "RC", "RC/M", "M", "NHC", "SC"];
 
 export const NEW_SHOREHAM_UNMAPPED = [
-  { abbr: "H", name: "Historic Overlay (Historic District Commission, § 317)", where: "The Town's Historic District Map; not found as map data." },
+  { abbr: "H", name: "Historic Overlay (Historic District Commission, § 317)", where: "The Town's GIS, Historic District Overlay layer (last edited July 2017), and the lots listed in § 7-13 of the Town's Code." },
 ];
 
 export function newShorehamUse(i: ProjectInputs): { value: Value; finding: Finding } | null {
@@ -79,19 +81,61 @@ export function newShorehamFindings(i: ProjectInputs): Finding[] {
   }];
 }
 
-export const newShorehamOverlayFlags = (i: ProjectInputs) => ({ historic: (i.overlays ?? []).includes("H") });
+export const newShorehamOverlayFlags = (i: ProjectInputs): Partial<Flags> => ({ historic: (i.overlays ?? []).includes("H") });
 
 export function newShorehamOverlay(_i: ProjectInputs, abbr: string): Finding[] | null {
   if (abbr !== "H") return null;
   return [{
-    id: "ns-area-h", st: "flag", t: "Historic Overlay: the Historic District Commission's approval",
-    p: "Construction, alteration, moving and demolition in the Historic Overlay are regulated under the Town's Historic District Zoning Ordinance, administered by the Historic District Commission. That ordinance was not read, so its procedure and clock are not on the route.",
-    src: "nszo", pin: "§ 317 B", q: "This Zoning Ordinance incorporates by reference the Town of New Shoreham Historic District Zoning Ordinance",
+    id: "ns-area-h", st: "flag", t: "Historic Overlay: a certificate of appropriateness from the Historic District Commission",
+    p: "Before any construction, alteration, repair, removal or demolition of a structure in the historic district, the owner must have a certificate of appropriateness from the Historic District Commission, whether or not a building permit is needed. The district is every property inside the boundary marked \"historic district zone\" on the official zoning map, with buildings added one by one; § 7-13 lists the lots. The Town's GIS layer draws the boundary (the harbour area, with two small areas inland) without subdistricts, and was last edited in 2017, so a lot near its edge, or added since, should be checked against the list.",
+    src: "nsc7", pin: "§ 7-4(a), § 7-6(a), § 7-13", q: "the owner must first apply for and receive a certificate of appropriateness from the commission",
+    gap: "Whether the lot is on § 7-13's list, where the map's edge is close: the list is by plat and lot, and was last amended in 2013",
   }];
 }
+
+export const newShorehamCoaStep: Step = {
+  id: "coa", title: "Certificate of appropriateness", cond: "historic", app: "Historic District Commission application, with plans, drawings and photographs",
+  clock: { days: 45, text: "45 days from the completed application to decide, or up to 90 with a finding that more study is needed; no decision in time counts as approval" },
+  what: "In the Historic Overlay, the Historic District Commission approves the design of new construction, alterations, repairs, moves and demolition before the work starts, and its certificate binds the building official. It passes only on exterior features, considering the building's significance, how it contributes to the district, and the design, arrangement, texture, materials and siting. It may call in experts at the owner's expense. It also advises the Zoning Board on setback variances in the district, and on the siting and massing of a second dwelling. Its decisions are in writing, and are appealed to the Zoning Board of Review.",
+  auth: [
+    { c: "hdc", role: "Decides the certificate after a hearing; advises the Zoning Board on setback variances in the district" },
+    { c: "zbr", role: "Hears appeals of the Commission's decisions, on the Commission's record" },
+  ],
+  objections: ["design"],
+  docs: [
+    {
+      title: "Which work needs a certificate", src: "nsc7", pin: "§ 7-6(a), (b); § 7-10", q: "A certificate of appropriateness is necessary whether or not state law requires that a permit",
+      checklist: ["Find whether the lot is in the Historic Overlay: the Town's GIS draws it, and § 7-13 lists the lots by plat and lot", "Ordinary maintenance and repair that change no design, material or appearance need none (§ 7-10)"],
+    },
+    {
+      title: "What to bring", src: "nsc7", pin: "§ 7-6(d)", q: "The commission shall require the owner to submit information which is",
+      checklist: ["Plans, drawings and photographs, or other information the Commission asks for"],
+    },
+    {
+      title: "A business sign, in a mixed-use building", src: "nshdcsign", pin: "Sign tabulation form", q: "HISTORIC DISTRICT COMMISSION SIGN TABULATION",
+      checklist: ["List each sign, existing and proposed: its size in square feet, type, location, material, colours, font and the business name on it"],
+    },
+    {
+      title: "What the Commission weighs: exterior features only", src: "nsc7", pin: "§ 7-6(e), (f)", q: "The commission shall pass only on exterior features of a structure and its appurtenances",
+      checklist: ["The building's historic and architectural significance, and how it contributes to the district", "The design, arrangement, texture, materials and siting proposed", "Experts the Commission calls in are paid by the owner (§ 7-6(g))"],
+    },
+    {
+      title: "45 days, or it counts as approved", src: "nsc7", pin: "§ 7-6(k)", q: "shall be deemed to constitute approval",
+      checklist: ["With a finding that more study is needed, the Commission has up to 90 days", "The applicant and the Commission may agree to more time"],
+    },
+    {
+      title: "Setback variances in the district", src: "nsc7", pin: "§ 7-9", q: "may recommend to the zoning board of review that such variance or exception to the standard yard",
+      checklist: ["Older buildings in the district often do not meet today's yards; the Commission may support a variance to keep the street's look"],
+    },
+    {
+      title: "Appeal to the Zoning Board of Review", src: "nsc7", pin: "§ 7-11", q: "shall not substitute its own judgment for that of the commission",
+      checklist: ["The Board reverses only for prejudicial procedural error, clear error or a decision the record does not support", "A $75 fee covers advertising the appeal"],
+    },
+  ],
+};
 
 /** What the town lays over state law, registered in ../overlay.ts. Chunk 5, an island (ARD D70): no use table, a zone-by-zone reading; its ordinance copy carries a "which copy" mark. */
 export const RULES: TownRules = {
   use: newShorehamUse, moreFindings: (i) => newShorehamFindings(i), overlayRules: newShorehamOverlay, unmappedOverlays: NEW_SHOREHAM_UNMAPPED,
-  overlayFlags: newShorehamOverlayFlags, inclusionaryNone: { src: "nszo", note: "Affordable homes earn extra density by special use permit (§ 405), an incentive, not a requirement." },
+  overlayFlags: newShorehamOverlayFlags, extraSteps: [{ step: newShorehamCoaStep, before: ["record", "building"] }], inclusionaryNone: { src: "nszo", note: "Affordable homes earn extra density by special use permit (§ 405), an incentive, not a requirement." },
 };

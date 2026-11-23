@@ -9,6 +9,8 @@ import { cellsOf, plain, useFinding, type Value } from "../useTable";
  *     the use table. Marked as overlays here, so the lookup no longer reads a site in Chepachet as on a boundary, and
  *     the overlay's column answers in place of the base district's;
  *   - multi-family homes only in the village: in VD only with retail, in CD with no more than three homes.
+ * Inclusionary zoning: none (ARD D68). The zoning points to Chapter 286, Affordable Housing, which was repealed on
+ * December 7, 2023 (`gl286`, read 2026-11-20).
  * Not read: the village's design standards, the dimensional table beyond the two-family row, the Planned District.
  */
 
@@ -69,4 +71,6 @@ export function glocesterFindings(i: ProjectInputs): Finding[] {
 /** What the town lays over state law, registered in ../overlay.ts. Chunk 6, small rural towns (ARD D63): its housing rows, read in place of the Atlas. */
 export const RULES: TownRules = {
   use: glocesterUse, moreFindings: (i) => glocesterFindings(i), kinds: GLOCESTER_KINDS,
+  // The zoning's general references still point to an Affordable Housing chapter (Ch. 286), repealed on December 7, 2023 (`gl286`).
+  inclusionaryNone: { src: "glzo", note: "The zoning's list of general references still points to an Affordable Housing chapter, Chapter 286, which the Town Council repealed on December 7, 2023; the chapter is now reserved." },
 };

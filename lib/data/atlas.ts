@@ -117,11 +117,15 @@ export async function fetchAtlasDistricts(jurisdiction: string, signal?: AbortSi
  * it as a tick. Also applied to the saved copy the stored comparison runs on (scripts/engine/atlas-districts.json).
  */
 export function atlasForTown(jurisdiction: string, raw: AtlasDistrict[]): AtlasDistrict[] {
-  const kinds = townRules(jurisdiction).kinds ?? {};
-  return raw.map((a) => {
+  const rules = townRules(jurisdiction);
+  const kinds = rules.kinds ?? {};
+  const out = raw.map((a) => {
     const k = kinds[a.abbrvname];
     return !k ? a : k === "Overlay" ? { ...a, family4_treatment: "Overlay" } : { ...a, type: k };
   });
+  // Districts the town's ordinance has and the Atlas lacks (Foster's of 2023, ARD D78).
+  const own = (rules.ownDistricts?.list ?? []).filter((d) => !out.some((a) => a.abbrvname === d.abbrvname));
+  return [...out, ...own];
 }
 
 /** Fields whose live value differs from the snapshot, per district. */

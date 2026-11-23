@@ -278,6 +278,12 @@ export interface TownRules {
   asksCommercial?: boolean;
   /** Districts the Zoning Atlas lists that the town's current ordinance no longer has. The district picker marks them. */
   retired?: { zones: string[]; note: string };
+  /**
+   * Districts the town's ordinance has that the Atlas lacks (debt 13, Q7), added to the district list with the note.
+   * Their use columns are the town's table read into the Atlas's words; their figures are null, since the Atlas has none
+   * and the town's own findings give them (ARD D78).
+   */
+  ownDistricts?: { list: AtlasDistrict[]; note: string };
   /** Route names and rules as the town defines them, where they differ from the state defaults */
   /** `stateTerms`: the town words the route its own way but means what state law means by it, so the glossary applies. */
   routeText?: Partial<Record<TreeId, { name?: string; rule: string; blurb: string; stateTerms?: boolean }>>;

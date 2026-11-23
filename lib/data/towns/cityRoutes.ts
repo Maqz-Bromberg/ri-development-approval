@@ -5,7 +5,8 @@ import type { Finding, TreeId } from "../../types";
  * development regulations could not be fetched: eCode360 began refusing scripts on 2026-11-19, Municode always has,
  * and Woonsocket's copy on ClerksHQ dates from 2017, before the state's 2023 rewrite of the review law. What the
  * minutes show is who decides, which stages are combined, and what is left to staff; the steps themselves stay state
- * law. Each finding quotes the minutes it rests on. Keep `src` before `q` on the same line.
+ * law. Each finding quotes the minutes it rests on. Keep `src` before `q` on the same line. Since 2026-11-20 Central
+ * Falls's 2025 regulations are read too (in its own folder), and Woonsocket's of 2021 are in hand but predate 2023.
  */
 
 type Route = Omit<Finding, "st" | "id"> & { id: string };
@@ -28,7 +29,7 @@ const ROUTES: Record<string, Route> = {
   },
   Woonsocket: {
     id: "wo-route", t: "How Woonsocket runs its review: the Planning Board, with zoning relief under unified development review",
-    p: "The Planning Board decides land development projects and the zoning relief they need in the same hearing, under unified development review, and has combined the master and preliminary plans for a project in one approval. Every member's vote on each motion is recorded. The city's regulations on ClerksHQ date from 2017, before the state's 2023 rewrite, and were not read; these are from the minutes of 2024 to 2026.",
+    p: "The Planning Board decides land development projects and the zoning relief they need in the same hearing, under unified development review, and has combined the master and preliminary plans for a project in one approval. Every member's vote on each motion is recorded. The city's own regulations in hand, adopted on May 4, 2021 (newer than the 2017 copy on ClerksHQ), still predate the state's 2023 rewrite, so their stages and clocks are not used; these are from the minutes of 2024 to 2026.",
     src: "wopb251209", pin: "Dec 9, 2025, 60 Mendon Road", q: "Motion to approve the Combined Master & Preliminary Plan",
   },
   Warwick: {
@@ -43,7 +44,7 @@ const ROUTES: Record<string, Route> = {
   },
   "Central Falls": {
     id: "cf-route", t: "How Central Falls runs its review: the Planning Board, voting each variance separately",
-    p: "The Planning Board decides land development projects and their dimensional variances under unified development review, voting each variance as a motion of its own before the plan. The board has filed nothing on the state site since May 2025. The city's own regulations were not read; these are from the minutes of 2024.",
+    p: "The Planning Board decides land development projects and their dimensional variances under unified development review, voting each variance as a motion of its own before the plan. The board has filed nothing on the state site since May 2025. These are from the minutes of 2024; the city's regulations of April 2025 are read on the minor and major routes.",
     src: "cfpb240111", pin: "Jan 11, 2024, 4 and 6 School Street", q: "Approve or deny the Applicant’s request Dimensional Variances for maximum height.",
   },
 };

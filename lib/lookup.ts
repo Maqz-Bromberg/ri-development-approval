@@ -50,8 +50,11 @@ export interface SiteFacts {
   wetAgency: "CRMC" | "DEM" | null;
   /** Overlay districts at the point. The Atlas keeps them in the same layer as base districts, marked "Overlay"; a town's own layers add more. */
   overlays: { zone: string; name: string }[];
-  /** The district on the town's own zoning map, where the town publishes one (lib/data/townLayers.ts), and whose map it is */
-  townZone?: { zone: string; label: string } | null;
+  /**
+   * The district on the town's own zoning map, where the town publishes one (lib/data/townLayers.ts), and whose map it is.
+   * `replaced` holds the Atlas's district where the town's map replaces the Atlas's (`zone` is then the town's).
+   */
+  townZone?: { zone: string; label: string; replaced?: string | null } | null;
   parcelOptions: ParcelOption[];
 }
 
@@ -184,13 +187,22 @@ async function townLayers(facts: SiteFacts, lon: number, lat: number, signal?: A
   type Rows = { features: { attributes: Record<string, string | number | null> }[] };
   const ask = (url: string, fields: string) => getJSON<Rows>(`${url}/query?${pointQuery(lon, lat, { outFields: fields, returnGeometry: "false" })}`, signal);
   const [zone, ...areas] = await Promise.allSettled([
-    t.zoning ? ask(t.zoning.url, t.zoning.field) : Promise.resolve(null),
+    t.zoning ? ask(t.zoning.url, [t.zoning.field, t.zoning.nameField].filter(Boolean).join(",")) : Promise.resolve(null),
     ...t.areas.map((a) => ask(a.url, a.nameField ?? "OBJECTID")),
   ]);
   if (t.zoning) {
+    const z = t.zoning;
     if (zone.status === "fulfilled" && zone.value) {
-      const codes = Array.from(new Set(zone.value.features.map((f) => String(f.attributes[t.zoning!.field] ?? "")).filter((c) => c && c !== "None")));
-      facts.townZone = codes.length === 1 ? { zone: codes[0], label: t.zoning.label } : null;
+      const codes = Array.from(new Set(zone.value.features.map((f) => String(f.attributes[z.field] ?? "")).filter((c) => c && c !== "None")));
+      facts.townZone = codes.length === 1 ? { zone: codes[0], label: z.label } : null;
+      // Where the town's map replaces the Atlas's districts, its district is the site's (Foster's renamed districts, ARD D78).
+      if (z.replaces && facts.townZone && z.replaces[facts.townZone.zone]) {
+        const name = z.nameField ? String(zone.value.features[0].attributes[z.nameField] ?? "") : "";
+        facts.townZone.replaced = facts.zone;
+        facts.zone = facts.townZone.zone;
+        facts.zoneName = name || facts.townZone.zone;
+        facts.zoneOptions = [{ zone: facts.zone, name: facts.zoneName }];
+      }
     } else facts.failed.push(`${facts.town}'s zoning map`);
   }
   areas.forEach((r, k) => {

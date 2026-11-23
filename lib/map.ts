@@ -1,11 +1,13 @@
 import { RIZA_LAYER_URL } from "./data/atlas";
 import { withTimeout } from "./lookup";
 import { townRules } from "./data/towns/overlay";
+import { TOWN_LAYERS } from "./data/townLayers";
 import type { TreeId } from "./types";
 
 /*
  * Map data for the Check page, in the browser, from the same public services as the address lookup:
- *   - zoning district outlines: Rhode Island Zoning Atlas, layer 14, one feature per district per town
+ *   - zoning district outlines: Rhode Island Zoning Atlas, layer 14, one feature per district per town; or the town's
+ *     own zoning map where it replaces the Atlas's (lib/data/townLayers.ts), and the town's own areas marked `draw`
  *   - parcels around the site: RIDEM tax parcels, with the state E-911 structure type of each
  * Coordinates come back as WGS84 [lon, lat] rings and are turned into Leaflet's [lat, lon] here.
  */
@@ -29,6 +31,8 @@ export interface DistrictShape {
   overlay: boolean;
   /** Outer rings and holes together. Leaflet fills them even-odd, so the order doesn't matter. */
   rings: Ring[];
+  /** Whose map it comes from, where it is not the Atlas */
+  from?: string;
 }
 
 export type StructureClass = "single" | "multi" | "commercial" | "public" | "other" | "none";
@@ -149,9 +153,40 @@ async function getJSON<T>(url: string, signal?: AbortSignal, ms = 30000): Promis
 
 const districtCache = new Map<string, Promise<DistrictShape[]>>();
 
-/** Every zoning district outline in a town, simplified to about 5 m. Cached for the visit. */
+type Features = { features: { attributes: Record<string, string | number | null>; geometry?: { rings: number[][][] } }[]; exceededTransferLimit?: boolean };
+const SHAPE_PARAMS = { returnGeometry: "true", outSR: "4326", geometryPrecision: "5", maxAllowableOffset: "0.00005", f: "json" };
+
+/**
+ * Every outline in one of a town's own layers, simplified as the Atlas's are, paged: Foster's zoning layer is drawn
+ * parcel by parcel, 2,362 polygons where a service gives 2,000 at a time. Five pages at most.
+ */
+async function townFeatures(url: string, fields: string[]): Promise<Features> {
+  const out: Features = { features: [] };
+  for (let page = 0; page < 5; page++) {
+    const r = await getJSON<Features>(`${url}/query?${new URLSearchParams({ where: "1=1", outFields: fields.join(","), orderByFields: "OBJECTID", resultOffset: String(out.features.length), ...SHAPE_PARAMS })}`);
+    out.features.push(...r.features);
+    if (!r.exceededTransferLimit || !r.features.length) break;
+  }
+  return out;
+}
+
+/**
+ * Every zoning district outline in a town, simplified to about 5 m, then the town's own areas it draws as overlays.
+ * Where the town's zoning map replaces the Atlas's (Foster, ARD D78), its districts are drawn instead. Cached for the visit.
+ */
 export function districtShapes(town: string): Promise<DistrictShape[]> {
   let p = districtCache.get(town);
+  const own = TOWN_LAYERS[town];
+  if (!p && own?.zoning?.replaces) {
+    const z = own.zoning, kinds = z.replaces!;
+    const base = townFeatures(z.url, [z.field, z.nameField].filter((x): x is string => !!x)).then((r) => r.features
+      .filter((f) => f.geometry && kinds[String(f.attributes[z.field])])
+      .map((f): DistrictShape => {
+        const abbr = String(f.attributes[z.field]);
+        return { abbr, name: z.nameField ? String(f.attributes[z.nameField] ?? abbr) : abbr, type: kinds[abbr], overlay: false, rings: toRings(f.geometry!.rings), from: z.label };
+      }));
+    p = withAreas(town, base);
+  }
   if (!p) {
     const params = new URLSearchParams({
       where: `Jurisdiction='${town.replace(/'/g, "''")}'`,
@@ -165,10 +200,22 @@ export function districtShapes(town: string): Promise<DistrictShape[]> {
     p = getJSON<{ features: { attributes: { abbrvname: string; name: string; type: string; family4_treatment: string | null }; geometry?: { rings: number[][][] } }[] }>(
       `${RIZA_LAYER_URL}/query?${params}`,
     ).then((r) => r.features.filter((f) => f.geometry).map((f) => ({ abbr: f.attributes.abbrvname, name: f.attributes.name, type: townRules(town).kinds?.[f.attributes.abbrvname] ?? f.attributes.type, overlay: f.attributes.family4_treatment === "Overlay" || townRules(town).kinds?.[f.attributes.abbrvname] === "Overlay", rings: toRings(f.geometry!.rings) })));
+    p = withAreas(town, p);
+  }
+  if (!districtCache.has(town)) {
     p.catch(() => districtCache.delete(town));
     districtCache.set(town, p);
   }
   return p;
+}
+
+/** The districts, then the town's own areas marked `draw`, as overlays after them (so a point finds its base district first). An area that fails is left off. */
+function withAreas(town: string, base: Promise<DistrictShape[]>): Promise<DistrictShape[]> {
+  const areas = (TOWN_LAYERS[town]?.areas ?? []).filter((a) => a.draw);
+  if (!areas.length) return base;
+  const extra = Promise.allSettled(areas.map((a) => townFeatures(a.url, ["OBJECTID"]).then((r) => r.features.filter((f) => f.geometry)
+    .map((f): DistrictShape => ({ abbr: a.abbr, name: a.name, type: "Overlay", overlay: true, rings: toRings(f.geometry!.rings), from: `${town}'s own map` })))));
+  return Promise.all([base, extra]).then(([b, e]) => [...b, ...e.flatMap((x) => (x.status === "fulfilled" ? x.value : []))]);
 }
 
 type ParcelRows = {

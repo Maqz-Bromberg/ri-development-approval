@@ -90,7 +90,8 @@ export function ZonePicker({ onMap }: { onMap?: () => void }) {
   // How a district treats the project's housing type: the town's own use table where it was read, else the Atlas.
   const fit = (zone: string) => FIT[treatmentOf({ ...inputs, zone })];
   const retired = townRules(inputs.town).retired;
-  const retiredNote = (z: string) => (retired?.zones.includes(z) ? retired.note : undefined);
+  const own = townRules(inputs.town).ownDistricts;
+  const retiredNote = (z: string) => (retired?.zones.includes(z) ? retired.note : own?.list.some((d) => d.abbrvname === z) ? own.note : undefined);
   const [editing, setEditing] = useState(false);
   const open = editing || inputs.zone === "other" || !districts.some((d) => d.abbrvname === inputs.zone);
   const [q, setQ] = useState("");
@@ -148,7 +149,7 @@ export function ZonePicker({ onMap }: { onMap?: () => void }) {
       {(() => {
         const f = look.status === "ready" ? look.data.facts : null;
         const said = f?.zone && f.zone === inputs.zone
-          ? `The Zoning Atlas puts the site in ${f.zone}${f.zoneName ? `, ${f.zoneName}` : ""}.`
+          ? `${f.townZone?.replaced !== undefined ? `${inputs.town}'s own zoning map, which replaces the Atlas's out-of-date districts here,` : "The Zoning Atlas"} puts the site in ${f.zone}${f.zoneName ? `, ${f.zoneName}` : ""}.`
           : fromOutline && fromOutline === inputs.zone ? `The site's point lies inside ${inputs.zone}'s outline on the Zoning Atlas, so it was chosen for you.` : null;
         return said ? <FactMark id="zone" label="Zoning district" said={said} /> : null;
       })()}
@@ -216,7 +217,7 @@ export function ZonePicker({ onMap }: { onMap?: () => void }) {
                       onMouseEnter={() => setActive(i)}
                     >
                       <span className="zp-dot" style={{ background: ZONE_KIND[k].color }} aria-hidden="true" />
-                      <span className="zp-opt"><b>{d.abbrvname}</b> {d.name}{retiredNote(d.abbrvname) ? <span className="muted"> · not in the 2026 ordinance</span> : null}</span>
+                      <span className="zp-opt"><b>{d.abbrvname}</b> {d.name}{retired?.zones.includes(d.abbrvname) ? <span className="muted"> · not in the 2026 ordinance</span> : own?.list.some((o) => o.abbrvname === d.abbrvname) ? <span className="muted"> · from the town&apos;s ordinance, not the Atlas</span> : null}</span>
                       <span className={`treat ${f.cls}`}>{f.label}</span>
                     </li>
                   );

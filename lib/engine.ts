@@ -309,7 +309,10 @@ function stateFindings(i: ProjectInputs, tree: TreeId): Finding[] {
     const perUnit = i.transit ? 1 : parseFloat(d?.family4_minparking_2br ?? "2") || 2;
     out.push(i.transit
       ? { key: "parking", st: "info", t: `Parking: at most ${i.units} spaces can be required (1 per unit near transit)`, p: "2026 state law caps required parking near frequent transit.", src: "ridsp", pin: "S 3303 / H 8005 Sub A (2026)", q: "no more than one off-street parking space per dwelling unit in a multi-family structure or development can be required" }
-      : { key: "parking", st: "info", t: `Parking: ${i.units * perUnit} spaces required (${perUnit} per unit)`, p: "Plan visitor spaces and snow storage on top of the minimum.", src: "rizaLayer", pin: `${i.zone} · family4_minparking` });
+      : d?.family4_minparking_2br
+        ? { key: "parking", st: "info", t: `Parking: ${i.units * perUnit} spaces required (${perUnit} per unit)`, p: "Plan visitor spaces and snow storage on top of the minimum.", src: "rizaLayer", pin: `${i.zone} · family4_minparking` }
+        // No Atlas figure (a district the Atlas lacks, ARD D78, or a blank field): two a home is assumed, and said to be.
+        : { key: "parking", st: "info", t: `Parking: ${i.units * perUnit} spaces assumed (${perUnit} per unit)`, p: "The Zoning Atlas gives no parking figure for this district, so two spaces a home is assumed. Plan visitor spaces and snow storage on top of the minimum.", src: "rizaLayer", pin: `${i.zone} · family4_minparking (none)`, gap: "The town's parking requirement for this district" });
   }
   if (d?.family4_maxheightft && i.units >= 4) {
     out.push({ key: "height", st: "info", t: `Height limit: ${d.family4_maxheightft} ft`, p: "Check the elevations against this limit.", src: "rizaLayer", pin: `${i.zone} · family4_maxheightft`, q: d.family4_maxheightft });

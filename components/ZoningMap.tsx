@@ -219,6 +219,7 @@ export function ZoningMap({ placement = "beside", preview = null, onPick, onTown
     const t = treatmentFor(d, inputs.units);
     return `<b>${esc(abbr)}</b> ${esc(shape?.name ?? d?.name ?? "")}<br><span class="zm-sub">${esc(ZONE_KIND[zoneKind(shape?.type ?? d?.type)].label)}</span>`
       + `<br>${housingTypeLabel(inputs.units)} housing: ${t.raw ? esc(t.raw.toLowerCase()) : "not in the atlas"}`
+      + (shape?.from ? `<br><span class="zm-sub">Drawn from ${esc(shape.from)}</span>` : "")
       + (abbr === inputs.zone ? "<br><i>The project's district</i>" : "");
   };
   const parcelTip = (p: Parcel) => {

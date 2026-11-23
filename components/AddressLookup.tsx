@@ -9,6 +9,7 @@ import { Info } from "./Info";
 import { useProject } from "./ProjectProvider";
 import { TownPicker, useSetTown } from "./TownPicker";
 import { ZoningMap } from "./ZoningMap";
+import { TOWN_LAYERS } from "@/lib/data/townLayers";
 
 type State =
   | { step: "idle" }
@@ -249,7 +250,7 @@ export function AddressLookup({ map = false, layout = "stack" }: { map?: boolean
                 <div><dt>Town</dt><dd>{f.town ?? "not found"}</dd></div>
                 <div><dt>Zoning district</dt><dd>{f.zone ? `${f.zone} · ${f.zoneName}` : f.zoneOptions.length > 1 ? "choose below" : "not found"}</dd></div>
                 {f.townZone && (
-                  <div><dt>On {f.townZone.label}</dt><dd>{f.townZone.zone}{f.zone && f.townZone.zone.replace("RP", "R-P") !== f.zone.replace("RP", "R-P") ? ` (the 2024 Atlas says ${f.zone})` : " (the same)"}</dd></div>
+                  <div><dt>On {f.townZone.label}</dt><dd>{f.townZone.zone}{f.townZone.replaced !== undefined ? (f.townZone.replaced && f.townZone.replaced !== f.townZone.zone ? ` (used in place of the 2024 Atlas's ${f.townZone.replaced}${TOWN_LAYERS[f.town ?? ""]?.zoning?.replaces?.[f.townZone.replaced] ? "" : ", which the town no longer has"})` : " (used; the Atlas's districts here are out of date)") : f.zone && f.townZone.zone.replace("RP", "R-P") !== f.zone.replace("RP", "R-P") ? ` (the 2024 Atlas says ${f.zone})` : " (the same)"}</dd></div>
                 )}
                 {f.overlays.length > 0 && <div><dt>Overlay</dt><dd>{f.overlays.map((o) => `${o.zone} · ${o.name}`).join("; ")}</dd></div>}
                 {f.wetAgency && <div><dt>Wetlands regulated by</dt><dd>{f.wetAgency === "CRMC" ? "CRMC (coastal)" : "RIDEM"}</dd></div>}

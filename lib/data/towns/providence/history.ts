@@ -176,8 +176,8 @@ export const PROVIDENCE_HISTORY: Omit<Precedent, "events" | "checked" | "town">[
     at: { lat: 41.83759, lon: -71.422581, exact: true }, parcels: ["PR 068-0846-0000"],
     name: "203 Douglas Avenue", addr: "203 Douglas Avenue", lot: "AP 68 Lot 846", zone: "C-2", units: 21, aff: 0, route: "minor",
     routeLabel: "Minor land development project (mixed use)",
-    status: "pending", statusLabel: "Continued to October 20, 2026",
-    notes: "A mixed-use building with commercial space on the ground floor and 21 apartments, seeking a height adjustment to 49 ft 2 in and five stories (50 ft and four allowed) and waivers for the transformer's location and a drainage plan. Listed for July 28, 2026, and continued at the applicant's request to August 18 and then to October 20. No staff report is posted yet.",
+    status: "pending", statusLabel: "Continued to October 20, 2026; not on that agenda",
+    notes: "A mixed-use building with commercial space on the ground floor and 21 apartments, seeking a height adjustment to 49 ft 2 in and five stories (50 ft and four allowed) and waivers for the transformer's location and a drainage plan. Listed for July 28, 2026, and continued at the applicant's request to August 18 and then to October 20. It was not on the Commission's agenda for October 20 or November 17 (read 2026-11-18), so where it stands is not on the record. No staff report is posted yet.",
     src: ["pmin260818"],
   },
 ];

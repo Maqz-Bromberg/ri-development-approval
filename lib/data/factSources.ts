@@ -40,8 +40,8 @@ export const FACT_SOURCES: FactSource[] = [
   {
     id: "zone", title: "Zoning district", how: "applied",
     layer: { label: "RI Zoning Atlas, districts layer", url: `${ATLAS}/14` },
-    query: "The district polygon containing the point. On a boundary, every district within 30 m is offered and you choose.",
-    misses: "The Atlas reflects zoning as of September 2024. A later rezoning or a new ordinance is not in it (Providence's 2026 ordinance dropped two districts, which the picker marks).",
+    query: "The district polygon containing the point. On a boundary, every district within 30 m is offered and you choose. In Foster, whose districts were renamed in 2023, the Town's own zoning map is asked instead; Providence's is asked beside the Atlas.",
+    misses: "The Atlas reflects zoning as of September 2024. A later rezoning or a new ordinance is not in it (Providence's 2026 ordinance dropped two districts, which the picker marks). Foster's map layer is dated January 2024, and it is a working map, not the official one (§ 38-501).",
     check: "The town's official zoning map, or the planning office.",
   },
   {
